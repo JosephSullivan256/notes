@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
+\contentsline {section}{\numberline {2}Double Covers}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Hyperelliptic Curves}{2}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}The $g=1$ case (4 branch points)}{2}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Higher genus ($2g+2$ branch points)}{3}{subsubsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.2}Cyclic Covers}{3}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Affine Case}{3}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Global Case}{5}{subsubsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.3}Embedding Double Covers of $\mathbb {P}^2$ in Weighted Projective Space}{6}{subsection.2.3}%

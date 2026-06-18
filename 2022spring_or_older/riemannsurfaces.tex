@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+
+\title{Riemann Surfaces}
+\author{Joseph Sullivan}
+\date{July 2022}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+
+These are some notes on Forster's \textit{Lectures on Riemann Surfaces}.
+
+\section{Definitions and Topological Preliminaries}
+
+\begin{defn}
+    An $n$-dimensional \textbf{manifold} (for the purposes of Forster) is a Hausdorff topological space $X$ such that every point $a\in X$ has an open neighborhood which is homeomorphic to an open subset of $\R^n$.
+\end{defn}
+
+\begin{defn}
+    Let $X$ be a two-dimensional manifold. A \textbf{complex chart} on $X$ is a homeomorphism $\phi: U\to V$ of an open subset $U\subseteq X$ onto an open subset $V\subseteq \C$. Two complex charts $\phi_i: U_i\to V_i, i=1,2$ are said to be \textbf{holomorphically compatible} if the map
+    \[
+        \phi_2\circ \phi_1^{-1} : \phi_1(U_1\cap U_2) \to \phi_2(U_1\cap U_2)
+    \]
+    is biholomorphic (holomorphic with holomorphic inverse).
+    
+    A \textbf{complex atlas} on $X$ is a set $\cA=\{\phi_i:U_i \to V_i, i\in I\}$ of charts which are holomorphically compatible and which cover $X$.
+    
+    Two complex atlases $\cA, \cA'$ on $X$ are \textbf{analytically equivalent} if every chart of $\cA$ is holomorphically compatible with every chart of $\cA'$.
+\end{defn}
+
+\begin{rmk}\;
+    \begin{enumerate}[(a)]
+        \item We can shrink charts and get holomorphically compatible charts.
+        \item Analytic equivalence is an equivalence relation, since the composition of two biholomorphisms is a biholomorphism.
+    \end{enumerate}
+\end{rmk}
+
+\begin{defn}
+    A \textbf{complex structure} $\Sigma$ on a two-dimensional manifold is an equivalence class of analytically equivalent complex atlases $\cA$ on $X$.
+\end{defn}
+
+\begin{rmk}
+    By taking the union of all complex atlases in an equivalence class, we can get a unique maximum complex atlas $\cA^*$. Given $\cA$ representing $\Sigma$, $\cA^*$ is just the collection of all complex charts biholomorphically compatible with every chart of $\cA$.
+\end{rmk}
+
+\begin{defn}
+    A \textbf{Riemann surface} is a pair $(X, \Sigma)$ of a connected two-dimensional manifold $X$ and a complex structure $\Sigma$ on $X$.
+\end{defn}
+
+\begin{eg}
+    The \textbf{Riemann sphere} $\P^1$. As a topological space, it is the one point compactification of $\C$, i.e.,
+    \[\P^1 \defeq \C \cup \{\infty\},\]
+    with open sets being the usual subsets of $\C$ and subsets $(\C\setminus K) \cup \{\infty\}$ for any compact $K\subseteq \C$.
+    
+    Set
+    \begin{align*}
+        U_1 &\defeq \P^1 \setminus \{\infty\} = \C\\
+        U_2 \defeq \P^1 \setminus \{0\} = \C^* \cup \{\infty\},
+    \end{align*}
+    and define $\phi_1: U_1\to \C$ as the identity map and $\phi_2: U_2\to \C$ by
+    \[
+        \phi_2(z) \defeq \begin{cases}
+            \frac{1}{z} & z\in \C^*\\
+            0 & z=\infty.
+        \end{cases}
+    \]
+    Then, $\phi_1(U_1\cap U_2)=\phi_2(U_1\cap U_2)=\C^*$, and $\phi_2\circ \phi_1^{-1}$ is just the biholomorphism $z\mapsto \frac{1}{z}$.
+\end{eg}
+
+\end{document}

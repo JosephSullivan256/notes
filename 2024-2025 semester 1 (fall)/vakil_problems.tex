@@ -1,0 +1,207 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+
+\title{Algebraic Geometry}
+\author{Joseph Sullivan}
+\date{June 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{QCQS Lemma}
+
+\begin{prop}
+    Suppose $X$ is quasicompact (qc) and quasiseparated (qs), $\cF$ quasicoherent, and $f\in \Gamma(X,\cO_X)$ a global function. Then, the restriction map
+    \[\Gamma(X,\cF) \to \Gamma(X_f, \cF)\]
+    is precisely localization.
+\end{prop}
+
+\begin{proof}
+    The QCQS hypothesis tells us that $X$ is covered by finitely many affine sets $U_i$, with finitely many affine opens $U_{i,j,k}$ covering the pairwise intersections (so fixing $i_0,j_0$, the $U_{i_0,j_0,k}$ cover $U_i\cap U_j$). Then, since $\cF$ is a sheaf, we have an exact sequence (the equalizer diagram, notice that we can use direct sums because these are finite collections)
+    \[0 \to \Gamma(X,\cF) \to \bigoplus_i \Gamma(U_i, \cF) \to \bigoplus \Gamma(U_{ijk}, \cF).\]
+    Hitting this sequence by the exact functor (exact because localizations are flat)
+    \[- \otimes_{\Gamma(X,\cO_X)} \Gamma(X,\cO_X)_f,\]
+    we get the exact sequence
+    \[0 \to \Gamma(X,\cF)_f \to \bigoplus \Gamma((U_i)_f, \cF) \to \bigoplus \Gamma((U_{ijk})_f, \cF),\]
+    where we took the $f$ in on the right terms because they are over affine opens. Now, the sheaf condition again tells us
+    \[\Gamma(X,\cF)_f \cong \Gamma(X_f, \cF).\]
+\end{proof}
+
+\section{Affine Communication Lemma}
+
+\begin{prop}
+    Suppose $\Spec A, \Spec B\subseteq X$ are affine opens. Then, $\Spec A \cap \Spec B$ is the union of open sets that are simultaneously distinguished open subschemes of $\Spec A$ and $\Spec B$.
+\end{prop}
+
+\begin{rmk}
+    We give the statement in more words. For each $p\in \Spec A \cap \Spec B$ (i.e., in the intersection of the images of both open embeddings), we get a $\Spec C \hookrightarrow \Spec A \cap \Spec B$ open embedding whose image contains $p$, such that $\Spec C \cong \Spec A_f \cong \Spec B_g$, such that under the isomorphisms, the open embedding becomes the standard embedding of a distinguished open (i.e., the spectrum of the localization map), i.e., we have the diagram
+    \begin{center}
+    \begin{tikzcd}
+        & X & \\
+        \Spec A \urar & \lar \Spec A \cap \Spec B \uar \rar & \ular \Spec B\\
+        \Spec A_f \uar & \lar["\cong"'] \Spec C \rar["\cong"] \uar & \Spec B_g \uar
+    \end{tikzcd}
+    \end{center}
+    (I find it tricky the way we should identify an open embedding, e.g., $\Spec A \hookrightarrow X$, with actually an open set of $X$ with the restricted structure sheaf).
+    
+    The point is that every (iso)morphism here commutes with the open embedding of each scheme in $X$,
+\end{rmk}
+
+\begin{rmk}
+    For two open embeddings $U\to X$, $V\to X$, there is at most one morphism $U\to V$ commuting with the open embeddings, because open embeddings are monomorphisms.
+\end{rmk}
+
+\begin{proof}
+    Let $p\in \Spec A \cap \Spec B$. We then have $\Spec A_f$ a distinguished open of $\Spec A$ containing $p$ (because distinguished opens form a base). Then, $\Spec A_f \cap \Spec B \subseteq \Spec B$ is an open subset containing $p$, so there is $\Spec B_g \subseteq \Spec A_f \cap \Spec B$ containing $p$ (because distinguished opens form a base).
+
+    \begin{center}
+    \begin{tikzcd}
+        & \Spec A \cap \Spec B &
+    \end{tikzcd}
+    \end{center}
+\end{proof}
+
+\section{Closed Embeddings}
+
+\begin{defn}
+    Let $\pi: X\to Y$ be a morphism.
+    \begin{itemize}
+        \item $\pi$ is \textbf{affine} if $\pi^{-1}(\text{affine}) = \text{affine}$.
+        \item $\pi$ is a \textbf{closed embedding} if it is affine and for $\Spec A=\pi^{-1}(\Spec B)$,
+        \[\pi|_{\Spec A}: \Spec A \to \Spec B\]
+        corresponds to a surjective map $B\to A$, i.e., $\pi$ is locally (on the target) modeled by inclusions of $V(I) \cong \Spec B/I \to \Spec B$.
+    \end{itemize}
+\end{defn}
+
+\begin{rmk}
+    A closed embedding is automatically injective as a map of sets, since the maps $\Spec B/I \to \Spec B$ are injective.
+\end{rmk}
+
+\begin{prop}
+    Let $\pi: X\to Y$ be a closed embedding. Then, $\pi_* \cO_X$ is quasi-coherent.
+\end{prop}
+
+\begin{proof}
+    We will show that $\pi_* \cO_X$ restricted to affine opens is associated to a module.
+    
+    Let $\Spec B \subseteq Y$ be an affine open. Since $\pi$ is a closed embedding, we have $\pi^{-1}(\Spec B) \cong \Spec B/I$, with the isomorphism commuting with $\pi$. Note then that $(\pi_* \cO_X)|_{\Spec B} = \pi_* \cO_{\Spec B/I}$, so we will just assume $X=\Spec B/I$.
+    
+    Now, we show that $\pi_* \cO_{\Spec B/I} \cong \tilde{B/I}$, where $B/I$ is a $B$-module. To overcomplicate things, we explain that we are building this isomorphism essentially using the adjunction
+    \[\tilde{(-)} \quad \dashv \quad \Gamma(\Spec B, -),\]
+    i.e.,
+    \[\Hom_{\cO_{\Spec B}}(\tilde{B/I}, \pi_* \cO_{\Spec B/I}) \cong \Hom_B(B/I, (\pi_* \cO_{\Spec B})(\Spec B))\]
+    (which should be thought of $\tilde{B/I}$ being the ``free'' sheaf with specified global sections on an affine). So, to get our map of $\cO_{\Spec B}$-modules, we build a $B$-module map
+    \[\phi: B/I \to B/I = \pi_*\cO_{\Spec B/I}(\Spec B),\]
+    which is just the identity map. Explicitly, we get the map $\tilde{B/I} \to \pi_* \cO_{\Spec B/I}$ by defining on distinguished open sets $D(f)$
+    \[\frac{m}{f^n} \mapsto \frac{1}{f^n} \cdot (\phi(m))|_{D(f)}.\]
+    To show that this is an isomorphism of sheaves, we show that these section maps over distinguished opens (which form a base) are all isomorphisms of $B_f$-modules.
+
+    So, we need to understand our morphism on sections over $D(f)$. First, we compute the codomain
+    \[\pi_* \cO_{\Spec B/I}(D(f)) = \cO_{\Spec B/I}(\pi^{-1}(D(f))),\]
+    and $\pi^{-1}(D(f))$ are all of the primes of $\Spec B/I$ (primes containing $I$) that don't contain $f$. So, $\pi^{-1}(D(f))$ is exactly $D(\overline{f})\subseteq \Spec B/I$, which tells us
+    \[\pi_* \cO_{\Spec B/I}(D(f)) = \Spec (B/I)_{\overline{f}} \cong \Spec B_f/I_f\]
+    (the point here being that localizing $B/I$ by $\overline{f}$ as a $B/I$-module and then restricting scalars to $B_f$ is the same as just localizing $B/I$ by $f$ as a $B$-module).
+    
+    Next, we compute the restriction map
+    \[\pi_*\cO_{\Spec B/I}(\Spec B) \to \pi_*\cO_{\Spec B}(D(f)),\]
+    which is setwise the restriction map $\cO_{\Spec B/I}(\Spec B/I) \to \cO_{\Spec B/I}(\Spec (B/I)_f)$, so this is just the localization map, but thought of as a map of $B$-modules. So, indeed the section map
+    \[\frac{m}{f^n} \mapsto \frac{1}{f^n}\cdot \frac{m}{1} = \frac{m}{f^n} \in (B/I)_{f}\]
+    is an isomorphism. So, $\pi_* \cO_{\Spec{B/I}}$ is quasicoherent.
+\end{proof}
+
+\begin{rmk}
+    Since $\QCoh(Y)$ is an abelian category, we get that the kernel $\cO_Y \to \pi_* \cO_X$, which we will denote by $\cI_{X/Y}$, is quasicoherent.
+\end{rmk}
+
+\begin{thm}
+    Let $Y$ be a scheme, and $\cI$ be a quasicoherent sheaf of ideals of $\cO_Y$. Then, there exists a closed embedding $\pi: X\to Y$ making $\cI = \cI_{X/Y}$.
+\end{thm}
+
+\begin{proof}
+    Our task is to construct $X$. For each affine open $\Spec A \subseteq Y$, we will want in particular an exact sequence
+    \[0\to \cI|_{\Spec A} \to \cO_{\Spec A} \to (\pi_*\cO_X)|_{\Spec A} \to 0, \tag{$*$}\]
+    for however we end up defining $X$. Since $\cI$ is quasicoherent, $\cI|_{\Spec A} \cong \tilde{I(A)}$ for some ideal $I(A)\leq \cO_{\Spec A}(\Spec A) = A$ (so here $I(A)$ is the notation we use for the identification of $\cI(\Spec A)$ where $\Spec A\cong U$ for $U$ an affine open).
+
+    Now, the desired exactness of $(*)$ suggests we should define $X$ at least locally by $\Spec A/I(A)$ so that the pushforward is correct. To define $X$ globally, we will glue all such affine pieces.
+
+    We consider the collection $\{\Spec A_i \hookrightarrow Y\}_{i\in I}$ the collection of all affine open embeddings, and we show that we can glue
+    \[\{\pi_i: \Spec A_i/I(A_i) \to \Spec A_i \hookrightarrow Y\}_{i\in I}\]
+    together into a closed embedding $\pi: X\to Y$. So, we build isomorphisms
+    \begin{center}
+    \begin{tikzcd}
+        \pi_i^{-1}(\Spec A_i \cap \Spec A_j) \dar[dashed,"f_{ij}"] \rar & \Spec A_i \cap \Spec A_j\\
+        \pi_j^{-1}(\Spec A_i \cap \Spec A_j) \ar[ur] & 
+    \end{tikzcd}
+    \end{center}
+    that satisfy the cocycle conditions. Then, we will get a scheme $X$ together with a morphism $\pi: X\to Y$ which restricts to the local models $\pi_i: \Spec A_i/I(A_i) \to \Spec A_i$, so it will have $(\pi_* \cO_X)|_{\Spec A_i} = \tilde{A_i/I(A_i)}$, so $\pi_* \cO_X$ will be the correct cokernel (since we can check this on the base).
+
+    So, our task is to get the gluing. To simplify notation, write $A=A_i$, $B=A_j$ and $\pi_A=\pi_i, \pi_B = \pi_j$. We can cover $\Spec A \cap \Spec B$ affine opens $\bigcup U_k$, where $U_k$ is simultaneously a distinguished open of $\Spec A, \Spec B$, i.e., we have
+    \begin{center}
+    \begin{tikzcd}
+        \Spec A & \lar \Spec A \cap \Spec B \rar & \Spec B\\
+        \Spec A_{f_k} \uar & \lar["\cong"'] U_k \uar \rar["\cong"] & \Spec B_{g_k} \uar
+    \end{tikzcd}
+    \end{center}
+    We then get that $\pi_A^{-1}(\Spec A \cap \Spec B) = \bigcup \Spec (A/I(A))_{\overline{f_k}}$ (and likewise for $B$) because for a prime $P \supseteq I(A)$, $P$ doesn't contain any $f_k$ exactly when it doesn't contain any $f_k$.
+
+    Now, we get an isomorphism on each piece
+    \[\Spec (A/I(A))_{f_k} \longrightarrow \Spec (B/I(B))_{g_k}\]
+    via the ``equality'' $\Spec A_{f_k} \cong \Spec B_{g_k}$ as open subschemes of $\Spec A \cap \Spec B$ (i.e., their images under the open embeddings are equal), so $A_{f_k} \cong B_{g_k}$, and then the ideal
+    \[\Gamma(U, \cI) \leq \Gamma(U, \cO_X)\]
+    identified in $\Spec A_{f_k}$, $\Spec B_{g_k}$ will have to equal $I(A)_{f_k}$ and $I(B)_{g_k}$ respectively because
+    \[\cI|_{\Spec A} \cong \tilde{I(A)}, \qquad \cI|_{\Spec B} \cong \tilde{I(B)},\]
+    and then localization is exact.
+
+    Finally, the isomorphisms on each piece assemble into one big isomorphism of the unions. The intersection of two pieces $\Spec (A/I(A))_{f_k}$ and $\Spec (A/I(A))_{f_{k'}}$ is
+    \[\Spec (A/I(A))_{f_k f_{k'}},\]
+    and by exactness of localization this is just
+    \[\Spec (A_{f_k f_{k'}}/I(A)_{f_k f_k'}),\]
+    likewise for $B$. Now, the morphism
+    \[\Spec (A_{f_k f_{k'}}/I(A)_{f_k f_k'}) \to \Spec (B_{g_k g_{k'}}/I(B)_{g_k g_k'})\]
+    could a-priori either come from restricting the $k$th morphism or the $k'$th morphism, but we argue that these are the same. After all, we got this morphism by the unique isomorphism $\Spec A_{f_k} \to \Spec B_{g_k}$ of open embeddings (since their image is really just the same open subset of $Y$, and an open subscheme is determined by its points), and this argument tells us that we get a unique isomorphism
+    \[\Spec A_{f_k f_k'} \to \Spec B_{g_k g_k'}\]
+    (commuting with open embeddings) because these after all give the same open subsets of $Y$. Similarly, we will get the same sort of identifications of the ideals.
+
+    So, indeed, we get our morphism $\pi_A^{-1}(\Spec A \cap \Spec B) \to \pi_B^{-1}(\Spec A \cap \Spec B)$. It shouldn't be hard to check the cocycle conditions on these morphisms, since there was really only one way to define these---you get equalities/isomorphisms of open embeddings, and then the ideal sheaf will give you localized ideals.
+
+    Now, this allows us to glue our closed embeddings $\pi_i: \Spec A_i/I(A_i) \to \Spec A$ into a single closed embedding $\pi: X \to Y$, which restricts to these $\pi_i$. So, $\pi$ is indeed a closed embedding, and then we get a morphism
+    \[\cI \to \cO_Y\]
+    by defining it on the base of affine open sets $\Spec A$. Then, we at least have maps
+    \[0 \to \cI \to \cO_Y \to \pi_* \cO_X \to 0,\]
+    and this sequence is exact because it is exact on our base of affine opens (so it is exact on stalks). So, this forces $\cI$ to arise as the ideal sheaf of this closed subscheme.
+\end{proof}
+
+\begin{prop}
+    A map $\pi: X\to Y$ is a closed embedding if and only if it is a homeomorphism onto a closed subset of $Y$, and $\cO_Y \to \pi_* \cO_X$ is surjective.
+\end{prop}
+
+\begin{proof}
+    Assume $\pi$ is a closed embedding. Then, we at least have a map $\cO_Y \to \pi_* \cO_X$ and the map $\cO_Y\to \pi_* \cO_X$ is surjective on affine opens by assumption, which means (checking on stalks)
+    \[\cO_Y \to \pi_*\cO_X\]
+    is surjective. Furthermore, $\pi$ being a closed embedding implies it is a proper morphism, so in particular it is closed and continuous, so it is a homeomorphism to its image.
+    
+    Conversely, assume that $\pi$ is a homeomorphism onto a closed subset, and $\cO_Y\to \pi_* \cO_X$ is surjective. Let $\Spec B\subseteq Y$ be an affine open. In this case,
+    \[\pi^{-1}(\Spec B) \to \Spec B\]
+    is still a homeomorphism onto a closed subset, and $\cO_{\Spec B} \to \pi_*\cO_{\pi^{-1}(\Spec B)}$ is still surjective.
+    
+    So, without loss of generality we can just consider a morphism
+    \[\pi: X\to \Spec B\]
+    which is a homeomorphism onto a closed subset and $\cO_Y \to \pi_* \cO_X$ surjective. We want to show that $X$ is an affine scheme $\Spec A$, and that the morphism on rings $B\to A$ is surjective. We at least have the diagram
+    \begin{cd}
+        X \rar["\phi"] \ar[dr,"\pi"] & \Spec \Gamma(X,\cO_X) \dar["\rho"]\\
+        & \Spec B
+    \end{cd}
+    where the extra maps are defined by the $\Gamma,\Spec$ adjunction (i.e., maps to affine spaces are defined by pulling back sections). Furthermore, $\phi$ is also a homeomorphism of topological spaces, because $\pi, \rho$ are.
+
+    We just need to show that $\phi$ induces an isomorphism $\phi^\sharp$ of structure sheaves, which we can do by showing that $\phi^\sharp$ evaluated at distinguished opens is an isomorphism, so we study
+    \begin{align*}
+        \phi^\sharp: \cO_{\Spec \Gamma(X,\cO_X)}(D(g)) &\to \phi_* \cO_X(X_{\phi^\sharp g})\\
+        \Gamma(X,\cO_X)_g &\to \cO_X(X_g),
+    \end{align*}
+    which is an isomorphism by the qcqs lemma, since $X$ is qcqs because it is homeomorphic to a qcqs space $\Spec \Gamma(X,\cO_X)$. Therefore, $X$ is affine, and the proof finishes quickly.
+\end{proof}
+
+\end{document}

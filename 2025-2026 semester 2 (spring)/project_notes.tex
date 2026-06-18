@@ -1,0 +1,753 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Project}
+\author{}
+\date{January 2026}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+\newcommand{\ft}{\text{ft}}
+\newcommand{\Bl}{\mathrm{Bl}}
+\newcommand{\Gr}{\mathrm{Gr}}
+
+\newcommand{\cTor}{\mathcal{T}\hspace{-0.2em}or}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+\addbibresource{project_notes.bib}
+
+
+\begin{document}
+
+% \maketitle
+
+\section*{Paper Questions}
+
+\begin{itemize}
+    \item {\color{blue} How do define the variety of secant lines $(\Sigma_1(S))$ on a surface $S\subseteq \P^n$? This should be some sort of projection of an incidence correspondence? That is, take
+    \[\{(Z,p) \mid \text{$p$ is on line spanned by $Z$}\} \subseteq S^{[2]}\times \P^n\]
+    which is somehow a closed subscheme---is this the vanishing of a section of some vector bundle on $S^{[2]}\times \P^n$? Then, do we take the scheme theoretic image under the projection
+    \[S^{[2]}\times \P^n \to \P^n\]
+    (and how does this construction lift to $\Bl_S \P^n$?)}
+
+    Define the intrinsic secant variety (usually called the \textit{secant bundle} \cite{schwarzenberger_secant_1964,bertram_moduli_1992}) by taking the universal family over the Hilbert scheme
+    \[\mathcal{Z} \hookrightarrow S^{[2]}\times S\]
+    (recall this is a closed subscheme, flat over $S^{[2]}$, such that for a length 2 scheme $Z\in S^{[2]}$, the pullback of $\mathcal{Z}$ along
+    \[\{Z\}\times S \to S^{[2]}\times S\]
+    is the closed subscheme $Z\hookrightarrow S$.
+
+    Denote
+    \[\begin{tikzcd}
+    & \mathcal{Z} \ar[dl,"p"'] \ar[dr,"q"] &\\
+    S^{[2]} && S
+    \end{tikzcd}\]
+    the projections.
+
+    Now, let $L$ is be a very ample line bundle on $S$, and denote $W=H^0(S,L)$ with $k$-dual $W$ (we will think of $V$ as geometric, and elements of $W$ as functionals). Also, given a point $p\in \P V$. Then, we get an embedding
+    \[S \xhookrightarrow{i} \P V\]
+    into the projective space of lines in $V$, and then $L=i^*\cO_{\P V}(1)$. We can take $p_* q^*L$ whose projectivization defines the \textit{instrinsic secant variety}, in the sense that this is a vector bundle associating to each $Z\in S^{[2]}$ (the cone over) the secant line.
+    
+    A secant line, being a copy of $\P^1$ in the projective space $\P V$ is the data of a 2-dimensional subspace of $V$, which is 2-dimensional quotient
+    \[W \to k^2.\]
+    So, to recognize should $p_*q^* L$ as the intrinsic secant variety, we find have a surjection
+    \[W \otimes_k \cO_S \twoheadrightarrow p_* q^*L\]
+    picking out the correct quotients as fibers. To accomplish this, we start with the section evaluation map, defining $K$ to be the kernel, to get SES
+    \[0\to K \to W \otimes_k \cO_S \twoheadrightarrow L \to 0,\]
+    where we can interpret $K,L$ as follows:
+    \begin{itemize}
+        \item $K$ associates $p\in S\subseteq \P V$ to the hyperplane of functionals vanishing on $p$ (which corresponds to a line in $V$).
+        \item $L$ associates $p\in S\subseteq \P V$ to the quotient $W/K|_p$ (and then the map $W\to W/K|_p$ is a point of $V$ which corresponds to $p$).
+    \end{itemize}
+    We then pull this SES up to $\mathcal{Z}\subseteq S^{[2]}\times S$ as
+    \[0\to q^*K \to W \otimes_k \cO_{\mathcal{Z}} \twoheadrightarrow q^*L \to 0,\]
+    and we try to push this down. Since $p$ is a generally 2-1 map, flat over $S^{[2]}$, we get that $p_*q^* L$ and $W\otimes_k p_*\cO_{\mathcal{Z}}$ are vector bundles of ranks 2 and $2\dim W$ respectively. We then try to understand the map
+    \[W\otimes_k p_*\cO_{\mathcal{Z}} \to p_* q^* L\]
+    by analyzing the fiber of $W\otimes_k \cO_{\mathcal{Z}}\to q^*L$ over a $Z\in S^{[2]}$. When $Z$ is the disjoint union of 2 points $p_1,p_2$, the fiber of this map over $Z$ is just the direct sum of the maps
+    \[W\otimes_k \cO_{p_i} \to W/K|_{p_i} \otimes_k \cO_{p_i},\]
+    which is clearly surjective. In fact, this suggests that we should precompose our map $W\otimes_k p_*\cO_{\mathcal{Z}} \to p_* q^* L$ with a ``diagonal'' map
+    \[W\otimes_k \cO_{S^{[2]}} \to W\otimes_k p_*\cO_{\mathcal{Z}}\]
+    which is just the pullback morphism $\cO_{S^{[2]}} \to p_*\cO_{\mathcal{Z}}$ tensored with $W$, so that for our composition
+    \[W\otimes_k \cO_{S^{[2]}} \to p_*q^* L,\]
+    the fiber over $Z=\{p_1,p_2\}$ is 
+    \[W \to W/K|_{p_1} \oplus W/K|_{p_2},\]
+    which is exactly the rank 2 quotient corresponding to the line through $p_1,p_2$. Indeed, if $p_1,p_2$ correspond to lines $\ell_1,\ell_2\subseteq V$, then the line through $p_1,p_2$ is $\ell_1+\ell_2$, and so a functional in $W$ vanishes on the line through $p_1,p_2$ iff it vanishes on both $\ell_1$ and $\ell_2$, so such functionals are given by $K|_{p_1}\cap K|_{p_2}$, which is exactly the kernel of our quotient.
+    
+    So, I'm satisfied that $p_*q^* L$ is correct at least on the complement of exceptional locus of the Mumford-Chow map (i.e., when $Z$ is a disjoint union). I'm not sure how to see this in general, ask Aaron {\color{red} also look up why $S^{[n]}$ is smooth... can we see this just using functor of points without using the construction?})
+    
+    \item {\color{blue} why is it the case for a smooth subvariety $X\subseteq \P^n$ with $Y=\Bl_X(\P^n)$ that
+    \begin{center}$I_X$ generated by homog. polynomials of degree $\leq d$\end{center}
+    implies
+    \begin{center}
+        $X\subseteq \P^n$ is scheme-theoretically cut out by polynomials of degree $d$
+    \end{center}
+    implies
+    \begin{center}
+        the divisor $dH-E$ on the blow-up $Y$ is nef.
+    \end{center}
+    Also, what is the distinction between generating $I_X$ versus scheme-theoretically cut out? Is this the difference between being $V(s)$ for a section of $\cO_(d)^{\oplus r}$ versus the ideal? I would think these would be equivalent? Also, what does \textbf{projectively normal} mean?
+    }
+
+    Let $X\subseteq \P^n$ be a closed subscheme, which has \textit{(saturated) homogeneous ideal}
+    \[I_X = \Gamma_*(\cI_X) = \bigoplus_{d\in \Z} \Gamma(\P^n,\cI_X(d)),\]
+    so that $X=\Proj k[x_0,\dots,x_n]/I_X$. Note that this ring need not be the same as the section ring
+    \[R(X,\cO_X(1)) = \bigoplus_{d\in \Z} \Gamma(X,\cO_X(d)),\]
+    since we need not have $\Gamma(\P^n,\cO_{\P^n}(d)) \twoheadrightarrow \Gamma(X,\cO_X(d))$ be a surjection.
+    \begin{defn}
+        A closed subscheme $X\hookrightarrow \P^n$ is called \textbf{projectively normal} if $X$ is normal and the section ring $R(X,\cO_X(1))$ is canonically $k[x_0,\dots,x_n]/I_X$. In other words, for all $d\geq 0$,
+        \[\Gamma(\P^n,\cO_{\P^n}(d)) \twoheadrightarrow \Gamma(X,\cO_X(d))\]
+        surjects.
+    \end{defn}
+    This is usually checked by getting the vanishing of $H^1(\P^n,\cI_X(d))$ (for example this is feasible for a normal complete intersection).
+    
+    Even when $X$ is not projectively normal, we will still have
+    \[X = \Proj k[x_0,\dots,x_n]/I_X = \Proj R(X,\cO_X(1))\]
+    (by picking affine charts of $X$, and either using the very ampleness of $\cO_X(1)$ or by using the closed embedding description of $X$ via $\cI_X$).
+
+    In analogy to the difference between $k[x_0,\dots,x_n]/I_X$ and $R(X,\cO_X(1))$ (the former being ``arithmetic'' and tied to syzygies, the latter being more intrinsic), we also have multiple notions of cutting out $X$ by degree $d$ polynomials:
+
+    \begin{defn}
+    \begin{itemize}
+        \item $I_X$ is \textbf{generated by polynomials of degree $d$} (which we will take to mean that the truncation of $I_X$ to degrees $\geq d$ is generated by polynomials of degree $d$),
+        \item $X$ is \textbf{scheme-theoretically cut out} by degree $d$ polynomials, i.e., there exist $s_1,\dots,s_r\in \Gamma(\P^n,\cO(d))=k[x_0,\dots,x_n]_d$ such that $X=V(s_1,\dots,s_r)$.
+    \end{itemize}
+    \end{defn}
+    
+
+    Again, the former notion is more arithmetic/syzygetic, and the latter is more intrinsic to $X$.
+    
+    We can for example show both notions by Mumford's theorem on regularity---if $\cI_X$ is $d$-regular, meaning $H^i(\P^n,\cI_X(d-i))=0$ for $i>0$, then $I_X$ is genereated in degree $d$, and $\cI_X(d)$ is globally generated, which plugs into the following lemma.
+
+    \begin{lem}
+        $X$ is scheme-theoretically cut out by degree $d$ polynomials iff $\cI_X(d)$ is globally generated, i.e.,
+        \[\Gamma(\P^n,\cI_X(d)) \otimes_k \cO_{\P^n} \to \cI_X(d)\]
+        is surjective.
+    \end{lem}
+    \begin{proof}
+        Assume $X=V(s_1,\dots,s_r)$. We translate this into a global generation notion. To do this, we consider $s=(s_1,\dots,s_r)$ a global section of $\cO_{\P^n}(d)^{\oplus r}$, which is a morphism
+        \[\cO_{\P^n} \to \cO(d)^{\oplus r},\]
+        which is dual to a morphism
+        \[\cO(-d)^{\oplus r} \to \cO_{\P^n}\]
+        whose image is the quasicoherent ideal sheaf cutting out $V(s)=X$, so we actually have
+        \[k\{s_1,\dots,s_r\} \otimes_k \cO(-d) \twoheadrightarrow \cI_X\]
+        which after twisting by $d$ is the morphism we desire. To get the reverse implication, we trace through our steps backwards.
+    \end{proof}
+
+    \begin{rmk}
+        With this in mind, these two notions of defining a projective variety can be phrased very analogously:
+        \begin{itemize}
+            \item $X$ is scheme-theoretically cut out by degree $d$ polynomials if
+            \[ (I_X)_d \otimes_k \cO_{\P^n} \twoheadrightarrow \cI_X(d).\]
+
+            \item $I_X$ is generated in degree $d$ if
+            \[ (I_X)_d \otimes_k H^0(\P^n,\cO_{\P^n}(m)) \twoheadrightarrow (I_X)_{d+m}\]
+            for all $m\geq 0$.
+        \end{itemize}
+        So, the latter notion is asking that the first notion induces surjections on global sections after all nonnegative twists, which would be guaranteed by, for example, the vanishing of a certain $H^1$.
+    \end{rmk}
+
+    \begin{lem}
+        If $I_X$ is generated by polynomials of degree $d$, then $X$ is scheme-theoretically cut out by polynomials of degree $d$.
+    \end{lem}
+    \begin{proof}
+        This is implicit in the proof of Mumford's reglarity theorem \cite{ein_lectures_nodate}. For completeness, we sketch this here. The generation is exactly the statement that
+        \[H^0(\P^n,\cO_{\P^n}(m)) \otimes H^0(\P^n,\cI_X(d)) \twoheadrightarrow H^0(\P^n,\cI_X(d+m))\]
+        is surjective for all $m\geq 0$. To get global generation, we need to show that
+        \[\cO_{\P^n} \otimes_k H^0(\P^n,\cI_X(d)) \to \cI_X(d)\]
+        is surjective, or equivalently
+        \[\cO_{\P^n}(m) \otimes_k H^0(\P^n,\cI_X(d)) \to \cI_X(d+m)\]
+        for any/all $m\in \Z$. {\color{red} show this later}.
+    \end{proof}
+    
+    % \begin{eg}
+    %     We do not have a converse in general. For example, take $X$ to be 6 points in general linear position in $\P^3$, and we claim $\cI_X(2)$ is globally generated but $I_X$ is not generated in degree 2.
+
+    %     First, we want to show that $\cI_X(2)$ is globally generated, that is, that
+    %     \[\cO_{\P^n} \otimes_k \Gamma(\P^n,\cI_X(2)) \to \cI_X(2)\]
+    %     is surjective, which amounts to showing surjectivity at stalks.
+        
+    %     For $x$ not in $X$, $\cI_X(2)_x$ is just $\cO_{X,x}$, so surjectivity amounts to finding a nonzero section in the stalk, which amounts to finding a quadric containing $X$ but not $x$. To do this, we will construct a quadric which is a union of planes. In particular, we will choose these planes to be spans of points in $X$, so we want to choose a partition of $X$
+    %     \[X = \{p_1,p_2,p_3\}\sqcup \{p_4,p_5,p_6\}\]
+    %     such that $x$ is not in either spanned plane. There are $\binom{6}{3}/2=10$ possible partitions. Suppose to the contrary that every partition results in $x$ being in at least one plane.
+        
+    %     To get a contradiction, first assume without loss of generality that $x\not\in \overline{p_1p_2}$, since $x$ was in both $\overline{p_1p_2}$ and $\overline{p_1p_3}$, then $\overline{p_1p_2}\cap\overline{p_1p_3}$ is a linear space containing distinct points $x$ and $p_1$, which means it is a line, so it must also contain $p_2,p_3$. This contradicts general linear position, so $x$ dodges at least one of $\overline{p_1p_2}$ or $\overline{p_1p_3}$, and we assume the former.
+        
+    %     Next, we want to find three distinct $p_i$ such that $x\not\in \overline{p_1p_2p_i}$. Assume we cannot do this, so by pigeonhole principle we have at least 2 counterexamples. Say $x \in \overline{p_1p_2p_3}$ and $\overline{p_1p_2p_4}$, so then $\overline{p_1p_2p_3}\cap \overline{p_1p_2p_4}$ contains $p_1$, $p_2$, and $x$, which span a plane, so these planes coincide, which contradicts general linear position. So, without loss of generality $x\not\in \overline{p_1p_2p_3},\overline{p_1p_2p_4},\overline{p_1p_2p_5}$.
+
+    %     Finally, we want to find $p_i,p_j \in \{p_3,p_4,p_5\}$ such that $x\not\in \overline{p_ip_jp_6}$. Otherwise, $x$ is in
+    %     \[\overline{p_3p_4p_6}, \overline{p_3p_5p_6}, \overline{p_4p_5p_6}.\]
+    %     Picking two of these, for example, $\overline{p_3p_4p_6}$ and $\overline{p_3p_5p_6}$, we get at least $x,p_3,p_6$ are in the intersection. By general linear position, this means $x\in \overline{p_3p_6}$. Repeating this argument, we get $x$ is in
+    %     \[\overline{p_3p_6},\overline{p_4p_6},\overline{p_5p_6},\]
+    %     but then the interesction of, for example $\overline{p_3p_6}$ and $\overline{p_4p_6}$ contains $x,p_6$ so it is a line, so it also contains $p_3,p_4$, which is a contradiction. So, when $x\not\in X$, we can find a quadric vanishing on $X$ but not on $x$, which implies that $\cI_X(2)_x$ is surjected onto by global sections.
+
+    %     Now, let $x\in X$, so that $\cI_X(2)_x \cong \fm_x$. Now, surjectivity amounts to (by Nakayama's lemma) showing that every cotangent vector $\eta\in \fm_x/\fm_x^2\cong T_x^\vee \P^3$ is the differential of a degree 2 polynomial vanishing on $X$. We can use basically the same strategy as before: assume $x=p_1$, and then the differential of the union of planes
+    %     \[\overline{p_1 p_2 p_3} \cup \overline{p_4 p_5 p_6}\]
+    %     is just the linear form cutting out the first plane, so it suffices to show that $T_x^\vee \P^3$ is generated by the linear forms corresponding to the planes through $p_1$ and two other distinct points of $X$. This indeed generates the cotangent space, even using just the planes
+    %     \[\overline{p_1p_2p_3}, \overline{p_1p_3p_4}, \overline{p_1p_4p_5},\]
+    %     since the span of the linear forms of each plane is the set of linear forms vanishing on the intersection, which is just $p_1$ due to general linear position, so we get all of the cotangent space. Thus, we surject onto $\cI_X(2)_x$ even for $x\in X$.
+
+    %     Finally, we show that $I_X$ is \textit{not} generated in degree 2, despite $\cI_X(2)$ being globally generated. This is because we can choose a cubic vanishing on $X$ which is not a union of a 
+    % \end{eg}
+
+    These notions of generation are not equivalent. There are several counterexamples provided in \cite{holme_varieties_1988}. We give an alternate Bertini-type proof of one example (whereas the authors of \cite{holme_varieties_1988} proved this by studying general minimal free resolutions).
+
+    \begin{prop}\label{points-counterexample-scheme-to-arithmetic}
+        18 points in general position in $\P^2$ are scheme theoretically cut out by quintics, but their homogeneous ideal is not generated in degree 6.
+    \end{prop}
+
+    We first need a lemma.
+    \begin{lem}
+        Let $\phi:X\to S, \psi:Y\to S$ be smooth maps of finite type integral $k$-schemes. Then
+        \[\dim X\times_S Y = \dim X + \dim Y - \dim S.\]
+    \end{lem}
+    \begin{proof}
+        Locally, $S=\Spec R$, and
+        \[X=\Spec R[\underline{x}]/(f_i), Y = \Spec R[\underline{y}]/(g_i),\]
+        so that
+        \[X\times_S Y = \Spec R[\underline{x},\underline{y}]/(f_i,g_i),\]
+        and we just need to show that the jacobian of $f_i,g_i$ has the expected rank. {\color{red} todo, make hypotheses weaker}.
+    \end{proof}
+
+    \begin{proof}[Proof of Proposition \ref{points-counterexample-scheme-to-arithmetic}]
+        Let $X$ be a collection of 18 points in $\P^2$. Let
+        \[i: \P^2 \to \P H^0(\P^2, \cO_{\P^2}(5))^\vee \cong \P^{20}\]
+        be the Veronese embedding. Then, we can make the following identifications:
+        \begin{center}
+            \begin{tabular}{rcl}
+                $\P H^0(\P^2, \cI_X(5))$ & $\leftrightarrow$ & $\{\text{quintics in $\P^2$ through $X$}\}$\\
+                & $\leftrightarrow$ & $\{\text{planes in $\P^{20}$ through $i(X)$} \}$\\
+                & $\leftrightarrow$ & $\<i(X)\>^\perp$,
+            \end{tabular}
+        \end{center}
+        where $\<i(X)\>$ is the linear span of ({\color{red} the scheme-theoretic image of $X$... can I do this for $X$ not reduced by spanning tangent vectors?}), and for a linear space
+        \[L\subseteq \P^{20} = \P H^0(\P^2,\cO_{\P^2}(5))^\vee,\]
+        denoting 
+        \[L^\perp\subseteq (\P^{20})^\vee \cong H^0(\P^2,\cO_{\P^2}(5))\]
+        the linear space of of hyperplanes containing $L$.
+
+        For a general $X$, $\<i(X)\>$ will be a full dimensional linear space (i.e., 18 dimension), since dropping a dimension is the vanishing of a determinant.
+
+        We push further, and try to choose $X$ generally enough so that $\cI_X(5)$ is globally generated.
+
+        Denote the space of quintics
+        \[\P S_5 = \P \dim H^0(\P^2, \cO_{\P^2}(5)) \cong \P^{20},\]
+        and our choice of general $X$ gives us a linear space
+        \[\P I_{X,5} = \P H^0(\P^2, \cI_X(5)) \cong \P^3 \subseteq \P S_5,\]
+        so varying $X$ we are studying
+        \[\Gr(\P^2, \P S_5).\]
+        {\color{red} this should be a map
+        \[(\P^2)^{[18]} \dashrightarrow \Gr(\P^2, \P S_5).\]
+        Oh... can we just do $(\P^2)^{18}$ and not worry about symmetric group or blow ups or anything?
+        }
+
+        Now, we want a choice of $\P I_{X,5}\subseteq \P S_5$ such that $\P I_{X,5}$ generate the stalks of $\cI_X(5)$ at various points $p\in \P^2$. This boils down to two cases:
+        \begin{enumerate}
+            \item $p\not\in X$, which amounts to finding $Q\in \P I_{X,5}$ with $p\not\in V(q)$.
+            \item $p\in X$, which amounts to showing that $\fm_p/\fm_p^2=T_p^\vee \P^2$ is spanned by the residues of polynomials $q \in I_{X,5}$, which amounts to spanning all tangent directions of $p$ using the $Q\in \P I_{X,5}$.
+        \end{enumerate}
+
+        We can consider $X$ to be a point of $(\P^2)^{18}$ (or rather a point on $(\P^2)^{18}$ off any diagonal at least gives us an $X$ by forgetting the ordering). We want to see that the set of ``bad choices'' of $X$ for cases (1) and (2) form a proper closed subset so that the complement is open nonempty.
+        
+        Starting with case (1), we describe the ``bad locus'' for $X$, working with all $p\not\in X$ at a time. That is, we bound the subset
+        \[\{(p_1,\dots,p_{18}) \mid \P I_{X,5} \text{ does not generate $(\cI_X)_p$ for \textit{some} $p$}\} \subseteq (\P^2)^{18}\]
+        by phrasing it the image of some morphism whose domain has dimension strictly less than $2\times 18 = 36$.
+
+        \textbf{Case (1).} In particular, to bound the bad locus for (1), we construct a sort of family over $(\P^2)^{18}$, such that the fiber over a given $X$ are the ``witnesses'' of the failure of global generation. Such a witness consists of
+        \begin{itemize}
+            \item A net of quintics through $X$, i.e., a copy of
+            \[\P^2 \subseteq \P I_{X,5} \subseteq \P S_5\]
+            which is considered as an element of the Grassmannian
+            \[N\in \Gr(\P^2,\P S_5).\]
+            \item A basepoint $p\not\in X$ of the net, i.e., $p\in Q$ for all $Q\in N$ in the net. 
+        \end{itemize}
+        In fact, we can recognize that the role of each $p_i\in X$ and $p\not\in X$ is symmetric, so we can describe this witness alternatively as
+        \begin{itemize}
+            \item A net of quintics $\P^2\subseteq \P S_5$
+            \item A collection of basepoints $p_1,\dots,p_{18},p$ of the net.
+        \end{itemize}
+        Thus, we can build this family as a projection of an incidence correspondence on the universal net of quintics in $\P^2$, i.e.,
+        \[\mathcal{B} = \{(N,q_1,\dots,q_{18},q_{19}) \mid N\in \Gr(\P^2,\P S_5), q_i \in \P^2, q_i\in Q \text{ for all } Q\in N\},\]
+        which projects onto $(\P^2)^{18}$ by remembering points $q_1,\dots,q_{18}$, which we denote
+        \[\pi: \mathcal{B} \to (\P^2)^{18}.\]
+        In this way, if $X=(q_1,\dots,q_{18})$ is in the bad locus, then $\pi^{-1}(X) \neq \emptyset$, so the bad locus is contained within the image of $\pi$.
+
+        Therefore, if we can bound the dimension of $\mathcal{B}$, we bound the dimension of $\im(\pi)$, which bounds the bad locus.
+
+        Now, to bound the dimension, we express this incidence correspondence as a big fiber product of smooth schemes. Define
+        \[\mathcal{I} = \{(N,p) \mid N\in \Gr(\P^2,\P S_5), p \text{ is a base point of } N\},\]
+        which is {\color{red} smooth over} $\Gr(\P^2,\P S_5)$. We can then get $\mathcal{B}$ as an iterated fiberproduct of $\mathcal{I}$ over $\Gr$.
+        
+        So, we first calculate the dimension of $\mathcal{I}$. To do this, we study the projection $\mathcal{I}\to \P^2$. Over a fixed point $p\in\P^2$, the fiber is nets of quintics with basepoint $p$, which is a $\P^2$ in
+        \[\P H^0(\P^2, \fm_p(5)) \cong \P^{19},\]
+        because this forms a codimension 1 subspace of $\P S_5$. So, the fiber is a copy of
+        \[\Gr(\P^2, \P^{19})\]
+        which has dimension $(20-3)3 = 51$. Therefore, {\color{red} granting that $\mathcal{I}\to \P^2$ is smooth},
+        \[\dim \mathcal{I} = 51+2 = 53.\]
+        {\color{red} Granting smoothness}, we get
+        \[\dim \mathcal{I}^{\times_{\Gr} 19} = 19\dim \mathcal{I} - 18 \dim \Gr(\P^2,\P S_5) = 19(53)-18(54)=35,\]
+        which is smaller than 36. Thus, the bad locus for (1) is contained in a proper closed subset of $(\P^2)^{18}$.
+
+        \textbf{Case (2).} Fix a point $p\in X$. We want to show that the ``bad locus'' of $X$ (such that $\P I_{X,5}$ does not span $T_p \P^2$) is a proper closed subset of $(\P^2)^{18}$. We again do this by dimension counting. Define
+        \[\mathcal{T} = \{(N,\tau) \mid N\in \Gr(\P^2, \P S_5), \tau \in \P \mathcal T_{\P^2}, N \text{ has basepoint $\tau$}\},\]
+        i.e., the set of nets of quintics which all go through a $p$ with tangent direction $\tau$ (which we think of as a point in the projectivized tangent bundle of $\P^2$). We want to estimate the dimension of $\mathcal{T}$. As before, we try to calculate the dimension of fibers when we project $\mathcal{T} \to \P T\P^2$. So, we start by counting the dimension of $\P S_5 \to \P T \P^2$ (after which we will take a Grassmannian). {\color{red} is this just the projectivization of the tangent bundle to the fiber over $p$ of $\cI$?}
+
+        {\color{red} should I actually be doing a Grassmannian bundle of 2 dimensional subvector bundles of $\cO_{\P^2}(5)$?}
+    \end{proof}
+
+
+    \textbf{Grassmannian bundle approach to (1).} We can consider the incidence correspondence as first taking the projective space $\Gr(\P^2,\P S_5)$ with universal subbundle $\mathcal{S}\subseteq S_5\otimes_\C \cO$, whose projectivization $\P\mathcal{S}$ is the universal family for the linear subspaces $\P^2$ in $\P S_5$.
+    
+    On $\Gr(\P^2,\P S_5) \times \P^2$, consider the sheaf $\mathcal{S} \boxtimes \fm_p$. Oops this is not a vector bundle, so it's harder to say what vanishing of a section means. Also, vanishing of which section? I guess this still injects into $\mathcal{S} \boxtimes \cO_{\P^2}$ because the projection is flat.
+
+    Oh this is what I was thinking earlier. I want to build a bundle on $\P^2$ such that the fiber over a point $\ell\in \P^2$ is the vector space of quintics vanishing at $\ell$, which I can identify with the kernel of evaluation at $\ell$. To find how to evaluate quintics, we recognize that $\ell \leq V$ (which assembles into $\cO(-1)\to \cO^2$) becomes a 1-dimensional quotient $V^\vee \to \ell^\vee \cong \C$ (which assembles to $\cO^2 \to \cO(1)$) corresponding to evaluating a linear form in $V^\vee$. Then, we can take the 5th symmetric power to get
+    \[\Sym^5 V^\vee \to \Sym^5 \ell^\vee \cong \C\]
+    which assembles into $\Sym^5 \cO^2 \to \cO(5)$, whose kernel is our desired bundle $\mathcal{Q}$. In particular, $\dim \mathcal{Q}=20$.
+
+    Finally, we can take the Grassman bundle $\Gr(3,\mathcal{Q})$ of 3 dimensional vector subspaces (so 2-dimensional linear subspaces of the corresponding quintic), and this is exactly $\cI$. One can check that the fibers match up.
+
+    \textbf{Grassmannian bundle approach to (2).} Similarly, we want to construct $\mathcal T$. To construct $\mathcal T$, we need a linear algebraic interpretation of a point of the projectivized tangent bundle of $\P^2$. A point is a line $\ell \leq V$, and a projectivized tangent direction is a line in $\ell' \leq \Hom(\ell,V/\ell)$.
+
+    Somehow, we should be able to evaluate a quintic against $\ell,\ell'$ to say whether or not this quintic contains the point with given tangent direction. In this way, we want to consider $\ell'$ as a directional derivative, and to check that the defining equation of the quintic has 0 derivative in the direction of $\ell'$. {\color{red} I'm getting something orthogonal here.} 
+    
+    
+    {\color{red} is there now a more direct way to form $\cB$? Can I form a $\mathcal Q$ which is the bundle of quintics with base locus consisting of several point of $\P^2$?}
+    
+    is t which should be
+    \[\cO(5)\]
+    
+    We have the Veronese $\P^2 \to \P S_5^\vee$, and on $\P S_5^\vee$ we have the tautological line bundle assigning  $\cO(-1)$
+    
+    We already have the sheaf on $\P^2=\P V$ that has fibers $V/\ell$, 
+
+
+
+
+
+
+
+    \item {\color{blue} now to show that scheme-theoretically cut out by polynomials of degree $d$ implies $dH-E$ is nef.}
+    
+    \begin{proof}
+        If $X \subseteq \P^n$, with blow up
+        \[Y=\Bl_X \P^n,\]
+        then $\cI_X(d)$ pullsback to $\cO_Y(dH-E)$, so $\cI_X(d)$ globally generated means $\cO_Y(dH-E)$ is globally generated, and in particular $dH-E$ is nef, since $dH-E$ pulled back to any curve will be globally generated, so nonnegative degree (because either 0, or nonzero with a nonzero global section).
+    \end{proof}
+
+
+
+
+    \item {\color{blue} example of a nef divisor that is not base point free (even better, can we do it in our case of blowing up an embedded surface in projective space?)}
+    
+    \begin{eg}
+        We give an example to show that nef does not imply base point free. Take $S=\Bl_p \P^2$, with exceptional divisor $E$. Then, $E$ itself is nef because it is effective (on a smooth projective variety), but $E$ is not basepoint free because $E.E=-1$, i.e., $\cO_S(E)|_E$ has no sections.
+    \end{eg}
+
+    It would be nice to find a counterexample for our specific scenario, blowing up a polarized surface adjointly embedded in projective space, and getting the exceptional not basepoint free.
+
+    \item {\color{blue} How to construct the Hilbert scheme of 2 points?}
+    
+    Let $X$ be a smooth projective variety. We give a concrete construction for $X^{[2]}$ (as opposed to showing it abstratly exists as some subvariety of a Grassmannian), following \cite{fantechi_fundamental_2005}[section 7.3]. Our strategy to ``find'' $X^{[2]}$ is to build a space $Y$ with a family of length 2 subschemes of $X$, which gives a map $Y\to X^{[2]}$, and we then prove the map is an isomorphism.
+
+    First, recall that $X^{[2]}$ solves the moduli problem
+    \begin{align*}
+        (\Sch/\Spec \C)^\op &\longrightarrow \Set\\
+        T &\longmapsto \left\{\parbox{19em}{$Z \subseteq T\times_{\C} X$ closed embedding flat over $T$\\ such that $Z_t\subseteq S\times_\C k(t)$ is length 2}\right\},
+    \end{align*}
+    so in particular, a $\Spec \C$ point is a length 2 subscheme $Z$. These are given by either two disjoint $\C$-points $p,q$, or by a $\C$-point $p$ together with a tangent vector $v\in \Hom(\fm/\fm^2, \C)$, which one can see by studying classifying extensions $\Ext_{\cO_{X,p}}^1(k(p),k(p))$.
+
+    Now, we build our $Y$. One approximation to $X^{[2]}$ is the symmetric product
+    \[X\times_\C X/S_2,\]
+    but this is incorrect on the ``collision'' locus, where we have a repeated point. {\color{red} What even is a quotient here? I can try to form a GIT quotient, but it's not clear to me that this has any uniqueness...} So, instead we delay modding out by $S_2$ until we expand the diagonal by a blow-up. Denote
+    \[X[2] = \Bl_\Delta X\times X,\]
+    and note that the $S_2$ action lifts trivially from $X\times X$ (i.e., putting a stabilizer on the exceptional) since $\Delta$ is $S_2$ invariant, so that the $S_2$ action on $\cO_{X\times X}$ lifts to $\cO_{X\times X}[\cI_\Delta]$, which dualizes to the automorphism on
+    \[X[2] = \cProj_{X\times X} \cO_{X\times X}[\cI_\Delta].\]
+
+    Note that a $\C$-point of $X[2]$ is either a pair $(p,q)$ (away from the exceptional locus) or $\C$-point of the projective bundle $\P \cN_{\Delta/X\times X}$ (projective space of lines in the normal bundle) over $\Delta$. But, we recall that $\Delta^* \cI_\Delta/\cI_\Delta^2$ is exactly $\Omega_X^1$, and so a 1-dimensional quotient of a fiber is exactly a tangent vector. This is promising.
+
+    Now, to build our map $X[2]/S_2 \to X^{[2]}$, we need to build a family over $X[2]/S_2$. {\color{red} Again, I have a problem with understanding what the quotient is. I would want a \textit{geometric quotient} I suppose, since I want the points to exactly be orbits}. In fact, the quotient map $X[2]\to X[2]/S_2$ itself will be the family, via
+    \begin{center}
+    \begin{tikzcd}
+        X[2] \rar \ar[dr] & X[2]/S_2 \times X \dar\\
+        & X[2]/S_2
+    \end{tikzcd}
+    \end{center}
+    where the horizontal map has coordinates being the quotient map and then the composition $X[2] \to X\times_\C X \to X$ (where the last map is a choice of projection---it does not matter which one). We will see that this expresses $X[2] \to X[2]/S_2$ as a family of length 2 subschemes. Indeed, the fibers of the horizontal map exactly give our description of $X[2]/S_2$ as length 2 subschemes. To formally see that this is a family, we should also have that the (diagonal) map $X[2]\to X[2]/S_2$ is flat, which follows from miracle flatness, granted that we can prove $X[2]/S_2$ is regular (and we already know $X[2]$ is Cohen-Macaulay, all fibers are 0-dimensional, $\dim_x X[2] = \dim_{\pi(x)} X[2]/S_2$, and both schemes are locally Noetherian).
+
+    Then, this affords us a morphism
+    \[X[2]/S_2 \xrightarrow{\phi} X^{[2]},\]
+    which is a bijection of $\C$-points. Furthermore, this \textit{should} be birational because $(X\times X) \setminus \{0\}/S_2$ is an open of both (it is easy to see it is an open of $X^{[2]}$ via a moduli description, since the reduced locus of any family is always an open), but it is not clear to me that it is dense, and its not clear to me what birational means if things are not irreducible. So, we should show that $X^{[2]}$ is irreducible.
+
+    Now, a birational (of $\C$-points) bijection feels very close to an isomorphism, but I think we need a little bit more. Let's prove that the bijection extends to all points, and so we just need to show that $\cO_{X^{[2]}} \xrightarrow{\cong} \phi_* \cO_{X[2]/S_2}$, where the pullback map is an injection (because dominant, because birational). These are both sheaves of rings on $X^{[2]}$, and affine locally (assuming irreducibility again), these are subrings of the fraction field, with
+    \[\cO_{X^{[2]}} \subseteq \phi_* \cO_{X[2]/S_2} \subseteq \kappa(X^{[2]}),\]
+    so if we know that $\cO_{X^{[2]}}$ is integrally closed, we squeeze the injection to be an isomorphism. {\color{red} Where am I using Zariski's main theorem? Is it to get the injection of sheaves inside the fractional field?} So, we should just show that $X^{[2]}$ is normal to get an isomorphism.
+    
+    So, it remains just to show that
+    \begin{enumerate}
+        \item There exists a good geometric $S_2$ quotient,
+        \item $X[2]/S_2$ is regular,
+        \item $X^{[2]}$ is irreducible and normal.
+        \item See that $\cO_{X^{[2]}} \to \phi_* \cO_{X[2]/S_2}$ is indeed an injection.
+    \end{enumerate}
+
+    To prove some of these things and future facts, we need the following.
+
+    \begin{prop}
+        Let $X$ be a quasiprojective variety with the action of a finite group $G$. Then the quotient $X/G$ exists as a variety.
+    \end{prop}
+    \begin{proof}
+        If $X$ were affine $\Spec A$, then compute the affine GIT quotient $A^G$, and note that no points are unstable because the orbits are all closed with 0-dimensional stabilizers, so there exists a good geometric quotient
+        \[\Spec A \to \Spec A^G= \Spec A/G.\]
+        To argue that we can do this globally, we see that we can cover $X$ by $G$-invariant affine opens and that these glue together {\color{red} I did not thoroughly check that these can glue together}.
+
+        To get the open cover, first note that for each orbit $G\cdot x$, we can find an affine open containing it---this is where the quasiprojective hypothesis comes into play (in particular this could be false for just a proper variety). Specifically, $X$ is locally closed in some projective space, and because $G\cdot x$ is finite, we can choose a hypersurface dodging it. Then, the complement is affine {\color{red} I believe this for an projective variety... maybe slightly suspicious for a quasiprojective one...}. This is then an open that works.
+
+        Now that we can contain any orbit in an affine, this gives us an affine open cover $U_i$, but it still need not be $G$-invariant. Replace the $U_i$ with
+        \[W_i = \bigcap_{g\in G} g\cdot U_i,\]
+        which is still affine (because $X$ is separated, since it is a variety). Now, these $W_i$ are $G$-invariant by construction, and we glue together the affine GIT quotients $W_i/G$.
+    \end{proof}
+
+    \begin{prop}
+        Let $X$ be a connected variety over $k$. Then $X^{[n]}$ is connected for all $n\geq 0$.
+    \end{prop}
+
+    \begin{proof}
+        {\color{blue} TODO!!!}
+    \end{proof}
+
+
+    \item {\color{blue} Elementary deformation theory.}
+
+    Let $X$ be a scheme over $k$, and $Z$ a closed subscheme with ideal sheaf $\cI_Z$. Denote $D=k[\eps]/\eps^2$ the dual numbers. Note that there is both a structure map $k\to D$ expressing $D$ as a $k$-algebra, but also a truncation map $D\to k$ quotienting $\eps$ (which is dual to the inclusion of $\Spec k$ in the fat point).
+
+    Denote $X' = X\times_{\Spec k} \Spec D$.
+
+    \begin{defn}
+        A \textbf{first order deformation} of
+        \[\begin{tikzcd}
+            Z \rar[hook] \ar[rd] & X\dar\\
+            & \Spec k
+        \end{tikzcd}\]
+        is a diagram (up to isomorphism of diagrams, varying the $Z'$ and $Z'\hookrightarrow X$)
+        \[\begin{tikzcd}
+            Z' \rar[hook] \ar[rd] & X' \dar\\
+            & \Spec D
+        \end{tikzcd}\]
+        with $Z'\to \Spec D$ flat, which base changes to the former diagram (i.e., after we apply $(-) \times_{\Spec D} \Spec k$ restricting to the closed fiber, we get an isomorphic diagram, where the isomorphism $X \cong X' \times_{\Spec D} \Spec k$ is fixed... projection right to left).
+    \end{defn}
+
+    \begin{rmk}
+        I want to be careful about what is canonical/fixed. It might be even easier to talk about this from a $\Quot$ scheme perspective, saying that a deformation of
+        \[\cO_X \twoheadrightarrow \cO_Z\]
+        is a quotient
+        \[\cO_{X'} \twoheadrightarrow \cO_{Z'}\]
+        with $\cO_{Z'}$ flat over $\Spec D$, such that for the inclusion of closed fiber $i: X\hookrightarrow X'$,
+        \[i^*(\cO_{X'} \twoheadrightarrow \cO_{Z'}) \cong \cO_X \to \cO_Z.\]
+    \end{rmk}
+
+    \begin{rmk}
+        This is a slightly different perspective than the usual bijection between
+        \[\begin{tikzcd}
+            \Spec D \rar & X\\
+            \Spec k \uar \ar[ur] &
+        \end{tikzcd}\]
+        and tangent vectors $\Hom_k(\fm/\fm^2, k)$, in that here we keep the $\Spec D$ really trully fixed---the isomorphism of diagrams must identify $\Spec D$ with itself using the identity. In particular,
+        \[\Aut(\Spec D\to \Spec k) \cong k^*,\]
+        so if we are allowed to use nontrivial automorphisms of $\Spec D$, quotient by scaling, leaving us instead with the projectivized tangent space.
+
+        We can rephrase this subtlety as that the $\cO_X$-module structure on $D$ does \textit{not} determine a tangent vector, it only determines the class of a projectivized tangent vector.
+
+        On the other hand, if we instead carry a lift
+        \[\begin{tikzcd}
+            \Spec D \rar \ar[dr,"1"] & X_D \dar\\
+            & \Spec D
+        \end{tikzcd}\]
+        the $\cO_{X_D}$-module structure on $\Spec D$ \textit{does} determine the tangent vector. {\color{red} why? need to work this out more formally}.
+    \end{rmk}
+
+    \item {\color{blue} How to show the Hilbert schemes of points on a surface are smooth?}
+
+    \item {\color{blue} How to describe the divisors $D^{[d]}$ when $D$ is a divisor on $S$? Or how to do this at least when $d=2$?}
+    
+    \item {\color{blue} show that analog of hyperelliptic curves are boundary examples. That is, show that when $f:S\to \P^2$ is a finite map of degree $d$, then
+    \[D = f^*(-K_{\P^2}) \text{ satisfies } D^2=9d\]
+    and $(K_S+D)^{[d]}-E$ is not ample.}
+    
+\end{itemize}
+
+
+
+\section*{Boundary Examples Questions/Thoughts}
+
+
+
+\section*{(Nested) Hilbert Schemes}
+
+\begin{prop}
+    $S^{[d]}$ is connected and for all $[Z]\in S^{[d]}$ closed,
+    \[\dim T_{[Z]} S^{[d]} = 2d.\]
+    In particular, $S^{[d]}$ is smooth.
+\end{prop}
+
+To prove the (connectedness part of the) proposition, we will play with different nested Hilbert schemes to perform induction.
+
+Denote the universal family for $S^{[d]}$ by
+\[S^{[1,d]} \subseteq S^{[d]} \times S,\]
+which is an incidence correspondence. We use this notation because, in fact, the universal family $S^{[1,d]}$ solves the moduli problem
+\[T \mapsto \{\text{families of inclusions $\{p\}\subseteq Z$ of a closed point and length $d$ closed subscheme}\}.\]
+
+Denote a different incidence correspondence
+\[S^{[d-1,d]} \subseteq S^{[d-1]} \times S^{[d]},\]
+which solves the moduli problem 
+\[T \mapsto \{\text{families of $W\subseteq Z$ with $W$ length $d-1$, $Z$ length $d$}\}.\]
+Given $S^{[d-1]}$ and $S^{[d]}$, we can construct this space scheme-theoretically by (1) pulling the universal family $S^{[1,d]}\subseteq S^{[d]} \times S$ up to
+\[S^{[d-1]} \times S^{[1,d]} \subseteq S^{[d-1]} \times S^{[d]} \times S\]
+and (2) taking the scheme-theoretic image under the projection to $S^{[d-1]}\times S^{[d]}$.
+
+Now, we prove that $S^{[d]}$ is connected (assuming $S^{[d-1]}$ is connected). The argument is to
+\begin{enumerate}
+    \item Show $S^{[d-1,d]}$ is connected by showing the fibers of $S^{[d-1,d]} \to S^{[d-1]}$ are connected nonempty.
+    \item Show $S^{[d-1,d]} \to S^{[d]}$ is surjective, so that $S^{[d]}$ is the image of a connected scheme.
+\end{enumerate}
+
+When we study the fibers of these morphisms, we will need the following lemmas.
+
+This first lemma characterizes length 1 extensions of a $Z$ as extension classes.
+\begin{lem}
+    Let $Z\subseteq X$ be a 0-dimensional closed subscheme of $X$ supported entirely at $p$. Then, any nonsplit extension class
+    \[\eps = [0\to k(p) \to M \to \cO_Z \to 0]\]
+    has $M=\cO_W$ for some closed $W\subseteq X$.
+\end{lem}
+\begin{proof}
+    We show that the surjection $\cO_X \to \cO_Z$ lifts to a map $\cO_X \to M$, and then use the nonsplitness of $\eps$ to get that $\cO_X\to M$ is surjective.
+
+    Denote $r \in \Hom(\cO_X,\cO_Z)$ the surjection, and we study the exact sequence
+    \[\Hom(\cO_X,M) \to \Hom(\cO_X,\cO_Z) \to \Ext^1(\cO_X,\cO_Z).\]
+    To see that $r$ lifts to $M$, we need to see that it is sent to 0 in $\Ext^1(\cO_X,\cO_Z)$, but in fact
+    \[\Ext^1(\cO_X,\cO_Z) = H^1(Z,\cO_Z) = 0,\]
+    so indeed $r$ lifts:
+    \[\begin{tikzcd}
+        & & & \cO_X \dar[two heads] \ar[dl,dashed] &\\
+        0 \rar & k(p) \rar & M \rar[two heads] & \cO_Z \rar & 0
+    \end{tikzcd}\]
+
+
+    Now, to see that $r:\cO_X \to M$ is surjective, suppose not. So, the image of $r$ is a submodule $M'\leq M$ of strictly smaller dimension, but this still has to surject onto $\cO_Z$, so actually $\dim M' = |Z|$, but then $M'\to \cO_Z$ is an isomorphism, which provides a splitting of $M\to \cO_Z$. This contradicts $\eps$ being nonsplit, so $\cO_X\to M$ must have been surjective, so $M=\cO_W$.
+\end{proof}
+
+In light of this lemma, for $E\defeq \Ext^1(\cO_Z,k(p))$ we should guess $\P E$ is the fiber of a $[Z]$ along $S^{[d-1,d]} \to S^{[d-1]}$, so we state the following lemma.
+
+\begin{lem}
+    $\P E$ admits a family of length 1 extensions of $Z$, i.e., there exists a $\mathcal{W}$ with
+    \[\P E \times Z \subseteq \mathcal{W} \subseteq \P E \times X,\]
+    with the fiber over a $\<\eps\> \in \P E$ being the extension $\cO_W$ given by $\eps$.
+\end{lem}
+\begin{proof}
+    For
+    \[\begin{tikzcd}[column sep=0]
+        & \P E \times X \ar[dl, "p"] \ar[dr, "q"'] &\\
+        \P E & & X
+    \end{tikzcd}\]
+    show that
+    \[\Ext^1_{\P E \times X}(q^*\cO_Z, p^* \cO_{\P E}(1) \otimes q^*k(p))\]
+    has a natural element, which as an extension class restricted to the fiber of $\<\eps\>$ gives $\eps$.
+\end{proof}
+
+Finally, we are in a position to prove some connectedness results.
+
+\begin{prop}
+    $S^{[d-1,d]}$ is connected.
+\end{prop}
+\begin{proof}
+    Denote $q: S^{[d-1,d]} \to S^{[d-1]}$ the projection. Since $S^{[d-1]}$ is connected, it suffices to show the fibers are connected nonempty. The fiber over a $[Z]\in S^{[d-1]}$ is the set of flags $[Z\subseteq W]$ where $W$ a length $d$ closed subscheme. The fiber is nonempty because we can get a $W$ by taking a point $p$ outside of the support of $Z$, and trivially extending $Z$.
+
+    To show the fiber is connected, we study a projection
+    \begin{align*}
+        q^{-1}([Z]) \xrightarrow{\pi_Z} S\\
+        [\cO_W \xrightarrow{\rho} \cO_Z] \mapsto [\ker \rho]
+    \end{align*}
+    and show that it has connected fibers. If $p\in S$ is outside of the support of $Z$, then $\pi_Z^{-1}(p) = \{\cO_Z \oplus k(p)\}$. Otherwise, we assume without loss of generality (by taking a connected component of $Z$) that the support of $Z$ is exactly $p$, we define
+    \[E = \Ext^1_{\cO_S}(\cO_Z, k(p)),\]
+    and we get (by our lemma) a surjection
+    \[\P E \to \pi_Z^{-1}(p)\]
+    ({\color{red} this will probably be an isomorphism}), which sends (the line through) a nonzero (i.e., nonsplit) extension class
+    \[\eps = [0 \to k(p) \to \cO_W \to \cO_Z \to 0]\]
+    to $[Z\subseteq W]$. This proves that $\pi_Z^{-1}(p)$ is connected, as long as $\P E\neq \emptyset$, i.e.,
+    \[\ext^1(\cO_Z,k(p)) \geq 1.\]
+    By Hirzebruch-Riemann-Roch,
+    \[\chi(\cO_Z,k(p)) = \int_X \chern(\cO_Z)^\vee \chern(k(p)) \todd(T_X),\]
+    but this integral is 0 for degree reasons, so
+    \begin{align*}
+        \ext^1(\cO_Z,k(p)) &= \hom(\cO_Z,k(p)) + \ext^2(\cO_Z,k(p))\\
+        &= 1 + \hom(k(p),\cO_Z)\\
+        &\geq 1.
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    $S^{[d-1,d]} \to S^{[d]}$ is surjective, so $S^{[d]}$ is connected.
+\end{prop}
+\begin{proof}
+    Given a $[W]\in S^{[d]}$, we just need the existence of a length $d-1$ subscheme $Z$. We can produce one by choosing a $p$ in the support of $W$, which gives a
+    \[\cO_W \twoheadrightarrow k(p),\]
+    and taking the kernel $K$ we get a $\cO_Z$. Indeed, the kernel is a quotient of $\cO_S$ because (similar to the proof of a lemma) the image of the surjection $\cO_S\to k(p)$ in
+    \[\Ext^1(\cO_S,K) = H^1(S,K) = 0\]
+    because the support of $K$ is 0-dimensional, since the support of $K$ is contained within that of $\cO_W$.
+\end{proof}
+
+Finally, we compute
+\[\dim T_{[Z]} S^{[d]}, \qquad \dim T_{[Z\subseteq W]} S^{[d-1,d]}.\]
+
+\subsubsection*{For \texorpdfstring{$S^{[d]}$}.}
+By deformation theory (and the long exact sequence of $\Ext(-,\cO_Z)$),
+\[T_{[Z]} S^{[d]} \cong \Hom(\cI_Z, \cO_Z) \cong \Ext^1_{\cO_S}(\cO_Z,\cO_Z),\]
+and then by Hirzebruch-Riemann-Roch vanishing, we get
+\begin{align*}
+    \ext^1(\cO_Z,\cO_Z) &= \hom(\cO_Z,\cO_Z) + \ext^2(\cO_Z,\cO_Z)\\
+    &= 2\hom(\cO_Z, \cO_Z)\\
+    &= 2d,
+\end{align*}
+which matches the dimension of the reduced locus of $S^{[d]}$.
+
+
+\subsubsection*{For \texorpdfstring{$S^{[d-1,d]}$}.}
+
+A similar deformation theory calculation tells us
+\[T_{[Z\subseteq W]} S^{[d-1,d]} = \left\{(\phi,\psi) \in \Hom(\cI_Z,\cO_Z) \times \Hom(\cI_W,\cO_W): \begin{tikzcd}
+    \cI_Z \rar["\phi"] & \cO_Z\\
+    \cI_W \uar[hook] \rar["\psi"] & \cO_W \uar[two heads]
+\end{tikzcd} \right\},\]
+and a similar homological algebra exercise gives
+\[T_{[Z\subseteq W]} S^{[d-1,d]} = \left\{(\eps,\eta) \in \Ext^1(\cO_Z,\cO_Z) \times \Ext^1(\cO_W,\cO_W): \begin{tikzcd}
+    \cO_Z \rar["\eps"] & \cO_Z[1]\\
+    \cO_W \uar["\rho"] \rar["\eta"] & \cO_W[1] \uar["\rho"]
+\end{tikzcd} \right\}.\]
+So, we can phrase
+\[T_{[Z\subseteq W]} S^{[d-1,d]} = \ker(\Ext^1(\cO_Z,\cO_Z)\times \Ext^1(\cO_W,\cO_W) \to \Ext^1(\cO_W,\cO_Z))\]
+where the morphism is the matrix
+\[\begin{bmatrix}
+    \rho^* & -\rho_*
+\end{bmatrix}\]
+where $\rho: \cO_W \to \cO_Z$ is the restriction map. To calculate the rank of the kernel, we would hope this matrix is full rank. In other words, we want that the cokernel is 0
+\[\Ext^1(\cO_W,\cO_Z) \Big/ (\rho^* \Ext^1(\cO_Z,\cO_Z) + \rho_*\Ext^1(\cO_W,\cO_W)) = 0,\]
+but it is easier to reason about this if we quotient off one of these summands at a time, e.g., showing that
+\[\overline{\rho^*\Ext^1(\cO_Z,\cO_Z)} \subseteq \Ext^1(\cO_W,\cO_Z) \Big/ \rho_*\Ext^1(\cO_W,\cO_W)\]
+is everything, which is to say that $\overline{\rho^*}$ surjects onto the $\rho_*$ cokernel. In principal, we could have instead first quotiented off the image of $\rho^*$, and then try to show $\overline{\rho_*}$ is surjective, but it turns out that will be more difficult (since eventually we will analyze our cokernels as submodules of certain $\Ext$ groups, and by Serre duality the easiest $\Ext$ group to understand is $\Ext^2\cong \Hom$, and this will only appear when analyzing the $\rho_*$ cokernel).
+
+So, our goal is to show $\overline{\rho^*}$ surjects onto the $\rho_*$ cokernel. To do this, we take advantage of various exact sequences which are obtained by applying $\Ext(-,\cO_Z)$ or $\Ext(\cO_W,-)$ to the ideal sequence
+\[0\to k(p) \xrightarrow{i} \cO_W \xrightarrow{\rho} \cO_Z \to 0\]
+where $k(p) = \cI_Z/\cI_W$, and we will refer to this extension class as $\eps \in \Ext^1(\cO_Z,k(p))$. Writing a piece of both sequences together, we get a diagram with exact diagonals.
+\[\begin{tikzcd}[row sep=0]
+    &&& \Ext^2(\cO_W,\cO_W)\\
+    \Ext^1(\cO_Z,\cO_Z) \ar[dr,"\rho^*"] \ar[rr,bend left,dashed,"\overline{\rho^*}"] & & \Ext^2(\cO_W,k(p)) \ar[ur,"i_*"] &\\
+    & \Ext^1(\cO_W,\cO_Z) \ar[ur,"\eps_*"] & &\\
+    \Ext^1(\cO_W,\cO_W) \ar[ur,"\rho_*"'] & & &\\
+\end{tikzcd}\]
+Exactness of the diagonals tells us in particular that
+\[\coker \rho_* = \ker i_*,\]
+so our goal is to show $\overline{\rho^*}$ surjects onto $\ker i_* \subseteq \Ext^2(\cO_W,k(p))$.
+
+To do this, we give an alternate factorization of $\overline{\rho^*}$ besides $\eps_* \circ \rho^*$, as in the following diagram
+\[\begin{tikzcd}[row sep=0.5cm]
+    && \Ext^2(\cO_Z,\cO_W) &\\
+    & \Ext^2(\cO_Z,k(p)) \ar[dr,"\rho^*"] \ar[ur,"i_*"] && \Ext^2(\cO_W,\cO_W)\\
+    \Ext^1(\cO_Z,\cO_Z) \ar[rr,dashed,"\overline{\rho^*}"] \ar[ur,"\eps_*"] \ar[dr,"\rho^*"'] & & \Ext^2(\cO_W,k(p)) \ar[ur,"i_*"] &\\
+    & \Ext^1(\cO_W,\cO_Z) \ar[ur,"\eps_*"'] & & \\
+    \Ext^1(\cO_W,\cO_W) \ar[ur,"\rho_*"] & & &\\
+\end{tikzcd}\]
+
+We will then analyze $\overline{\rho^*}$ by studying $\eps_*$ and $\rho^*$, as well as their Serre duals.
+
+First, we show $\eps_*$ is surjective. It is Serre dual to
+\[\Hom(k(p),\cO_Z) \xrightarrow{\eps^*} \Ext^1(\cO_Z,\cO_Z),\]
+so we should $\eps^*$ is injective. This, in turn, fits into an exact sequence, where
+\[\ker \eps^* = \im(\Hom(\cO_W,\cO_Z) \xrightarrow{i^*} \Hom(k(p),\cO_Z)),\]
+so we need to show this image is 0. Indeed, any $\cO_S$-linear morphism $\cO_W\to \cO_Z$ is secretly an $\cO_W$-linear morphism $\cO_W \to \cO_W/k(p)$ which kills $k(p)$, so such a morphism restricts to 0 on $k(p)$, so the image is 0.
+
+Next, we show $\rho^*$ surjects onto $\ker i_*$. To employ Serre duality again, we recognize that we are studying
+\[\begin{tikzcd}
+    & \Ext^2(\cO_W,k(p))\\
+    \Ext^2(\cO_Z,k(p)) \ar[ur, "\rho^*"] \rar[two heads] & \ker i_* \uar[hook]
+\end{tikzcd}\]
+(where we are hoping the bottom right arrow is surjective) which would become Serre dual to
+\[\begin{tikzcd}
+    & \Hom(k(p),\cO_W) \ar[dl, "\rho_*"'] \dar[two heads]\\
+    \Hom(k(p),\cO_Z) & \lar[hook] (\ker i_*)^\vee
+\end{tikzcd}\]
+(where we are hoping the bottom left arrow is injective). So, if we denote
+\[(\ker i_*)^\perp = \{f\in \Ext^2(\cO_W,k(p))^\vee \mid f|_{\ker i_*} = 0\} \subseteq \Hom(k(p),\cO_W),\]
+we are then asking that $\ker \rho_* = (\ker i_*)^\perp$.
+
+So, we should better characterize $(\ker i_*)^\perp$ by observing that a functional vanishing on $\ker i_*$ is identified with a functional on
+\[\Ext^2(\cO_W,k(p))/\ker i_* \cong \im i_*,\]
+by pulling back along $\Ext^2(\cO_W,k(p)) \to \im i_*$. Then, note that every functional on $\im i_*$ can be trivially extended to
+\[\Ext^2(\cO_W,\cO_W) \supseteq \im i_*,\]
+having the same pullback in $\Ext^2(\cO_W,k(p))$, so $(\ker i_*)^\perp$ is in fact
+\[\im(\Ext^2(\cO_W,\cO_W)^\vee \xrightarrow{i_*^\vee} \Ext^2(\cO_W,k(p))^\vee),\]
+which is identified with
+\[\im(i^*) = \im(\Hom(\cO_W,\cO_W) \xrightarrow{i^*} \Hom(k(p),\cO_W))\]
+under Serre duality, so our new goal is to show
+\[\ker \rho_* = \im i^*.\]
+Now, by our exact sequences, we know
+\[\ker \rho_* = \im(i_*) = \im(\Hom(k(p),k(p)) \xrightarrow{i_*} \Hom(k(p),\cO_W)) = \<i\>,\]
+so we want
+\[\im(i^*) = \<i\> \subseteq \Hom(k(p),\cO_W).\]
+
+This is true! Our fixed map $k(p) \xrightarrow{i} \cO_W$ is the data of a section $i \in \cO_W$ whose annihilator is $d-1$ dimensional. Then, any $\cO_W \xrightarrow{f} \cO_W$ is determined by the image of the 1 section, which will be a function $f\in \cO_W$. The pullback of $f$ to $k(p)$ is then just the product $fi \in \cO_W$, which is either 0 (having a bigger annihilator, now $d$ dimensional), or has the same $d-1$ dimensional annihilator as $i$, but this forces $f i$ to be a $\C$-multiple of $i$.
+
+So, this means $\overline{\rho^*}$ surjects onto $\ker i_* = \coker \rho_*$, which means the joint map
+\[\Ext^1(\cO_Z,\cO_Z) \oplus \Ext^1(\cO_W,\cO_W) \to \Ext^1(\cO_W,\cO_Z)\]
+is surjective. Recall that the kernel of this morphism gives the dimension of the tangent space $T_{[Z\subseteq W]} S^{[d-1,d]}$, so we get
+\[\dim T_{[Z\subseteq W]} S^{[d-1,d]} = \ext^1(\cO_Z,\cO_Z) + \ext^1(\cO_W,\cO_W) - \ext^1(\cO_W,\cO_Z).\]
+As before, we know
+\[\ext^1(\cO_Z,\cO_Z) = 2(d-1), \qquad \ext^1(\cO_W,\cO_W) = 2d,\]
+but the computation for $\ext^1(\cO_W,\cO_Z)$ is slightly more subtle. First, the same Hirzebruch-Riemann-Roch analysis tells us that
+\begin{align*}
+    \ext^1(\cO_W,\cO_Z) &= \hom(\cO_W,\cO_Z) + \ext^2(\cO_W,\cO_Z)\\
+    &= \hom(\cO_W,\cO_Z) + \hom(\cO_Z,\cO_W).
+\end{align*}
+Now, as usual $\hom(\cO_W,\cO_Z)=\dim \cO_Z=d-1$ because any $\cO_S$-module morphism $\cO_W\to \cO_Z$ is determined by the image of 1, which maps freely.
+
+However, $\hom(\cO_Z,\cO_W)$ is slightly more subtle, because $1\in \cO_Z$ does not map freely---if we write $\cO_Z=\cO_W/(f)$, where $(f)=k(p)$ is the principal ideal cutting out $Z$ inside $W$, then we see that $1\in \cO_Z$ can only be mapped to the annihilator of $f$, so
+\[\Hom(\cO_Z,\cO_W) = \Ann(f) = \ker(\cO_W \xrightarrow{\cdot f} (f)),\]
+and clearly $\cO_W \xrightarrow{\cdot f} (f)$ is surjective, so
+\[\hom(\cO_Z,\cO_W) = |W| - 1 = d-1.\]
+
+Thus,
+\[\ext^1(\cO_W,\cO_Z) = 2(d-1),\]
+so
+\[\dim T_{[Z\subseteq W]} S^{[d-1,d]} = 2(d-1) + 2d - 2(d-1) = 2d,\]
+which matches the dimension of the reduced locus of $S^{[d-1,d]}$.
+
+\subsubsection*{Random Thoughts}
+
+Is there some spectral sequence that would have made my argument easier somehow? If I draw out all of the $\Ext$ groups, they form a double complex, but I don't know what it converges to.
+
+\[\begin{tikzcd}[row sep=0.5cm]
+    & \Ext^2(\cO_Z,k(p)) \ar[dr,"\rho^*"] && \Ext^2(\cO_W,\cO_W)\\
+    \Ext^1(\cO_Z,\cO_Z) \ar[rr,dashed,"\overline{\rho^*}"] \ar[ur,"\eps_*"] \ar[dr,"\rho^*"'] & & \Ext^2(\cO_W,k(p)) \ar[dr,"i^*"'] \ar[ur,"i_*"] &\\
+    & \Ext^1(\cO_W,\cO_Z) \ar[ur,"\eps_*"'] \ar[dr,"i^*"] & & \Ext^2(k(p),k(p))\\
+    \Ext^1(\cO_W,\cO_W) \ar[rr,dashed,"\overline{\rho_*}"] \ar[ur,"\rho_*"] \ar[dr,"i^*"'] & & \Ext^1(k(p),\cO_Z) \ar[ur,"\eps_*"]\ar[dr,"\eps^*"'] &\\
+    & \Ext^1(k(p),\cO_W) \ar[ur,"\rho_*"'] && \Ext^2(\cO_Z,\cO_Z)
+\end{tikzcd}\]
+
+
+
+\printbibliography
+
+
+\end{document}

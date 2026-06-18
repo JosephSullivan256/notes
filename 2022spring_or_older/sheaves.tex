@@ -1,0 +1,205 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+
+\title{Sheaves}
+\author{Joseph Sullivan}
+\date{July 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Definitions}
+
+For the entire article, $X$ is a topological space, $\cC$ is your favorite (concrete) category. The goal of this article is to build of the definitions/machinery to be able to say that a sequence of sheaves is exact, and that exactness can be checked at stalks.
+
+\begin{defn}
+    A \textbf{presheaf} $\cF$ on $X$ is an assignment, mapping each $U\subseteq X$ open to an object $\cF(U)$ of $\cC$, together with a family of \textbf{restriction maps}: for each $V\subseteq U$, there is a morphism
+    \[\rho_{U,V}: \cF(U) \to \cF(V)\]
+    satisfying the following properties:
+    \begin{itemize}
+        \item For any $U\subseteq X$ open, $\rho_{U,U} = \id_{\cF(U)}$
+        \item For any $W\subseteq V\subseteq U$ open sets,
+        \[\rho_{V,W} \circ \rho_{U,V} = \rho_{U,W}.\]
+    \end{itemize}
+    Elements of $\cF(U)$ are called \textbf{sections} on $U$. For $V\subseteq U$ and $\phi\in \cF(U)$, we denote $\rho_{U,V}(\phi)$ by $\phi|_V$.
+    
+    (More concisely, if we let $\tau(X)$ denote the poset category of open subsets of $X$ under inclusion, then a presheaf is a functor $\cF: \tau(X)^\op \to \cC$).
+\end{defn}
+
+
+\begin{defn}
+    A \textbf{sheaf} $\cF$ on $X$ is a presheaf on $X$ satisfying two extra axioms:
+    \begin{itemize}
+        \item \textbf{Locality}: for two section $\phi,\psi \in \cF(U)$, if for some open cover $\{U_i\}_{i\in I}$ of $U$ one has $\phi|_{U_i} = \psi|_{U_i}$ for all $i\in I$, then $\phi=\psi$.
+        \item \textbf{Gluing}: for all open covers $\{U_i\}_{i\in I}$ of an open set $U$ with \textit{compatible} sections $\phi_i \in \cF(U_i)$, i.e, for all $i,j\in I$
+        \[\phi_i|_{U_i\cap U_j} = \phi_j|_{U_i\cap U_j},\]
+        then there exists a section $\phi\in \cF(U)$ with $\phi|_{U_i} = \phi_i$ for all $i\in I$.
+        \item $\cF(\emptyset)=0$ is a terminal object.
+    \end{itemize}
+    Locality immediately implies that the result of gluing is unique.
+\end{defn}
+
+\begin{rmk}
+    Apparently the last axiom is implied by the other two if you interpret empty products correctly.
+\end{rmk}
+
+\begin{defn}
+    The \textbf{stalk} of a presheaf at $P\in X$ is
+    \[\cF_P = \{(U,\phi) \mid U\subseteq X\text{ open}, \phi\in \cF(U)\}/\sim,\]
+    where $(U,\phi)\sim (V,\psi)$ if there exists $W\subseteq U\cap V$ open such that $\phi|_W = \psi|_W$.
+    
+    In other words,
+    \[\cF_P = \colim_{x\in U} \cF(U),\]
+    where our indexing category is the poset category of open sets $U\ni x$.
+    
+    An element of the stalk $\cF_P$ is called a \textbf{germ} at $P$. To clarify which stalk we are considering, we sometimes denote an element of $\cF_P$ by $[U,\phi]_P$. When the open set is clear, we also sometimes write $[\phi]_P$.
+\end{defn}
+
+\begin{defn}
+    A \textbf{morphism} of (pre)sheaves $f: \cF\longrightarrow \cG$ is a collection of morphisms
+    \[f_U: \cF(U) \longrightarrow \cG(U)\]
+    that commute with restrictions, i.e., for $V\subseteq U$
+    \begin{center}
+    \begin{tikzcd}
+        \cF(U) \ar[r,"f_U"] \ar[d, "\phi_{U,V}"] & \cG(U) \ar[d, "r_{U,V}"]\\
+        \cF(V) \ar[r,"f_V"] & \cG(V)
+    \end{tikzcd}
+    \end{center}
+    (In other words, a morphism is a natural transformation $\cF\xRightarrow{f}\cG$).
+    
+    The \textbf{composition} of morphisms
+    \[\cF \xrightarrow{f} \cG \xrightarrow{g} \cH\]
+    is the morphism
+    \[(g\circ f)_U = g_U \circ f_U.\]
+    
+    The \textbf{identity} morphism $\id_\cF: \cF\to \cF$ is the morphism $(\id_\cF)_U = \id_{\cF(U)}$.
+    
+    A morphism $f: \cF \to \cG$ is an \textbf{isomorphism} is there exists an inverse morphism, i.e., a morphism $g: \cG \to \cF$ such that $g\circ f = \id_{\cF(U)}$ and $f\circ g = \id_{\cG(U)}$.
+\end{defn}
+
+\begin{prop}
+    Let $f: \cF \to \cG$ be a morphism of presheaves. For all $P\in X$, $f$ induces a morphism $f_P: \cF_P \to \cG_P$.
+\end{prop}
+
+\begin{proof}
+    Check that
+    \[f_P([U,\phi]) = [U,f_U(\phi)]\]
+    is well-defined.
+\end{proof}
+
+We want to eventually show that we can check if a morphism is an isomorphism by looking at the level of stalks. Before doing so, we define some terminology.
+
+\begin{defn}
+    Let $\cF$ be a presheaf on $X$. A collection $\{\phi_P\}_{P\in U}$, where $\phi_P\in \cF_P$ (i.e., an element of $\prod_{P\in U} \cF_P$) consists of \textbf{compatible germs} if there exist representatives $[U_p, \phi_{(P)}] = \phi_P$ for each $P\in U$ such that for all $P,Q\in P$
+    \[\phi_{(P)}|_{U_P\cap U_Q} = \phi_{(Q)}|_{U_P\cap U_Q}.\]
+\end{defn}
+
+\begin{prop}\label{compgerms}
+    Let $\cF$ be a sheaf on $X$. Then, there is a bijection
+    \begin{align*}
+        \cF(U) &\Longleftrightarrow \{\text{compatible germs } \{\phi_P\}_{P\in U}\}\\
+        \phi &\longmapsto \{[\phi]_P\}_{P\in U}\\
+        \text{Glue representatives} &\longmapsfrom \{\phi_P\}_{P\in U}.
+    \end{align*}
+\end{prop}
+
+\begin{proof}
+    The backwards map is well-defined because the definition of compatible germs tells us that gluing applies, and locality tells us that these maps are inverse to each other (otherwise there would be two ways to glue).
+\end{proof}
+
+\begin{rmk}
+    This proposition tells us we can check equality of sections by checking if all of the germs are equal, and that we can produce sections by giving compatible germs.
+\end{rmk}
+
+\begin{prop}
+    Let $f: \cF \to \cG$ be a morphism of sheaves. The morphism $f$ is an isomorphism if and only if $f_p$ is an isomorphism for all $P\in X$.
+\end{prop}
+
+\begin{proof}
+    Assume $f$ is an isomorphism. Then, there exists an inverse $g:\cG\to \cF$. Then, $f_P$ has inverse $g_P$.
+    
+    Assume that each $f_P$ has inverse $g_P$. We want to construct $g:\cG\to \cF$. Let $U\subseteq X$. We show that $f_U$ is injective and surjective.
+    
+    First, injectivity. Let $\phi,\phi'\in \cF(U)$, and assume $f_U(\phi)=f_U(\phi')$. Therefore, for all $P\in U$, $f_P([\phi]_P)=f_P([\phi']_P)$, so $[\phi]_P=[\phi']_P$. Thus, by proposition \ref{compgerms}, $\phi=\phi'$.
+    
+    Next, surjectivity. Let $\psi\in \cG(U)$. For each $P\in U$, we can take representatives of $g_P(\psi_P)$ to get
+    \[g_P(\psi_P) = [U_p, \phi_P]\]
+    where $U_P\subseteq X$ open, $\phi_P\in \cF_P$. Then, we can write
+    \[\psi_P = f_P\circ g_P(\psi_P) = f_P([U_P, \phi_P]) = [U_P, f_{U_P}(\phi_P)].\]
+    Our equality gets the existence of open sets $V_P \subseteq U_P\cap U$ containing $P$ such that
+    \[f_{U_P}(\phi_P)|_{V_P} = \psi|_{V_P}.\]
+    Since $f$ is a morphism of sheaves, it commutes with restriction. Thus,
+    \[f_{V_P}(\phi_P|_{V_P}) = \psi|_{V_P}.\]
+    We have the following situation: an open cover $\{V_P \mid P\in X\}$ paired with sections $\phi^P|_{V_P}$. We claim that these are actually compatible sections, so that we may apply gluing.
+    
+    To get equality, we take advantage of $f$ being injective at each open set. For $P,Q\in X$, (commuting restrictions and the sheaf morphism)
+    \[f_{V_P\cap V_Q}(\phi_P|_{V_P\cap V_Q}) = f_{V_P}(\phi_P|_{V_P})|_{V_P\cap V_Q} = \psi|_{V_P}|_{V_P\cap V_Q} = \psi|_{V_P\cap V_Q}\]
+    and similarly
+    \[f_{V_P\cap V_Q}(\phi_Q|_{V_P\cap V_Q}) = f_{V_Q}(\phi_Q|_{V_Q})|_{V_P\cap V_Q} = \psi|_{V_Q}|_{V_P\cap V_Q} = \psi|_{V_P\cap V_Q},\]
+    so therefore, using injectivity of $f_{V_P\cap V_Q}$,
+    \begin{align*}
+        f_{V_P\cap V_Q}(\phi_P|_{V_P\cap V_Q}) &= f_{V_P\cap V_Q}(\phi_Q|_{V_P\cap V_Q})\\
+        \phi_P|_{V_P\cap V_Q} &= \phi_Q|_{V_P\cap V_Q}\\
+        \phi_P|_{V_P}|_{V_P\cap V_Q} &= \phi_Q|_{V_Q}|_{V_P\cap V_Q}.
+    \end{align*}
+    Therefore, these sections are compatible and glue to give us a section $\phi\in \cF(U)$. Then, $f_{V_P}(\phi|_{V_P}) = \psi|_{V_P}$, so
+    \[f_U(\phi)|_{V_P} = \psi|_{V_P}\]
+    for all $P\in X$. By locality, this implies $f_U(\phi) = \psi$. Therefore, $f_U$ is surjective.
+    
+    Since each $f_U$ is bijective, we can define $g_U: \cG(U)\to \cF(U)$ inverse to $f_U$. We finally need to show that the $g_U$ assemble into a sheaf morphism $g:\cG\to \cF$. Let $V\subseteq U$, and let $\psi\in \cG(U)$. Then,
+    \begin{align*}
+        f_V(g_U(\psi)|_V) &= f_U(g_U(\psi))|_V\\
+        &= \psi|_V\\
+        &= f_V(g_V(\psi|_V)),
+    \end{align*}
+    so by injectivity of $f_V$, we get $g_U(\psi)|_V = g_V(\psi|_V)$. Therefore, $g$ is indeed a morphism of sheaves.
+\end{proof}
+
+\begin{rmk}
+    We saw that injectivity of induced stalk morphisms implies injectivity of all section morphisms. However, it is not necessarily true that surjective stalk morphisms implies surjective section morphisms. This leads us to a perhaps surprising definition of surjectivity for sheaf morphisms.
+\end{rmk}
+
+
+
+
+\section{Sheaf on a Base}
+
+It takes a bit of work to define a sheaf---we have to give objects and restrictions for \textit{all} open sets of $X$. Can we make our lives easier and recover this information if we just specify information on open sets.
+
+For this section, assume $\cB = \{B_i\}_{i\in I}$ is a base of open sets for $X$.
+
+\begin{defn}
+    A \textbf{presheaf on a base} $F$ is an assignment, mapping each $B_i$ to an object $F(B_i)$ of $\cC$, together with restriction maps whenever $B_i \subseteq B_j$
+    \[\rho_{B_j, B_i}: F(B_j) \to F(B_i),\]
+    satisfying the axioms
+    \begin{itemize}
+        \item $\rho_{B_i,B_i} = \id_{F(B_i)}$
+        \item For $B_i \subseteq B_j \subseteq B_k$,
+        \[\rho_{B_k,B_i} = \rho_{B_j,B_i} \circ \rho_{B_k,B_j}.\]
+    \end{itemize}
+    (More concisely, if we denote $\cB(X)$ the poset category of basic open subsets of $X$ under inclusion, then a presheaf is a functor $F: \cB(X)^\op \to \cC$).
+\end{defn}
+
+\begin{defn}
+    A \textbf{sheaf on a base} $F$ is a presheaf on a base satisfying
+    \begin{itemize}
+        \item \textbf{Locality on a base}: for $\bigcup_{i\in J} B_i = B\in \cB$ (and $J\subseteq I$), then if two sections $\phi,\psi \in F(B)$ satisfy $\phi|_{B_i} = \psi|_{B_i}$ for all $i\in J$, then $\phi=\psi$.
+        
+        \item \textbf{Gluing on a base}: for $\bigcup_{i\in J} B_i = B\in \cB$ (and $J\subseteq I$) and sections $\phi_i \in F(B_i)$ such that for all $i,j\in J$, $\phi_i,\phi_j$ agree on all basic sets inside $B_i\cap B_j$, then there exists a section $\phi\in F(B)$ with $\phi|_{B_i} = \phi_i$.
+    \end{itemize}
+\end{defn}
+
+Now, we see that we can get a unique sheaf from a sheaf on a base.
+
+\begin{prop}
+    Let $F$ be a sheaf on a base. Then, there exists a unique (up to unique isomorphism) sheaf $\cF$ with $\cF(B_i) = F(B_i)$ and agreeing on restriction maps.
+\end{prop}
+
+\begin{proof}
+    The strategy is to define stalks, and we can then define $\cF(U)$ as collections of germs that are compatible (on basic sets).
+\end{proof}
+
+\end{document}

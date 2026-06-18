@@ -1,0 +1,860 @@
+\documentclass[class=book, crop=false]{standalone}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
+
+\usepackage{{../mystyle}}
+
+\tikzset{
+    wb/.style={
+        ->,preaction={draw, line width=5pt, white}
+    }
+}
+
+\begin{document}
+
+
+\setcounter{chapter}{0}
+\chapter{Homological Algebra}
+
+\section{Derived and Triangulated Categories}
+
+Now, we give a rapid tour of the required homological algebra background.
+
+\begin{defn}
+    Let $\cA$ be an abelian category.
+    \begin{itemize}
+        \item Denote $\Kom(\cA)$ the \textbf{category of chain complexes} valued in $\cA$, with chain maps as morphisms.
+        \item Denote $K(\cA)$ the \textbf{homotopy category} of $\cA$, which has the same objects as $\Kom(\cA)$, but morphisms are quotiented by chain homotopy.
+        \item Denote $D(\cA)$ the \textbf{derived category} of $\cA$, which is $K(\cA)[\text{q-isos}^{-1}]$, i.e., the category with the same objects as $K(\cA)$ but with formal inverses to quasi-isomorphisms adjoined.
+    \end{itemize}
+\end{defn}
+
+\begin{rmk}
+    A few remarks are in place:
+    \begin{itemize}
+        \item We will always use cohomology indexing for chain complexes.
+        \item We can put superscripts $+,-,b$ on $\Kom$, $K$ or $D$ to denote the category where we only have objects which are chain complexes with cohomology vanishing sufficiently far on the left, right, or both.
+    \end{itemize}
+\end{rmk}
+
+\subsection{Morphisms in the Derived Category}
+
+In general, it is difficult to describe the morphisms of a category where we formally inverted morphisms (called \textbf{localization}, in analogy to the ring setting). However, in $K(\cA)$, the class of quasi-isomorphisms form a \textbf{localizing class} (I won't include the definition here) which makes the following true.
+
+\begin{defn}
+    A \textbf{roof} in $D(\cA)$ is a diagram of the form
+    \begin{cd}
+        & Z^\bullet \ar[dl,"s"'] \ar[dr,"f"] &\\
+        X^\bullet & & Y^\bullet
+    \end{cd}
+    for $s$ a quasi-isomorphism, and $f$ a chain map (or rather both should be homotopy classes of maps), which should be thought of as $f\circ s^{-1} = \frac{f}{s}$. The roofs $X^\bullet \xleftarrow{s} Z^\bullet \xrightarrow{f} Y^\bullet$ and $X^\bullet \xleftarrow{t} W^\bullet \xrightarrow{g} Y^\bullet$ are \textbf{equivalent} if there exists a ``common denominator'' roof, i.e., there is a roof $Z^\bullet \xleftarrow{u} V^\bullet \xrightarrow{h} W^\bullet$ make the diagram commute (in $K(\cA)$, so up to homotopy)
+    \begin{cd}
+        & & V^\bullet \ar[dl, "u"'] \ar[dr, "h"] & &\\
+        & Z^\bullet \ar[dl,"s"'] \ar[drrr,"f"',near end] & & W^\bullet \ar[dlll,"t",near end] \ar[dr,"g"] &\\
+        X^\bullet & & & & Y^\bullet
+    \end{cd}
+    which will at least imply $f\circ s^{-1} = g\circ t^{-1}$, since
+    \[f\circ s^{-1} = f\circ u \circ u^{-1} \circ s^{-1} = g\circ h \circ u^{-1} \circ s^{-1}\]
+    (the long route), and to get $g\circ t^{-1}$ to be the long route, we first notice
+    \begin{align*}
+        s \circ u &= t\circ h\\
+        t^{-1} &= h \circ s^{-1} \circ u^{-1}
+    \end{align*}
+    so with this identity
+    \[g\circ t^{-1} = g \circ h \circ s^{-1} \circ u^{-1}.\]
+    
+    We can compose roofs $X^\bullet \leftarrow A^\bullet \to Y^\bullet$ and $Y^\bullet \leftarrow B^\bullet \to Z^\bullet$ by putting a roof over both of them.
+    \begin{cd}
+        & & C^\bullet \ar[dl, dashed] \ar[dr, dashed] & &\\
+        & A^\bullet \ar[dl] \ar[dr] & & B^\bullet \ar[dl] \ar[dr] &\\
+        X^\bullet & & Y^\bullet & & Z^\bullet
+    \end{cd}
+    This is always be possible, exercise for the reader. You should do this by studying cones/distinguished triangles.
+\end{defn}
+
+\begin{thm}
+    \[\Hom_{D(\cA)}(X^\bullet, Y^\bullet) = \{\text{roofs $X^\bullet$ to $Y^\bullet$}\}/\text{equivalence},\]
+    i.e., all morphisms in the derived category are roofs.
+\end{thm}
+
+In some cases, we can describe the morphisms even more explicitly. There is a functor $\cA\to D(\cA)$  by sending an object to a degree 0 complex $A\mapsto (\cdots \to 0\to A\to 0 \to \cdots)$. We will often identify $A\in \cA$ with its degree 0 complex. We can then ask the following:
+\begin{itemize}
+    \item Is $\cA \to D(\cA)$ full? faithful? That is for $A,B\in \cA$, can we describe
+    \[\Hom_{D(\cA)}(A,B)\]
+    in relation to $\Hom_\cA(A,B)$?
+    \item Can we understand $\Hom_{D(\cA)}(A,B[i])$?
+\end{itemize}
+
+For the second question, at least when $i>0$, we have the following strategy for writing down morphisms. Take an exact sequence
+\[0\to B \to K^{-i+1}\to \cdots \to K^{0} \to A \to 0,\]
+which we denote by $K^\bullet$. In this case, we have the morphisms of chain complexes
+\begin{cd}
+    0 \rar & 0 \rar & 0 \rar & \cdots \rar & 0 \rar & A\rar & 0 \rar & \cdots\\
+    0 \rar & B \dar \rar & K^{-i+1} \rar & \cdots \rar & K^{-1} \rar & K^{0} \uar[two heads] \rar & 0 \rar & \cdots\\
+    0 \rar & B \rar & 0 \rar & \cdots \rar & 0 \rar & 0 \rar & 0 \rar & \cdots
+\end{cd}
+where the top morphism is a quasi-isomorphism (so has a formal inverse). Denote the middle complex by $\tilde{K}$, so that in total we get get a morphism $A\to B[i]$ which is a roof.
+\begin{cd}[column sep=0cm]
+    & \tilde{K} \ar[dl] \ar[dr] &\\
+    A & & B[i]
+\end{cd}
+Denote this morphism by $y(K^\bullet)$. We can then ask whether all morphisms $A\to B[i]$ arise in this way, and when are two such morphisms equivalent.
+
+These questions are then answered by the following proposition.
+
+\begin{prop}
+    \begin{enumerate}[(a)]
+        \item $\Hom_{D^*(\cA)}(X,Y[i])=0$ for $i<0$
+        \item $\Hom_{D^*(\cA)}(X,Y)=\Hom_\cA(X,Y)$
+        \item Any element of $\Hom_{D^*(\cA)}(X,Y[i])$ is of the form $y(K^\bullet)$, and the composition corresponds to concatenating extensions.
+    \end{enumerate}
+\end{prop}
+\begin{proof}[Proof of (a).]
+    Let $\phi: X \to Y[-i]$ for $i>0$ be written as a roof $X \xleftarrow{s} K^\bullet \xrightarrow{f} Y[-i]$. To show $\phi=0$, we 
+\end{proof}
+
+We also have the following theorem to help us understand morphisms: {\color{red} TODO}
+\begin{prop}
+    $K^+(I) \to D^+(\cA)$ and $K^-(P) \to D^-(\cA)$ form equivalence of categories (assuming enough projectives/injectives). Consequently,
+    \[\Hom_{K(\cA)}(X^\bullet, Y^\bullet) \cong \Hom_{D(\cA)}(X^\bullet, Y^\bullet)\]
+    when either $Y^\bullet \in I$ or $X^\bullet \in P$.
+\end{prop}
+
+\begin{proof}
+    {\color{red} both of these would be good to understand!!!}
+\end{proof}
+
+\subsection{Triangles}
+
+The derived category is usually no longer abelian, but it does have some extra structure. It's still additive (add roofs by expressing both as $f\circ s^{-1}, g\circ s^{-1}$ for some $s$, and then $(f+g)\circ s^{-1}$ is the sum), it still has the (additive) shift functor $X^\bullet \mapsto X^\bullet[1]$, and it has a notion of ``distinguished triangles'', which somewhat analogous to exact sequences.
+
+Recall that a short exact sequence
+\[0 \to A^\bullet \xrightarrow{f} B^\bullet \xrightarrow{g} C^\bullet \to 0 \tag{$*$}\]
+of chain complexes in $\Kom(\cA)$ induces a long exact sequence in cohomology.
+\[H^n(A^\bullet) \xrightarrow{H^n(f)} H^n(B^\bullet) \xrightarrow{H^n(g)} C^\bullet \xrightarrow{\delta^n} H^{n+1}(A^\bullet) = H^n(A^\bullet[1]),\]
+where the maps $H^n(f), H^n(g)$ are directly induced by $f,g$, but $\delta^n$ is maybe more mysterious. In any case, the LES might be drawn as a spiraling triangular helix.
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    \node (Hnm1C) at (0,-1.67) {$\cdots$};
+    \node (HnA) at (2,0) {$H^n(A)$};
+    \node (HnB) at (-0.5,2) {$H^n(B)$};
+    \node (HnC) at (-1,0.5) {$H^n(C)$};
+    \node (Hnp1A) at (2,3) {$H^n(A[1])$};
+    \node (Hnp1B) at (-0.5,5) {$H^n(B[1])$};
+    \node (Hnp1C) at (-1,3.5) {$H^n(C[1])$};
+    \node (Hnp2A) at (1.5,5.58) {$\cdots$};
+    \draw[wb,->] (Hnm1C) -- (HnA);
+    \draw[wb] (HnA) -- (HnB);
+    \draw[wb] (HnA) -- (HnB);
+    \draw[wb] (HnB) -- (HnC);
+    \draw[wb] (HnC) -- (Hnp1A);
+    \draw[wb] (Hnp1A) -- (Hnp1B);
+    \draw[wb] (Hnp1B) -- (Hnp1C);
+    \draw[wb] (Hnp1C) -- (Hnp2A);
+\end{tikzpicture}
+\end{center}
+One thing the derived category does for you is it makes it so $\delta^n$ is actually induced by a morphism $C\to A[1]$, so that this spiral is true not just on the level of cohomology, but on the level of the derived category.
+
+More precisely, it is true that the short exact sequence ($*$) is quasi-isomorphic to a short exact sequence
+\[0 \to A^\bullet \to \Cyl(f) \to C(f) \to 0,\]
+where $\Cyl(f),C(f)$ are the \textbf{mapping cylinder/mapping cone} respectively, analogous to topology, but they have a chain complex definition. In some sense, they are defined exactly the same as in topology---define the path object chain complex $I^\bullet$ by $I^{-1}=\Z e$, $I^{0}=\Z a \oplus \Z b$, and $d^{-1}(e)=b-a$. Then, $\Cyl(f)$ is the pushout of a diagram $A^\bullet \otimes I^\bullet \leftarrow A^\bullet \rightarrow B^\bullet$, and $C(f)$ is a quotient of $\Cyl(f)$.
+
+Also, like topology, there is a map
+\[C(f) \xrightarrow{\delta} SA^\bullet \defeq A^\bullet[1]\]
+where we $SA^\bullet$ is the suspension (this map is ``contracting $B^\bullet$''). This map induces the connecting map in the long exact sequence in cohomology, i.e.,
+\[H^n(C(f)) \xrightarrow{H^n(\delta)} H^n(A^\bullet[1]) = H^{n+1}(A^\bullet)\]
+is the connecting map. We will call a sequence of the form
+\[A^\bullet \to \Cyl(f) \to C(f) \to A^\bullet[1]\]
+(or anything quasi-isomorphic to it) a \textbf{distinguished triangle} in $D(\cA)$. What we just discussed shows that any short exact sequence in $\Kom(\cA)$ gives a distinguished triangle in $D(\cA)$.
+
+Just as a short exact sequence $0\to A\to B\to C\to 0$ tells us that $B$ is $C$ extended by $A$, a distinguished triangle also tells us this sort of gluing information but with added symmetry. We axiomatize the formal structure of the dervied category with the following notion.
+
+\begin{defn}
+    A \textbf{triangulated category} $\Delta$ is an additive category with
+    \begin{itemize}
+        \item An additive automorphism $(-)[1]: \Delta \to \Delta$ called the \textbf{shift/translation/suspension functor} (some authors relax to auto-equivalence, but this is tricky).
+        \item A collection of triangles
+        \[\{A^\bullet \to B^\bullet \to C^\bullet \to A^\bullet[1]\}\]
+        called distinguished triangles
+    \end{itemize}
+    such that the following axioms hold:
+    \begin{itemize}
+        \item \textbf{TR1:}
+        \begin{itemize}
+            \item Every triangle isomorphic to a distinguished triangle is itself a distinguished triangle.
+            \item The triangle
+            \[X \xrightarrow{\id_X} X \to 0 \to X[1]\]
+            is a distinguished triangle.
+            \item Every morphism $f:X\to Y$ can be completed to a distinguished triangle
+            \[X \xrightarrow{f} Y \to C(f) \to X[1],\]
+            where $C(f)$ is called the \textbf{cone} of $f$. The other axioms will imply $C(f)$ is unique up to (non-unique) isomorphism.
+        \end{itemize}
+        
+        \item \textbf{TR2:} a triangle
+        \[X \xrightarrow{f} Y \xrightarrow{g} Z \xrightarrow{h} X[1]\]
+        is distinguished iff
+        \[Y\xrightarrow{g} Z \xrightarrow{h} X[1] \xrightarrow{-T(f)} Y[1]\]
+        is distinguished (we can ``rotate'' distinguished triangles, giving us the spiraling triangular helix we drew earlier).
+        \item \textbf{TR3:} Given a diagram of solid arrows
+        \[\begin{tikzcd}
+            X \rar["f"] \dar["\alpha"] & Y \rar["g"] \dar["\beta"] & Z \dar[dashed, "\gamma"] \rar["h"] & X[1] \dar["T(\alpha)"]\\
+            X' \rar["f'"] & Y' \rar["g'"] & Z' \rar["h'"] & X'[1]
+        \end{tikzcd}\]
+        where the rows are distinguished triangles and the left square commutes, then there exists $\gamma: Z\to Z'$ making the entire diagram commute.
+
+        \item \textbf{TR4 (octahedral axiom):} Given three distinguished triangles of the form
+        \[\begin{tikzcd}[row sep=0cm]
+            X \rar["f"] & Y \rar["p"] & Y/X \rar & X[1]\\
+            Y \rar["g"] & Z \rar["q"] & Z/Y \rar & Y[1]\\
+            X \rar["g\circ f"] & Z \rar["r"] & Z/X \rar & X[1]
+        \end{tikzcd}\]
+        (where we are denoting the cones suggestively like quotients), there exists a distinguished triangle
+        \[Y/X \xrightarrow{\overline{g}} Z/X \xrightarrow{\pi} Z/Y \xrightarrow{s} (Y/X)[1]\]
+        such that the following diagram commutes
+        \[\begin{tikzcd}
+            X \ar[dr,"f"] \ar[rr,"g\circ f"] && Z \ar[rr,"q"] \ar[dr,"r"] && Z/Y \ar[rr,"s"] \ar[dr] && (Y/X)[1]\\
+            & Y \ar[ur,"g"] \ar[dr,"p"] && Z/X \ar[ur,"\pi"] \ar[dr] && Y[1] \ar[ur,"{p[1]}"] &\\
+            && Y/X \ar[ur, "\overline{g}"] \ar[rr] && X[1] \ar[ur,"{f[1]}"] &&
+        \end{tikzcd}\]
+    \end{itemize}
+\end{defn}
+
+\begin{rmk}
+    The octahedral axiom is roughly a version of the ``third isomorphism theorem'', which says $(Z/X)/(Y/X) \cong Z/Y$. The commuting diagram says something about how the projections/suspensions interact.
+\end{rmk}
+
+\begin{rmk}
+    In TR3, we do \textit{not} assert that $\gamma$ is unique, just that some $\gamma$ exists. In fancier words, the cone construction is not functorial.
+\end{rmk}
+
+\begin{thm}
+    For $\cA$ and abelian category, $D^*(\cA)$ (where $*\in \{+,-,b,\;\}$) is a triangulated category with the shift functor and the described distinguished triangles.
+\end{thm}
+
+We will not prove this in these notes, but I don't believe it is particularly hard.
+
+Now, we're going to give ourselves a little bit of scaffolding for how to handle a triangulated category. We're not going to be very comprehensive---go to the Stacks' project if that's what you want.
+
+\begin{prop}
+    In a distinguished triangle
+    \[X\xrightarrow{f} Y \xrightarrow{g} Z \to X[1],\]
+    $g\circ f=0$.
+\end{prop}
+
+\begin{proof}
+    By TR1 we have the distinguished triangle $X\xrightarrow{\id_X} X\to 0 \to X[1]$. We can then apply TR3 to get the following commutative diagram
+    \[\begin{tikzcd}
+        X \rar["\id_X"] \dar["\id_X"] & X \dar["f"] \rar & 0 \dar[dashed] \rar & X[1] \dar["\id_{X[1]}"]\\
+        X \rar["f"] & Y \rar["g"] & Z \rar & X[1]
+    \end{tikzcd}\]
+    so indeed $g\circ f = 0$.
+\end{proof}
+
+This tells us, at least a little bit, distinguished triangles behave like exact sequences.
+
+\begin{defn}
+    Let $\Delta$ a triangulated category, and $\cA$ an abelian category. A \textbf{cohomomological functor} is a functor $H: \Delta \to \cA$ such that every distinguished triangle
+    \[X\to Y \to Z \to X[1]\]
+    is sent to an exact sequence
+    \[H(X) \to H(Y) \to H(Z)\]
+    (and by TR2, we can continue this exact sequence in a spiral).
+\end{defn}
+
+\begin{eg}
+    When $\Delta = D^*(\cA)$, the usual cohomology functor $H^n$ on $\Kom(\cA)$ descends to a functor on $D^*(\cA)$ (almost by definition), and indeed, the cohomology functor is a cohomological functor.
+\end{eg}
+
+\begin{eg}
+    Let $\Delta$ be a triangulated category. In particular, $\Delta$ is additive, so the hom-sets are abelian groups. So, for any $W\in \Delta$, we can consider the hom functor as
+    \[\Hom(W,-): \Delta \longrightarrow \Z\text{-Mod}.\]
+    We claim this is a cohomological functor. Let
+    \[X\xrightarrow{f} Y \xrightarrow{g} Z \to X[1]\]
+    be distinguished, we show exactness at the middle term
+    \[\Hom(W,X) \xrightarrow{\Hom(W,f)} \Hom(W,Y) \xrightarrow{\Hom(W,g)} \Hom(W,Z).\]
+    We at least have $\Hom(W,g\circ f)=0$, since $g\circ f = 0$. Now, let $y: W\to Y$ such that $g\circ y = 0$. We wish to show $y = f\circ x$. To see this, rotate with TR2, apply TR3, and rotate back to get the commutative diagram
+    \[\begin{tikzcd}
+        W \rar["\id_W"] \dar[dashed,"x"] & W \rar \dar["y"] & 0 \dar["0"] \rar & W[1] \dar[dashed,"{x[1]}"]\\
+        X \rar["f"] & Y \rar["g"] & Z \rar & X[1]
+    \end{tikzcd}\]
+    so indeed, we get exactness.
+\end{eg}
+
+\begin{prop}
+    Cones are unique up to isomorphism.
+\end{prop}
+
+\begin{proof}
+    This will essentially be the 5-lemma. Suppose
+    \[X \to Y \to Z \to X[1], \qquad X\to Y\to Z' \to X[1]\]
+    are both distinguished triangles. Then, applying TR3, we get $\gamma: Z\to Z'$ giving us a morphism between the distinguished triangles. To show $\gamma$ is an isomorphism it suffices, by Yoneda, to show for all $W\in \Delta$, $\Hom(W,\gamma)$ is an isomorphism. Indeed, applying the functor $\Hom(W,-)$ to the diagram which is the morphism of distinguished triangles, we get
+    \[\begin{tikzcd}[column sep=0.5cm]
+        \Hom(W,X) \rar \dar["{(id_X)_*}"] & \Hom(W,Y) \rar \dar["{(id_Y)_*}"] & \Hom(W,Z) \rar \dar["{\gamma_*}"] & \Hom(W,X[1]) \rar \dar["{(id_{X[1]})_*}"] & \Hom(W,Y[1]) \dar["{(id_{Y[1]})_*}"]\\
+        \Hom(W,X) \rar & \Hom(W,Y) \rar & \Hom(W,Z') \rar & \Hom(W,X[1]) \rar & \Hom(W,Y[1])
+    \end{tikzcd}\]
+    where all vertical morphisms (except for potentially the middle one) are isomorphisms, so by the 5-lemma the middle is an isomorphism.
+\end{proof}
+
+\begin{prop}
+    The direct sum of distinguished triangles in distinguished, i.e., if
+    \[X_i \to Y_i \to Z_i \to X_i[1] \tag{$S_i$}\]
+    is distinguished for $i=\{1,2\}$, then
+    \[X_1 \oplus X_2 \to Y_1 \oplus Y_2 \to Z_1 \oplus Z_2 \to X_1[1] \oplus X_2[1]\]
+\end{prop}
+
+\begin{proof}
+    We at least have distinguished triangle
+    \[X_1 \oplus X_2 \to Y_1\oplus Y_2 \to Z \to X_1[1] \oplus X_2[1], \tag{T}\]
+    and we want to show that this is isomorphic to our ``desired'' triangle. We have morphisms $S_i \to T$ by completing the commutative square
+    \[\begin{tikzcd}
+        X_i \dar \rar & Y_i \dar\\
+        X_1 \oplus X_2 \rar & Y_1\oplus Y_2
+    \end{tikzcd}\]
+    to a distinguished triangle. Now, we want to argue that $S_1\oplus S_2 \to T$ is an isomorphism. We do this by hitting the morphism of distinguished triangles with $\Hom(W,-)$. Even though $S_1\oplus S_2$ is not a-priori distinguished, it will still turn into an exact sequence after being hit with $\Hom(W,-)$, since it will be a direct sum of exact sequences $\Hom(W,S_i)$. Therefore, we can finish the proof by applying the 5-lemma.
+\end{proof}
+
+\begin{prop}\label{zero-morphism-triangle}
+    The morphism $A\xrightarrow{0} B$ is completed to a distinguished triangle via
+    \[A \xrightarrow{0} B \xrightarrow{i} A[1] \oplus B \xrightarrow{\pi} A[1],\]
+    where $i,\pi$ are inclusions/projections into the direct sum.
+\end{prop}
+
+\begin{proof}
+    We have distinguished triangles
+    \[A\xrightarrow{\id_A} A \to 0 \to A[1],\]
+    which rotates via TR3 to
+    \[A \to 0 \to A[1] \xrightarrow{\id_{A[1]}} A[1].\]
+    Likewise, we have distinguished triangle
+    \[0 \to B \xrightarrow{\id_B} B \to 0[1].\]
+    Their direct sum is a distinguished triangle
+    \[A\xrightarrow{0} B \xrightarrow{i} A[1]\oplus B \xrightarrow{\pi} A[1].\]
+\end{proof}
+
+We will define/develop some helpful notation.
+\begin{defn}
+    Let $A,C\in \cD$. We call $B$ an \textbf{extension} of $A,C$ if there is a distinguished triangle
+    \[A\to B\to C \to A[1].\]
+    Let $E_1,\dots,E_n \in \cD$ be some objects (resp. $\cC\subseteq \cD$ a full subcategory). Denote the \textbf{extension closure}
+    \[\<E_1,\dots,E_n\> \subseteq \cD, \qquad (\text{resp. } \<\cC\>\subseteq \cD)\]
+    the smallest full subcategory containing $E_1,\dots,E_n$ (resp. $\cC$) which is closed under extensions.
+\end{defn}
+
+\begin{defn}
+    Let $\cC \subseteq \cD$ be a full subcategory of a triangulated category $\cD$. Denote
+    \[{}^\perp\cC = \{X\in \cD \mid \Hom(X,\cC)=0\},\]
+    where by $\Hom(X,\cC)=0$, we mean for all $C\in \cC$, $\Hom(X,C)=0$. Similarly, define
+    \[\cC^\perp = \{X\in \cD \mid \Hom(\cC,X)=0\}.\]
+\end{defn}
+
+If we squint our eyes and think of $\Hom$ as some sort of non-symmetric inner product, then we are exactly looking at the (one-sided) orthogonal complements. We put the $\perp$ on the side of $\cC$ where we should put $X$ to get $\Hom$ with $\cC$ to be 0.
+
+\begin{prop}
+    ${}^\perp\cC$ and $\cC^\perp$ are closed under extensions.
+\end{prop}
+
+\begin{proof}
+    Let $X\to Y\to Z\to X[1]$ be a distinguished triangle with $X,Z\in {}^\perp \cC$. We want to show $Y\in {}^\perp \cC$, so for an arbitrary object $C\in \cC$, we show $\Hom(Y,C)=0$.
+
+    To do this, we hit the triangle with $\Hom(-,C)$ to get the exact sequence
+    \[\Hom(X,C) \leftarrow \Hom(Y,C) \leftarrow \Hom(Z,C),\]
+    and by assumption the left and right terms are 0, so $\Hom(Y,C)=0$. This show ${}^\perp\cC$ is closed under extensions.
+
+    An analogous proof shows $\cC^\perp$ is also closed under extensions.
+\end{proof}
+
+\begin{cor}
+    Let $\cC,\cC'$ be full subcategories of $\cD$. If $\cC' \subseteq {}^\perp\cC$, then $\<\cC'\>\subseteq {}^\perp\cC$.
+\end{cor}
+
+\begin{prop}[Verdier's Exercise/The $3\times 3$ lemma] \label{3x3-lemma}
+    Assume
+    \begin{cd}
+        X \rar \dar & Y\dar\\
+        Z \rar & W
+    \end{cd}
+    is commutative. Then, there exists an object $U$ and morphisms making all rows and columns distinguished triangles.
+    \begin{cd}
+        X \rar \dar & Y\dar \rar & Y/X \dar[dashed] \rar & X[1] \dar \\
+        Z \rar \dar & W \rar \dar & W/Z \dar[dashed] \rar & Z[1] \dar\\
+        Z/X \rar[dashed] \dar & W/Y \rar[dashed] \dar & U \rar[dashed] \dar[dashed] & (Z/X)[1] \dar\\
+        X[1] \rar & Y[1] \rar & (Y/X)[1] \rar & X[2]
+    \end{cd}
+\end{prop}
+
+\begin{proof}[Proof Sketch.]
+    We get $Y/X\to W/Z$ by TR1 and TR3, likewise for $Z/X\to W/Y$ (i.e., we get the diagram without the bottom $2\times 2$ square, with rows and columns distinguished). Following TR1, we get two ``options'' for $U$, which we will denote respectively
+    \[(W/Z)/(Y/X), \qquad (W/Y)/(Z/X).\]
+    Heuristically, if cross multiply we get the same formal fractions which gives us some hope they are isomorphic and that the squares commute.
+    % To be careful, we actually shouldn't immediately pick the map $Y/X\to W/Z$ or $Z/X\to W/Y$. Recall that the cone construction isn't functorial, and multiple morphisms of cones might commute to give morphisms of distinguished triangles. Instead, we first build $W/X$, which is obtained via the composite $X\to Z \to W$ or $X\to Y \to W$ (either one, they are equal). The octahedral axiom applied to both composites gives us the distinguished triangles
+    % \begin{align*}
+    %     Y/X &\to W/X \to W/Y \to (Y/X)[1]\\
+    %     Z/X &\to W/X \to W/Z \to (Z/X)[1].
+    % \end{align*}
+    % Then, we should check that the composite $Y/X\to W/X\to W/Z$ (first map from the first triangle, second from second) as a morphism $Y/X\to W/Z$ fills dashed map in the diagram to make the first two rows a morphism of distinguished triangles. Similarly the composite $Z/X \to W/X \to W/Y$.
+
+    % Now, applying the octahedral axiom to the composite $Y/X\to W/X \to W/Z$, we get distinguished triangle
+    % \[(W/X)/(Y/X) \to (W/Z)/(Y/X) \to (W/Z)/(W/X) \to (W/X)/(Y/X)[1],\]
+    % and similarly for $Z/X \to W/X \to W/Y$, we get
+    % \[(W/X)/(Z/X) \to (W/Y)/(Z/X) \to (W/Y)/(W/X) \to (W/X)/(Z/X)[1].\]
+    % Chasing things through, we get
+    % \begin{align*}
+    %     W/Y &\to (W/Z)/(Y/X) \to (Z/X)[1] \to (W/Y)[1]\\
+    %     W/Z &\to (W/Y)/(Z/X) \to (Y/X)[1] \to (W/Z)[1]\\
+    % \end{align*}
+\end{proof}
+
+\section{t-structures}
+
+The derived category $D(\cA)$ of an abelian category $\cA$ comes with even more structure called a t-structure---essentially this is the inclusion of $\cA\hookrightarrow D(\cA)$ as degree 0 complexes.
+
+\begin{rmk}
+    We can understand $\cA \hookrightarrow D(\cA)$ as the codomain category of $H^0$. In fact, we can understand $H^0$ as \textit{truncation}. Define $D(\cA)^{\leq 0}$ as the full subcategory of complexes $A^\bullet$ with $H^n(A^\bullet)=0$ for $n>0$, and $D(\cA)^{\geq 0}$ as those with $H^n(A^\bullet)=0$ for $n<0$.
+    
+    Now, define the left truncation functor
+    \begin{align*}
+        \tau_{\geq 0}: D(\cA) & \longrightarrow D(\cA)^{\geq 0}\\
+        \left(\cdots \to A^{-1} \xrightarrow{d^0} A^0 \xrightarrow{d^1} A^{1} \to \cdots\right) & \longmapsto (\cdots \to 0 \to 0\to \coker d^0 \to A^1 \to \cdots)\\
+        & \simeq (\cdots \to 0 \to \im d^{-1} \hookrightarrow A^0 \to A^1 \to \cdots) 
+    \end{align*}
+    and the right truncation functor
+    \begin{align*}
+        \tau_{\leq 0}: D(\cA) &\longrightarrow D(\cA)^{\leq 0}\\
+        \left(\cdots \to A^{-1} \xrightarrow{d^0} A^0 \xrightarrow{d^1} A^{1} \to \cdots\right) &\longmapsto (\cdots \to A^{-1} \to \ker d^0 \to 0 \to 0 \to \cdots)\\
+        &\quad \simeq (\cdots \to A^{-1} \to A^0 \twoheadrightarrow \im d^1 \to 0 \to \cdots)
+    \end{align*}
+    where these functors really are defined on the level of derived categories, i.e., quasi-isomorphic complexes give quasi-isomorphic truncations. Then, one can check for $i: \cA \to D(\cA)$ the inclusion of degree 0 complexes,
+    \[i\circ H^0 \cong \tau_{\leq 0} \circ \tau_{\geq 0} \cong \tau_{\geq 0} \circ \tau_{\leq 0},\]
+    where the compositions commuting is the fact that for a complex $A\xrightarrow{f} B \xrightarrow{g} C$
+    \[\coker(A \xrightarrow{f'} \ker g) \cong \ker g/\im f \cong \ker(\coker f \xrightarrow{\overline{g}} C).\]
+    So, we'll see a t-structure as a way to give generalized cohomology. Other cohomologies besides $H^0$ are gotten just by shifting.
+\end{rmk}
+
+\begin{rmk}
+    We can then refine our above ideas that cohomology is a way of giving objects a filtration in the derived category. Given an object $A^\bullet \in D(\cA)$, we have the \textbf{cohomology filtration}
+    \[0 \to \cdots \to \tau_{\leq n-1} A^\bullet \to \tau_{\leq n} A^\bullet \to \cdots \to A\]
+    where we have the short exact sequence
+    \[0 \to \tau_{\leq n-1} A^\bullet \to \tau_{\leq n} A^\bullet \to \left(\cdots \to 0 \to A^{n-1}/\ker d^n \to \ker d^{n+1} \to 0\to \cdots\right) \to 0,\]
+    but in the derived category
+    \[\left(\cdots \to 0 \to A^{n-1}/\ker d^n \to \ker d^{n+1} \to 0\to \cdots\right) \simeq \left(\cdots \to 0 \to 0 \to H^n(A^\bullet) \to 0 \to \cdots \right),\]
+    since there is a map left to right inducing isomorphisms of cohomology. So, in the derived category we have the triangle
+    \[\tau_{\leq n-1} A^\bullet \to \tau_{\leq n} A^\bullet \to H^n(A^\bullet)[-n] \to \tau_{\leq n-1} A^\bullet [1],\]
+    where the $-n$ shift is to place the cohomology at degree $n$. If we think of cones as a derived category analogy of quotients/kernels, we should view this as saying that $\tau_{\leq n} A^\bullet$ is built by gluing $H^n(A^\bullet)[-n]$ to $\tau_{\leq n-1} A^\bullet$.
+
+    In this way, the abelian category $\cA \hookrightarrow D(\cA)$ is important because shifts of it (the cohomologies of a complex) are used to build the entire derived category by gluing. We will give two related definitions, which are equivalent in certain setups explained below.
+\end{rmk}
+
+\subsection{Basics}
+
+This first definition defines a t-structure by defining the image of the truncation functors---by specifying $\cD^{\leq 0}, \cD^{\geq 0}$, we will later define the truncations as adjoints to the inclusions of these categories (and the adjoints will exist).
+
+\begin{defn}
+    Let $\cD$ be a triangulated category. A \textbf{t-structure} on $\cD$ is a pair $(\cD^{\leq 0}, \cD^{\geq 0})$ of strictly full subcategories (strictly=closed under isomorphisms), which satisfying some axioms. Denote $\cD^{\leq n} \defeq \cD^{\leq 0}[-n]$, $\cD^{\geq n} \defeq \cD^{\geq 0}[-n]$, and require
+    \begin{enumerate}[(i)]
+        \item $\Hom_{\cD}(\cD^{\leq 0},\cD^{\geq 1})=0$.
+        \item If $X\in \cD^{\leq 0}$, then $X[1]\in \cD^{\leq 0}$. If $Y\in \cD^{\geq 0}$, then $Y[-1]\in \cD^{\geq 0}$.
+        \item For $A\in \cD$, there exists a distinguished triangle
+        \[X \to A \to Y \to X[1]\]
+        such that $X\in \cD^{\leq 0}$ and $Y\in \cD^{\geq 1}$. These will be unique up to isomorphism, and we denote $\tau^{\leq 0} A \defeq X$ and $\tau^{\geq 1} A \defeq Y$
+    \end{enumerate}
+
+    In particular, (i) implies $\cD^{\leq 0} \cap \cD^{\geq 1} = 0$, because otherwise a nonzero object $E$ would have the nonzero morphism $\id_E$.
+    
+    The t-structure is said to be \textbf{non-degenerate} if $\bigcap_{n\in \N} \cD^{\leq n} = \bigcap_{n\in \N} \cD^{\geq n} = \{0\}$. It is said to be \textbf{bounded} if for all $E\in \cD$, there exists $n\in \N$ such that $E\in \cD^{\leq n} \cap \cD^{\geq -n}$. In particular, bounded t-structures are non-degenerate because a nonzero $E\in \cD^{\leq n} \cap \cD^{\geq -n}$ will \textit{not} be in $\cD^{\geq n+1}$ nor $\cD^{\geq n-1}$.
+    
+    We denote $\tau^{\leq n} A = \tau^{\leq 0} (A[n])[-n]$ and $\tau^{\geq n} A = \tau^{\leq 1}(A[n-1])[-n+1]$, called the \textbf{truncation functors} (we will soon prove they are well-defined and functorial).
+
+    The \textbf{heart} of the t-structure is $\cD^{\leq 0} \cap \cD^{\geq 0}$, denoted $\cD^\heart$. We will later see that the heart of a t-structure is abelian.
+
+    For $A\in \cD$, we denote $H^n_{\cP}(A) \defeq (\tau^{\leq n} \tau^{\geq n} A)[n] \in \cD^\heart$, called the \textbf{cohomology} of $A$ with respect to the t-structure. This name makes sense, because we will later prove that
+    \[H^0_{\cP}: \cD \to \cD^\heart\]
+    is a cohomological functor.
+\end{defn}
+
+\begin{prop}
+    Let $(\cD^{\leq 0}, \cD^{\geq 0})$ be a t-structure. Then, $\tau^{\leq 0}, \tau^{\geq 1}$ (as well as their translates) are well-defined functors, and they form adjoint pairs
+    \[(i^{\leq 0}, \tau^{\leq 0}), \qquad (\tau^{\geq 0}, i^{\geq 0})\]
+\end{prop}
+
+\begin{proof}
+    To show the truncations are well-defined functors, we show that given $f:A\to A'$ and distinguished triangles
+    \[X \to A \to Y \to X[1], \qquad X' \to A' \to Y' \to X'[1]\]
+    with $X,X'\in \cD^{\leq 0}$ and $Y,Y' \in \cD^{\geq 1}$, then we get a unique morphism of the distinguished triangles.
+    
+    In particular, supposing we have shown this, we can apply this to $f=\id_A$ twice to get a diagram
+    \begin{cd}
+        X \ar[dd,bend left] \dar \rar & A \ar[dd,bend left] \dar \rar & Y \ar[dd,bend left] \dar \rar & X[1] \ar[dd,bend left] \dar\\
+        X' \dar \rar & A \dar \rar & Y' \dar \rar & X'[1] \dar\\
+        X \rar & A \rar & Y \rar & X[1]
+    \end{cd}
+    and by uniqueness of the morphisms ``extending'' $\id_A$, we are forced to have the composition be identity. This argument eventually tells us that the triangle given by the t-structure is unique up to isomorphism.
+
+    So, we just have to show this fact. We start by completing the diagram.
+    \begin{cd}
+        X \rar \dar[dashed] & A \dar["f"]\\
+        X' \rar & A'
+    \end{cd}
+    Since $\Hom(X,-)$ is a cohomological functor, we have an exact sequence
+    \[\Hom(X,Y'[-1]) \to \Hom(X,X') \to \Hom(X,A') \to \Hom(X,Y'),\]
+    and we want the middle map an isomorphism, so that the composition $X\to A\xrightarrow{f} A'$ is the pushforward of a unique $X\to X'$. Now, this follows from the axioms---we have $Y',Y'[-1]\in \cD^{\geq 0}$ whereas $X\in \cD^{\leq 0}$, so the left and right terms in the exact sequence vanish. A similar argument gives a unique map $Y\to Y'$ making a square commute, and these morphisms must assemble into a map of distinguished triangles by TR3.
+
+    Now, we can indeed define the truncation functor $\tau^{\leq 0}$ just by picking for each $A$ some isomorphism representative of $X$. We use a similar argument for $\tau^{\geq 1}$.
+
+    Finally, we say some words about the first adjunction. Given $X \in \cD^{\leq 0}$ and $A\in \cD$. Then, a morphism $X\to A$ in $\cD$ gives a unique morphism $\tau^{\leq 0} X \to A$ and vice versa by the argument described before. This gives the bijection between the hom sets---one is left to check it is natural, and to work out the other adjunction.
+\end{proof}
+
+% \begin{prop}
+%     $\cD^{\leq 0}$ is closed under extensions, i.e., if $X,Z\in \cD^{\leq 0}$ and $Y$ fits in a distinguished triangle
+%     \[X\to Y\to Z\to X[1],\]
+%     then $Y\in \cD^{\leq 0}$.
+% \end{prop}
+
+% \begin{proof}
+%     It suffices to show $\tau^{\geq 1} Y = 0$. Since $X,Z\in \cD^{\leq 0}$, $X=\tau^{\leq 0}X$, $Z=\tau^{\leq 0} Z$. We will then have the truncation distinguished triangles
+%     \begin{align*}
+%         \tau^{\leq 0} X &\to X \to 0\\
+%         \tau^{\leq 0} Y &\to Y \to \tau^{\geq 1} Y\\
+%         \tau^{\leq 0} Z &\to Z \to 0.
+%     \end{align*}
+%     Since $\tau^{\leq 0}$ is a functor, we even have $\tau^{\leq 0} X \to \tau^{\leq 0} Y$, so we have the diagram
+%     \begin{cd}
+%         \tau^{\leq 0} X \rar \dar & \tau^{\leq 0} Y \dar\\
+%         X \rar & Y
+%     \end{cd}
+%     so by Proposition \ref{3x3-lemma}, it extends to a diagram
+%     \begin{cd}
+%         \tau^{\leq 0} X \rar \dar & \tau^{\leq 0} Y \rar \dar & \tau^{\leq 0} Z \rar \dar & (\tau^{\leq 0} X)[1] \dar\\
+%         X \rar \dar & Y \rar \dar & Z \rar & X[1]\\
+%         0 \rar \dar & \tau^{\geq 1} Y \dar & \tau^{\geq 1} Y & 0\\
+%         (\tau^{\leq 0}X)[1] \rar & (\tau^{\leq 0} Y)[1] & (\tau^{\leq 0} Z)[1] & 
+%     \end{cd}
+%     and conclude $\tau^{\geq 1} Y = 0$.
+% \end{proof}
+
+
+\subsection{Bounded t-structures}
+
+Now, we give an alternative definition of a bounded t-structure, which emphasizes the cohomology filtration.
+
+\begin{defn}
+    A \textbf{bounded t-structure} is the data of a strictly full additive subcategory $\cA^{\sharp} \leq \cD$ such that
+    \begin{enumerate}[(i)]
+        \item For $k_1 > k_2$, we have $\Hom_{\cD}(\cA^{\sharp}[k_1],\cA^{\sharp}[k_2])=0$ (``no negative $\Ext$'').
+        \item For every object $E$ in $\cD$ there are integers $k_1 > k_2 > \cdots > k_n$ and a sequence (the top row)
+        \begin{cd}[column sep=0.25cm]
+            0=E^0 \ar[rr] && E^1 \ar[dl] \ar[rr] && E^2 \ar[dl] \ar[r] & \cdots \ar[r] & E^{n-1} \ar[rr] && E^n=E \ar[dl]\\
+            & A^1 \ar[ul,dashed] && A^2 \ar[ul,dashed] && && A^n \ar[ul,dashed] &
+        \end{cd}
+        where the cones over successive morphisms $A^i$ are in $\cA^\sharp [k_i]$. We will again call this sequence \textbf{t-structure cohomology filtration}.
+    \end{enumerate}
+\end{defn}
+
+\begin{eg}
+    Given a t-structure cohomology filtration on $E$ as above, we get a t-structure cohomology filtration on $E/E^1$ (the cone over $E^1\to E$) by ``quotienting'' all the way through. That is, if we have the distinguished triangle
+    \[E^{i-1} \to E^i \to A^i \to E^{i-1}[1],\]
+    we should temporarily denote $E^i/E^{i-1} \defeq A^i$, and write out the distinguished triangles (neglecting to write the third term)
+    \begin{align*}
+        E^1 &\to E^{i-1} \to E^{i-1}/E^1\\
+        E^1 &\to E^i \to E^{i}/E^1,
+    \end{align*}
+    where $E^1\to E^1$ is exactly the composite of $E^1\to E^{i-1}$ and $E^{i-1}\to E^i$ (from the original distinguished triangle in the filtration). So, we are in the position to apply the octahedral axiom to get a distinguished triangle
+    \[E^{i-1}/E^1 \to E^{i}/E^1 \to E^{i}/E^{i-1} = A^i,\]
+    so indeed we get a sequence of morphisms $E^{i-1}/E^1 \to E^i/E^1$ which filters $E$ using the same cones $A^i$. We did, however, throw away $E^1=A^1$. We will use this construction to do induction on cohomology filtrations.
+\end{eg}
+
+\begin{prop}
+    The t-structure cohomology filtration, if we require all $A_i\neq 0$, is unique up to isomorphism.
+\end{prop}
+
+\begin{proof}
+     Suppose
+    \begin{cd}[column sep=0.25cm]
+        0=F^0 \ar[rr] && F^1 \ar[dl] \ar[rr] && F^2 \ar[dl] \ar[r] & \cdots \ar[r] & F^{m-1} \ar[rr] && F^m=E \ar[dl]\\
+        & B^1 \ar[ul,dashed] && B^2 \ar[ul,dashed] && && B^m \ar[ul,dashed] &
+    \end{cd}
+    is another cohomology filtration, with $B_i \in \cA^\sharp[\ell_i]$. Our strategy is to ``pullback'' the map $E\xrightarrow{\id_E} E$ to the earliest respective objects in the filtration, then quotient out, and repeat.
+    
+    Assume without loss of generality that $k_1 \geq \ell_1$. We can factor $E^1\to E$ through $F^1$, since we have distinguished triangle
+    \[F^1 \to E \to E/F^1 \to F^1[1], \tag{$*$}\]
+    where by $E/F^1$ has a t-structure cohomology filtration by only $B^2,\dots,B^m$, so
+    \[E/F^1 \in \<\cA^\sharp[\ell_2],\dots,\cA^\sharp[\ell_m]\> \subseteq \cA^\sharp[k_1]^\perp,\]
+    so in particular the composition $E^1 \to E \to E/F^1$ is zero. By applying $\Hom(E^1,\cdot)$ to $(*)$, we get exact sequence
+    \[\Hom(E^1,F^1) \to \Hom(E^1, E) \to \Hom(E^1, E/F^1),\]
+    so $E^1 \to E \to E/F^1$ being $0$ implies we can pull back $E^1\to E$ to $E^1\to F^1$.
+    
+    % Then, we argue we can factor $F^1\to E$ through $E^{m-1}$ as in the diagram
+    % \begin{cd}[column sep=0.25cm]
+    %     F^1 \ar[r] \ar[dr,dotted] & F^{m-1} \ar[rr] && E \dar["\id"]\\
+    %     & E^{m-1} \ar[rr] && E \ar[dl]\\
+    %     & & A^m \ar[ul,dashed] &
+    % \end{cd}
+    % by showing that $\Hom(F^1,E^{m-1}) \to \Hom(F^1, E)$ is surjective, since we have the exact sequence
+    % \[\Hom(F^1,E^{m-1}) \to \Hom(F^1, E) \to \Hom(F^1,A^m)=0,\]
+    % where the right vanishes since $F^1=B^1$, and $\ell_1 \geq k_1 > k_m$. Repeating this argument inductively, we eventually get that $F^1\to E$ factors through $E^1$.
+    
+    Now, if $k_1 > \ell_1$ strictly, then $E_1$ even factors through $E^0=0$, so $E^1\to E$ is 0. Even better, we will get $E^1\xrightarrow{\id_{E^1}} E^1$ is zero, which would be a contradiction because $E^1=A^1\neq 0$. This is because we have the exact sequence
+    \[\Hom(E^1,(E/E^1)[-1])\to \Hom(E^1,E^1) \to \Hom(E^1,E),\]
+    with lefthand side 0, since
+    \[E/E^1 \in \<\cA^\sharp[k_2],\dots,\cA^\sharp[k_n]\> \subseteq \cA^\sharp[k_1]^\perp.\]
+    Therefore, we indeed have $k_1=\ell_1$.
+
+    Now, we argue that $E^1\to F^1$ is an isomorphism, by considering its cone, which we denote $F^1/E^1$. We have the following distinguished triangles (neglecting to write the last term).
+    \begin{align*}
+        E^1 &\to F^1 \to F^1/E^1\\
+        E^1 &\to E \to E/E^1\\
+        F^1 &\to E \to E/F^1,
+    \end{align*}
+    where $E^1\to E$ is the composite of $E^1\to F^1 \to E$, so we are exactly in the position to apply the octahedral axiom to get the distinguished triangle
+    \[F^1/E^1 \to E/E^1 \to E/F^1,\]
+    but $F^1/E^1 \in \<\cA^\sharp[k_1],\cA^\sharp[k_1+1]\>$ while $E/E^1 \in \<\cA^\sharp[k_2],\dots,\cA^\sharp[k_n]\>$, and as usual there are no ``negative Exts'', so $F^1/E^1 \to E/E^1$ is the zero morphism, so by Proposition \ref{zero-morphism-triangle},
+    \[E/F^1 \cong E/E^1 \oplus (F^1/E^1)[1],\]
+    but, if we assume $E^1\to F^1$ is not an isomorphism, then $F^1/E^1 \neq 0$, so we get a nonzero morphism via the inclusion
+    \[(F^1/E^1)[1] \to E/E^1 \oplus (F^1/E^1)[1] \cong E/F^1,\]
+    which violates
+    \[E/F^1 \in \<\cA^\sharp[\ell_2],\dots,\cA^\sharp[\ell_m]\> \subseteq \<\cA^\sharp[k_1],\cA^\sharp[k_1+1]\>^\perp.\]
+    So, $E^1\to F^1$ is an isomorphism, so we get $E/E^1 \to E/F^1$ an isomorphism via the 5-lemma from the following diagram.
+    \begin{cd}
+        E^1 \rar \dar & E \rar \dar & E/E^1 \rar \dar[dashed] & E^1[1] \rar \dar & E[1] \dar\\
+        F^1 \rar & E \rar & E/F^1 \rar & F^1[1] \rar & E[1]
+    \end{cd}
+    Now, the quotiented filtrations $E^i/E^1$, $F^i/F^1$ of $E/E^1\cong E/F^1$ have strictly smaller $n,m$, so by induction they are isomorphic. To finish the argument, one should argue that the isomorphism of the quotiented filtrations lifts to an isomorphism of the original filtrations.
+    % The following diagram has distinguished triangles as rows, and we want to argue the right square commutes so that we get the dashed arrow.
+    % \begin{cd}
+    %     E^1 \rar \dar["\cong"] & E^i \rar \dar[dashed] & E^i/E^1 \dar \rar & E^1[1] \dar["\cong"]\\
+    %     F^1 \rar & F^i \rar & F^i/F^1 \rar & F^1[1]\\
+    % \end{cd}
+    % We can factor $E^i/E^1 \to E^[1]$ by $E^i/E^1 \to E/E^1 \to E^1[1]$
+\end{proof}
+
+This next proposition is Lemma 3.2 in Bridgeland's original paper. He says it's ``a good exercise in manipulating the definitions''.
+
+\begin{prop}
+    Let $(\cD^{\leq 0}, \cD^{\geq 0})$ give a t-structure, such that for all $E\in \cD$, there exists $n\in \N$ with $E\in \cD^{\leq n} \cap \cD^{\geq -n}$. Then, $\cA^\sharp \defeq \cD^\heart$ is a bounded t-structure in the other sense.
+
+    Conversely, given a bounded t-structure specified by $\cA^\sharp$, define
+    \[\cD^{\leq 0} = \{E\in \cD \mid \text{all $A_{i}\neq 0$ has $k_i\geq 0$ in the t-structure cohomology filtration}\},\]
+    \[\cD^{\leq 0} = \{E\in \cD \mid \text{all $A_{i}\neq 0$ has $k_i\leq 0$ in the t-structure cohomology filtration}\},\]
+    then, $(\cD^{\leq 0}, \cD^{\geq 0})$ forms a t-structure such that $\cD^\heart = \cA^\sharp$ and for all $E\in \cD$, there exists $n\in \N$ with $E\in \cD^{\leq n} \cap \cD^{\geq -n}$.
+\end{prop}
+
+\begin{proof}
+    We show that for $(\cD^{\leq 0}, \cD^{\geq 0})$ as in the first definition, $\cA^\sharp \defeq \cD^{\leq 0} \cap \cD^{\geq 0}$ satisfies the second definition. It's clear that
+    \[\Hom_{\cD}(\cA^\sharp[k_1], \cA^\sharp[k_2]) = \Hom_{\cD}(\cA^\sharp, \cA^\sharp[k_2-k_1]) = 0\]
+    since $\cA^\sharp \subseteq \cD^{\leq 0}, \cA^\sharp[k_2-k_1] \subseteq \cD^{\geq 1}$. Now, we get the filtration as follows. Take $\tau^{\leq n} E$, and by (iii) in the first definition, we get a distinguished triangle (now naming the objects with the truncation functors)
+    \[\tau^{\leq n-1} \tau^{\leq n} E \to \tau^{\leq n} E \to \tau^{\geq n} \tau^{\leq n} E \to (\tau^{\leq n-1} \tau^{\leq n} E)[1]\]
+    and we show $\tau^{\leq n-1} \tau^{\leq n} E = \tau^{\leq n-1} E$, so if we call the terms $E^{n-1},E^n,A^n$ respectively, we get our desired triangle with $A^n\in \cA^\sharp[-n]$. The fact that $\tau^{\leq n-1}\tau^{\leq n} E = \tau^{\leq n-1} E$ is essentially the fact that $i^n i^{n-1} = i^n$, i.e., we argue by Yoneda
+    \begin{align*}
+        \Hom(A, \tau^{\leq n-1}\tau^{\leq n}E) &\cong \Hom(i^{\leq n-1} A, \tau^{\leq n} E)\\
+        &\cong \Hom(i^{\leq n} i^{\leq n-1} A, E)\\
+        &\cong \Hom(i^{\leq n} A, E)\\
+        &\cong \Hom(A,\tau^{\leq n} E).
+    \end{align*}
+    Now, the bounded assumption will tell us that only finitely many $A_n \neq 0$, and we use these sorts of distinguished with that fact to get the finite filtration.
+
+    Now, conversely, let $\cA^\sharp$ be a bounded t-structure as in the second definition, and we show $(\cD^{\leq 0}, \cD^{\geq 0})$ satisfies the first. Essentially by construction, we automatically have (ii). To get (i), we can reformulate our definition of $\cD^{\leq 0},\cD^{\geq 0}$ as
+    \begin{align*}
+        \cD^{\leq 0} &= \<\cA^\sharp[k_1] \mid k_1\geq 0\>\\
+        \cD^{\geq 1} &= \<\cA^\sharp[k_2] \mid k_2\leq -1\>.
+    \end{align*}
+    By assumption, we have for $k_1\geq 0 > -1 \geq k_2$,
+    \[\Hom(\cA^\sharp[k_1], \cA^\sharp[k_2]),\]
+    which implies $\cA^\sharp[k_1] \subseteq {}^\perp \cA^\sharp[k_2]$ for all $k_1\geq 0$, so
+    \[\cD^{\leq 0} = \<\cA^\sharp[k_1] \mid k_1\geq 0\> \subseteq {}^\perp \cA^\sharp[k_2],\]
+    which implies for all $k_2\leq -1$,
+    \[\cA^\sharp[k_2] \subseteq (\cD^{\leq 0})^\perp,\]
+    so
+    \[\cD^{\geq 1} = \<\cA^\sharp[k_2] \mid k_2 \leq -1\> \subseteq (\cD^{\leq 0})^\perp,\]
+    so indeed
+    \[\Hom(\cD^{\leq 0}, \cD^{\geq 1}).\]
+    
+    To get (iii), take a cohomology filtration, re-indexed so that $A^i \in \cA^\sharp[-i]$ (allowing negative indices and maybe $A_i=0$),
+    \begin{cd}[column sep=0.25cm]
+        0=E^{-n} \ar[rr] && E^{-n+1} \ar[dl] \rar & \cdots \rar & E^{-1} \ar[rr] && E^0 \rar \ar[dl] & \cdots \rar & E^{n-1} \ar[rr] && E^n=E \ar[dl]\\
+        & A^{-n} \ar[ul,dashed] && && A^0 \ar[ul,dashed] && && A^n \ar[ul,dashed] &
+    \end{cd}
+    and complete $E^0 \to E$ to a distinguished triangle
+    \[E^0 \to E \to E/E^0 \to E^0[1].\]
+    By construction $E^0 \in \cD^{\leq 0}$, and as we have argued before, $E/E^0 \in \cD^{\geq 1}$.
+\end{proof}
+
+\begin{rmk}
+    Let $\cD$ be a triangulated category. Given the heart of a bounded t-structure $\cA^\sharp$ which induces $(\tau^{\leq 0},\tau^{\geq 0})$, we had defined for $E\in \cD$
+    \[H^i_\cP(E) = \tau^{\leq i} \tau^{\geq i} E \in \cA^\sharp[-i].\]
+    We can formulate this differently. If $E \in \cD^{\leq n} \cap \cD^{\geq -n}$, then it has t-structure cohomology filtration
+    \begin{cd}[column sep=0.25cm]
+        0=E^{-n} \ar[rr] && E^{-n+1} \ar[dl] \rar & \cdots \rar & E^{-1} \ar[rr] && E^0 \rar \ar[dl] & \cdots \rar & E^{n-1} \ar[rr] && E^n=E \ar[dl]\\
+        & A^{-n} \ar[ul,dashed] && && A^0 \ar[ul,dashed] && && A^n \ar[ul,dashed] &
+    \end{cd}
+    by choosing $E^{i} = \tau^{\leq i}E$, and then $A^i \in \cA^\sharp[-i]$. We exactly then have
+    \[H_\cP^i(E) = A^i[i].\]
+
+    This will tell us that we can read off the t-structure cohomology in the t-structure cohomology filtration given by a bounded t-structure---all cohomologies are 0, except for those appearing as cones in the filtration.
+
+    We then denote this t-structure cohomology by
+    \[H_{\cA^\sharp}^i = H_\cP^i,\]
+    as we will later be discussing multiple t-structures at the same time.
+\end{rmk}
+
+\begin{eg}
+    standard t-structure on $D(\cA)$
+\end{eg}
+
+\subsection{Hearts are Abelian}
+
+\begin{thm}
+    $\cA = \cD^{\leq 0} \cap \cD^{\geq 0}$ is an abelian category.
+\end{thm}
+
+\begin{eg}
+    To motivate the proof, let's try to use the standard t-structure/truncations to find kernels/cokernels for the standard heart of the derived category.
+
+    That is, let $\cA$ be an abelian category, $D(\cA)$ the derived category, and equip $D(\cA)$ with the standard t-structure $(D(\cA)^{\leq 0}, D(\cA)^{\geq 0})$, which has as heart $\cA$ (realized as the degree 0 complexes).
+    
+    Given $f:A\to B$, we form the cone $C(f)$ as the complex
+    \[0\to A\to B \to 0,\]
+    with $A$ in degree $-1$, $B$ in degree $0$. Then, we get
+    \begin{align*}
+        \tau_{\leq -1} C(f) &= \qquad (0 \to \ker f \to 0 \to 0)\\
+        \tau_{\geq 0} C(f) &= \qquad (0 \to 0 \to \coker f \to 0),
+    \end{align*}
+    so we see $(\tau_{\leq -1} C(f))[1]$ (shifted to be a degree 0 complex) recovers the kernel, and $\tau_{\geq 0} C(f)$ recovers the cokernel.
+
+    We will see that this works for any t-structure.
+\end{eg}
+
+\begin{proof}
+    This is an additive category, since it is the intersection of two additive subcategories. So, we just have to show that it admits kernels, cokernels, and a morphism decomposition making image canonically isomorphic to coimage.
+
+    Let $f:X\to Y$ be a morphism in $\cA$, denote $Z$ its cone, and define
+    \[K = \tau^{\leq -1} Z \qquad C = \tau_{\geq 0} Z.\]
+    Define $k$ as the composition $\tau_{\leq -1} Z \to Z \to X[1]$, and $c$ as the composition $Y\to Z\to \tau_{\geq 0} Z$. We claim that $(K[-1],k[-1])$ and $(C,c)$ are the kernel and cokernel of $f$.
+
+    Let's show $(C,c)$ is the cokernel, the kernel is showed similarly. By construction $C\in \cD^{\geq 0}$, and from the triangle
+    \[Y \to Z \to X[1] \to Y[1]\]
+    where $Y,X[1]\in \cD^{\leq 0}$, we need $Z\in \cD^{\leq 0}$.
+\end{proof}
+
+\subsection{Tilting at a Torsion Pair}
+
+One large source of examples of t-structures is by what is called ``tilting at a torsion pair''.
+
+\begin{defn}
+    Let $\cA$ be an abelian category. A \textbf{torsion pair} $(\cT,\cF)$ is a pair of (strictly) full subcategories of $\cA$ satisfying
+    \begin{enumerate}[(i)]
+        \item $\Hom(\cT,\cF) = 0$
+        \item Every object $A \in \cA$ fits in a short exact sequence
+        \[0\to T \to A \to F \to 0\]
+        for some $T\in \cT$ and $F\in \cF$.
+    \end{enumerate}
+\end{defn}
+
+% \begin{prop}
+%     Assuming condition (i), condition (ii) is equivalent to 
+%     \[\cT = {}^\perp\cF, \qquad \cF = \cT^\perp. \tag{($*$)}\]
+% \end{prop}
+
+% \begin{proof}
+%     Assume (ii) holds, and to show ($*$) holds, take $E\in \cT^\perp$, i.e., $\Hom(\cT,E)=0$. We show $F\in \cF$. By (ii), we have an SES
+%     \[0 \to T \to E \to F \to 0,\]
+%     with $T\in \cT, F\in \cF$. Then, we know $T\to E$ is 0 by assumption, so for it to be an injection, $T=0$, so
+%     \[0\to E \to F \to 0\]
+%     says $E\cong F \in \cF$ (by strict fullness).
+
+%     Now, assume ($*$) holds, and let $A\in \cA$.
+% \end{proof}
+
+Now, we explain how to tilt at a torsion pair.
+
+\begin{thmdef}
+    Let $\cD$ be a triangulated category, and let $\cA$ be the heart of a bounded t-structure on $\cD$. Let $(\cT,\cF)$ be a torsion pair on $\cA$. Then, the following is the heart of a bounded t-structure on $\cD$:
+    \[\cA^\sharp = \<\cF[1],\cT\> = \{X\in \cD \mid H_\cA^0(X) \in \cT, H_\cA^{-1}(X) \in \cF, H_\cA^i(X)=0 \text{ otherwise}\}.\]
+\end{thmdef}
+
+\begin{proof}
+    We give a sketch.
+
+    First, $\Hom(\cA^\sharp,\cA^\sharp[i])=0$ for $i<0$ because
+    \[\Hom(\cF[1],\cF[1+i])=\Hom(\cF[1],\cT[i])=\Hom(\cT,\cT[i])=\Hom(\cT,\cF[1+i])=0,\]
+    (where the last equality comes from the definition of a torsion pair) imply
+    \[\Hom(\<\cF[1],\cT\>, \<\cF[1],\cT\>[i]) = 0.\]
+
+    Now, we need to produce t-structure cohomology filtrations for $\cA^\sharp$. Let $E \in \cD$. Our bounded t-structure $\cA$ gives us a filtration
+    \begin{cd}[column sep=0.25cm]
+        0=E^{-n} \ar[rr] && E^{-n+1} \ar[dl] \rar & \cdots \rar & E^{-1} \ar[rr] && E^0 \rar \ar[dl] & \cdots \rar & E^{n-1} \ar[rr] && E^n=E \ar[dl]\\
+        & A^{-n} \ar[ul,dashed] && && A^0 \ar[ul,dashed] && && A^n \ar[ul,dashed] &
+    \end{cd}
+    where $A^i \in \cA[-i]$. Then, we ``refine'' the filtration using the torsion pair as follows. By the torsion pair, we have a short exact sequence
+    \[0 \to T^i \to A^i \to F^i \to 0,\]
+    which will give us a distinguished triangle in $\cA$. Thinking of $E^i$ as an extension of $A^i$ by $E^{i-1}$, we will lift come up with $\tilde{T}^i$ which is an extension of $T^i$ by $E^{i-1}$, such that we have distinguished triangles.
+    \begin{cd}[column sep=0.25cm]
+        E^{i-1} \ar[rr] && \tilde{T}^i \ar[ld]\ar[rr] && E^i \ar[ld]\\
+        & T^i \ar[lu,dashed] && F^i \ar[lu,dashed] &
+    \end{cd}
+    We can do this by defining
+    \[\tilde{T}^i = C(T^i[-1] \to E^{i-1}),\]
+    and then getting a map $\tilde{T}^i \to E^i$ by pulling back $E^{i-1}\to E^i$, after noticing that the composition $T^i[-1] \to E^{i-1} \to \tilde{T}^i$ is 0 (and using that $\Hom$ is a cohomological functor). Then, the cone over $E^{i-1}\to \tilde{T}^i$ is $T^i$ by definition, and the cone over $\tilde{T}^i \to E^i$ is $F^i$ by the octahedral axiom (i.e., analyze the composition $E^{i-1}\to \tilde{T}^i \to E^i$).
+    
+    The point now is to filter $E$ by the $\tilde{T}^i$ instead of the $E^i$.
+    
+    Putting two of these diagrams next to each other and deleting the left/right ends, we get the following.
+    \begin{cd}[column sep=0.25cm]
+        \tilde{T}^{i-1} \ar[rr] && E^{i-1} \ar[ld] \ar[rr] && \tilde{T}^i \ar[ld]\\
+        & F^{i-1} \ar[lu,dashed] && T^i \ar[lu,dashed] &
+    \end{cd}
+    We now need to compute the cone over $\tilde{T}^{i-1} \to \tilde{T}^i$, which we denote by $\tilde{A}^i$. Applying the octahedral axiom, we get a distinguished triangle
+    \[F^{i-1} \to \tilde{A}^i \to T^i \to F^{i-1}[1].\]
+    Taking $\cA$ cohomology, and recognizing that
+    \[H_\cA^j(F^{i-1}) = \begin{cases}
+        F^{i-1}[i-1] & j=i-1\\
+        0 & \text{otherwise}
+    \end{cases}, \qquad H_\cA^j(T^i) = \begin{cases}
+        T^i[i] & j=i\\
+        0 & \text{otherwise}
+    \end{cases}\]
+    we then get exact sequences
+    \[0 \to F^{i-1}[i-1] \to H_\cA^{i-1}(\tilde{A}^i) \to 0\]
+    and
+    \[0 \to H_\cA^i(\tilde{A}^i) \to T^i[i] \to 0,\]
+    so in other words
+    \begin{align*}
+        H_\cA^{-1}(\tilde{A}^i[i]) &= F^{i-1}[i-1] \in \cF\\
+        H_\cA^0(\tilde{A}^i[i]) &= T^i[i] \in \cT,
+    \end{align*}
+    so indeed
+    \[\tilde{A}^i \in \cA^\sharp[-i],\]
+    so we get an $\cA^\sharp$ t-structure cohomology filtration as desired.
+\end{proof}
+
+Tilting provides tons of examples of t-structures---starting with the standard t-structure $\cA \subseteq D^b(\cA)$, we can tilt over and over again to find more and more t-structures. One question we can ask is whether two given t-structures are tilts of each other. We can the following proposition to help us answer this questions.
+
+\begin{prop}
+    Let $\cA^\sharp, \cA$ be hearts of bounded t-structures on a triangulated category $\cD$, and assume
+    \[\cA^\sharp \subseteq \<\cA[1],\cA\>.\]
+    Then, $\cA^\sharp$ is a tilt of $\cA$ at the torsion pair
+    \[\cT = \cA \cap \cA^\sharp, \qquad \cF = \cA \cap \cA^\sharp[-1].\]
+\end{prop}
+
+\begin{proof}
+    It's clear that 
+    \[\Hom(\cT,\cF) = 0,\]
+    since $\cT \subseteq \cA^\sharp$ and $\cF\subseteq \cA^\sharp[-1]$.
+
+    Now, we need to show that every object $A\in \cA$ is an extension of $\cF$ by $\cT$. To do this, we study the $\cA^\sharp$ cohomology filtration of $A$, which will be something like
+    \begin{cd}[column sep=0.25cm]
+        \cdots \ar[rr]&&A^{-2} \ar[rr] && A^{-1} \ar[dl]\ar[rr] && A^0 \ar[dl]\ar[rr] && A^1 \ar[dl]\ar[rr] && A^2 \ar[dl]\ar[rr] && \cdots\\
+        && & H^{-1} \ar[ul,dashed] && H^0 \ar[ul,dashed] && H^1 \ar[ul,dashed] && H^2 \ar[ul,dashed] & &&
+    \end{cd}
+    and we want to argue that only $H^0,H^1$ are nonzero, so that we get a distinguished triangle
+    \[H^0 \to A \to H^1 \to H^0[1],\]
+    {\color{red} FINISH THIS!!}
+\end{proof}
+
+
+\subsection{Examples in Algebraic Geometry}
+
+\begin{eg}
+    Let $(X,H)$ be a polarized surface. We will define a tilt of $D^b(X)$ which will be used later to define a stability condition.
+    
+    Let $\mu \in (-\infty,\infty]$. Then, define
+    \[\cT_\mu = \{\text{torsion sheaves}\} \cup \{\text{sheaves with } \mu^- > \mu\}\]
+\end{eg}
+
+\end{document}

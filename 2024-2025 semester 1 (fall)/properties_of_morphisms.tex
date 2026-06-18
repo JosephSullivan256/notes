@@ -1,0 +1,212 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+
+% Comic Sans
+% \usepackage{sansmathfonts}
+% \usepackage{fontspec}
+% \setmainfont{Comic Sans MS}
+
+% \usepackage{fontspec}
+% \setmainfont{Wingdings-Regular.ttf}
+
+% \usepackage{libertine}
+
+% fancy header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{Joseph Sullivan}
+
+\title{Properties of Schemes and Morphisms}
+\author{Joseph Sullivan}
+\date{December 2024}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+
+\section{Properties of Schemes}
+
+\begin{defn}
+    A scheme $X$ is \textbf{quasicompact} (qc) when any open cover has a finite subcover.
+
+    $X$ is \textbf{quasiseparated} (qs) is the intersection of any two quasicompact open subsets is quasicompact.
+\end{defn}
+
+\begin{prop}
+    Let $X$ be a quasicompact scheme. Then, any $P\in X$ specializes to a closed point $\fm$, i.e., there exists a closed point $\fm \in \overline{\{P\}}$.
+\end{prop}
+\begin{proof}
+    Let $P$ be a point of $X$. We want to show the existence of a ``maximal'' specialization of $P$, so we consider the poset of specializations. That is, consider the set
+    \[\overline{\{P\}}\]
+    which is all points that are specializations of $P$, and define an order via
+    \[a \preceq b \qquad \iff \qquad b \in \overline{\{a\}}\]
+    (which is more usually written if $a\rightsquigarrow b$). To find a maximal element with respect to this order, we apply Zorn's lemma.
+
+    To apply, first we see that $\overline{\{P\}}\neq \emptyset$, since it contains $P$. Second, let $\mathcal A$ be a chain in $\overline{\{P\}}$ (a totally ordered subset). To argue that this is bounded above, we observe that
+    \[\bigcap_{a\in \mathcal A} \overline{\{a\}} \neq \emptyset,\]
+    since an intersection of nested nonempty closed sets is nonempty in a quasicompact space (the usual topology fact), so we can choose a point $b$ in the intersection which will be a mutual specialization of all such $a\in \mathcal A$.
+
+    Therefore, Zorn's lemma implies there is a maximal specialization $\fm$, which is exactly a closed point specializing $P$.
+\end{proof}
+
+\begin{defn}
+    A property $P$ of schemes is called \textbf{local} when
+    \begin{enumerate}[(a)]
+        \item if $X$ has $P$, then all open subsets $U$ have $P$
+        \item if $\bigcup U_i = X$ is an open cover where each $U_i$ has $P$, then $X$ has $P$.
+    \end{enumerate}
+\end{defn}
+
+\begin{defn}
+    A property $P$ of schemes is called \textbf{affine local} when there is a property $Q$ of affine opens where $X$ has $P$ when there is a cover of affine opens having $Q$, and furthermore $Q$ satisfies
+    \begin{enumerate}[(a)]
+        \item if $\Spec A\hookrightarrow X$ has $Q$, then $\Spec A_f \hookrightarrow X$ has $Q$.
+        \item if $(f_1,\dots,f_n)=A$ (i.e., the $\Spec A_{f_i}$ cover $\Spec A$) and $\Spec A_{f_i}\hookrightarrow X$ has $Q$ for all $i$, then so does $\Spec A \hookrightarrow X$.
+    \end{enumerate}
+\end{defn}
+
+In the way that a local property $P$ being true for a scheme $X$ implies that $P$ is true for any open $U$, we would ask something analogous for an affine local property $P$.
+
+\begin{lem}[Affine Communication Lemma]
+    Let $P$ be an affine local property, where $X$ has $P$ if there exists an affine open cover $\bigcup \Spec A_i$ where each $\Spec A_i$ has $Q$. In this case, if $X$ has $P$, then every affine open (not just those in a cover) has $Q$.
+\end{lem}
+
+In particular, the Affine Communication Lemma implies that affine local properties are local, if $X$ has $P$, then any open $U\subseteq X$ has $P$ because any affine open cover of $U$ consists of affine open subsets of $P$, which will then have $Q$.
+
+\begin{eg}
+    The following properties are affine-local
+    \begin{itemize}
+        \item Any \textbf{stalk-local property} (a scheme has property $P$ iff all stalks have property $Q$)
+        \begin{itemize}
+            \item \textbf{reduced} (all stalks reduced)
+            \item \textbf{normal} (all stalks integrally closed)
+            \item \textbf{factorial} (all stalks UFDs)
+        \end{itemize}
+        \item \textbf{Locally Noetherian}, that $X$ every affine open set $\Spec A$ has $A$ is Noetherian.
+        \item \textbf{Locally finite type $A$-scheme}, that $X\to \Spec A$ is an $A$-scheme, with every affine open $\Spec B \to \Spec A$ has $B$ a finitely generated $A$-algebra.
+        \item An $\cO_X$-module $\cF$ being \textbf{quasicoherent}, that restricted to any affine open $\Spec A$, $\cF|_{\Spec A} \cong \tilde{M}$ for an $A$-module.
+        \item A quasicoherent sheaf $\cF$ being \textbf{finite type}, \textbf{finitely presented}, or \textbf{coherent}, which is that for every affine open $\Spec A$, $\Gamma(\Spec A,\cF)$ is finitely generated, finitely presented, or coherent respectively. (Recall, an $A$-module $M$ is coherent if for any morphism $N\to M$, the kernel is finitely generated).
+    \end{itemize}
+\end{eg}
+
+\begin{defn}
+    When we name a property ``locally $P$'', then we will define the property $P$ to be the schemes which are locally $P$ and also quasicompact.
+\end{defn}
+
+
+\section{Properties of Morphisms}
+
+\begin{defn}
+    If $P$ is a property of schemes, we (typically) say a morphism $f:X\to Y$ has $P$ when for every affine open subset $U\subseteq Y$, $\pi^{-1}(U)$ has $P$.
+\end{defn}
+
+In particular this is how we will define what it means for a morphism to be $P=$ quasicompact, quasiseparated, affine, etc.
+
+\begin{defn}
+    A class $P$ of morphisms is called \textbf{reasonable} if it contains all isomorphisms and the following hold.
+    \begin{itemize}[(i)]
+        \item The class is \textbf{preserved by composition}: if $\pi:X\to Y$ and $\rho:Y\to Z$ are both in this class, then so is $\rho\circ\pi$.
+        \item The class is \textbf{preserved by ``base change''}: if $\pi:X\to Y$ is in the class, then for any $Y'\to Y$, the induced map $X\times_Y Y'\to Y'$ is in the class.
+        \item The class is \textbf{local on the target}:
+        \begin{itemize}[(a)]
+            \item if $\pi:X\to Y$ is in the class, then for any $V\subseteq Y$ open, $\pi^{-1}(V)\to V$ is in the class.
+            \item for $\pi:X\to Y$, if there is an open cover $\{V_i\}$ of $Y$ for which each restricted morphism $\pi^{-1}(V_i)\to V_i$ is in the class, then $\pi$ is in the class.
+        \end{itemize}
+    \end{itemize}
+\end{defn}
+
+\begin{defn}
+    We say a property $P$ of morphisms is \textbf{local on the source} when the following holds.
+    \begin{enumerate}[(a)]
+        \item if $X\to Y$ has $P$, then for any open subset, $U\to X \to Y$ has $P$.
+        \item if there is an open cover $\{U_i\}$ of $X$ for which each restricted morphism $U_i\hookrightarrow X\to Y$ has $P$, then $\pi$ has $P$.
+    \end{enumerate}
+\end{defn}
+
+\begin{defn}
+    We will say $P$ is \textbf{affine-local on the target} when there is a property $Q$ of morphisms to affine schemes, where $\pi: X\to Y$ has $P$ when there is an open cover $\{V_i\}$ of $Y$ where each $\pi^{-1}(V_i)\to V_i$ has $Q$, and furthermore $Q$ satisfies properties analogous to (a) and (b) for affine-local properties, i.e.,
+    \begin{enumerate}[(a)]
+        \item if $\pi^{-1}(\Spec A)\to \Spec A$ has $Q$, then $\pi^{-1}(\Spec A_f)\to \Spec A_f$ has $Q$.
+        \item if $(f_1,\dots,f_n)=A$ (i.e., the $\Spec A_{f_i}$ cover $\Spec A$) and each $\pi^{-1}(\Spec A_{f_i}) \to \Spec A_{f_i}$ has $Q$, then so does $\pi^{-1}(\Spec A) \to \Spec A$.
+    \end{enumerate}
+    By the Affine Communication Lemma, if a property is affine-local on the target, then it is in particular local on the target.
+
+    Analogously, one can define what it means for a class of morphisms to be \textbf{affine-local on the source}.
+\end{defn}
+
+\begin{prop}
+    Let $P$ be a property preserved by composition and base change, and say $X\to Y$ and $X'\to Y'$ are morphisms of $S$-schemes with property $P$. Then, $X\times_S X' \to Y\times_S Y'$ has property $P$.
+\end{prop}
+
+\begin{proof}
+    We build the map $X\times_S X' \to Y\times_S Y'$ in steps. Consider the diagram
+    \begin{cd}
+        & X\times_S X' \ar[dl] \rar & X\times_S Y' \ar[dl] \ar[dr] \rar & Y\times_S Y' \ar[dr] &\\
+        X' \rar & Y' & & X \rar & Y
+    \end{cd}
+    and we claim that the left/right parallelograms are Cartesian. We just show the left parallelogram is Cartesian. This amounts to showing that there is a bijection of commuting squares
+    \begin{center}
+        \begin{tikzcd}
+            T \dar[dashed]\rar[dashed] & X\times_S Y' \dar\\
+            X' \rar & Y'
+        \end{tikzcd}
+        $\qquad\iff\qquad$
+        \begin{tikzcd}
+            T \dar[dashed]\rar[dashed] & X \dar\\
+            X' \rar & Y'
+        \end{tikzcd}
+    \end{center}
+    where starting with $T\to X\times_S Y'$, we get $T\to X$ by post composing with the projection, and conversely starting with $T\to X$, we get $T\to X\times_S Y'$ by assembling $T\to X$ and $T\to X'\to Y'$. This will imply that our parallelogram really is Cartesian.
+
+    Now, since $X'\to Y'$ has $P$ by assumption, the map $X\times_S X'\to X\times_S Y'$ has $P$ because it is the base change along a morphism $X\times_S Y'\to Y'$.
+
+    Similarly, we will argue that $X\times_S Y'\to Y\times_S Y'$ is has $P$, so then the compositions has $P$.
+\end{proof}
+
+\begin{defn}
+    A morphism $\pi:X\to Y$ is an \textbf{open embedding} if $\pi$ factors as
+    \[(X,\cO_X) \xrightarrow{\cong} (U,\cO_Y\mid_U) \hookrightarrow (Y,\cO_Y).\]
+\end{defn}
+
+\begin{defn}
+    A morphism $\pi:X\to Y$ is a \textbf{closed embedding} if it is an affine morphism, and for every affine open $\Spec B\subseteq Y$ with $\pi^{-1}(\Spec B)=\Spec A$, the map $B\to A$ is surjective (so modeled on $B\to B/I$).
+\end{defn}
+
+\begin{prop}
+    Open embeddings and closed embeddings are reasonable classes of morphisms.
+\end{prop}
+
+\section{Diagonals}
+
+\begin{defn}
+    Let $P$ be a class of morphisms. We define the class of morphisms $P\delta$ (read $P$-diagonal), where we say $\pi:X\to Y$ lies in $P\delta$ if $\delta_\pi: X \to X\times_Y X$ lies in $P$.
+\end{defn}
+
+\begin{thm}[Cancellation Theorem]
+    Let $P$ be a class of morphisms preserved by base change and composition (e.g. a reasonable class). Suppose
+    \begin{cd}
+        X \ar[rr, "\pi"] \ar[dr,"\tau"'] & & Y \ar[dl,"\rho"]\\
+        & Z &
+    \end{cd}
+    is a commuting diagram of schemes. Suppose $\rho$ is in $P\delta$ and $\tau$ is in $P$. Then, $\pi$ is in $P$.
+\end{thm}
+
+We will write for short,
+\begin{cd}
+    X \ar[rr, "\therefore\in P"] \ar[dr,"\in P"'] & & Y \ar[dl,"\in P\delta"]\\
+    & Z &
+\end{cd}
+
+\begin{proof}
+    
+\end{proof}
+
+\end{document}

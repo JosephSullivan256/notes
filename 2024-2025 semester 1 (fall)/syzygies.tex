@@ -1,0 +1,655 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+
+% Comic Sans
+% \usepackage{sansmathfonts}
+% \usepackage{fontspec}
+% \setmainfont{Comic Sans MS}
+
+% \usepackage{fontspec}
+% \setmainfont{Wingdings-Regular.ttf}
+
+% \usepackage{libertine}
+
+% fancy header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{Joseph Sullivan}
+
+\title{Syzygies in Algebraic Geometry}
+\author{Joseph Sullivan}
+\date{August 2024}
+
+\newcommand{\reg}{\mathrm{reg}}
+\newcommand{\sing}{\mathrm{sing}}
+\newcommand{\Pic}{\mathrm{Pic}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\FS}{\mathrm{FS}}
+\newcommand{\Alb}{\mathrm{Alb}}
+\newcommand{\CMan}{\text{$\C$-$\mathsf{Man}$}}
+
+\newcommand{\ev}{\mathrm{ev}}
+
+\newcommand{\Hol}{\mathrm{Hol}}
+
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Tor}{\mathrm{Tor}}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\textcolor{red}{TODO:
+\begin{itemize}
+    \item kernel bundles
+    \item Koszul duality
+    \item everything we can say about canonical curves easily
+    \item Green's conjecture.
+\end{itemize}
+}
+
+\section{Introduction}
+
+The goal of this set of notes is to give a taste of syzygies in algebraic geometry.
+
+We will define everything and give examples in a moment, but the focus of these notes is to study varieties embedded in projective space $\P^n = \Proj S$ for $S=\C[x_0,\dots,x_n]$ by studying related graded $S$-modules. In turn, we study these graded modules by looking at their minimal free resolutions. The free module in the $i$th step of a resolution is called the \textit{$i$th syzygy module}, and the number of copies of shifts of $S$ in degree $j$ is denoted by $b_{i,j}$, called the $(i,j)$th Betti number. Our goal is to relate geometric properties of projective varieties to the vanishing/non-vanishing of these Betti numbers.
+
+\section{Definitions}
+
+Let $V$ be an $n+1$-dimensional $\C$-vector space. Let $S=\Sym V$, which carries a natural grading, so we get projective space (of 1-dim quotients)
+\[\P(V) = \Proj S,\]
+where $S$ becomes the homogeneous coordinate ring, $V=S_1$ the vector space of $1$-forms, and $\fm = \bigoplus_{d>0} S_d$ the irrelevant ideal.
+
+\begin{defn}
+    A \textbf{minimal free resolution} of a finitely generated graded $S$-module $E$ is an exact sequence
+    \[0\to P_k \xrightarrow{\delta_k} \cdots \to P_1 \xrightarrow{\delta_1} P_0 \xrightarrow{\eps} E \to 0\]
+    of graded $S$-modules, where each $P_i$ is a (shift of a) free $S$-module such that
+    \[\im(\delta_i)\subseteq \fm P_{i-1}\]
+    i.e., the matrix representing $\delta_i$ has entries only in $\fm$ (no ``constant'' entries, elements of $S_0\setminus \{0\}$).
+\end{defn}
+
+\begin{prop}
+    (Potentially infinite) minimal free resolutions exist and are unique up to chain complex isomorphism.
+\end{prop}
+
+\begin{proof}
+    This is by inductively applying graded Nakayama's lemma, which allows us to lift a homogeneous basis of the graded $S/\fm$-vector space
+    \[E/\fm E = \bigoplus_d E_d/(E_d \cap \fm E)\]
+    to generators of $E$. We will apply this repeatedly to the kernel of the previous map to show the existence of a (potentially infinite) minimal free resolution.
+
+    To get uniqueness, similarly apply Nakayama to inductively build isomorphisms between each piece of two minimal free resolutions, starting on the right. In the first step, we want to define an isomorphism $u$ to make the diagram commute.
+    \begin{cd}
+        P \rar["\eps"] \dar[dashed,"u"] & E \dar["\id"]\\
+        P' \rar["\eps'"] & E
+    \end{cd}
+    We do this as follows. Denote $e_1,\dots,e_n$ the basis for $P$ and $e_1',\dots,e_n'$ the basis for $P'$. Choose the ordering such that $\deg(e_i)=\deg(e_i')$, which we can do because both are lifts graded bases for $E/\fm E$ in order for $\eps,\eps'$ to meet the minimality condition. Then, write $\eps(e_i)$ as
+    \[\sum_{j=1}^n s_j \eps'(e_j'),\]
+    and define $u$ by sending
+    \[e_i \mapsto \sum_{j=1}^n s_j e_j'.\]
+    If we identify
+    \[P\cong P' \cong \bigoplus_{i=1}^n S(-\deg(e_i)),\]
+    then we can consider $u$ as an endomorphism of this free module, and then modulo $\fm$, $\det(u)$ is nonzero, so $\det(u)\not\in \fm$ and is therefore a unit, so $u$ is invertible.
+\end{proof}
+
+\begin{defn}
+    The \textbf{$(i,j)$th Betti number} $b_{i,j}(E)$ is the number of copies of the $S(-j)$ in the $i$th step of \textit{the} minimal graded free resolution of $E$, i.e.,
+    \[P_i = \bigoplus_j S(-j)^{b_{i,j}}\]
+    The \textbf{Betti table} is the table consisting of Betti numbers with a strange indexing convention, as below.
+    \begin{center}
+    \begin{tabular}{c|c c c}
+                 & $\cdots$      & $i$      & $i+1$ \\\hline
+        $\cdots$ & $\cdots$ & $\cdots$      & $\cdots$ \\
+        $j$      & $\cdots$ & $b_{i,i+j}$   & $b_{i+1,i+j+1}$\\
+        $j+1$    & $\cdots$ & $b_{i,i+j+1}$ & $b_{i+1,i+j+2}$
+    \end{tabular}
+    \end{center}
+    This convention will make sense in practice.
+\end{defn}
+
+\section{Koszul Complex}
+
+Our goal is to understand how the geometry of a projective variety $X$ affects the Betti numbers of related graded $S$-modules. Our proof of the existence of minimal resolutions isn't very transparent about when Betti numbers vanish or not.
+
+One source of easy to understand Betti numbers are those of a module resolved by a \textit{Koszul Complex}. In particular, we will see that the homogeneous ideal of a complete intersection has easy to understand Betti numbers.
+
+To set this up, we will first define the Koszul complex, give an alternate formulation that is much easier to compute, and then prove that it actually can be used to resolve certain modules.
+
+\subsection{As Tensor Product}
+
+First, we do algebra, which works in both the graded and non-graded setting. Let $A$ be a commutative ring.
+
+\begin{defn}
+    Let $M,N$ be $\Z$-graded $A$-modules. The \textbf{tensor product $M\otimes_A N$} is $\Z$-graded by
+    \[(M\otimes_A N)_d = \bigoplus_{i+j=d} M_i \otimes N_j.\]
+    Now, let $L,P$ also be $\Z$-graded $A$-modules, and $f: M\to L$, $g: N\to P$ are graded module homomorphisms of degree $\deg(f), \deg(g)$. Then, define
+    \[f\otimes g: M\otimes N \to L\otimes P\]
+    of degree $\deg(f)+\deg(g)$ by the following formula, where $a,b$ are homogeneous elements of $M,N$ respectively.
+    \[(f\otimes g)(a\otimes b) = (-1)^{\deg(a)\deg(g)}f(a)\otimes g(b)\]
+\end{defn}
+
+\begin{defn}
+    Let $\cA, \cB$ be chain complexes of $A$-modules, so in particular $\cA,\cB$ are graded $A$-modules with degree -1 differentials $d^\cA,d^\cB$.
+    
+    The \textbf{tensor product $\cA \otimes \cB$} is the graded $A$-module
+    \[\cA \otimes \cB\]
+    with degree -1 differential
+    \[d^\cA \otimes 1_\cB + 1_\cA \otimes d^\cB.\]
+\end{defn}
+
+\begin{rmk}
+    Alternatively, we could have defined the tensor product chain complex $\cA\otimes \cB$ by first defining the double complex $\cA\otimes \cB = (A^i\otimes B^j, d^i\otimes d^j)$, alternatively multiplying the differentials to make the double complex anticommutative, and then taking the total complex (need the double complex to be anticommutative for the total complex to actually have $d\circ d=0$).
+\end{rmk}
+
+\begin{defn}
+    The \textbf{Koszul complex} $K_*=K_*(f_1,\dots,f_r)$ associated to a sequence $f_1,\dots,f_r \in A$ is the tensor product
+    \[\bigotimes_{i=1}^r (0\to A \xrightarrow{\cdot f_i} A \to 0).\]
+\end{defn}
+
+\subsection{As Complex of Wedge Powers}
+
+We want to unpack this definition into something more computable. Unfortunately, the easiest way for me to do this is to introduce even more notation. Denote
+\[\cA^i = (0\to A \xrightarrow{\cdot f_i} A\to 0)\]
+the chain complex which is a tensor factor of $K_*$, and choose the convention that the copies of $A$ occur in degree $0$ and $1$, which we denote with our notation $\cA^i_0$ and $\cA^i_1$.
+
+Now, by definition,
+\[K_k = \bigoplus_{\eps_1+\dots+\eps_r=k} \bigotimes_{i=1}^r \cA^i_{\eps_i}.\]
+In order to get a nonzero summand, without loss of generality assume each $\eps_i \in \{0,1\}$, so our direct sum ranges over $r$ choose $k$ combinations. We then get an isomorphism
+\[\bigwedge^k A^r \cong K_k\]
+by mapping $e_{j_1}\wedge \cdots \wedge e_{j_k}$ to the copy of $1\otimes \cdots \otimes 1$ in the copy of
+\[\bigotimes_{i=1}^r \cA^i_{\eps_i}\]
+where $\eps_i=1$ if $\eps_i \in \{j_1,\dots,j_k\}$ and $\eps_i=0$ otherwise. From now on, we will identify/denote
+\[e_{j_1}\wedge \cdots \wedge e_{j_k} = 1\otimes \cdots \otimes 1 \in \bigotimes_{i=1}^r \cA_{\eps_i}^i.\]
+So, $K_*$ looks like
+\[0\to \bigwedge^r A^r \to \bigwedge^{r-1} A^r \to \cdots \to \bigwedge^1 A^r \to \bigwedge^0 A^r \to 0.\]
+We now find a formula for the boundary in $K_*$ under these identifications. Define
+\[\delta_j = 1_{\cA^1} \otimes \cdots 1_{\cA^{i-1}} \otimes d^{\cA^i} \otimes 1_{\cA^{i+1}} \otimes \cdots \otimes 1_{\cA^r}.\]
+One can check that the boundary of $K_*$, as defined as a tensor product, is
+\[d = \sum_{i=1}^r \delta_j, \]
+e.g., if $r=3$
+\begin{align*}
+    d &= \quad \delta_1 + \delta_2 + \delta_3,\\
+    &= \quad d^{\cA^1}\otimes 1_{\cA^2} \otimes 1_{\cA^3} \quad + \quad 1_{\cA^1} \otimes d^{\cA^2} \otimes 1_{\cA^3} \quad + \quad 1_{\cA^1} \otimes 1_{\cA^2} \otimes d^{\cA^3}.
+\end{align*}
+Now, we will compute the image of $e_{j_1}\wedge \cdots \wedge e_{j_k}$ under our identifications.
+
+The map $\delta_j$ will apply $d^{\cA_j}$ to the $j$th copy of $1$ in $e_{j_1}\wedge \cdots \wedge e_{j_k} = 1\otimes \cdots \otimes 1$, and multiply by -1 to an appropriate power as per the sign convention on the tensor product of graded maps.
+
+We have two cases: If $j$ is some $j_i$, then the $j$th $1$ is degree $1$, and the effect of $d^{\cA_j}$ is to demote the degree of the $j$th $1$ to degree $0$ and multiply by $f_j$. Otherwise, $j$ is not some $j_i$, and so the $j$th $1$ is degree 0, and the effect of $d^{\cA_j}$ is the 0 map.
+
+Therefore, the only summands in $d$ that are nonzero on $e_{j_1}\wedge \cdots \wedge e_{j_k}$ are $\delta_{j_1},\dots,\delta_{j_k}$. Now, our remaining task is to determine the ``appropriate power'' of -1.
+
+We will have
+\begin{align*}
+    \delta_{j_i}(e_{j_1} \wedge \cdots \wedge e_{j_k}) &= (1_{\cA^1}\otimes \cdots \otimes d^{\cA_{j_i}} \otimes \cdots \otimes 1_{\cA^r})(1\otimes \cdots \otimes 1)\\
+    &= [(1_{\cA^1}\otimes \cdots \otimes 1_{\cA^{j_i-1}})\otimes (d^{\cA_{j_i}}\otimes \cdots \otimes 1_{\cA^r})][(1\otimes \cdots \otimes 1)\otimes (1\otimes \cdots \otimes 1)]\\
+    &= (-1)^{\deg(\underbrace{1\otimes \cdots \otimes 1}_{\text{through $j_i-1$}})\deg(d^{\cA_{j_i}}\otimes \cdots \otimes 1_{\cA^r})} \\
+    & \qquad\qquad[(1_{\cA^1}\otimes \cdots \otimes 1_{\cA^{j_i-1}})(1\otimes\cdots \otimes 1)] \otimes [(d^{\cA_{j_i}}\otimes \cdots \otimes 1_{\cA^r})(1\otimes \cdots \otimes 1)]\\
+    &= (-1)^{(\#\{\ell | j_\ell < j_i\}) (-1)} f_{j_i} \cdot e_{j_1} \wedge \cdots \wedge \widehat{e_{j_i}} \wedge \cdots \wedge e_{j_k}\\
+    &= (-1)^{i-1} f_{j_i} \cdot e_{j_1} \wedge \cdots \wedge \widehat{e_{j_i}} \wedge \cdots \wedge e_{j_k}.
+\end{align*}
+
+Therefore,
+\begin{equation}\label{koszul_wedge}
+    d(e_{j_1}\wedge \cdots \wedge e_{j_k}) = \sum_{i=1}^k (-1)^{i-1} f_{j_i} \cdot e_{j_1} \wedge \cdots \wedge \widehat{e_{j_i}} \wedge \cdots \wedge e_{j_k}.
+\end{equation}
+
+\subsection{Acyclicity}
+
+As promised, we will use this Koszul stuff to resolve modules.
+
+\begin{prop}
+    Let $A$ be a commutative ring, $E$ an $A$-module, and the sequence $x=x_1,\dots,x_r$ a regular sequence for $E$, i.e.,
+    \[E/(x_1,\dots,x_{i-1}) \xrightarrow{\cdot x_i} E/(x_1,\dots,x_{i-1})\]
+    is injective. Then, $K_*(x,E)=K_*(x_1,\dots,x_r)\otimes E$ has
+    \[H_p(K_*(x,E)) = \begin{cases}
+        E/(x_1,\dots,x_r)E & p=0\\
+        0 & p\neq 0
+    \end{cases},\]
+    so $K_*(x,E)$ resolves $E/(x_1,\dots,x_r)$.
+\end{prop}
+
+In particular, if $X\subseteq \P(V)$ is a complete intersection of hypersurfaces $f_1,\dots,f_r$, then $K_*(f_1,\dots,f_r)$ is a minimal resolution.
+
+\begin{proof}
+    We prove by induction on $r$. Denote $x'$ the truncated sequence $x_1,\dots,x_{r-1}$. We have a short exact sequence
+    \[0\to K_*(x',E) \to K_*(x,E) \to K_*(x',E)[-1] \to 0,\]
+    where the first map sends
+    \[e_{j_1} \wedge \cdots \wedge e_{j_k} \otimes e \mapsto e_{j_1} \wedge \cdots \wedge e_{j_k} \otimes e,\]
+    and the second map sends
+    \[e_{j_1}\wedge \cdots \wedge e_{j_{k-1}} \wedge e_r \otimes e \mapsto e_{j_1} \wedge \cdots \wedge e_{j_{k-1}}\otimes e,\]
+    and the standard basis elements without $e_r$ are sent to 0. This is clearly exact, and one can check that these maps commute with the boundary map.
+
+    Now, we study the LES of homology, which gives us in particular
+    \begin{cd}
+    H_p(K_*(x'{,}E)) \arrow[r]
+    & H_p(K_*(x{,}E)) \arrow[r]
+    \arrow[d, phantom, ""{coordinate, name=Z}]
+    & H_{p-1}(K_*(x'{,}E)) \arrow[dll,
+    "\delta"{xshift=3.25cm,yshift=0.6cm},
+    rounded corners,
+    to path={ -- ([xshift=2ex]\tikztostart.east)
+    |- (Z) [near end]\tikztonodes
+    -| ([xshift=-2ex]\tikztotarget.west)
+    -- (\tikztotarget)}] \\
+    H_{p-1}(K_*(x'{,}E)) \arrow[r]
+    & H_{p-1}(K_*(x{,}E)) \arrow[r]
+    & H_{p-2}(K_*(x'{,}E))
+    \end{cd}
+    so for $p>1$, we immediately get by induction
+    \[0 \to H_p(K_*(x,E)) \to 0.\]
+
+    More generally, we have to compute the connecting map $\delta$. Let
+    \[\beta = \sum_{j_1<\cdots<j_{p-1}} e_{j_1}\wedge \cdots \wedge e_{j_{p-1}} \otimes e_{j_1,\dots,j_p}\]
+    be a cycle in $K_{p-1}(x',E)$. Then, we have preimage in $K_p(x,E)$ which is
+    \[\alpha = \sum_{j_1<\cdots<j_{p-1}} e_{j_1}\wedge \cdots \wedge e_{j_{p-1}} \wedge e_r \otimes e_{j_1,\dots,j_p},\]
+    and then the boundary in $K_{p-1}(x,E)$ is
+    \begin{align*}
+        d(\alpha) &= \sum_{j_1<\cdots<j_{p-1}} \Big( \sum_{i=1}^{p-1} (-1)^{i-1} x_{j_i} e_{j_1}\wedge \cdots \wedge \widehat{e_{j_i}} \wedge \cdots \wedge e_{j_{p-1}} \wedge e_r \otimes e_{j_1,\dots,j_p}\\
+        &\hspace{7cm}+ (-1)^{p-1} x_r e_{j_1}\wedge \cdots \wedge e_{j_{p-1}} \otimes e_{j_1,\dots,j_p} \Big)\\
+        &= (-1)^{p-1} x_r \sum_{j_1<\cdots<j_{p-1}} e_{j_1}\wedge \cdots \wedge e_{j_{p-1}} \otimes e_{j_1,\dots,j_p}\\
+        &= (-1)^{p-1} x_r \beta
+    \end{align*}
+    where we simplified our term using the fact that $\beta$ was a cycle. Now, this $d(\alpha)$ is a cycle in $K_{p-1}(x',E)$, and its homology class is the image of the class of $
+    \beta$ under $\delta$. In this way, we see that the map is just multiplication by $\pm x_r$. So, referring to the LES induced by our SES of chain complexes, we see that in the $p=1$ case, we get
+    \[H_1(K_*(x,E)) = \ker \delta = 0,\]
+    since $x_r$ is a nonzero divisor for $H_0(K_*(x',E)) = E/(x_1,\dots,x_{r-1})$. Finally, in the $p=0$ case we get that $H_0(K_*(x,E)) = \coker \delta = E/(x_1,\dots,x_r)$ as desired. 
+\end{proof}
+
+\subsection{Graded Case}
+
+The entire discussion carries through when $A$ is a graded ring, with some modifications. For the tensor product description of the Koszul complex, we should instead write
+\[K_*(x_0,\dots,x_r) = \bigotimes_{i=0}^r (0\to A(-\deg(x_i)) \xrightarrow{\cdot x_i} A \to 0\]
+in order for the chain complex to have (degree 0) graded module homomorphisms. That is, $A(-\deg(x_i))$ is $A$ but with the degrees shifted \textit{up} by $\deg(x_i)$, so $1$ is now degree $\deg(x_i)$ and $1\mapsto x_i$ is a degree 0 graded module homomorphism.
+
+Our wedge power description is then correct only as $A$-modules, not as graded $A$-modules. In the case where all $\deg(x_i)=1$ for example, we can make the result correct as graded $A$-modules as follows. Take a vector space $V$ of dimension $r+1$, and write the complex as
+\[0\to \bigwedge^{r+1} V \otimes_\C S(-r-1) \to \bigwedge^r V \otimes_\C S(-r) \to \cdots \to \bigwedge^1 V \otimes_\C S(-1) \to \bigwedge^0 V\otimes_\C S \to 0.\]
+
+As for acyclicity, we will have the same computation of the homology of the Koszul complex for a regular sequence, and even better the homology will be graded, with the isomorphism
+\[H_0(K_*(x,E)) \cong E/(x_1,\dots,x_r)E\]
+being an isomorphism of graded modules.
+
+\subsection{Examples}
+
+Now that we have the Koszul complex, we can figure out the Betti numbers of complete intersections easily.
+
+\begin{eg}
+    Let $X\subseteq \P^2$ be two points in the plane. Then, $X$ is the intersection of a quadric $q$ and line $\ell$, so
+    \[I_X = (q,\ell),\]
+    and $S/I_X$ is resolved by the Koszul complex
+    \[(0\to S(-2) \xrightarrow{\cdot q} S \to 0) \otimes (0 \to S(-1) \xrightarrow{\cdot \ell} S \to 0)\]
+    which is (appending the cokernel)
+    \[0\to S(-3) \to S(-2) \oplus S(-1) \to S \to S/I_X \to 0.\]
+    We can describe the maps using our wedge product description. Forgetting the grading, we are identifying $S(-3)=\wedge^2 S^2$, $S(-2)\oplus S(-1)= \wedge^1 S^2$, $S=\wedge^0 S^2$. Then, we can compute our maps using the formula (\ref{koszul_wedge}). Alternatively, we use the tensor description, where
+    \begin{align*}
+        d(e_1\wedge e_2) &= (d\otimes 1)(e_1\wedge e_2) + (1\otimes d)(e_1\wedge e_2)\\
+        &= q e_2 - \ell e_1
+    \end{align*}
+    and
+    \begin{align*}
+        d(e_1) &= (d\otimes 1)(e_1) + (1\otimes d)(e_1) = q + 0,\\
+        d(e_2) &= (d\otimes 1)(e_2) + (1\otimes d)(e_2) = 0 + \ell.
+    \end{align*}
+    Either way, we compute that the matrices are
+    \[0\to S(-3) \xrightarrow{\begin{bmatrix}
+        -\ell\\
+        q
+    \end{bmatrix}} S(-2) \oplus S(-1) \xrightarrow{\begin{bmatrix}
+        q & \ell
+    \end{bmatrix}} S \xrightarrow{\pi} S/I_X \to 0.\]
+    We could also have replaced the last two terms with just the kernel that the final matrix surjects onto, which is $I_X$. That is, we could have written
+    \[0\to S(-3) \xrightarrow{\begin{bmatrix}
+        -\ell\\
+        q
+    \end{bmatrix}} S(-2) \oplus S(-1) \xrightarrow{\begin{bmatrix}
+        q & \ell
+    \end{bmatrix}} I_X \to 0.\]
+    From this last sequence, we can read off the Betti numbers of $I_X$, giving us the following Betti table.
+    \begin{center}
+        \begin{tabular}{c|c c}
+              & 0 & 1 \\\hline
+            1 & 1 & - \\
+            2 & 1 & 1
+        \end{tabular}
+    \end{center}
+\end{eg}
+
+\begin{eg}\label{maximal_ideal}
+    Let $S=\C[x_0,x_1,x_2]$, and $\fm = S_+$ the irrelevant ideal. This $\fm$ is the complete intersection of $x_0,x_1,x_2$, so it is resolved by the Koszul complex $K_*(x_0,x_1,x_2)$. If we set $V$ to be a $3$-dim $\C$-vector space, the resolution looks like (appending the cokernel, and all tensors over $\C$)
+    \[0 \to \bigwedge^3 V \otimes S(-3) \to \bigwedge^2 V \otimes S(-2) \to \bigwedge^1 V \otimes S(-1) \to \bigwedge^0 V \to S/\fm \to 0.\]
+    We can again write the maps as matrices. Choosing ordered bases
+    \begin{align*}
+        \bigwedge^3 V &= \C \cdot e_0 \wedge e_1 \wedge e_2\\
+        \bigwedge^2 V &= \C \cdot \{e_0 \wedge e_1, e_0 \wedge e_2, e_1 \wedge e_2\}\\
+        \bigwedge^1 V &= \C \cdot \{e_0, e_1, e_2\}\\
+        \bigwedge^0 V &= \C \cdot 1
+    \end{align*}
+    We compute
+    \begin{align*}
+        d(e_0\wedge e_1\wedge e_2) &= x_0 e_1\wedge e_2 - x_1 e_0 \wedge e_2 + x_2 e_0 \wedge e_1\\
+        d(e_0 \wedge e_1) &= x_0 e_1 - x_1 e_0\\
+        d(e_0 \wedge e_2) &= x_0 e_2 - x_2 e_0\\
+        d(e_1 \wedge e_2) &= x_1 e_2 - x_2 e_1\\
+        d(e_0) &= x_0\\
+        d(e_1) &= x_1\\
+        d(e_2) &= x_2,
+    \end{align*}
+    so 
+    \[0 \to \bigwedge^3 V \otimes S(-3) \xrightarrow{\begin{bsmallmatrix}
+            x_2\\ -x_1\\ x_0
+        \end{bsmallmatrix}} \bigwedge^2 V \otimes S(-2) \xrightarrow{\begin{bsmallmatrix}
+        -x_1 & -x_2 & 0 \\
+        x_0  & 0    & -x_2 \\
+        0    & x_0  & x_1
+    \end{bsmallmatrix}}
+    \bigwedge^1 V \otimes S(-1) \xrightarrow{\begin{bsmallmatrix}
+        x_0 & x_1 & x_2
+    \end{bsmallmatrix}} \bigwedge^0 V \otimes S \xrightarrow{\pi} S/\fm \to 0,\]
+    and $\fm$ has the following Betti table.
+    \begin{center}
+        \begin{tabular}{c|c c c}
+              & 0 & 1 & 2 \\\hline
+            1 & 1 & 1 & 1
+        \end{tabular}
+    \end{center}
+\end{eg}
+
+
+\section{Koszul Cohomology: First Look}
+
+\subsection{Algebra}
+
+We can compute Betti numbers of a resolution using cohomology tools.
+
+Let $S=\Sym V$, let $E$ be a graded $S$-module, and
+\[0 \to P_k \xrightarrow{\delta_k} P_{k-1} \to \cdots \to P_1 \xrightarrow{\delta_1} P_0 \xrightarrow{\eps} E \to 0\]
+its minimal free resolution (it could a-priori be infinite, but we are about to show it is finite).
+
+\begin{prop}
+    $b_{p,q}(E) = \dim_\C \Tor_p^S(E, S/\fm)_{q}$
+\end{prop}
+
+\begin{proof}
+    We compute $\Tor_p^S(E,S/\fm)$ as the derived functor of $-\otimes S/\fm$. So, we need to pick a projective resolution for $E$, and in particular the free minimal resolution (truncated to not include $E$) works. Now, we tensor the minimal free resolution with $S/\fm$, so that
+    \[S(-a) \otimes_S S/\fm \cong \C(-a),\]
+    and by the ``minimal'' requirement, all maps become $0$ since tensoring amounts to quotienting each $P_i$ by $\fm P_i$, which contains the image of the previous map. So, our tensored complex looks like
+    \[0 \to P_k \otimes S/\fm \xrightarrow{0} P_{k-1} \otimes S/\fm \xrightarrow{0} \cdots \to P_1 \otimes S/\fm \xrightarrow{0} P_0 \otimes S/\fm \to 0.\]
+    Since all the boundary maps are $0$, we can read off $\Tor$ as
+    \[\Tor_p^S(E,S/\fm) \cong P_p \otimes S/\fm,\]
+    and we therefore can read off the number of copies of $S(-q)$ in $P_p$ by counting the dimension of the $q$th graded component of $P_p \otimes S/\fm$, i.e.,
+    \[b_{p,q}(E) = \dim_\C \Tor_p^S(E,S/\fm)_q.\]
+\end{proof}
+
+Alternatively, we can compute $\Tor_p^S(E,S/\fm)$ as the derived functor of $E\otimes -$. We can resolve $S/\fm$ as in example (\ref{maximal_ideal}) using the Koszul complex $K_*(x_0,\dots,x_n)$, and then tensor with $E$ to get the complex
+\[\cdots \to \bigwedge^{p+1} V \otimes E(-p-1) \to \bigwedge^p V \otimes E(-p) \to \bigwedge^{p-1} V \otimes E(-p+1) \to \cdots\]
+To match the Betti table convention, typically one takes the $(p+q)$th graded component of this complex to get
+\[\cdots \to \bigwedge^{p+1} V \otimes E_{q-1} \xrightarrow{\delta_{p+1,q-1}} \bigwedge^p V \otimes E_q \xrightarrow{\delta_{p,q}} \bigwedge^{p-1} V \otimes E_{q+1} \to \cdots,\]
+and one takes the homology to recover the graded piece of $\Tor$.
+
+\begin{defn}
+    We denote the homology of this complex by
+    \[K_{p,q}(E) := \frac{\ker \delta_{p,q}}{\im \delta_{p+1,q-1}},\]
+    called the $(p,q)$th \textbf{Koszul cohomology} group of $E$. Sometimes, we emphasize that we are studying $E$ as a graded $S=\Sym V$ module, and we write
+    \[K_{p,q}(E;V) = K_{p,q}(E).\]
+\end{defn}
+
+Our discussion then proves
+\[K_{p,q}(E) \cong \Tor_p^S(E,S/\fm)_{p+q},\]
+and as a result
+\[b_{p,p+q}(E) = \dim_\C K_{p,q}(E).\]
+
+In particular, we get that $b_{p,q}(E)=0$ for $p>n+1$, since the Koszul complex resolving $S/\fm$ is only $n+1$ terms long.
+
+
+\subsection{Geometry}
+
+Since we're geometers, we want to instead say something about varieties and sheaves. In our setup, we'll have
+\begin{itemize}
+    \item an irreducible variety $X$,
+    \item an ample line bundle $L$ together with $V\leq H^0(X,L)$ which generates $L$ (i.e., $V\otimes_{\C} \cO_X \twoheadrightarrow L$) to give us a finite morphism $\phi: X\to \P(V)$, (so for $S=\Sym V$, $\P(V)=\Proj S$)
+    \item a sheaf $\cF$ on $X$
+\end{itemize}
+We'll then want to resolve $\phi_* \cF$ by direct sums of sheaves $\cO_{\P}(n)$, so we'll be interested in the group
+\[E_\cF = \bigoplus_{m\gg -\infty} H^0(X,\cF\otimes L^{\otimes m})\]
+(the sheaf associated to this graded module exactly recovers $\phi_* \cF$), which is a module over $S= \Sym H^0(X,L^{\otimes m})$. Then, minimal graded free resolutions of the $S$-module $E_\cF$ will be associated to resolutions of $\cF$ by twisting sheaves. When $\cF$ has no associated primes of dimension 0, then this correspondence is bijective.
+
+\begin{defn}
+    Define the Koszul cohomology groups of $\cF$ with respect to $V$ as
+    \[K_{p,q}(X,\cF; V) = K_{p,q}(E_\cF; V),\]
+    so $K_{p,q}(X,\cF; V)$ is the homology of the complex
+    \[\bigwedge^{p+1} V \otimes H^0(X,\cF\otimes L^{\otimes (q-1)}) \to \bigwedge^p V \otimes H^0(X,\cF\otimes L^{\otimes q}) \to \bigwedge^{p-1} V \otimes H^0(X,\cF\otimes L^{\otimes q+1}).\]
+    Often $L,V$ are implicit (e.g., we fix an embedding $\phi: X\to \P^n$, and take $L=\phi^*\cO_\P(1)$, $V=\<\phi^*x_0,\dots,\phi^*x_n\>$) and we just write $K_{p,q}(\cF)$, and often $\cF=\cO_X$, and we just write $K_{p,q}(X;V)$.
+\end{defn}
+
+\begin{rmk}
+    Very often, we will consider $X\subseteq \P^n$ a projective variety and $L=\cO_X(1)$, and $V=H^0(L)$.
+\end{rmk}
+
+
+\section{Castelnuovo-Mumford Regularity}
+
+One way of relating geometric properties of projective varieties (together with their embedding in projective space) and their Betti numbers is through regularity. Our first definition will be cohomological, though in our primary cases it can also be defined purely as a bound on the non-vanishing of Betti numbers.
+
+\subsection{Definition and Mumford's Theorem}
+
+As always, let $V$ be a $(n+1)$-dim vector space over $\C$, and $\P=\P(V)$ the $n$-dimensional projective space (of one dimensional quotients) of $V$. Let $\cF$ be a coherent sheaf on $\P$.
+
+\begin{defn}
+    Given $m\in \Z$, we say $\cF$ is \textbf{$m$-regular} in the sense of Castelnuovo-Mumford if
+    \[H^i(\P,\cF(m-i))=0 \qquad \text{for $i>0$}.\]
+    The \textbf{regularity} of $\reg(\cF)$ of $\cF$ is the first $m\in \Z$ such that $\cF$ is $m$-regular. ``$i$th cohomology starts vanishing by $m-i$''
+\end{defn}
+
+\begin{eg}
+    We will show the $\reg(\cO_{\P^n})=0$. We know for $\cO$ (all any twists of it) all intermediate cohomology vanishes, and in the top degree (by Serre duality)
+    \[H^n(\cO(0-n))=H^0(\cO(-(-n)+(-n-1)))=H^0(\cO(-1))=0,\]
+    we still get vanishing, but ``barely'', in the sense that $H^n(\cO(-1-n))=H^0(\cO)\neq 0$. So, $\cO$ is $0$-regular, but not $-1$-regular (or any smaller).
+    
+    We can think of this as that in top cohomology, the twisting sheaves sheaves start getting vanishing $-n$, but might not before hand. For example, $\reg(\cO_{\P^n}(-a))=a$, since the $H^n(\cO(-a+a-n))=H^0(\cO(-1))=0$, i.e., $-a$ is cancelled out $a$, but not $a-1$. Heuristically, $\cO(-a)$ is small degree, so the Serre dual has large degree, so it is more likely to have sections, so cohomology is harder to vanish, so regularity is higher.
+\end{eg}
+
+\begin{eg}
+    \begin{itemize}
+        \item $\reg(\cF(a)) = \reg(\cF) - a$.
+        \item $\reg(\cF \oplus \cG) = \max\{\reg(\cF), \reg(\cG)\}$.
+    \end{itemize}
+\end{eg}
+
+\begin{eg}
+    Let
+    \[0\to \cF' \to \cF \to \cF'' \to 0\]
+    be a SES of sheaves. Since $(-) \otimes \cO(a)$ is exact, we get by the LES of cohomology
+    \begin{enumerate}[(i)]
+        \item If $\cF',\cF''$ are $m$-regular, then so is $\cF$, by studying
+        \[H^i(\cF'(m-i)) \to H^i(\cF(m-i)) \to H^i(\cF''(m-i))\]
+        \item If $\cF$ is $m$-regular and $\cF'$ is $(m+1)$-regular, then $\cF''$ is $m$-regular, by studying
+        \[H^i(\cF(m-i)) \to H^i(\cF''(m-i)) \to H^{i+1}(\cF'((m+1)-(i+1))),\]
+        \item We would like to say that if $\cF$ is $m$-regular and $\cF''$ is $(m-1)$-regular, then $\cF'$ is $m$-regular by studying
+        \[H^{i-1}(\cF''((m-1)-(i-1))) \to H^i(\cF'(m-i)) \to H^i(\cF(m-i)),\]
+        but this argument fails in degree $i=1$, since regularity says nothing about the vanishing of $H^0(\cF''(m))$. If, however, we also assume
+        \[H^0(\cF(m-1)) \to H^0(\cF''(m-1))\]
+        is surjective, then the map $H^0(\cF''(m-1))\to H^1(\cF'(m-1))$ is 0, so we get an exact sequence
+        \[0 \to H^1(\cF'(m-1)) \to H^1(\cF(m-1)),\]
+        with the last term zero because $\cF$ is $m$-regular.
+    \end{enumerate}
+\end{eg}
+
+\begin{thm}[Mumford]
+    Assume that $\cF$ is $m$-regular. Then:
+    \begin{enumerate}[(i)]
+        \item $\cF(m)$ is globally generated.
+        \item For every $k\geq 1$, the mapping
+        \[H^0(\P,\cF(m)) \otimes H^0(\P, \cO_\P(k)) \to H^0(\P,\cF(m+k))\]
+        is surjective.
+        \item $\cF$ is $(m+k)$-regular for every $k\geq 1$.
+    \end{enumerate}
+\end{thm}
+
+\begin{rmk}
+    Serre's vanishing theorem tells us that for any given $i$, for sufficiently high twists the $i$th cohomology of $\cF$ vanishes. Mumford's theorem tells us that we should interpret regularity as when Serre vanishing ``starts'', i.e., it's not a coincidence that cohomology happens to vanish along this ``diagonal''
+    \[H^1(\cF(m-1)),H^2(\cF(m-2)),\dots,H^n(\cF(m-n)),\]
+    but rather once we get such vanishing here, we get all higher vanishing.
+\end{rmk}
+
+\begin{proof}
+    We prove (iii) first. By induction, it suffices to prove for $k=1$. As in Koszul cohomology, we start with the Koszul complex resolving $S/\fm$
+    \[0\to\bigwedge^{n+1} V \otimes S(-n-1) \to \cdots \to \bigwedge^1 V \otimes S(-1) \to S \to S/\fm \to 0,\]
+    and we sheafify to get
+    \[0\to\bigwedge^{n+1} V \otimes \cO(-n-1) \to \cdots \to \bigwedge^1 V \otimes \cO(-1) \to \cO \to 0,\]
+    and we tensor by $\cF(m+1-i)$ to get 
+    \[0\to\bigwedge^{n+1} V \otimes \cF(m-i-n) \to \cdots \to \bigwedge^1 V \otimes \cF(m-i) \to \cF(m+1-i) \to 0,\]
+    which is still exact, since the previous complex consisted of locally free sheaves. Now, we want to apply the diagram chasing lemma (below), so we check the hypotheses. Since $\cF$ is $m$-regular, we know
+    \[H^i(\cF(m-i))=H^{i+1}(\cF(m-i-1))=\cdots=H^n(\cF(m-i-n))=0,\]
+    and likewise, if we tensor these sheaves by a vector space $W$ this amounts to direct summing the sheaf $\dim W$ times, so indeed the relevant cohomologies vanish, which tells us that
+    \[H^i(\cF(m+1-i))=0\]
+    for $i>0$, so $\cF$ is $(m+1)$-regular.
+
+    Now, to prove (ii), we take $i=0$, and we can no longer get $H^0(\cF(m-0))=0$ from the regularity hypothesis (since it only applies for $i>0$), but this still tells us (by the lemma below)
+    \[V\otimes H^0(\cF(m)) \to H^0(\cF(m+1))\]
+    is surjective, and writing $V= H^0(\P, \cO(1))$, this is exactly the $k=1$ statement in (ii). We could continue inductively by tensoring the above surjection by more copies of $V$, writing down
+    \[V^{\otimes k} \otimes H^0(\cF(m)) \cong V^{\otimes (k-1)} \otimes V \otimes H^0(\cF(m)) \to V^{\otimes (k-1)} \otimes H^0(\cF(m+1)),\]
+    and then post composing with the inductive step ``evaluation map''.
+
+    Finally, we prove (i), i.e., that
+    \[H^0(\cF(m)) \otimes \cO \twoheadrightarrow \cF(m)\]
+    is surjective, or equivalently
+    \[H^0(\cF(m)) \otimes \cO(k) \twoheadrightarrow \cF(m+1).\]
+    We have the commutative diagram
+    \begin{cd}
+        H^0(\cO(k)) \otimes H^0(\cF(m)) \otimes \cO \rar[two heads] \dar & H^0(\cF(m+k)) \otimes \cO \dar[two heads]\\
+        H^0(\cF(m)) \otimes \cO(k) \rar & \cF(m+k)
+    \end{cd}
+    where for $k\gg 1$, $\cF(m+k)$ is globally generated (since a high enough twist will kill $H^1$ of the kernel of the evaluation map). So, the ``top route'' is surjective, so the bottom horizontal map is surjective, so we win.
+\end{proof}
+
+\begin{lem}[Diagram Chasing Lemma.]
+    Let
+    \[0\to \cF_\ell \xrightarrow{d_{\ell}} \cF_{\ell-1} \xrightarrow{d_{\ell-1}} \cdots \to \cF_1 \xrightarrow{d_1} \cF_0 \xrightarrow{\eps} \cF \to 0\]
+    be an exact sequence of sheaves.
+
+    \begin{enumerate}[(i)]
+        \item If
+        \[H^i(\cF_0)=H^{i+1}(\cF_1)=\cdots=H^{i+\ell}(\cF_\ell)=0,\]
+        then $H^i(\cF)=0$.
+        \item If the previous condition holds for $i=0$ except maybe $H^0(\cF_0)\neq 0$, then
+        \[H^0(X,\cF_0)\to H^0(X,\cF)\]
+        induced by $\eps$ is surjective.
+    \end{enumerate}
+\end{lem}
+
+\begin{proof}
+    We prove (i). Splitting up the LES, we get the following SESs.
+    \begin{align*}
+        & 0 \to \cF_\ell \to \cF_{\ell-1} \to \im d_{\ell-1}\to 0 \tag{$\ell$}\\
+        & 0 \to \im d_{\ell-1} \to \cF_{\ell-1} \to \im d_{\ell-1} \to 0 \tag{$\ell-1$}\\
+        & \cdots \tag{$\cdots$}\\
+        & 0 \to \im d_{2} \to \cF_{1} \to \im d_{1} \to 0 \tag{1}\\
+        & 0 \to \im d_{1} \to \cF_{0} \to \cF \to 0 \tag{0}
+    \end{align*}
+    so then looking at the LESs of cohomology induced by these SESs, we get from (0) and our hypotheses
+    \[0 = H^i(\cF_0) \to H^i(\cF) \to H^{i+1}(\im d_1),\]
+    so we want $H^{i+1}(\im d_1)=0$, so we study (1) to get
+    \[0 = H^{i+1}(\cF_1)\to H^{i+1}(\im d_1) \to H^{i+2}(\im d_2),\]
+    so we want $H^{i+2}(\im d_2)=0$, and so on, until we get to
+    \[0 = H^{i+\ell-1}(\cF_{\ell-1}) \to H^{i+\ell-1}(\im d_{\ell-1}) \to H^{i+\ell}(\cF_\ell)=0,\]
+    so indeed $H^{i+\ell-1}(\im d_{\ell-1})=0$, which implies all the desired cohomologies are 0, so $H^{i}(\cF)=0$.
+
+    To prove (ii), proceed similarly for $i=0$, but notice in the (0) SES, we didn't need $H^0(\cF_0)=0$ just to get surjectivity, we only need $H^1(\im d_1)=0$, where the analogous argument holds.
+\end{proof}
+
+\subsection{Relation to Betti Numbers}
+
+Let's first see how betti numbers control regularity.
+
+\begin{prop} \label{betti-bound}
+    Let $\cF$ be a coherent sheaf on projective space $\P$, and let $E_\cF$ be ``the'' associated graded module. Let
+    \[\cdots \to P_2 \to P_1 \to P_0 \to E \to 0\]
+    be the minimal graded free resolution of $E_\cF$, with $P_i = \bigoplus S(-a_{i,j})$. Then, if $a_{i,j}\leq i+m$ for all $i,j$, then $\cF$ is $m$-regular.
+\end{prop}
+
+\begin{proof}[Proof of Proposition.]
+    This is the diagram chasing lemma applied to the exact sequence of sheaves associated to the $P_i$ and $E$.
+\end{proof}
+
+\begin{eg}
+    A linear subspace $L$ of codimension $r$ in $\P^n$ is a complete intersection of hyperplanes, so its homogeneous ideal has the Koszul complex
+    \[\C^{\binom{r}{r}} \otimes S(-r) \to \cdots \to \C^{\binom{r}{2}}\otimes S(-2) \to \C^{\binom{r}{1}} \otimes S(-1) \to I_L \to 0,\]
+    which proves that $\cI_L$ is $-1$-regular. In fact, $\reg(\cI_L)=-1$, as we'll discuss soon. It will then be true that $\reg(\cO_L)=0$, and in general we would want to say that $\reg(\cO_X) = \reg(\cI_X)+1$, but there's an issue of projective normality, i.e., that
+    \[E_{\cO_X} = S/I_X,\]
+    which is not true in general. Even so, we will at least have that $\cO_X$ is $(\reg(\cI_X)+1)$-regular, but it might have even smaller regularity. For example, 
+\end{eg}
+
+Now, what about a converse? That is, how does regularity control betti numbers? Already Mumford's theorem tells us how regularity of $\cF$ starts to control syzygies of $\Gamma_* \cF$. That is, statement (ii)
+\[H^0(\P, \cF(m)) \otimes H^0(\P, \cO_\P(k)) \twoheadrightarrow H^0(\P, \cF(m+k))\]
+tells us exactly that we can can get global sections of $\cF(k)$ for $k\geq m+1$ via multiplying sections of $\cF(m)$ by homogeneous polynomials. So, $\Gamma_*\cF$ is generated in degrees $\leq m$, so in a minimal free resolution
+\[\cdots \to P_0 \to \Gamma_* \cF \to 0,\]
+where $P_0 = \bigoplus S(-a_{0,j})$, we need $a_{0,j}\leq m$. There's a slight problem with this argument though---it matters where we truncate $\Gamma_*$. The above argument works fine for $\Gamma_* = \Gamma_{m>-\infty}$, but if for example, $\cF$ is $m_0$ regular, and we we define
+\[\Gamma_* \cF = \bigoplus_{m\geq m_0+1} H^0(\P,\cF(m)),\]
+then we can't generate $\Gamma_* \cF$ using degrees $\leq m$, since there are no sections! Instead, we would get generation in degree $m_0+1$, or however much higher we choose to truncate. We'd avoid this issue if we didn't truncate, but to get a finitely generated module, sometimes we need to truncate.
+
+\begin{eg}
+    When $\cF$ has an associated prime of dimension 0, there isn't a canonical associated graded module $E_\cF$, i.e., we cannot take as definition
+    \[E_\cF = \bigoplus_{m=-\infty}^\infty H^0(\cF(m)),\]
+    since, for example, the skyscraper sheaf $\C_P$ has $H^0(\C_P(m))=\C$ for all $m$, so we wouldn't get finite generation. Instead, we have to choose some $m\geq m_0$ to truncate at, but this choice of $m_0$ affects the resolution.
+    
+    For example, consider $\P^1$, so the skyscraper sheaf $\C_P = \cO_P$ has the usual resolution
+    \[0 \to \cO(-P) \to \cO \to \C_P \to 0,\]
+    where $\cO(-P)\cong \cO(-1)$. So, this tells us $\C_P$ is $0$-regular by the proposition.
+
+    \textbf{Question:} is $\reg(\C_P)=0$?
+    
+    \textbf{Answer:} No---essentially the point is that $\C_P\otimes \cO(a) = \C_P$, so we will always get the same higher cohomology no matter how we twist it, so by the cohomology definition of regularity we get $\reg(\C_P) = -\infty$.
+
+    We can also see this from the proposition (but here we are using resolutions by line bundles). We can tensor the resolution
+    \[0\to \cO(-1) \to \cO(0) \to \C_P \to 0\]
+    by $\cO(a)$ to get
+    \[0 \to \cO(-(-a+1)) \to \cO(-(-a)) \to \C_P \to 0,\]
+    so indeed $\C_P$ is $(-a)$-regular for all $a\in \Z$.
+
+    We can see these ``alternate'' resolutions via line bundles essentially as an issue with truncation, as we described earlier. If we take $\Gamma_* = \Gamma_{m\geq 0}$, then $\Gamma_* \C_P$ has the (unique, as always) minimal free resolution
+    \[0 \to S(-1) \to S \to \Gamma_* \C_P \to 0,\]
+    whereas if we took $\Gamma_* = \Gamma_{m\geq a}$, then we get
+    \[0 \to S(-(-a+1)) \to S(-(-a)) \to \Gamma_* \C_P \to 0.\]
+    
+    So, here betti numbers from \textit{any} minimal graded free resolution of \textit{some} $\Gamma_*$ module controls the regularity, but regularity doesn't control all of these resolutions. The next proposition says what regularity can control.
+\end{eg}
+
+\begin{prop}
+    If $\cF$ is $m$-regular and $\cF$ has no dimension 0 associated primes, then in the minimal graded free resolution, $a_{i,j}\leq i+m$. That is, the converse to Proposition \ref{betti-bound} holds, and consequently
+    \[\reg(\cF) = \max\{a_{i,j}-i\}.\]
+\end{prop}
+
+\begin{rmk}
+    We could have also made this theorem true by assuming $\dim \mathrm{Supp}(\cF)>0$ (equivalently $\reg(\cF)>-\infty$) and $\Gamma_* = \Gamma_{m\geq m_0}$ for $m_0$ smaller than $\reg(\cF)$.
+\end{rmk}
+
+\begin{proof}
+    As discussed before, Mumford's theorem (ii) in this setup implies that $\cF$ is generated in degrees $\leq m$, so putting down copies of $S$ in the right degrees and quantities to define $P_0 = \bigoplus S(-a_{0,j})$, we get a short exact sequence
+    \[0 \to K \to P_0 \to \cF \to 0\]
+    where $K$ is the kernel. Then, because $\cF$ is $m$ regular and $P_0$ is $m+1$-regular (it's also $m$-regular, but not needed) with $H^0(P_0(m)) \twoheadrightarrow H^0(\cF(m))$ by construction, we get that $K$ is $(m+1)$-regular. Now, we repeat the argument inductively to build our minimal graded free resolution as usual while bounding betti numbers.
+\end{proof}
+
+\section{Canonical Curves}
+
+% \begin{prop}
+%     The minimal graded free resolution of $E$ is of length at most degree $n+1$, with 
+% \end{prop}
+
+% \begin{itemize}
+%     \item define minimal free resolution of graded $S$-module, betti numbers/table
+%     \item Goal: understand betti numbers of a variety embedded in projective space
+%     \item give geometry example of points in the plane
+%     \item what can we say about canonical curves
+% \end{itemize}
+
+\nocite{*} % Include all references in refs.bib regardless of whether they are referenced or not
+\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliography{2024fall/syzygy_refs} % Entries are in the refs.bib file
+
+\end{document}

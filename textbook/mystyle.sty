@@ -1,0 +1,295 @@
+\ProvidesPackage{mystyle}
+
+%%%% %%%% %%%% %%%% %%%% %%%% %%%%
+%%%% %%%% %%%% MISC %%%% %%%% %%%%
+
+
+% necessary for doing more imports
+\usepackage{standalone}
+\usepackage{import}
+
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[normalem]{ulem}
+
+% smaller margins
+\usepackage[margin=1in]{geometry}
+
+% makes links clickable
+\usepackage{hyperref}
+
+% test that mystyle loaded correctly.
+\newcommand{\mystyleloaded}{My style has loaded correctly.}
+
+% lorem ipsum for generating text for testing purposes
+\usepackage{lipsum}
+
+% boxed environment magic
+\setlength{\fboxsep}{6pt}
+\newsavebox{\mybox}
+\newenvironment{boxedenv}
+    {
+        \begin{lrbox}{\mybox}
+        \begin{minipage}{0.98\textwidth}
+    }
+    {
+        \end{minipage}\end{lrbox}\begin{center}\framebox[\textwidth]{\usebox{\mybox}}\end{center}
+    }
+
+
+%%%% %%%% %%%% %%%% %%%% %%%% %%%%
+%%%% %%%% %%%% MATH %%%% %%%% %%%%
+
+
+% barebones math packages
+\usepackage{amsmath, amsfonts, amssymb}
+% even more math stuff (e.g. floor/ceil)
+\usepackage{mathtools, mathrsfs, stmaryrd}
+% diagrams
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\newenvironment{cd}{\begin{center}\begin{tikzcd}}{\end{tikzcd}\end{center}}
+
+% type set accents, also used for certain math symbols
+% must be included AFTER AMSMATH
+\usepackage{accents}
+
+%%%% THEOREMS %%%%
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+
+\newtheorem{construction}[thm]{Construction}
+
+
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{thmdef}{Theorem/Definition}[section]
+\newtheorem{notation}[thm]{Notation}
+\newtheorem{convention}[thm]{Convention}
+\newtheorem{eg}[thm]{Example}
+\newtheorem{ex}[thm]{Exercise}
+
+\newtheorem{problem}[thm]{Problem}
+
+% \theoremstyle{remark}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{warning}[thm]{Warning}
+
+\newenvironment{motto}{\textit{Motto.}}{}
+\newenvironment{idea}{\textit{Idea.}}{ \hspace*{\fill}$\heartsuit$}
+
+
+%%%% COMMON %%%%
+
+% common blackboard letters
+\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\m}{\mathfrak{m}}
+\newcommand{\fm}{\mathfrak{m}}
+\renewcommand{\P}{\mathbb{P}}
+
+% swap meaning of phi and varphi
+\let\temp\phi
+\let\phi\varphi
+\let\varphi\temp
+
+\renewcommand{\tilde}{\widetilde}
+
+\newcommand{\defeq}{:=}
+
+% turn on display style so that commands like `\lim` and `\sum` are displayed full size in inline math mode
+\newcommand{\ds}{\displaystyle}
+
+
+%%%% ANALYSIS %%%%
+
+% derivatives, partial derivatives, differentials
+% \usepackage{physics}
+
+% shorthand for good letters
+\newcommand{\eps}{\varepsilon}
+
+% sequences
+\newcommand{\seq}[2]{\{#2\}_{#1=1}^\infty}
+
+% upper and lower riemann integrals
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+% riemann integrable
+\newcommand{\Riem}{\mathcal{R}}
+
+% diameter
+\DeclareMathOperator{\diam}{diam}
+
+% override Real and Imaginary to make them readable
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+
+% Principle Log and Arg
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+% floor and ceil
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+%%%% TOPOLOGY %%%%
+
+% interior
+%\newcommand{\interior}[1]{\accentset{\circ}{#1}}
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\Supp}{Supp}
+
+% closure
+\newcommand{\cl}[1]{\overline{#1}}
+%\DeclareMathOperator{\cl}{cl}
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\dv}[2]{\frac{\mathrm d #1}{\mathrm d #2}}
+\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
+
+
+%%%% Linear Algebra %%%%
+
+\newcommand{\rref}[1]{\operatorname{rref}(#1)}
+%\newcommand{\rank}[1]{\operatorname{rank}(#1)}
+\newcommand{\vspan}[1]{\operatorname{span}(#1)}
+
+\newcommand{\innerprod}[2]{\langle #1, #2 \rangle}
+
+
+%%%% Algebra %%%%
+
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Ob}{\mathrm{Ob}}
+\newcommand{\eval}{\mathrm{eval}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\Quot}{\mathrm{Quot}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\im}{\mathrm{im}}
+\newcommand{\coker}{\mathrm{coker}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\DeclareMathOperator{\Proj}{Proj}
+\newcommand{\Ann}{\mathrm{Ann}}
+\newcommand{\LT}{\mathrm{LT}}
+\newcommand{\LC}{\mathrm{LC}}
+\newcommand{\ch}{\mathrm{char}}
+\newcommand{\Fix}{\mathrm{Fix}}
+\newcommand{\GL}{\mathrm{GL}}
+
+\newcommand{\heart}{\ensuremath\heartsuit}
+
+\newcommand{\colim}{\mathrm{colim}}
+
+\newcommand{\QCoh}{\mathrm{QCoh}}
+
+\newcommand{\bigmid}{\;\Big|\;}
+\newcommand{\tensor}{\otimes}
+\newcommand{\teq}{\trianglelefteq}
+
+\newcommand{\op}{\mathrm{op}}
+
+\newcommand{\<}{\left\langle}
+% overwrite \>, which is normally used as an alias to \medskip
+\renewcommand{\>}{\right\rangle}
+
+
+\newcommand{\cHom}{\mathcal{H}\kern -1pt \mathit{om}}
+\newcommand{\cEnd}{\mathcal{E}\kern -1pt \mathit{nd}}
+
+
+%%% categories
+\newcommand{\Set}{\mathrm{Set}}
+\newcommand{\rmod}{\mathrm{mod}\text{-}}
+\newcommand{\rMod}{\mathrm{Mod}\text{-}}
+
+\newcommand{\lmod}{\text{-}\mathrm{mod}}
+\newcommand{\lMod}{\text{-}\mathrm{Mod}}
+
+\newcommand{\grlMod}[1]{\mathrm{Gr} #1 \text{-}\mathrm{Mod}}
+
+\newcommand{\rep}{\mathrm{rep}}
+\newcommand{\Rep}{\mathrm{Rep}}
+
+\newcommand{\Sch}{\mathrm{Sch}}
+
+
+
+\newcommand{\reg}{\mathrm{reg}}
+\newcommand{\sing}{\mathrm{sing}}
+\newcommand{\Pic}{\mathrm{Pic}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\FS}{\mathrm{FS}}
+\newcommand{\Alb}{\mathrm{Alb}}
+\newcommand{\CMan}{\text{$\C$-$\mathsf{Man}$}}
+
+\newcommand{\ev}{\mathrm{ev}}
+
+\newcommand{\Hol}{\mathrm{Hol}}
+
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Tor}{\mathrm{Tor}}
+
+\newcommand{\cL}{\mathcal{L}}
+
+\DeclareMathOperator{\Weil}{Weil}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\CDiv}{CDiv}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\height}{height}
+\DeclareMathOperator{\Ass}{Ass}
+\renewcommand{\div}{\operatorname{div}}
+
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Coh}{Coh}
+\DeclareMathOperator{\RHom}{RHom}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+
+\DeclareMathOperator{\supp}{supp}
+
+\newcommand{\adjunction}[4]{\begin{tikzcd}[ampersand replacement=\&]
+    #1 \rar[shift left=1.3ex,"#3"{name=A}] \& #2 \lar[shift left=0.8ex,"#4"{name=B}] \ar[from=A, to=B,draw=none,"\dashv"{sloped, allow upside down, auto=false}]
+\end{tikzcd}}
+

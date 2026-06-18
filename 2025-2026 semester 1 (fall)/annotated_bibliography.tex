@@ -1,0 +1,130 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{_mystyle}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+
+\usepackage[scr=boondox,  % heavily sloped
+            cal=esstix]   % slightly sloped
+           {mathalpha}
+
+\usepackage{bibentry}
+\bibliographystyle{plain} % We choose the "plain" reference style
+\nobibliography* % here!
+
+% fancy header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{Joseph Sullivan}
+
+\title{Annotated Bibliography}
+\author{Joseph Sullivan}
+\date{December 2025}
+
+\newcommand{\Ku}{\mathcal{Ku}}
+
+\begin{document}
+
+\maketitle
+
+\textbf{Research Idea:}
+
+
+
+
+\cite{Beckmann_Belmans_2022} \bibentry{Beckmann_Belmans_2022}
+
+\begin{itemize}
+    \item Very well explained example of HPD, one step up in complexity from intersection of quadrics vs hyperelliptic curve, which is duality between the (small resolution of) segre cubic $S_3$ and (small resolution of) double cover $\pi: \mathrm{Cob} \to \P^4$ branched along Castelnuovo-Richmond quartic $\mathrm{CR}_4$.
+    \item The $S_3$ has interesting linear sections, including cubic surfaces, Kummer quartics, elliptic curves. The linear sections of the dual also admit classical descriptions.
+    \item Data for HPD is a map $X\to \P V$ \textit{and} a Lefschetz decomposition. The HPD dual described above is for a certain rectangular Lefschetz decomposition (which is maximal in some sense, very good), but there is also another decomposition coming from a different small resolution of $S_3$, coming from a quiver moduli description of $S_3$ as in \cite{Franzen_Reineke_Sabatini_2021}. Specifically, $S_3$ is a moduli space of quiver representations for a stability condition lying on a wall, and small perturbations give small desingularizations, which (through some sort of mutations?) give new Lefschetz decompositions.
+    \item \textbf{Further work:} understand (noncommutative) HPD for this new Lefschetz center.
+\end{itemize}
+
+\cite{Belmans_Bose_Frei_Gould_Hotchkiss_Lamarche_Petok_Avila_Shah} \bibentry{Belmans_Bose_Frei_Gould_Hotchkiss_Lamarche_Petok_Avila_Shah}
+
+\begin{itemize}
+    \item Proposes conjectural semiorthogonal decompositions for Fano schemes of linear subspaces on intersections of two quadrics (denote $F_k(Q_1\cap Q_2)$, where $Q_1\cap Q_2$ is in $\P^{2g+1}$ or $\P^{2g}$), in terms of symmetric powers of an associated hyperelliptic/stacky curve (for odd/even cases). Main evidence is a conjectured identity in the Grothendieck ring of varieties, which in turn is suggested by a (conjectured) equality of E-polynomials (assembles Hodge numbers but makes sense in non smooth/proper setup) which is achieved by upgrading recent topological results from \cite{Chen_Vilonen_Xue_2020,Chen_Vilonen_Xue_2021} to Hodge structures. Upgrading the result involves going back through the proof (Springer theory, mixed Hodge modules, perverse sheaves).
+    \item This is a somewhat reasonable conjecture to make (i.e., it implies the evidence) because of the following commutative diagram:
+    \[\begin{tikzcd}
+    K_0(\mathrm{Var}/k) \dar["\mu_{D^b}"] \rar["\mu_{\mathrm{Hdg}}"] & K_0(\mathrm{HS}) \rar["\mu_\mathrm{E}"] & \Z[x,y] \dar\\
+    K_0(\mathrm{Cat}/k) \ar[rr,"\mu_{\mathrm{Hoch}}"] & & \Z[t,t^{-1}]
+    \end{tikzcd}\]
+    \begin{itemize}
+        \item The ring $K_0(\mathrm{Cat}/k)$ is the \textit{Grothendieck ring of categories}, i.e., a quotient of the free abelian group of smooth and proper pretriangulated dg categories, where you mod out by the ``cut-and-paste-relation'', setting $[\cA]=[\cB]+[\cC]$ whenever you have a semiorthogonal decomposition of the corresponding triangulated categories $H^0(\cA) = \<H^0(\cB), H^0(\cC)\>$. You get a ring structure by tensor product of dg categories.
+        \item The ring $K_0(HS)$ is the Grothendieck ring of the category of polarizable pure rational Hodge structures.
+        \item $\mu_{\mathrm{Hdg}}$ sends a variety to its Hodge structure.
+        \item $\mu_E$ sends a Hodge structure to its Hodge polynomial $\sum_{p,q=0} (-1)^{p+q} h^{p,q} x^p y^q \in \Z[x,y]$
+        \item $\mu_{D^b}$ sends a smooth proper variety to $D^b(X)$ (and extended in a reasonable way by ``Bittner's presentation'' and ``Orlov's blowup formula'').
+        \item $\mu_{\mathrm{Hoch}}$ sends a dg category to its Hochschild homology polynomial $\sum \dim_k HH_i t^i$ (can have negative degrees).
+        \item The Hochschild-Kostant-Rosenberg decomposition
+        \[HH_i(X) \cong \bigoplus_{q-p=i} H^p(X,\Omega_X^q)\]
+        implies the diagram commutes, where we map (I think??)
+        \begin{align*}
+            \Z[x,y] &\longmapsto \Z[t,t^{-1}]\\
+            q &\longmapsto t\\
+            p &\longmapsto t^{-1}
+        \end{align*}
+    \end{itemize}
+    \item This conjecture is known in a few cases:
+    \begin{itemize}
+        \item If $k=0$, the conjecture is known by Bondal-Orlov/Kuznetsov.
+        \item If $k=0,\dots,g-2$, embeddings of $D^b(C)$ into $D^b(F_k(Q_1\cap Q_2))$ are known by \cite{Fonarev_Kuznetsov_2018}[Theorem 2.11].
+        \item If $k=g-2$ and odd dimensional projective space, this is known by the (now proven) BGMN conjecture \cite{Tevelev_Torres_2023,Tevelev_2023} (this is a crazy paper!), due to moduli description by \cite{Desale_Ramanan_1976}.
+    \end{itemize}
+\end{itemize}
+
+\cite{Belmans_Krug_2024} \bibentry{Belmans_Krug_2024}
+
+\begin{itemize}
+    \item Let $S$ be a smooth projective surface, and let $\mathcal J$ be the ideal sheaf of the universal subscheme on $S\times S^{[n]}$. Denote $F$ the Fourier-Mukai functor $\Phi_\mathcal J : D^b(S) \to D^b(S^{[n]})$. Then, they prove for $n\geq 2$
+    \begin{itemize}
+        \item $F$ is fully faithful iff $H^1(S,\cO_S)=H^2(S,\cO_S)=0$ (i.e., $\cO_S$ is exceptional) (this is a reverse implication of a known result).
+        \item $F$  is a $\P^m$-functor or a spherical functor iff $S$ is a K3 surface, where {\color{red} define a $\P^n$-functor}
+        \item If $D^b(S)$ has an exceptional collection using line bundles $L_i$, $D^b(S^{[n]})$ gets a semiorthogonal decomposition using associated line bundles on $S^{[n]}$.
+        \item They get a simplified proof of Toda's semiorthogonal decomposition of a symmetric power of a curve using Jacobians.
+        \item They get a semiorthogonal decomposition
+        \[D^b(S^{[n-1,n]}) = \<D^b(S\times S^{[n-1]}, D^b(S^{[n-2,n-1]}))\>\]
+        which one can expand inductively. No assumptions on $S$ needed!
+    \end{itemize}
+    \item They use derived McKay correspondence, $G$-equivariant derived category, quotient stack.
+    \item Something still works in higher dimensions if you use a symmetric quotient stack instead of the Hilbert scheme.
+    \item Spherical means cone over unit is auto-equivalence which composes to be right adjoint... don't have any intuiting.
+    \item A $\P^n$-functor is similar, but has to do with a $\P$-cotwist auto-equivalence $H$.
+    \item Use Jiang-Leung's ``generalized blowup formula'' \cite{Jiang_Leung_2021}.
+\end{itemize}
+
+\cite{Cheng_Perry_Zhao_2025} \bibentry{Cheng_Perry_Zhao_2025}
+
+\begin{itemize}
+    \item Kuznetsov's conjecture that a cubic fourfold $X\subseteq \P^5$ is rational iff $\Ku(X)$ is a K3 surface comes from heurstics that suggest the following more general claim: if $\Ku(X)$ is a CY category of dimension $\dim X - 2$ and $X$ is rational, then $\Ku(X)$ is equivalent to the $D^b$ of a smooth projective CY variety. 
+    \item This paper investigates an interesting $5$-dimensional example, taking a double cover $X\to \P^5$ branched along a quartic hypersurface that singular along a line $L\subseteq \P^5$. They prove that there is a (weak) crepant categorical resolution of singularities of $\Ku(X)$ by $D^b(W^+,\mathcal{A}^+)$, where $W^+$ is a proper 3-dim CY algebraic space which is not projective, and $\mathcal{A}^+$ is an Azumaya algebra on $W^+$ whose Brauer class is nontrivial. See \cite{Căldăraru_2000} for twisting by Brauer classes (which can be represented by Azumaya algebras), and \cite{Kuznetsov_2015} for the definition of a (weak) crepand categorical resolution.
+    \item The proof studies a RoS $\tilde{X}\to X$, and gets a Kuznetsov component $\tilde{\Ku}(X) \subseteq D^b(\tilde{X})$ which is a crepant categorical resolution of $\Ku(X)$, and uses the {\color{red} quadric bundle structure (look into this)} on $X$ induced by linear projection from $L$ to identify $\tilde{\Ku}(X)$ as the derived category of $(W^+,\mathcal{A}^+)$.
+    \item Another theorem when the quadric bundle admits sections and more singularities you get a projective CY 3-fold.
+\end{itemize}
+
+\cite{Kuznetsov_2015} \bibentry{Kuznetsov_2015}
+\begin{itemize}
+    \item A \textbf{categorical resolution of singularities} of a scheme $Y$ is a ``smooth'' triangulated category $\mathcal{T}$ and an adjoint pair of triangulated functors $\pi_*: \cT \to D^b(Y)$ and $\pi^*: D^{\mathrm{perf}}(Y)\to \mathcal{T}$ such that $\pi_* \circ \pi^* \cong \id_{D^{\mathrm{perf}}(Y)}$ (in particular, $\pi^*$ is fully-faithful).
+    \item A categorical resolution $(\cT,\pi_*,\pi^*)$ of a scheme $Y$ is \textbf{weakly crepant} if $\pi^*$ is in addition a right adjoint to $\pi_*$. (generalizing $K_{\tilde{Y}/Y} = 0$). This is the notion referred to in \cite{Cheng_Perry_Zhao_2025}.
+    \item A categorical resolution is \textbf{strongly crepant} if the relative Serre functor of $\cT$ over $D^b(Y)$ is isomorphic to identity.
+    \item MMP for categorical resolutions seems to be easier.
+\end{itemize}
+
+\cite{Tevelev_Torres_2023} \bibentry{Tevelev_Torres_2023}
+\begin{itemize}
+    \item Let $C$ be a smooth complex projective curve of genus $g\geq 2$, and $N=M_C(2,\Lambda)$ the moduli space of stable vector bundles on $C$ of rank 2 with fixed determinant $\Lambda$ of odd degree. Then, $N$ is a smooth Fano variety of index 2 and $\Pic N = \Z\cdots \theta$ for some ample line bundle $\theta$. Then, the authors gives a semiorthogonal decomposition of $D^b(N)$ (prove semiorthogonality here, prove fullness in \cite{Tevelev_2023}).
+    \item Decomposition is given by several copies of $D^b(\Sym^i C)$ for $i=0,\dots,g-2$ embedded by Fourier Mukai transforms with kernel given by the ``Poincare bundles'' $\mathcal{E}$ or $\overline{\mathcal{E}}$ on $C\times N$, then tensored by powers of $\theta^*$.
+    \item Here, by the Poincare bundles
+    \[\mathcal{E} = F^{\boxtimes \alpha} \in D^b(\Sym^\alpha C \times M_i(\lambda)), \qquad \overline{\mathcal{E}} = \overline{F}^{\boxtimes \alpha} \in D^b(\Sym^\alpha C \times M_i(\Lambda))\]
+    they mean the symmetric group invariant parts of box products/$\mathrm{sgn}$-twisted box products of $F$, the universal bundle on $C\times M_i(\Lambda)$, where $M_i(\Lambda)$ is a moduli space of stable pairs $(E,\phi)$ (where $E$ is a rank 2 vector bundle, $\phi\in H^0(E)$ a nonzero section) with varying GIT stability conditions for different $i$. The derived categories of these $M_i(\Lambda)$ then embed into succesive ones across wall crossings, and then there is a final map from $M_{g-1}\to N$ is the ``Abel-Jacobi'' map with the fiber over a vector bundle given by $\P H^0(C,E)$.
+\end{itemize}
+
+
+% \nocite{*} % Include all references in refs.bib regardless of whether they are referenced or not
+
+\bibliography{annotated_bibliography} % Entries are in the refs.bib file
+
+\end{document}

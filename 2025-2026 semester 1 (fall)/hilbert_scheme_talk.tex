@@ -1,0 +1,310 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Hilbert Scheme Talk}
+\author{Joseph Sullivan}
+\date{September 2025}
+
+\usetikzlibrary{decorations.pathmorphing}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+\DeclareMathOperator{\Spin}{Spin}
+
+% \DeclareMathOperator{\Quot}{Quot}
+\DeclareMathOperator{\Hilb}{Hilb}
+\DeclareMathOperator{\Gr}{Gr}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section*{Introduction}
+
+Let $k$ be a field, and $\P_k^n = \Proj k[x_0,\dots,x_n]$ be projective space. A closed subvariety is a scheme
+\[X = \Proj k[x_0,\dots,x_n]/I\]
+together with the inclusion to projective space induced by the quotient map.
+
+Recall the \textbf{Hilbert polynomial} $p_X(t)$ defined by
+\[p_X(t) = \chi(\cO_X(t)) = \sum_{i} (-1)^i h^i(\cO_X(t))\]
+which for large $t$ (by Serre vanishing) agrees with
+\[p_X(t) = h^0(\cO_X(t)) = \dim (k[x_0,\dots,x_n]/I)_t.\]
+
+\textbf{Question:} How many closed subschemes $X\subseteq \P_k^n$ have the same Hilbert polynomial?
+
+\textbf{Answer:} An entire moduli space's worth of them! We have families!
+
+\section{Grassmannian}
+
+Let's warm up with an easier moduli space, the Grassmannian. In fact, we will eventually realize the Hilbert scheme as a subscheme of the Grassmannian by using this moduli description, so the work we put in here will pay off later!
+
+There are several ways to define the Grassmannian $\Gr_k(q,V)$, but however you do it, the points of the Grassmannian should correspond $q$ dimensional quotients of the vector space $V$, where ``nearby'' quotients are ``nearby'' points. This ``nearby'' notion is crucial: we need to define \textit{families}.
+
+\subsection{Families}
+
+\begin{defn}
+    A \textbf{family} over (i.e., parameterized by) a $k$-scheme $T$, of $q$-dimensional quotients of $V$, is a quotient of vector bundles
+    \[\cO_T\otimes_k V \twoheadrightarrow Q\]
+    where $Q$ is rank $q$.
+\end{defn}
+
+A family over a single point $\Spec k$ is just a vector space quotient $V\to Q$.
+
+Over a more general $k$-scheme, this should indeed be thought of as a family, since for every $k$-point $\{P\}=\Spec k \to T$, we can pullback to a point
+\[\begin{tikzcd}
+\cO_{P} {\otimes_k}  V \dar[two heads] & \lar[squiggly] \cO_{\cO_T\otimes_k V} \dar[two heads]\\
+Q|_{P} & \lar[squiggly] Q
+\end{tikzcd}\]
+(i.e., take fibers), which is just a quotient $V\to Q|_{P}$. The condition that this is a vector bundle quotient is exactly saying that these quotients vary in a nice way.
+
+\subsection{Moduli Functor}
+
+The way that the Grassmannian parameterizes rank $q$ quotients of a vector space $V$ is by the following fact: A map $T\to \Gr(q,V)$ naturally corresponds to a family over $T$.
+
+Now, therefore the \textit{set} of all maps $T\to \Gr(q,V)$ naturally bijects with the set of all families over $T$, so
+\[\Hom(T,\Gr(q,V)) \cong \{\cO_T \otimes_k V \twoheadrightarrow Q \mid \text{Q is a vector bundle of rank } q\}.\]
+
+In fact, the moduli way of defining the Grassmannian is not to start with some concrete description, like by matrices where some minor doesn't vanish (or as the Pl\"ucker embedding in $\P \bigwedge^q V$), but instead to define the Grassmannian by this property.
+
+\begin{defn}
+    The \textbf{Grassmannian moduli functor} is the functor
+    \begin{align*}
+        \Gr(q,V): (\Sch/k)^\op &\longrightarrow \Set\\
+        T &\longmapsto \{\text{rank $q$ vector bundle quotients } \cO_T \otimes_k V \twoheadrightarrow Q\}.
+    \end{align*}
+\end{defn}
+
+By the Yoneda lemma, we have an embedding (full faithful functor)
+\begin{align*}
+    \Sch/k &\longrightarrow ((\Sch/k)^\op \to \Set)\\
+    T &\longmapsto \Hom(-,T),
+\end{align*}
+and we are just characterizing $\Gr(q,V)$ by its image under this functor. This is how you do moduli before stacks---you define a functor $F$, and try to see if this functor comes from a scheme $X$, i.e., that
+\[F \cong \Hom(-,X).\]
+In this case, we say $F$ has a \textbf{fine moduli space}, but this is often too much to ask for.
+
+\section{Functorial Viewpoint}
+
+In some sense, we should view functors
+\[F: (\Sch/S)^\op \to \Set\]
+as generalized spaces. We can carry over lots of terminology from the theory of schemes to these more general spaces. Then, to some extent our task is to try to recognize when a functor is a scheme.
+
+\begin{defn}
+    A functor $h:(\Sch/S)^\op \to Set$ is called a \textbf{Zariski sheaf} if given an open cover
+    \[X = \bigcup_i U_i,\]
+    we get an equalizer sequence
+    \[\bullet \to h(X) \to \prod_i h(U_i) \rightrightarrows \prod_{i,j} h(U_i\cap U_j).\]
+\end{defn}
+
+We will then carry over properties originally defined for morphisms of schemes to natural transformations $h'\to h$ by saying $h'\to h$ has property $P$ whenever base changed along a scheme $X$, we get a morphism of schemes with property $P$.
+
+That is, given a natural transformation $h_X \to h$ (where $h_x = \Hom(-,X)$), we can then form the pullback
+\[\begin{tikzcd}
+h_X \times_h h' \dar\rar & h_X \dar\\
+h' \rar & h
+\end{tikzcd}\]
+(where the pullback of functors is by pulling back in the codomain category, $\Set$, in each object), and then we ask that $h_X\times_h h'$ is representable by a scheme $Y$, and the morphism $h_Y\to h_X$ corresponds to a morphism
+\[Y\to X\]
+with property $P$.
+
+\begin{defn}
+    \begin{itemize}
+        \item For two functors $h',h: (\Sch/S)^\op \to \Set$, we say a natural transformation $h' \to h$ expresses $h'$ as a \textbf{subfunctor} of $h$ if each component $h'(X)\to h(X)$ is injective.
+        
+        \item We say $h' \hookrightarrow h$ is an \textbf{open subfunctor} if it base changes to open immersions, i.e., given $h_X\to h$, $h_X \times_h h' \cong h_U$ for some scheme $U$, and the morphism $h_U\to h_X$ is an open immersion.
+        
+        \item We say a collection $h_i$ of open subfunctors \textbf{covers} $h$ if it base changes to open covers, i.e., given $h_X\to h$, for the $U_i\hookrightarrow X$ by
+        \[h_{U_i} \cong h_X \times_h h_i \hookrightarrow h,\]
+        the $U_i$ form an open cover of $X$.
+    \end{itemize}
+\end{defn}
+
+\begin{prop}
+    A locally representable (having an open cover by representable functors) Zariski sheaf is representable.
+\end{prop}
+\begin{proof}
+    Glue the open subfunctors $h_{U_i}$ along their inclusion into $h$, i.e., we can define $h_{U_{ij}}$ as the fiber product
+    \[h_{U_i} \times_h h_{U_j}\]
+    and glue the $U_i$ along the $U_{ij}$. This gives us a scheme $X$.
+
+    Next, build a morphism $\alpha: h_X\to h$, by seeing that this is the data (by Yoneda) of an $\alpha \in h(X)$, which we get exactly by the Zariski sheaf property, since $\alpha$ will push to the tuple of inclusions $\iota_i \in h(U_i)$, which are cooked up to agree on overlaps.
+
+    Finally, check that $\alpha$ is an isomorphism. From its construction, it isn't hard to see that it is an isomorphism when base changed to each $U_i$. Then, to check when base changing to an arbitrary $T$, {\color{red} finish this!!}
+    
+    by seeing injective and surjective. Pick a test scheme $T$, so that we will study the set function $h_X(T) \to h(T)$.
+
+    First, show surjective. Pick $\beta \in h(T)$ to try to reach. This is (by Yoneda) the data of $\beta: h_T \to h$. Base change this along $X$, and we want to argue that $h_X \times_h h_T \cong h_T$ via the projection, so that our pullback diagram is
+    \[\begin{tikzcd}
+    h_T \dar["="] \rar & h_X \dar\\
+    h_T \rar & h
+    \end{tikzcd}\]
+    which factors $h_T\to h$ through $h_X$, providing a preimage of $\beta$ in $h_X(T)$.
+
+    So, to see $h_X\times_h h_T \cong h_X$, we che
+    
+    To do this, recognize that by Yoneda, $\iota: h_U \to h$ is the data of an element $\iota \in h(U)$, and then 
+\end{proof}
+
+This then gives us a strategy to show certain moduli functors are representable---find an open cover (after you prove it is a Zariski sheaf).
+
+
+\section{Hilbert Scheme}
+
+Fix $S$ a locally Noetherian scheme (to avoid ``finitely presented'' hypotheses showing up everywhere, though this would also work).
+
+Now the Hilbert scheme again comes from a different moduli problem. Our goal is to parameterize closed subvarieties of $\P_S^n$ with fixed Hilbert polynomial $P$, so as before we need to define a \textit{family} of subvarieties.
+
+\begin{defn}
+    A \textbf{family} over an $S$-scheme $T$ is a closed subscheme
+    \[Z\subseteq \P_T^n \cong \P_S^n \times_S T\]
+    which is flat over $T$ such that $Z_t \subseteq \P^n_{\kappa(t)}$ has Hilbert polynomial $P$ for all $t\in T$.
+\end{defn}
+
+Now, we write down the moduli functor.
+\begin{align*}
+    \Hilb^P(\P_k^n/S): (\Sch/S)^\op &\to \Set\\
+    T &\mapsto \left\{\parbox{22em}{closed subschemes $Z\subseteq \P_T^n$ flat $T$ such that\\ $Z_t\subseteq \P_{\kappa(t)}^n$ has Hilbert polynomial $P$ for all $t\in T$}\right\}
+\end{align*}
+
+We should remark that picking a closed subscheme $Z$ flat over $T$ is the same as picking a (quasi)coherent quotient of $\cO_{\P_k^n}$ flat over $T$ (since $Z\hookrightarrow \P_S^n \xrightarrow{\pi} T$ flat is just saying $\cO_{Z,z}$ is a flat $\cO_{T,\pi(z)}$-module). I will go back and forth between these perspectives.
+
+Now, our task is to find a scheme that represents this functor.
+
+\subsection{Boundedness}
+
+Often a first step in moduli problems is to come up with \textit{some} finite-type parameter space for our desired objects. Then, we will take some sort of subobject/quotient to get our moduli space.
+
+With the Hilbert scheme, our finite-type parameter space will be an appropriate Grassmannian. For building intuition, first consider the case when $S=\Spec k$. The idea is that to define a subscheme $X\subseteq \P_S^n$, we either need to specify the inclusion of the ideal or the quotient to the homogeneous coordinate ring
+\[I \hookrightarrow k[x_0,\dots,x_n] \twoheadrightarrow k[x_0,\dots,x_n]/I = S,\]
+and both of these are determined scheme-theoretically by what happens in sufficiently high degrees---while maybe an ideal isn't determined by it's first nonzero degree, there does exist a large $m\gg 0$ such that the ideal generated by $I_m$ cuts out the same scheme. Equivalently (for maybe $m$ one larger), the quotient map $k[x_0,\dots,x_n]_m \to S_m$ determines the the scheme.
+
+Furthermore, we know
+\[\dim_k S_m = P(m)\]
+because $m$ is sufficiently large, so we can consider
+\[(k[x_0,\dots,x_n]_m \twoheadrightarrow S_m) \in \Gr\left(P(m),\binom{n+m}{m}\right),\]
+turning our ``point in the Hilbert scheme'' into a point in the Grassmannian. Sheaf theoretically, this is the map (when $m$ is sufficiently large)
+\[H^0(\cO_{\P^n_k}(m) \to \cO_Z(m))\]
+
+However, we want the \textit{entire} Hilbert scheme in one uniform Grassmannian, not some giant disjoint union over $m$. So, we have to solve this technical issue of finding a uniform $m$.
+
+\subsubsection{Castelnuovo-Mumford Regularity}
+
+We first define this numerical invariant.
+
+\begin{defn}
+    Let $\cF$ be a coherent sheaf on $\P_k^n$.
+    
+    We say \textbf{$d$-regular} if for $i>0$
+    \[H^i(\cF(d-i)) = 0.\]
+
+    We then say the \textbf{Castelnuovo-Mumford regularity} of $\cF$ is the minimum $d$ such that $\cF$ is $d$-regular.
+\end{defn}
+
+This number plays into our discussion due to Mumford's theorem.
+\begin{thm}
+    Let $\cF$ be a coherent sheaf on $\P_k^n$, and assume $\cF$ is $d$-regular. Then,
+    \begin{enumerate}[(i)]
+        \item $\cF(d)$ is globally generated.
+        \item $\Gamma(\cF(m))$ generates $\Gamma_{\geq m}(\cF(m))$ as an $S=k[x_0,\dots,x_n]$-module.
+        \item for $d'\geq d$, $\cF$ is $d'$-regular.
+    \end{enumerate}
+\end{thm}
+
+Regularity helps us in a few ways here:
+\begin{itemize}
+    \item To uniquely determine the ideal/quotient, we wanted the corresponding graded module $\Gamma_{\geq m}(\cF)$ to be generated in degree $m$, and indeed this is true $m=\reg(\cF)$.
+    \item To know the dimension of $\Gamma(\cF(m))$ already matches the Hilbert polynomial, we need higher cohomology to vanish, which is also guaranteed by regularity.
+    \item We want to be able to choose a uniform regularity that makes all $\cO_{\P_k^n(d)} \twoheadrightarrow \cF(d)$ surjective, if they have a fixed Hilbert polynomial. This will need both cohomology vanishing, and the property that we can always choose the degree higher to get more regularity---however this will be subtle.
+\end{itemize}
+
+So, to find our uniform $m$, we just need to uniformly bound the regularity of all coherent sheaf quotients/ideals of $\cO_{\P_k^n}$ with a fixed Hilbert polynomial.
+
+First, let's prove Mumford's regularity theorem. The key ideas are the Koszul complex and how regularity plays with exact sequences.
+
+\begin{proof}
+    First, we show the global generation is implied by the module generation hypothesis. Being globally generated is the condition that the ``evaluation morphism''
+    \[H^0(\P^n_k, \cF(m)) \otimes_k \cO_{\P_k^n} \to \cF(m)\]
+    is a surjection, which is equivalent to any twist being an isomorphism. This looks like a type of multiplication, except instead of multiplying to sections/cocycles of cohomology, we are multiplying against a sheaf section.
+
+    We can factor this multiplication as follows.
+    \[\begin{tikzcd}
+        H^0(\P^n_k, \cF(m)) \otimes H^0(\P^n_k, \cO(d)) \otimes \cO_{\P^n_k} \dar \rar & H^0(\P^n_k, \cF(m+d)) \otimes_k \cO_{\P^n_k} \dar\\
+        H^0(\P^n_k, \cF(m)) \otimes \cO_{\P^n_k}(d) \rar & \cF(m+d)
+    \end{tikzcd}\]
+    We want the bottom map to be surjective. We will soon prove that the top map is surjective (the module generation hypothesis), and the right map is surjective for sufficiently large $d$ by a theorem of Serre. So, indeed global generation is implied by this module generation.
+
+    Let $W = \bigoplus_{i=0}^n kx_i$ so that the polynomial ring is $\Sym^\bullet W$. Then, to show the module generation, it suffices to work one degree at a time (since multiplication $W\times \Sym^{\ell - 1} W \to \Sym^\ell W$ is surjective), i.e., that
+    \[W \otimes \cF(m) \to \cF(m+1)\]
+    is surjective. To prove surjectivity, we analyze the Koszul complex, tensored by $\cF$ and twisting appropriately, i.e., we get an exact sequence
+    \[0\to \wedge^{n+1} W \otimes \cF(-n-1) \to \cdots \xrightarrow{d^3} \wedge^2 W \otimes \cF(-2) \xrightarrow{d^2} \wedge^1 W \otimes \cF(-1) \xrightarrow{\mu(-1)} \wedge^0 W \otimes \cF \to 0.\]
+
+    Now, to deduce $H^0(\P^n_k,\mu(m))$ is surjective, we write a SES
+    \[0\to \im d^2(m+1) \to \wedge^1 W \otimes \cF(m) \to \wedge^0 W \otimes \cF(m) \to 0\]
+    and argue $H^1(\P^n_k, \im d^2(m+1))=0$ by studying the SES
+    \[0 \to \im d^3(m+1) \to \wedge^2 W \otimes \cF(m) \to \im d^2(m+1) \to 0\]
+    and showing $H^1(\P^n_k, \wedge^2 W\otimes \cF(m))=0$ and $H^2(\P^n_k, \im d^3(m+1)) = 0$, by studying...
+
+    Similarly argue that $\cF$ is $(m+1)$-regular.
+\end{proof}
+
+\begin{thm}
+    There exists a uniform bound $m$ on the regularity of (quasi)coherent subsheaves $\cI\leq \cO_{\P_k^n}$ with fixed Hilbert polynomial $P$.
+\end{thm}
+\begin{proof}[Sketch.]
+    The proof goes by induction on $n$. By flat base change, we can assume $k$ is infinite/algebraically closed. Since $\P^n_k$ is Noetherian, $\cI$ has finitely many associated points, so we can (by the infinite field assumption) choose a hyperplane $H$ dodging all of them. Now,
+    \[\Tor^{\cO_{\P_k^n}}_1(\cO_H,\cO_{\P_k^n}/\cI) = 0\]
+    because we can compute $\Tor$ by tensoring the locally free resolution
+    \[0\to \cO_{\P_k^n}(-1) \xrightarrow{H} \cO_{\P_k^n} \to \cO_H\to 0,\]
+    where the first map will remain injective exactly because $H$ being a nonzerodivisor means missing the associated points.
+    
+    So, the sequence
+    \[0\to \cI \to \cO_{\P_k^n} \to \cO_X \to 0\]
+    remains exact upon pulling back (i.e., tensoring with $\cO_H$) to $H=\P_k^{n-1}$
+    \[0 \to \cI|_H \to \cO_H \to \cO_{X\cap H} \to 0.\]
+
+    We also have SES, since $\cI$ is torsion free,
+    \[0\to \cI(-1) \to \cI \to \cI|_H \to 0 \tag{*}\]
+    so $P_{\cI|_H}(t) = P(t) - P(t-1)$, so by induction we can get a uniform bound on $\reg(\cI|_H)$ as $\cI$ varies.
+
+    So, now we want to bootstrap from here to bound the regularity of $\cI$. The usual LES in cohomology applied to (*) gives vanishing of all $H^i$ for $i\geq 2$ for appropriate twists, so we only need to worry about $H^1$. This is technical by measuring the surjectivity on cohomology of the twisted restriction, and by measuring dimension dropping as we do higher twists.
+\end{proof}
+
+\subsubsection{Map to Grassmannian}
+
+We now \textit{try} to define a natural transformation.
+\[\Hilb^P(\P_k^n/k) \to \Gr\left(P(m),\binom{n+m}{m}\right).\]
+A $\Spec k$ family on the left is just a subscheme $X\subseteq \P_k^n$. A 
+$\Spec k$ family on the right is a quotient
+\[k^{\binom{n+m}{m}} \twoheadrightarrow k^{P(m)}.\]
+We get our map on $\Spec k$ points by just sending
+\[\left(X\subseteq \P_k^n \right) \mapsto \left( H^0(\cO_{\P_k^n}(m)) \twoheadrightarrow H^0(\cO_X(m))\right).\]
+
+However, to define a natural transformation, we need to do more! We need to say how families over $T$ map---how a family of subschemes maps to a family of vector space quotients. To do this in families, we would just like to do (for $\pi: \P_T^n \to T$)
+\[(Z\subseteq \P_T^n) \mapsto (\pi_*(\cO_{\P_k^n}(m)) \to \pi_*(\cO_Z(m)))\]
+
+
+
+
+
+% \nocite{*} % Include all references in refs.bib regardless of whether they are referenced or not
+% \bibliographystyle{plain} % We choose the "plain" reference style
+% \bibliography{hilbert_scheme} % Entries are in the refs.bib file
+
+\end{document}

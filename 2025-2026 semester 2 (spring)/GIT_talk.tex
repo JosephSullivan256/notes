@@ -1,0 +1,140 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{GIT 3: Quiver Representations}
+\author{Joseph Sullivan}
+\date{January 2026}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+
+\begin{document}
+
+\maketitle
+
+\section{Problem}
+
+In the previous talks, Jonathon and Daniel set up the general framework of trying to parameterize something using GIT. In this talk, we'll focus on a specific moduli problem which we can solve pretty explicitly with GIT. Before getting into this problem, I wanted to at least mention some famous applications:
+\begin{itemize}
+    \item Moduli of projective hypersurfaces
+    \item Moduli of vector bundles on a curve
+    \item Moduli of pure sheaves (i.e, having pure dimensional support) on a general variety (due to Gieseker, Simpson, Maruyama, etc).
+    \item Moduli of curves of stable curves.
+\end{itemize}
+
+Today I wanted to focus on an application that is in some sense more modest, but still leads to very interesting geometry.
+
+\subsection{Quiver Representations}
+
+\begin{defn}
+    A \textbf{quiver} is a directed graph $Q$ with set of vertices denoted $Q_0$ and set of arrows denoted $Q_1$, where we specify an arrow by source and target, which assembles into functions
+    \[s,t: Q_1 \to Q_0.\]
+\end{defn}
+
+\begin{eg}
+    The \textbf{Kronecker quiver} is the directed graph
+    \[\begin{tikzcd}
+        \bullet \rar[bend left=1cm] \rar[bend right=1cm] & \bullet
+    \end{tikzcd}\]
+    which we could write combinatorially as $Q_0=\{0,1\}$, $Q_1=\{\alpha,\beta\}$, and $s(\alpha)=s(\beta)=0$, $t(\alpha)=t(\beta)=1$.
+\end{eg}
+
+\begin{defn}
+    A \textbf{quiver representation} (over $k$) $(M,\phi)$ is an assignment of vertices $i$ to $k$-modules $M_i$ and arrows to $k$-module homomorphisms $\phi_\alpha: M_{s(\alpha)} \to M_{t(\beta)}$.
+
+    The \textbf{dimension vector} of a quiver representation is the tuple of ranks of the $M_i$, i.e., the tuple $(\dim_k M_i)_{i\in Q_0}$.
+
+    A \textbf{morphism} $f:M\to N$ of quiver representations is the data of $k$-module homomorphisms $f_i: M_i \to N_i$ commuting with the arrows (like a chain complex morphism).
+\end{defn}
+
+\begin{eg}
+    Consider the quiver
+    \[\begin{tikzcd}
+        \overset{0}{\bullet} \rar["\alpha"] & \overset{1}{\bullet}
+    \end{tikzcd}\]
+    Fixing a dimension vector $(d_0,d_1)$, what are \textit{all} of the quiver representations over $\C$ (up to isomorphism)?
+
+    The data of a $\phi_\alpha: M_0 \to M_1$ is just a matrix $\C^{d_0} \to \C^{d_1}$, and the equivalence relation of ``up to isomorphism'' allows us to change bases on both sides independently. By Guassian elimination, we can change basis to a matrix with a block which is the identity $I$ and $0$s everywhere else, so the $\phi_\alpha$ is determined just by fixing a rank between $0$ and $\min\{d_0,d_1\}$.
+
+    So, there is no moduli for these representations---this is just a discrete natural number.
+\end{eg}
+
+\begin{eg}
+    However, once we move up to the Kronecker quiver, once can convince oneself that representations are the same thing as complexes
+    \[\cO_{\P^1}(-1)^{d_0} \xrightarrow{\phi} \cO_{\P^1}^{d_1}\]
+    up to isomorphism. For the case $d_0=d_1=1$, such a complex is determined by the cokernel, which is either $\cO_{\P^1}$ if $\phi=0$, or a skyscraper sheaf $\cO_P$. This suggests that (throwing away the exceptional case of $\phi=0$), we get a bijection between representations and $\P_\C^1$.
+\end{eg}
+
+\subsection{Families and Moduli}
+
+We will formalize this as a moduli problem.
+
+\begin{problem}
+    A \textbf{family} of quiver representations of dimension vector $\underline{d}$ over a scheme $T/k$ is the data of
+    \begin{itemize}
+        \item a collection of locally free sheaves $\cF_v$ for $v\in Q_0$ of rank $d_v$.
+        \item a collection of sheaf morphisms $\phi_\alpha: \cF_{s(\alpha)} \to \cF_{t(\alpha)}$.
+    \end{itemize}
+
+    There is then an equivalence relation on these families, where $(\cF_v,\phi_\alpha)\sim (\cG_v, \psi_\alpha)$ if there exist isomorphism $\cF_v \cong \cG_v$ commuting with the $\phi_\alpha,\psi_\alpha)$.
+
+    This gives us a moduli problem---we now can say what a family of quiver representations is. We can ask whether the following functor has a fine/coarse moduli space:
+    \begin{align*}
+        (\Sch/k)^\op &\longrightarrow \Set\\
+        T &\longmapsto \{\text{families over $T$}\}/\sim.
+    \end{align*}
+    This one will generally not---instead we're going to have to restrict ourselves to ``(semi)stable'' quiver representations, and identify $S$-equivalent semistable quiver representations.
+\end{problem}
+
+
+\section{Stability}
+
+Let's arrive at the notion of the stability of a quiver representation by following the GIT story. If I want to parameterize quiver representations of $Q$ with dimension vector $\underline{d}$, this is what I should do:
+
+\begin{enumerate}
+    \item (Redundantly) parameterize quiver representations by writing down all possible matrices for the arrows, i.e., write down the variety
+    \[X = \prod_{\alpha\in Q_1} \A_k^{d_{s(\alpha)}\cdot d_{t(\alpha)}}\]
+    which has $k$-points $(X_{\alpha})_{\alpha\in Q_0}$ matrices.
+    \item Remove the redundancy by quotienting out by change of basis. Define the ``change of basis'' group
+    \[G = \left(\prod_{v\in Q_0} \GL_{d_v}(k)\right) / \mathbb G_m\]
+    (where we mod out by the extra copy the $\mathbb G_m$ in the center of the action, i.e., scaling all the matrices at once), where a $k$-point $(P_v)_{v\in Q_0}$ acts on a $k$-point $(X_\alpha)_{\alpha\in Q_1}$ by
+    \[(P_v)_{v\in Q_0} \cdot (X_\alpha)_{\alpha\in Q_1} = (P_{t(\alpha)} X_\alpha P_{s(\alpha)}^{-1}).\]
+    Note, we quotient by $\mathbb G_m$ so that maximal dimensional orbits will have any hope of having dimension $\dim G$ (but as Daniel mentioned, we could just replace this notion of having $\dim G$ orbits/0-dimensional stabilizers with the notion of maximal dimension to define notions of stability).
+\end{enumerate}
+
+Now, we want to come up with an interesting quotient $X//G$.
+
+\subsection{Approach 1: Affine GIT}
+
+We could try to do affine GIT, since we are quotienting an affine space anyways. However, when our quiver is connected and has no any directed cycles, this ends up being $\Spec k$, since
+\[X \xlongrightarrow{\pi} X//G\]
+is a good quotient, so it is in particular separated and is constant on $k$-orbits, and so for any assignment of matrices $x\in X$, it sends
+\[\pi(\overline{G\times x}) \subseteq \overline{\pi(G\times x)},\]
+but we claim that the $0$ assignment is dense in \textit{every} orbit, so actually
+\[\pi(x) \in \pi(\overline{G\times 0}) \subseteq \overline{\pi(G\times 0)} = \{\pi(G\times 0)\}.\]
+Then, to see that $0$ is dense in every orbit, we observe the 1-parameter subgroup for $t\in \mathbb G_m$
+\[t \mapsto (t^{\pm 1} I_{d(v)})_{v\in Q_0} \in G\]
+(using the no directed cycles to alternate the signs) which acts on matrix assignments by (without loss of generality for parity)
+\[t\cdot (A_v) = (tI A_v (t^{-1}I)^{-1}) = (t^2 A_v),\]
+so the $G$ orbit of $A_v$ has a closure which hits $0$ as $t\to 0$.
+
+\end{document}

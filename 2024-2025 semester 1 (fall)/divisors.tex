@@ -1,0 +1,744 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+
+% Comic Sans
+% \usepackage{sansmathfonts}
+% \usepackage{fontspec}
+% \setmainfont{Comic Sans MS}
+
+% \usepackage{fontspec}
+% \setmainfont{Wingdings-Regular.ttf}
+
+% \usepackage{libertine}
+
+% fancy header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{Joseph Sullivan}
+
+\title{Divisors}
+\author{Joseph Sullivan}
+\date{December 2024}
+
+
+\renewcommand{\div}{\operatorname{div}}
+
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Associated Points}
+
+\subsection{Intuition}
+
+Here's my intuition about associated primes/points. We want to find the components of the support of a sheaf (something like $\tilde{M}$ on $\Spec A$). We think of $\tilde{M}$ as a bundle, but only supported/existing on a subscheme of $\Spec A$ (on $\Spec A/\Ann_A(M) \hookrightarrow \Spec A$).
+
+To probe the support of the entire sheaf $\tilde{M}$, we look at supports of sections $m\in M$. The annihilator of $m$, $\Ann_A(m)$, are the functions needed to scale $m$ down to zero, which are exactly the functions which vanish on the support of $m$. Now, $m$ might be supported on multiple components, so to get at a single component we should kill off some of $m$, i.e., study $fm$ for $f\in A$. This reflects the containment
+\[\Ann(fm) \supseteq \Ann(m) \qquad V(\Ann(fm)) \subseteq V(\Ann(m)).\]
+Now, this reasoning suggests that the maximal killing of $m$ (i.e., a maximal element of the set of $\{\Ann(m) \mid m\in M\}$) should be prime (a single component), and indeed it is, this is exactly the definition of an associated prime.
+
+We can then redo this definition but working in stalks at (most likely nonclosed) points. To find out about the support of a sheaf $\cF$, we should look at the generic point of an integral subscheme of $X$, and ask if there is a (germ of a) section of $\cF$ supported just at that generic point, which is to ask if there is a (germ of a) section killed by the functions cutting out (the generic point of) the component. This will tell us that this integral subscheme is part of the support of $\cF$, and maybe a little more information (in the case of embedded primes).
+
+\subsection{Associated Primes}
+
+Let $A$ be a Noetherian ring, $M$ a finitely generated module.
+
+\begin{defn}
+    An \textbf{associated prime} of $M$ is a prime ideal $P\leq A$ such that there exists $m\in M$ with
+    \[P = \Ann_A(m).\]
+    These are exactly the maximal ideals among the annihilators, i.e., where a chain
+    \[\Ann(m) \subseteq \Ann(f_1m) \subseteq \Ann(f_2f_1m) \subseteq \cdots\]
+    eventually stabilizes. The set of associated primes of $M$ is denoted $\Ass_A(M)$.
+\end{defn}
+
+\subsection{Finiteness}
+We now give a few lemmas to understand $\Ass(M)$, which we should think of as a sort of decomposition of the support of $M$ into generic points.
+
+This first lemma tells us, as expected, that support grows under extensions.
+
+\begin{prop}
+    Given a short exact sequence
+    \[0 \to M' \to M \to M'' \to 0,\]
+    we get
+    \[\Ass(M) \subseteq \Ass(M')\cup \Ass(M'').\]
+\end{prop}
+\begin{proof}
+    Let $P=\Ann(m)$ be an associated prime of $M$. We have two cases:
+    
+    \textbf{Case 1} (component of $m$ along $M''$ can be killed without destroying $P$ support). There exists $f\in A\setminus P$ such that $fm\in M'$, then
+    \[\Ann(fm) = \Ann(m) = P,\]
+    since $afm=0$ exactly when $af\in P$, so $a\in P$. So, $P\in \Ass(M')$.
+    
+    \textbf{Case 2} (support of $m$ comes from $M''$). When not in case 1, we know for all $f\in A\setminus P$, $fm\not\in M'$. So, we claim
+    \[\Ann(m) = \Ann(\overline{m}),\]
+    since if $f\overline{m}=0$, then $fm\in M'$, $f\in P$.
+\end{proof}
+
+\begin{cor}
+    If $0=M_0\leq M_1 \leq \cdots \leq M_n = M$ is a filtration,
+    \[\Ass(M) \subseteq \bigcup_{i=1}^n \Ass(M_i/M_{i-1}).\]
+\end{cor}
+\begin{proof}
+    We prove this by induction on the length of the filtration. As a base case, we know $\Ass(M_1) \subseteq \Ass(M_1/M_0)$.
+
+    Now, for the induction step, we have a short exact sequence
+    \[0 \to M_{n-1} \to M_n \to M_n/M_{n-1} \to 0,\]
+    which gives
+    \[\Ass(M_n) \subseteq \Ass(M_{n-1}) \cup \Ass(M_n/M_{n-1}) \subseteq \bigcup_{i=1}^n \Ass(M_i/M_{i-1}).\]
+\end{proof}
+
+Now, we will work towards showing that there are finitely many associated primes, by seeing that $M$ is filtered by modules which in turn have finitely many associated primes.
+
+\begin{prop}
+    $M$ has a finite length filtration by cyclic modules.
+\end{prop}
+\begin{proof}
+    Since $M$ is finitely generated, it has a finite length filtration, i.e., take a minimal generating set $\{x_1,\dots,x_r\}$, then we have the filtration
+    \[0\leq \<x_1\> \leq \<x_1,x_2\>\leq \cdots \<x_1,\dots,x_n\>=M\]
+    where each successive quotient is cyclic $\<\overline{x_i}\>\cong A/I_i$.
+\end{proof}
+
+\begin{prop}
+    A cyclic module $A/I$ can be filtered by finitely many successive quotients $A/P_i$.
+\end{prop}
+
+This should be something like a finite irreducible component decomposition, so we will use the usual Noetherian strategy of looking for the smallest component that does not have a finite irreducible component decomposition (which is contradictory, since it should itself be its own irreducible component decomposition).
+
+\begin{proof}
+    Consider the set
+    \[\{I\leq A \mid \text{ $I$ cannot be filtered by finitely many $A/P$}\},\]
+    i.e., the counterexamples to the proposition. Assume for contradiction it is nonempty. By the Noetherian assumption, it has a maximal element $J$. Now, $J$ cannot be prime, because otherwise $A/J$ is already filtered as desired. So, there exist $fg\in J$ with $f,g \not\in J$, which gives us a filtration
+    \[0 \leq fA/(J\cap fA) \leq A/J\]
+    with successive quotients cyclic, so we can write them as $A/J',A/J''$. We must have $J',J''\supseteq J$, by recognizing them as the annihilators of the respective modules. So, by maximality of $J$, we must have that $J',J''$ are such that $A/J',A/J''$ have filtrations by finitely many $A/P$, but (putting the filtrations together) this now gives a filtration of $A/J$ by finitely $A/P$.
+\end{proof}
+
+\begin{prop}
+    $\Ass(A/P)=\{P\}$.
+\end{prop}
+\begin{proof}
+    The annihilator of $\overline{a}$ fits into the exact sequence
+    \[0\to \Ann(\overline{a}) \to A \xrightarrow{\cdot \overline{a}} A/P \to 0,\]
+    and the kernel of $A\xrightarrow{\cdot \overline{a}} A/P$ can be recognized as
+    \[\ker(A/P \xrightarrow{\cdot \overline{a}} A/P) + P,\]
+    but this new kernel is 0 when $\overline{a}\neq 0$, since $A/P$ is an integral domain. So, the only possible proper annihilator is $P$.
+\end{proof}
+
+\begin{prop}
+    $M$ has finitely many associated primes.
+\end{prop}
+\begin{proof}
+    Applying the propositions, filter $M$ by modules $A/P_1,\dots,A/P_n$ so
+    \[\Ass(M) \subseteq \{P_1,\dots,P_n\}.\]
+\end{proof}
+
+\begin{prop}
+    $\Ass(M)=\emptyset$ iff $M=0$.
+\end{prop}
+
+\begin{proof}
+    Let $M=0$, then $\Ann(0)=A$ is not prime. Conversely, let $M\neq 0$, and choose a maximal ideal among annihilators of nonzero elements, this will be an associated prime.
+\end{proof}
+
+\subsection{Relation to Support}
+
+Still, $A$ is Noetherian and $M$ is finitely generated.
+
+\begin{prop}
+    $\Supp(M) = V(\Ann_A M)$
+\end{prop}
+\begin{proof}
+    Suppose $P\in \Supp(M)$, so $M_P\neq 0$, so there exists $m\in M$ which is not killed by $A\setminus P$. Thus, all of the annihilator $\Ann_A(m)$ is instead in $P$. So, we get
+    \[\Ann_A(M) \subseteq \Ann_A(m) \subseteq P,\]
+    so $P\in V(\Ann_A M)$.
+
+    Conversely, let $P\not\in \Supp(M)$, so $M_P=0$. Say $M$ is generated by $x_1,\dots,x_r$, so $M_P=0$ implies there exist $f_1,\dots,f_r\in A\setminus P$ with $f_i x_i=0$. But then, $f_1\cdots f_r \in A\setminus P \cap \Ann_A(M)$, so $P\not\supseteq \Ann_A(M)$.
+\end{proof}
+
+\begin{prop}
+    $\Ass(M) \subseteq \Supp(M)$.
+\end{prop}
+\begin{proof}
+    Let $P=\Ann(m)$ be an associated prime. Then, $M_P\neq 0$, since $\frac{m}{1}\neq 0$, because otherwise $am=0$ for some $a\in A\setminus P$.
+\end{proof}
+
+\begin{prop}
+    Let $0\to M'\to M\to M''\to 0$ be a short exact sequence. Then,
+    \[\Supp M = \Supp M' \cup \Supp M''\]
+\end{prop}
+\begin{proof}
+    By the exactness of localization, we get
+    \[0 \to M'_P \to M_P \to M''_P \to 0,\]
+    so $M_P$ is nonzero iff either $M'_P$ or $M''_P$ is nonzero.
+\end{proof}
+
+\begin{prop}
+    The minimal primes in $\Supp(M)$ are exactly the minimal associated primes.
+\end{prop}
+\begin{proof}
+    The crux is to show that minimal primes in $\Supp(M)$ are associated at all. To accomplish this, we need to find sections $m\in M$ killed by minimal primes. Our strategy is to filter $M$ by pieces $M_i/M_{i-1}\cong R/P_i$, to recognize some of these $P_i$ as minimal primes in $\Supp(M)$, and then to pick $m\in M_i\setminus M_{i-1}$ which has to be killed by $P_i$.
+    
+    So, to start, we give the irreducible component decomposition of the closed set
+    \[\Supp(M) = V(\Ann_A(M)) = \bigcup_{i=1}^r V(Q_i).\]
+    so the $Q_i$ are exactly the minimal primes in $\Supp(M)$. On the other hand, there exists a filtration
+    \[0=M_0 \leq M_1 \leq \cdots \leq M_n = M\]
+    with $M_i/M_{i-1}\cong R/P_i$, so then (because support splits over exact sequences/extensions)
+    \[\Supp(M) = \bigcup_{i=1}^n \Supp(A/P_i) = \bigcup_{i=1}^n V(P_i)\]
+    (since $\Supp(A/P_i) = V(\Ann_A(A/P_i)) = V(P_i)$). So, in particular, the $Q_i$ need to show up among the $P_i$, since the $Q_i$ are minimal among $\Supp(M)$ and will only appear in $V(P)$ for $P\in \Supp(M)$ if $P=Q_i$.
+
+    Now, pick a minimal supporting prime $P$, and choose the first $i$ such that $P=P_i$. Choose $m\in M_i\setminus M_{i-1}$, which we would like to be supported on $P_i$, but we might have to kill off more.
+
+    We at least have $P_i m \subseteq M_{i-1}$ because $M_i/M_{i-1}\cong R/P_i$, and continuing we know
+    \[P_1\cdots P_{i-1} P_i m \subseteq M_0=\{0\}.\]
+    Slightly better, $gm\in M_{i-1}$ iff $g\in P_i$, so in total we get
+    \[P_1\cdots P_{i-1} P_i \subseteq \Ann_A m \subseteq P_i.\]
+    Since $P_i$ is the first time the minimal supporting prime $P$ appeared, we know $P_1\cdots P_{i-1}\not\subseteq P_i$, so we can choose
+    \[f \in P_i \setminus P_1\cdots P_{i-1}.\]
+    Now, we $\Ann_A fm = P_i$, since $fm$ is still in $M_i\setminus M_{i-1}$, so it needs $P_i$ to kill it, but now $P_i$ is enough.
+
+    Thus, $P=P_i \in \Ass_A(M)$. Now, because $\Ass_A(M)\subseteq \Supp_A(M)$, we get that minimal primes of $\Supp_A(M)$ are exactly the minimal primes of $\Ass_A(M)$.
+\end{proof}
+
+\begin{cor}
+    If $A$ is a reduced ring, then $\Ass(A)$ is exactly the minimal primes of $A$.
+\end{cor}
+\begin{proof}
+    Let $P$ be an associated prime, so $P=\Ann_A(a)$. If $P$ isn't minimal, then there exists $Q\subsetneq P$, but then we have
+    \[0=aP \subseteq Q,\]
+    so by primeness, $a\in Q\subseteq P$, so $a^2=0$, but this contradicts $A$ being reduced.
+\end{proof}
+
+\subsection{Localizing at Associated Primes}
+
+We will see that associated primes in some sense contain all of the data for a finitely generated module over a Noetherian ring. To formalize this, in the following result we see that if we look locally around each associated prime (by localizing), we don't get any kernel.
+
+\begin{prop}
+    The product of localizations at associated primes
+    \[i: M \to \prod_{P\in \Ass(M)} M_{P}\]
+    is an injection.
+\end{prop}
+\begin{proof}
+    If $\ker i \neq 0$, it has an associated prime $P=\Ann(m)$ for some $m\in \ker i$, which will be an associated prime of $M$, but then the composition
+    \[\ker i \to M \to M_P\]
+    will be nonzero, since $\frac{m}{1}\neq 0$, since $fm\neq 0$ for any $f\in A\setminus P$.
+\end{proof}
+
+\begin{cor}
+    The product of localizations at maximal associated primes
+    \[i: M \to \prod_{\substack{P\in \Ass(M)\\\text{maximal}}} M_{P}\]
+    is an injection.
+\end{cor}
+\begin{proof}
+    We have a commutative diagram
+    \begin{cd}
+        M \rar[hook] \ar[dr] & \prod_{P\in \Ass(M)} M_{P}\\
+          & \prod_{\substack{P\in \Ass(M)\\\text{maximal}}} M_{P} \ar[u]
+    \end{cd}
+    where the vertical map is ``localizing further''. So, we have expressed our desired map as the first map in an injective composition. So, it is injective.
+\end{proof}
+
+\begin{prop}
+    \[\{\text{zerodivisors for $M$}\} = \bigcup_{P\in \Ass(M)} P.\]
+\end{prop}
+\begin{proof}
+    Suppose $f$ vanishes at an associated prime, $f\in \Ann(m)$, so indeed $f$ is a zerodivisor.
+
+    Conversely, if $f$ is a zerodivisor, then $f\in \Ann(m)$ for some nonzero $m$, and $\Ann(m)$ will be contained in a maximal annihilator, which is an associated prime.
+\end{proof}
+
+\begin{rmk}
+    We might as well have only used the maximal associated primes in the union.
+\end{rmk}
+
+\begin{prop}
+    Let $S$ be the set of zero divisors for $M$. Then,
+    \[S^{-1}M \cong \prod_{\substack{P\in \Ass(M)\\ \text{maximal}}} M_P.\]
+\end{prop}
+\begin{proof}
+    By the previous proposition, we at least get that $M\to \prod M_P$ factors through $S^{-1}M$.
+    
+    Now, we check that this map is an isomorphism by localizing at each maximal ideal. {\color{red} this works!!! i'm pretty sure but don't feel like typing right now... I should formalize the idea that you only need to check injectivity/surjectivity/exactness at maximal associated primes of both modules.}
+\end{proof}
+
+\subsection{On Sheaves}
+
+Recall that a Noetherian ring $A$ has a good notion of associated primes for a finitely generated $A$-module $M$. To move onto the scheme setting, we should work with finite type locally Noetherian schemes.
+
+\begin{defn}
+    Let $X$ be a locally Noetherian scheme, and $\cF$ a finite-type quasicoherent sheaf on $X$. The associated points $\Ass_X(\cF)$ of $X$ are the points $P$ such that $\fm_P$ is an associated prime of the $\cO_{X,P}$ module $\cF_P$, i.e., $\fm_P$ is an annihilator of a germ.
+\end{defn}
+
+\begin{prop}
+     $\Ass_X(\cF)$ is the union of associated primes (identified as points in $X$) of the $A$-modules $\Gamma(\Spec A, \cF)$ over the affine opens $\Spec A\subseteq X$.
+\end{prop}
+
+\begin{proof}
+    Let $P\leq A$ be an associated prime of $M=\Gamma(\Spec A, \cF)$, so $P=\Ann_A(m)$ for some $m\in M$. In other words,
+    \[0 \to P \to A\xrightarrow{\cdot m} \<m\> \to 0\]
+    is exact, and localizing at $P$ we get
+    \[0 \to P A_P \to A_P\xrightarrow{\cdot \frac{m}{1}} \<\frac{m}{1}\> \to 0,\]
+    so $\Ann_{A_P}(\frac{m}{1}) = P A_P$, which in other notation is just asserting
+    \[\fm_P = \Ann_{\cO_{X,P}}(\frac{m}{1}),\]
+    so $P$ is indeed an associated prime of $\cF$.
+    
+    Conversely, let $P\in X$ be an associated prime of $\cF$, let $\Spec A$ be an affine open containing $P$ (so identify $P\leq A$ a prime ideal), and denote $M=\Gamma(\Spec A, \cF)$. Since $X$ is locally Noetherian, $A$ is Noetherian, so $P=(f_1,\dots,f_n)$. By assumption, $PA_P \in \Ass_{A_P}(M_P)$, so there exists $\frac{m}{g}\in M_P$ such that
+    \[PA_P = \Ann_{A_P}(\frac{m}{g}).\]
+    Now, we get $\frac{f_i m}{g} = 0$, so $s_i f_i m = 0$ for some $s_i \in A\setminus P$. Therefore, $P=(f_1,\dots,f_n)$ annihilates $s_1\cdots s_n m$, so $P \subseteq \Ann_A(s_1\cdots s_n m)$. 
+    
+    We get the other containment because if $fs_1\cdots s_n m = 0$, then $\frac{fm}{g}=0$, so $\frac{f}{1} \in PA_P$ so $sf \in P$ for some $s\in A\setminus P$, and since $P$ is prime, this implies $f\in P$.
+\end{proof}
+
+\section{Recall: Presheaves Associated to Modules are Sheaves}
+
+Let $A$ be a ring, $M$ and $A$-module. Then, we have a presheaf $\tilde{M}$ on the base of distinguished opens of $\Spec A$ defined by
+\[\tilde{M}(\Spec A_f) = M_f.\]
+It is standard commutative algebra to show that this is a presheaf (e.g. restrictions commute, etc.)
+\begin{prop}
+    This is a sheaf on a base.
+\end{prop}
+\begin{proof}
+    We can more or less quickly reduce to the following case. Suppose $\Spec A$ is covered by $\Spec A_{f_1}, \dots, \Spec A_{f_n}$, i.e., $(f_1,\dots,f_n)=(1)$. Let
+    \[\frac{m_i}{f_i^k} \in M_{f_i}\]
+    be sections over each $\Spec A_{f_i}$ (we can assume the $k$ in the denominator is uniform by taking $k$ to be the maximum, and multiplying by powers of $1 = \frac{f_i}{f_i}$). Assume that these sections agree on intersections, i.e.,
+    \[\frac{m_i}{f_i^k} = \frac{m_j}{f_j^k} \quad \in M_{f_i f_j},\]
+    which boils down to
+    \[(f_i f_j)^\ell (f_j^k m_i - f_i^k m_j) = 0 \tag{$*$}\]
+    for $\ell \gg 0$.
+
+    The hardest part is to show that these sections glue (uniqueness is an exercise for the reader, as a hint recall that nonzero elements have proper annihilators) to a global section $m\in M$. The idea is ``partitions of unity''. We should think of $f_i^k$ as a bump function with support on $D(f_i)$, since this is exactly where it is nonzero. To get a partition of unity subordinate to the cover $D(f_i)$, we should carry out an averaging procedure, i.e., we want to scale the $f_i^k$ by some $g_i$ so that they add to 1, so we are exactly asking for
+    \[(f_1^k,\cdots,f_n^k) = (1),\]
+    but this is indeed true because
+    \[\sqrt{(f_1^k,\dots,f_n^k)} \supseteq (f_1,\dots,f_n) = (1),\]
+    so the radical contains $1$, so $(1)=(f_1^k,\dots,f_n^k)$. Thus, we have $g_i\in A$ with
+    \[1 = g_1 f_1^k + \cdots + g_n f_n^k.\]
+    The point of partitions of unity is to globalize a local definition---if we have a section defined on $D(f_i)$, then $g_i f_i^k$ can smoothly ``bump'' it down. More to the point, we want to globalize something like $\frac{m_i}{f_i^k}$, and we're scared that it blows up at $V(f_i)$, but our bump saves us when we (heuristically) write
+    \[g_i f_i^k \frac{m_i}{f_i^k} = g_i m_i\]
+    a well-defined global section $g_i m_i \in M$. So, to assemble our local definitions we should define
+    \[m = g_1 m_1 + \cdots + g_n m_n,\]
+    and check that this restricts as desired. Indeed, in $M_{f_i}$
+    \[\frac{m}{1} = \frac{m_i}{f_i^k}\]
+    because
+    \begin{align*}
+        (f_i f_j)^\ell (m_i - f_i^k m) &= (f_i f_j)^\ell (m_i - \sum_j g_j f_i^k m_j)\\
+        &= (f_i f_j)^\ell (m_i - \sum_j g_j f_j^k m_i)\tag{by ($*$)}\\
+        &= (f_i f_j)^\ell (m_i - m_i)\\
+        &= 0
+    \end{align*}
+    for $\ell \gg 0$.
+\end{proof}
+
+\section{Rational Functions}
+
+Let $X$ be a locally Noetherian scheme. There is way to generalize beyond this situation, but its apparently subtle (see Kleiman article on Misconceptions about $\cK_X$---essentially we need to replace zero divisors with elements that eventually become zero divisors (in stalks)).
+
+\begin{thmdef}
+    There is a sheaf $\cK_X$ on the base of affine opens, called the \textbf{sheaf of rational functions}, defined by
+    \[\cK_X(\Spec A) \defeq Q(A),\]
+    where $Q(A)$ is the \textbf{total quotient ring} of $A$, that is, for $S(A)=\{\text{nonzerodivisors of }A\}$, $Q(A)=S(A)^{-1}A$. Restrictions are induced by restrictions in $\cO_X$, i.e., for $\Spec A \supseteq \Spec B$
+    \[A\to B \to S(B)^{-1} B\]
+    factors through $S(A)^{-1}A$.
+\end{thmdef}
+
+Before proving that this works, we want to talk about the geometric inspiration for the algebra complication. We will want our definition of rational functions to correspond to regular functions on \textit{schematically dense} subschemes ({\color{red} should i actually look into/verify the correspondence?}), which coincides with Zariski dense on reduced schemes. Essentially, rational functions should be defined almost everywhere.
+
+If we aren't careful with our definition of the sheaf of rational functions, we could get this wrong. In particular, we will see (somewhat surprisingly) that we can get extra rational functions on smaller open subsets.
+
+\begin{eg}
+    Let $X=\Spec k[x,y]/(xy)$, the two coordinate axes. On the open subset $D(x)$ (the $x$-axis remove the origin), we get
+    \[\Gamma(D(x),\cK_X) = Q((k[x,y]/(xy))_x) = Q(k[x]_x) = Q(k[x]),\]
+    which in particular permits the rational function $\frac{1}{x}$. However, this will not come from a global rational function on $X$, since $x$ is a zerodivisor!
+
+    Geometrically, we want to exclude $\frac{1}{x}$ as a rational function on all of $X$ because it is undefined on a full-dimensional subset $V(x)$.
+\end{eg}
+
+So, in general, as zerodivisors are exactly the functions which cut out components, we should exclude having them in denominators so that we don't accidentally exlcude an entire component.
+
+We can also understand nonzerodivisors over affine opens as \textit{regular sections}.
+\begin{defn}
+    Let $L$ be a line bundle on $X$. A regular section $s\in \Gamma(U,L)$ of $L$ over $U$ is such that
+    \[\cO_U \xrightarrow{\cdot s} L_U\]
+    is injective.
+\end{defn}
+
+\begin{prop}
+    Nonzerodivisors of $A$ correspond exactly to global regular sections of $\cO_{\Spec A}$.
+\end{prop}
+\begin{proof}
+    An element $f\in A$ is a nonzerodivisor exactly when
+    \[A \xlongrightarrow{\cdot f} A\]
+    is injective, which occurs exactly when
+    \[\cO_A \xlongrightarrow{\cdot f} \cO_A\]
+    is injective, which is exactly when $f$ is a regular section.
+\end{proof}
+
+\begin{prop}
+    The assignment
+    \[U \mapsto S(U)\defeq \{\text{regular sections of $\cO_X(U)$}\}\]
+    is a subsheaf (of sets) of $\cO_X$, called the \textbf{sheaf of regular sections}.
+\end{prop}
+
+\begin{proof}
+    Given an open containment $U\supseteq V$ and $f\in \Gamma(U,\cO_X)$, the morphism
+    \[\cO_V \xlongrightarrow{\cdot f|_V} \cO_V\]
+    is just the restriction of
+    \[\cO_U \xlongrightarrow{\cdot f} \cO_U.\]
+    Restrictions of injections to opens are injections (by checking on stalks), so regular sections at least form a presheaf.
+
+    Then, regular sections form a sheaf because compatible regular sections $f_i\in \Gamma(U_i,\cO_X)$ glue at least to a section $f\in \Gamma(U,\cO_X)$, which then gives a morphism $\cO_U\xrightarrow{\cdot f} \cO_U$, which must be injective because it restricts to injective morphisms $\cO_{U_i} \xrightarrow{\cdot f_i} \cO_{U_i}$ on an open cover. This gluing is unique because gluing in $\cO_X$ is unique.
+\end{proof}
+
+As a corollary of this, we can quickly see that $\cK_X$ is at least a presheaf on a base.
+\begin{cor}
+    $\cK_X$ is a presheaf on the base of affine opens.
+\end{cor}
+
+Now, before proving $\cK_X$ is a sheaf, we need a commutative algebra fact that will help us glue rational functions by finding a common nonzerodivisor denominator.
+\begin{lem}
+    Let $I\leq A$ be an ideal such that for $c\in A$, $c\cdot I = (0)$ implies $c=0$. Then, $I$ contains a nonzerodivisor.
+\end{lem}
+\begin{proof}
+    Geometrically, we are asking for a function $f\in I$ which does not vanish on any maximal associated prime (this is exactly a nonzerodivisor).
+    
+    We are given that the only way to kill all functions vanishing on $I$ is to use the $0$ function. In particular, this tells us that for each individual maximal associated prime $P\in \Ass(A)$, we can find a function $f_P \in I$ not vanishing at $P$, since otherwise there exists a $P=\Ann(s)$ where all functions $f\in I$ vanish at $P$, so $I\subseteq P$, and $s$ kills $P$.
+    
+    Now, using the $f_P$, we want to construct a function which doesn't vanish at any maximal associated prime. Naively, we would want to just add up all of the $f_P$, but there's an issue about whether they will cancel each other out. To fix this, we multiply the $f_P$ so that they vanish at all other maximal associated primes. For each $P\in \Ass(A)$, write $P=\Ann(s_P)$, and define
+    \[g_P = s_p f_P \in I.\]
+    We still have $g_P$ is nonzero at $P$, since $f_P \not\in \Ann(s_P)=P$. And, as desired, $g_P$ vanishes at any distinct maximal associated prime $Q\neq P$ because $s_P\in Q$, since otherwise $\Ann(s_Ps_Q) \supseteq Q\cup P$ would be (contained in) a strictly larger associated prime than $Q,P$.
+    
+    Now, define
+    \[f = \sum_{P \text{ maximal in $\Ass(A)$}} g_P.\]
+    This does not vanish at any maximal associated prime, since modulo a maximal associated prime $P$, $f$ is just $g_P \neq 0$. Thus, $f$ is a nonzerodivisor, and by construction it is in $I$.
+\end{proof}
+
+Now, we go through the details proving that $\cK_X$ actually is a sheaf.
+
+\begin{proof}[Proof that $\cK_X$ is a sheaf]
+    % We need to show that we actually have restriction maps along affine opens, and then we want to check that this is a sheaf on a base.
+    
+    % First, we show that restricting to a distinguished open makes sense, so we study $A \to A_f$. To get our restriction map, we want $A \to A_f \to S(A_f)^{-1}A_f$ to factor through $S(A)^{-1}A$, so we the image of a nonzerodivisor of $A$ to be a nonzerodivisor of $A_f$.
+    
+    % Let $a\in A$ be a nonzerodivisor. To test if $\frac{a}{1}\in A_f$ is a nonzerodivisor, let $\frac{b}{f^k}\in A_f$ be nonzero (so $f^\ell b \neq 0$ for all $\ell\in \N$), and we see that
+    % \[\frac{a}{1}\cdot \frac{b}{f^k} \neq 0,\]
+    % since $f^k ab = a(f^k b) \neq 0$ because $f^k b\neq 0$ and $a$ is a nonzerodivisor in $A$.
+    
+    % So, we can at least restrict to distinguished opens. For a general restriction of affine opens, we need to use a usual simultaneous distinguished open argument, as in the Affine Communication Lemma.
+    
+    % Say $\Spec B \subseteq \Spec A$ is a smaller affine open. We can cover $\Spec B$ by $\Spec A_{f_i}=\Spec B_{g_i}$ simultaneous distinguished opens for $i=1,\dots,n$. We previous showed that nonzerodivisors of $A$ are sent to nonzerodisivosrs of $A_{f_i}=B_{g_i}$. Now, we have
+    % \[(a\in A) \mapsto (\frac{a}{1} \in A_{f_i}) \mapsto (b_i \in B_{g_i}),\]
+    % where the tuple of $b_i$ are the localizations of a single $b\in B$ which is the image of $a$ along $A\to B$. We would like to see that when $a$ is a nonzero divisor, that $b$ is a nonzerodivisor. So, this amounts to showing that for $b\in B$ with all $\frac{b}{1}\in B_{g_i}$ nonzerodivisors, that $b$ itself is a nonzerodivisor.
+    
+    % So, to test if $b$ is a nonzerodivisor, let $c\in B$ nonzero. Then, we claim some $\frac{c}{1}\in B_{g_i}$ is nonzero. Suppose not, then for each $i$, there exists a power $k_i\in \N$ with $g_i^{k_i} c = 0$. Now,
+    % \[\sqrt{(g_1^{k_1},\dots,g_n^{k_n})} = (g_1,\dots,g_n) = (1),\]
+    % so some power of $1$ is in $(g_1^{k_1},\dots,g_n^{k_n})$, so actually
+    % \[(g_1^{k_1},\dots,g_n^{k_n}) = (1),\]
+    % so the equations $g_i^{k_i} c = 0$ imply $1\cdot c = 0$, which contradicts $c\neq 0$.
+    
+    % So, some $\frac{c}{1}\in B_{g_i}$ is nonzero, so then $\frac{b}{1}\cdot\frac{c}{1}\neq 0$ because $\frac{b}{1}$ is a nonzerodivisor, so $bc\neq 0$, so $b$ is a nonzerodivisor. Thus, nonzerodivisors restrict well along general affine open restrictions. This means our definition as a presheaf on an open base is well-defined.
+    
+    This quickly specializes to the following setting. Let $\Spec A$ be an affine open covered by $\Spec A_{f_1},\dots,\Spec A_{f_n}$, i.e., $(f_1,\dots,f_n)=(1)$. Let
+    \[\frac{a_i}{b_i} \in \Gamma(\cK_X,\Spec A_{f_i}) = Q(A_{f_i}),\]
+    so $a_i,b_i\in A_{f_i}$ with $b_i$ a nonzerodivisor. Assume that these are compatible on overlaps, i.e.,
+    \[a_i b_j - a_j b_i = 0 \in Q(A_{f_i f_j}),\]
+    which turns into
+    \[(f_i f_j^\ell)(a_i b_j - a_j b_i) = 0 \in A\]
+    for $\ell \gg 0$.
+    
+    Our goal is to show that these glue to some $\frac{\alpha}{\beta}\in Q(A)$, so $\alpha,\beta\in A$ with $\beta$ a nonzerodivisor.
+
+    We make a few reductions. We can replace $a_i,b_i$ with $a_i f_i^k, b_i f_i^k$ by writing
+    \[\frac{a_i}{b_i} = \frac{a_i}{b_i}\cdot \frac{f_i^k}{f_i^k},\]
+    so we can assume $a_i,b_i \in A$ by choosing $k$ large, and furthermore we can assume
+    \[a_i b_j - a_j b_i = 0 \in A\]
+    on the nose by choosing $k$ even larger.
+
+    The main remaining subtlety will be that just because $b_i$ is a nonzerodivisor in $A_{f_i}$, it does not mean it is a nonzerodivisor in $A$ (e.g., if $f_i$ is a zerodivisor, then in $A_{f_i}$ becomes a unit, so in particular a nonzerodivisor).
+
+    If we are to believe that these local compatible rational functions assemble into a global rational function, our intuition might tell us that none of our local rational functions are ``really'' undefined on an entire component. So, we suspect that we can ``clear denominators'' of all $\frac{a_i}{b_i}$ with a single nonzerodivisor. To see if this actually works out, define
+    \[\cA = \{b\in A \mid ba_i \in (b_i) \subseteq A_{f_i} \text{ for all $i$}\} = \bigcap_i (((a_i)A_{f_i} : (b_i)A_{f_i})\cap A)\]
+    the set of global functions which clear denominators. We want to know that it contains a nonzerodivisor. By its description as the intersection of contractions of ideal quotients, it is clear that $\cA$ is at least an ideal. 
+    
+    To find our nonzerodivisor, we check the hypotheses of our lemma. Let $c\in A$ which kills $\cA$. In particular, each $b_j \in \cA$ because
+    \[b_j a_i = b_i a_j \in (b_i) \subseteq A_{f_i},\]
+    so $cb_j = 0$ for all $j$. Since the $b_j$ are nonzerodivisors in $A_{f_j}$, this means that $c=0$ in $A_{f_j}$, so there is $\ell \gg 0$ such that
+    \[c f_j^\ell = 0,\]
+    but $(f_1^\ell,\dots,f_n^\ell)=(1)$, so $\Ann_A(c)=(1)$, so $c=0$. Thus, our lemma tells us $\cA$ contains a nonzerodivisor $\beta$, and by virtue of being an element of $\cA$, we have $\beta a_i = \alpha_i b_i \in A_{f_i}$ for some $\alpha_i\in A_{f_i}$ (i.e., $\beta\frac{a_i}{b_i} = \frac{\alpha_i}{1}$ in $A_{f_i}$). 
+    
+    We would like these $\alpha_i \in A_{f_i}$ to glue into a single $\alpha\in A$, so we need to check that they restrict to the same element in $A_{f_i f_j}$, which we can check after multiplying by $b_i b_j$, since this is a nonzerodivisor in this ring (though not in $A$). So, we check
+    \[b_ib_j(\alpha_i - \alpha_j) = \alpha_i b_i b_j - \alpha_j b_j b_i = \beta a_i b_j - \beta a_j b_i = \beta(a_i b_j - a_j b_i) = 0.\]
+    So, indeed the $\alpha_i$ glue to a single $\alpha\in A$, and then
+    \[\frac{\alpha}{\beta} \in Q(A)\]
+    restricts to our original $\frac{a_i}{b_i}$.
+\end{proof}
+
+\begin{prop}
+    $\cK_{X,x} = Q(\cO_{X,x})$.
+\end{prop}
+\begin{proof}
+    We can understand
+    \[\cK_X = S^{-1} \cO_X,\]
+    where $S$ is the multiplicative subsheaf of $\cO_X$ consisting of regular sections, and by the localization of a sheaf of rings at a multiplicative subsheaf we mean the sheafification of the presheaf
+    \[U \mapsto S^{-1}(U) \cO_X(U).\]
+    In any case, the general theory of localization of sheaves says
+    \[(S^{-1} \cO_X)_x = S_x^{-1} \cO_{X,x},\]
+    so our task is to compute the stalk of $S$ at $x$. In particular, we want $S_x$ to be the set of nonzerodivisors for $\cO_{X,x}$.
+
+    We at least have that $S_x$ is contained in the nonzerodivisors, since otherwise there exists $f\in \Gamma(\Spec A,S)$ a regular section (so a nonzerodivisor) such that $\frac{f}{1}\in A_P$ (where $P$ corresponds to $x$) is not a nonzerodivisor. This means, in particular, that there exists $b\in A$ nonzero such that $ab=0$ in $A_P$, so there exists $g\not\in P$ such that $gab=0$, but this makes $a$ a zerodivisor in $A$.
+
+    To get equality, let $\frac{f}{g}\in A_P$ (so $g\not\in P$) be a nonzerodivisor. We want it to come from a nonzerodivisor over some $\Spec A_h$ (for $h\not\in P$), so in hopes of finding $h$, i.e., we are looking for an open set $D(h)$ of $\Spec A$ that restricts us so that $f$ is supported on all of $D(h)$, that is to say, $f$ is only killed by $0$.
+
+    To find such $D(h)$, our task is to ``kill the killers'' of $f$, so we study
+    \[I = \Ann_A(f) \leq A.\]
+    Since localization is exact, and $f$ is a nonzerodivisor in $A_P$, we have
+    \[I_P = 0\]
+    (in other words, we have short exact sequences
+    \[0\to \Ann_A(f) \to A \to A \to 0\]
+    \[0\to \Ann_{A_P}(f) \to A_P \to A_P \to 0,\]
+    so $I_P = \Ann_{A_P}(f) = 0$).
+
+    Since $A$ is Noetherian, $I=(g_1,\dots,g_k)$ is finitely generated, and all $g_i\mapsto 0$ in $I_P$, so there exist $h_i\not\in P$ with $h_ig_i = 0$. Thus, for $h=h_1\cdots h_k\not\in P$, we get that $hI = 0$, successfully ``killing the killers''. This makes it such that $\Ann_{A_h}(f) = I_h = 0$, so $f$ is a nonzerodivisor in $A_h$. This makes it so $\frac{f}{g}$ indeed is in $S_x$, since it comes from nonzerodivisor $\frac{fh}{gh}\in A_{gh}$.
+\end{proof}
+
+\begin{rmk}
+    The sheaf of rational functions comes equipped with an inclusion $\cO_X \hookrightarrow \cK_X$ associated to the map of sheaves on the base of distinguished opens, where over $\Spec A$ we map
+    \[A \to Q(A)\]
+    by the localization map. Since this is injective over basic open sets, it is an injective morphism, so this is indeed an inclusion.
+\end{rmk}
+
+\begin{defn}
+    We give $\Ass(X)$ the structure of a scheme, by writing
+    \[\Ass(X) = \colim_{P\in \Ass(X)} \Spec \cO_{X,P},\]
+    as the colimit over the inclusions $\Spec \cO_{X,P} \hookrightarrow \Spec \cO_{X,Q}$ for each specialization of associated points $P\rightsquigarrow Q$ (e.g., when $Q$ is an embedded prime).
+
+    This comes with a morphism $j: \Ass(X) \to X$ sending associated points to themselves, and pulling back
+    \[\cO_X \to j_* \cO_{\Ass(X)}\]
+    sending $f\in \cO_X(U)$ to its germ in the stalks of the associated points contained in $U$.
+\end{defn}
+
+\begin{prop}
+    $\cK_X = j_* \cO_{\Ass(X)}$, with the pullback map $j^\sharp$ being the inclusion $\cO_X\hookrightarrow \cK_X$.
+\end{prop}
+
+\begin{defn}
+    Denote the \textbf{ring of rational functions} $R(X) = \Gamma(X,\cK_X)$.
+\end{defn}
+
+\section{Weil Divisors}
+
+Before discussing/defining Cartier divisors, let's first give the easier definition of a harder object, \textbf{Weil divisor}. In nice situations, these will be exactly the same as Cartier divisors, but the ``not nice'' situations are very important when we want to study singularities.
+
+\subsection{Refresher on Codimension}
+
+First, we need a notion of codimension for an irreducible subset. Let $X$ be a scheme.
+\begin{defn}
+    Let $Y\subseteq X$ be irreducible. The \textbf{codimension} is the supremum of lengths of increasing chains of irreducible closed subsets starting with $Y$ (indexed as $0$).
+\end{defn}
+
+\begin{eg}
+    For example, when $X=\Spec A$ and $Y=V(P)$, then by the usual dictionary, a chain of irreducible subsets
+    \[Y=Y_0\subsetneq Y_1 \subsetneq \cdots \subsetneq Y_m\]
+    corresponds to a chain
+    \[P=P_0 \supsetneq P_1 \supsetneq \cdots \supsetneq P_m,\]
+    so $\codim Y = \height P$.
+\end{eg}
+
+Like the commutative algebra fact for height, we always have the inequality
+\[\dim Y + \codim Y \leq \dim X,\]
+since the supremum of lengths of chains of irreducible closed subsets of $X$ is at least the supremum of lengths of chains going through $Y$. In particular, when $\dim X=1$ and $\codim Y = 1$, we are forced to have $\dim Y = 0$. So, the codimension 1 irreducible closed subsets of a pure 1-dimensional scheme are exactly the closed points.
+
+\subsection{Refresher on Order of Vanishing}
+
+\begin{defn}
+    Let $K$ be a field and $A\subseteq K$ a Noetherian local ring of dimension 1 with fraction field $K$. We define the \textbf{order of vanishing along $A$} a function
+    \[\ord_A: K^* \longrightarrow \Z\]
+    where for $f\in R$, we send
+    \[f \longmapsto \operatorname{length}_A(A/(f)),\]
+    and otherwise for an arbitrary element $\frac{g}{f}\in K^*$, $g,f\in R$
+    \[\frac{g}{f} \longmapsto \ord_A(g) - \ord_A(f).\]
+\end{defn}
+
+We will typically apply this to the following setting. Let $X$ be a locally Noetherian scheme, $\eta$ the generic point of a codimension 1 integral subscheme $Z$. Then, $\cO_{X,\eta}$ can be computed in an affine open $\Spec A$ containing $\eta$ as $A_\eta$. Then, because $X$ is locally Noetherian, $A$ is Noetherian, so $A_\eta$ is Noetherian. Since $Z$ is codimension 1, by the correspondence on prime ideals, $A_\eta$ will be dimension 1. Therefore, we can study the notion of order of vanishing along $\cO_{X,\eta}$ in the fraction field $Q(\cO_{X,\eta})$.
+
+We also have a restriction morphism $R(X)\to \cO_{X,\eta}$, via understanding $\cK_{X,\eta} = Q(\cO_{X,\eta})$, i.e., the morphism is taking germs of rational functions.
+
+\begin{defn}
+    By this discussion, we get the \textbf{order of vanishing along $Z$}
+    \[\ord_Z: R(X)^* \longrightarrow \Z\]
+    sending $f\neq 0$ to its germ in the stalk, and then evaluating $\ord_{\cO_{X,\eta}}(f)$.
+\end{defn}
+
+\begin{prop}
+    {\color{red} figure out the right statement to translate from the stacks project's definition---somehow it should be that when $A$ is integrally closed/a valuation ring for $K$, then $\ord_A(f)$ is the same as the largest power $k$ of the uniformizing parameter $t$ such that $f\in (t^k)$. Then, if $A$ is not integrally closed, we can pass to its integral closure and similarly compute order of vanishing using uniformizing parameters...}
+\end{prop}
+
+Extending this notion slightly, if $L$ is a line bundle on $X$, then $L_{\eta}$ is generated by a single germ $s_\eta$, which is unique up to unit. Any choice $s_\eta$ gives an isomorphism
+\[\cO_{X,\eta} \xrightarrow{\cdot s_\eta} L_\eta,\]
+and we will denote the inverse by $\cdot \frac{1}{s_\eta}$. We can then define the following.
+
+\begin{defn}
+    The \textbf{order of vanishing along $Z$} for a rational section $s\in \Gamma(X,\cK_X(L))$ is given by
+    \[\ord_{Z,L}(s) = \ord_{\cO_{X,\eta}}(s/s_\eta).\]
+\end{defn}
+
+The choice of generator $s_\eta$ does not matter to define order.
+
+\subsection{Definitions}
+
+\begin{defn}
+    A \textbf{Weil divisor} is a locally finite formal $\Z$-linear combination of codimension 1 irreducible closed subsets of $X$, called \textbf{prime divisors}. That is, a Weil divisor is an object of the form
+    \[D = \sum_{Y\subseteq X \text{ codimension } 1} n_Y[Y]\]
+    where $\{Z\mid n_Z\neq 0\}$ is locally finite many $n_Y$ are zero. Denote the group of Weil divisors by $\Div(X)$.
+
+    A Weil divisor $D$ is called \textbf{effective} if all $n_Y\geq 0$. The \textbf{support} of $D$ is $\bigcup_{n_Y\neq 0} Y$.
+
+    The group of Weil divisors is denote $\Weil X$ or $\Div X$ (though the latter notation is reserved by some authors for Cartier divisors instead). For $U\subseteq X$ open, the \textbf{restriction map} $\Weil X \to \Weil U$ is the map
+    \[\sum n_Y [Y] \mapsto \sum_{Y\cap U\neq \emptyset} n_Y [Y\cap U].\]
+\end{defn}
+
+Notice that we sum over irreducible \textit{subsets}, not subschemes. One could alternatively think of us as summing over integral subschemes (taking the reduced irreducible subscheme as a unique representative of the irreducible subset).
+
+We will soon see a notion of passing from a codimension 1 subscheme to a Weil divisors, where we capture some of the reducedness information  of our subscheme via the coefficients we choose for each subset. Even so, this will still be a ``lossy'' process---there can be more data to reducedness than a multiplicity.
+
+\begin{eg}
+    On a curve (a pure 1-dimensional scheme), Weil divisors are exactly formal sums of closed points.
+\end{eg}
+
+\begin{eg}
+    In $\P_k^n$, a codimension 1 irreducible closed subset is exactly $V(I)$ for $I\leq k[x_0,\dots,x_n]$ homogeneous with $(I:S_+)=I$ and prime of height 1. Since $k[x_0,\dots,x_n]$ is a UFD, $I$ is principal, so a closed subset is $V(f)$ for $f$ homogeneous and irreducible. (We no longer need to check $((f): S_+)=(f)$, since principal already guarantees this).
+
+    Then, $V(f)=V(g)$ implies
+    \[(f) = \sqrt{(f)} = \bigcap_{P\ni f} P = I(V(f)) = I(V(g)) = \bigcap_{P\ni g} = \sqrt{(g)} = (g),\]
+    so $g=\lambda f$ for some $\lambda \in k^\times$.
+
+    So, the prime divisors correspond exactly irreducible homogeneous polynomials in $k[x_0,\dots,x_n]$ up to multiplication by $k^\times$, which is exactly the $k$-points of
+    \[\bigsqcup_{i=1}^\infty \P H^0(\P_k^n, \cO(i)).\]
+\end{eg}
+
+The projective space example is good for intuition. So far, we've said how the prime divisors are exactly $V(f)$ for $f$ irreducible homogeneous. So, we've seen how some sections of line bundles (namely $\cO(i)$ for $i\geq 1$) can give you divisors.
+
+We're going to give a more general construction, which will capture the idea that, given a section like $xy \in \cO_{\P^2}(2)$, we should get a divisor
+\[\div(xy) = V(x) \cup V(y).\]
+
+\begin{defn}
+    Let $L$ be a line bundle on $X$, and $s\in \Gamma(X,\cK_X(L))$ a nonzero rational section. Define the \textbf{divisor associated $f$} by
+    \[\div(s) = \sum_{[Z] \text{ prime divisor}} \ord_{Z,L}(s/s_Z) [Z].\]
+\end{defn}
+
+One should check that these sums have locally finite support, so that $\div$ is well-defined. In particular, when we specialize to $L=\cO_X$, so $\Gamma(X,\cK_X(\cO_X))=R(X)$, we get the following.
+
+\begin{prop}
+    The assignment $\div: R(X)^* \to \Div(X)$ is a group homomorphism.
+\end{prop}
+
+\begin{defn}
+    A \textbf{principal Weil divisor} is one of the form $\div(f)$ for $f\in R(X)^*$.
+
+    The \textbf{Class group} of $X$, denoted $\Cl(X)$, is the cokernel $R(X)^*\to \Div(X)$, so we have exact sequence
+    \[0 \to R(X)^* \to \Div(X) \to \Cl(X).\]
+\end{defn}
+
+
+\section{Cartier Divisors}
+
+As before, $X$ will be a locally Noetherian scheme. The inclusion of sheaves of rings
+\[\cO_X \subseteq \cK_X\]
+also gives an inclusion
+\[\cO_X^* \subseteq \cK_X^*\]
+of sheaves of abelian groups.
+
+\begin{defn}
+    A \textbf{Cartier divisor} $D$ on $X$ is a global section of $\cK_X^*/\cO_X^*$. More concretely, a Cartier divisor $D$ is given by the data of germs
+    \[D_x \in \cK_{X,x}^*/\cO_{X,x}^*\]
+    that are locally compatible, in the sense that for each $x\in X$, there is a neighborhood $U$ of $x$ and a local section $f\in \Gamma(U,\cK_X^*)$ such that $f$ induces the germs $D_x$ for all $x\in U$.
+
+    We call such $f$ a \textbf{local equation} of $D$ in $U$, which is unique up to $\cO_X^*(U)$. A Cartier divisor can be determined by specifying local equations $(f_i)$ with respect to an open covering $(U_i)$ such that $\frac{f_i}{f_j} \in \cO_{X}^*(U)$.
+\end{defn}
+
+\begin{rmk}
+    We make a somewhat unrelated digression about the subtleties of sheafification, and along the way we will see that Cartier divisors really are given by the local data (rather than the usual annoying collections of compatible germs).
+    
+    It is often really important that sheafification has all equivalence relations be in terms of germs/stalks---that is, a section of the sheafification of a presheaf is collections of compatible germs, where compatible means that germs are locally induced by a section. Notice that for local sections inducing germs, we do \textit{not} require agreement on overlapping open sets, but rather just agreement in so far as they both induce the same germs. In this sense, compatibility is checked pointwise at stalks, not at open sets. Likewise, two sections of the sheafification are said to be equal if they agree at each stalk (basically by definition).
+
+    The point to emphasize is that it is nontrivial and crucial that sheafification ist defined with compatibility/equivalence defined in stalks, \textit{not} open sets. There is an alternative construction/definition which replaces compatibility/equivalence by open set considerations,  called the \textbf{Grothendieck + construction}. It goes as follows. Let $\cF$ be a presheaf. Then, define the presheaf $\cF^+$ as follows:
+    \[\cF^+(U) = \{(f_i,U_i)_{i\in I} \mid f_i \in \cF(U_i), \bigcup_{i\in I} U_i = U, f_i|_{U_{ii'}} = f_{i'}|_{U_{ii'}}\}/\sim,\]
+    where local data $(f_i,U_i) \sim (g_j,V_j)$ if there exists a mutual refinement $W_k$ of the open covers $U_i,V_j$ such that
+    \[f_i|_{W_k} = g_j|_{W_k}\]
+    whenever $W_k \subseteq U_i\cap V_j$.
+
+    While this seems straightforward, this is actually really subtle and does \textit{not} in general give sheafification. The problem is that local data is compatible on entire open sets (rather than just pointwise at stalks) and the requirement for local data to be equivalent is checked again on entire open sets (rather than at stalks). It is harder to be compatible/equal when we check things on open sets, because we don't know how our original $\cF$ works.
+
+    However, the Grothendieck + construction \textit{does} agree with sheafification when $\cF$ is a \textbf{separated presheaf}, that is, for $s\in \Gamma(U,\cF)$, $s=0$ iff $s_x = 0$ for all $x\in U$.
+    
+    Then, in general if $A\leq B$ are sheaves of abelian groups, then the presheaf quotient
+    \[A/_{\mathrm{pre}}B\]
+    is at least a separated presheaf, that is, if a section $s$ is zero in all stalks, then it is 0.
+    
+    This happens because if $\overline{s} \in A(U)/B(U)$ is zero in all stalks, taking a representative $s\in A(U)$, we get that the $s_x \in A_x$ actually lands in $B_x$ for all $x\in U$, and since $B$ is a sheaf, the compatible $s_x\in B_x$ glue to a unique $s\in B(U)$, so indeed $\overline{s}=0$.
+
+    So, this means that $\cK_X^* /_{\mathrm{pre}} \cO_X^*$ is a separated presheaf, and therefore sheafification is computed by the Grothendieck + construction. This means that a Cartier divisor is exactly given by local data $f_i \in \cK_X^*(U_i)$ which are equal on overlaps up to $\cO_X^*(U_{ii'})$, with local data $g_j$ being equivalent exactly when there is a mutual refinement of open covers where $f_i,g_j$ restrict to be equal up to $\cO_X^*$.
+\end{rmk}
+
+\begin{defn}
+    We denote the group of Cartier divisors by
+    \[\CDiv(X) \defeq \Gamma(X,\cK_X^*/\cO_X^*),\]
+    which is an abelian group. Though the group operation is denoted by multiplication in $\cK_X^*$ or $\cO_X^*$, we will denote the group operation in $\CDiv(X)$ by addition (like Weil divisors).
+\end{defn}
+
+\begin{defn}
+    A Cartier divisor $D$ induces a subsheaf of $\cK_X$,
+    \[\cO_X(D) \subseteq \cK_X,\]
+    by declaring
+    \[\cO_X(D)_x = f_x^{-1} \cO_{X,x} \subseteq \cK_{X,x},\]
+    i.e., sections over $U$ are sections $g$ of $\cK_X$ with $g_x \in f_x^{-1}\cO_{X,x}$, where $f_x^{-1}$ is any representative of the germ of $D$ in $\cK_X^*/\cO_X^*$. In other words, sections of $\cO_X(D)$ are rational functions with poles only as bad as local equations $f$.
+
+    This is indeed a line bundle, since we have an isomorphism
+    \[\cO_X|_U \xrightarrow{\cdot f^{-1}} \cO_X(D)|_U.\]
+\end{defn}
+
+\begin{prop}
+    Cartier divisors exactly correspond to line bundle subsheaves of $L \leq \cK_X$.
+\end{prop}
+\begin{proof}
+    We've already seen how Cartier divisors give line bundle subsheaves of $\cK_X$ by sending $D\mapsto \cO_X(D)$. Conversely, we show how to recover (local data of) $D$ from $L\leq \cK_X$.
+    
+    The composition of the local trivializations with the inclusion in $\cK_X$
+    \[\cO_X|_U \xrightarrow{\cdot f} L|_U \leq \cK_X|_U\]
+    will be multiplication by an element of $f\in \cK_X^*(U)$, and then on overlaps $U\cap V$, we will get that
+    \[\cO_X|_{U\cap V} \xrightarrow{\cdot f} L|_{U\cap V} \xrightarrow{\cdot g^{-1}} \cO_X|_{U\cap V}\]
+    is an isomorphism, so $fg^{-1}$ is a unit in $\cO_X^*(U\cap V)$.
+\end{proof}
+
+% We have yet another perspective on Cartier divisors. Going from $D$ to $L=\cO_X(D)$, we can recover the inclusion $L\hookrightarrow \cK_X$ as long as we remember the section $1\in \Gamma(X,\cK_X(L))$, since this gives us the embedding 
+
+\begin{defn}
+    A Cartier divisor $D$ is \textbf{effective} if equivalently:
+    \begin{enumerate}[(i)]
+        \item its local equations $f$ are sections of $\cO_X$
+        \item $\cO_X \subseteq \cO_X(D) \subseteq \cK_X$
+        \item $\cO_X(-D)$ is a sheaf of ideals.
+    \end{enumerate}
+    We write $D\geq 0$ to mean $D$ is effective. We will slightly abuse notation and identify $D$ with the subscheme cut out by the ideal sheaf $\cO(-D)$.
+
+    For $D\geq 0$, we have the section $s=1\in \cO_X \subseteq \cO_X(D)$, which we will call the \textbf{global equation} of $D$. This gives???? an isomorphism
+    \[\cO_X \]
+\end{defn}
+
+
+
+\begin{defn}
+    Let $X$ be a scheme. An \textbf{effective Cartier divisor} $D$ in $X$ is any of the equivalent pieces of data
+    \begin{enumerate}[(a)]
+        \item A closed subscheme locally cut out by nonzerodivisors.
+        \item The dual of an invertible ideal sheaf.
+        \item A line bundle 
+    \end{enumerate}
+\end{defn}
+
+\end{document}

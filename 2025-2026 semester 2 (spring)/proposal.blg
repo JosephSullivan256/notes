@@ -1,0 +1,66 @@
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: proposal.aux
+The style file: plain.bst
+Database file #1: proposal_bibliography.bib
+Warning--string name "sept" is undefined
+--line 17 of file proposal_bibliography.bib
+Warning--string name "june" is undefined
+--line 23 of file proposal_bibliography.bib
+Warning--empty journal in Arcara_Bertram_2009
+Warning--there's a number but no volume in Arcara_Bertram_2009
+Warning--empty journal in Arcara_Bertram_Coskun_Huizenga_2012
+Warning--there's a number but no volume in Arcara_Bertram_Coskun_Huizenga_2012
+Warning--empty journal in Arcara_Bertram_Lieblich_2007
+Warning--there's a number but no volume in Arcara_Bertram_Lieblich_2007
+Warning--empty journal in Belmans_Bose_Frei_Gould_Hotchkiss_Lamarche_Petok_Avila_Shah
+Warning--empty year in Belmans_Bose_Frei_Gould_Hotchkiss_Lamarche_Petok_Avila_Shah
+Warning--empty journal in Craw
+Warning--empty year in Craw
+Warning--can't use both author and editor fields in Keller_2007
+Warning--empty journal in Tevelev_2023
+Warning--there's a number but no volume in Tevelev_2023
+Warning--empty journal in Tevelev_Torres_2023
+Warning--there's a number but no volume in Tevelev_Torres_2023
+You've used 16 entries,
+            2118 wiz_defined-function locations,
+            607 strings with 6951 characters,
+and the built_in function-call counts, 4881 in all, are:
+= -- 463
+> -- 225
+< -- 1
++ -- 92
+- -- 74
+* -- 353
+:= -- 839
+add.period$ -- 52
+call.type$ -- 16
+change.case$ -- 85
+chr.to.int$ -- 0
+cite$ -- 31
+duplicate$ -- 183
+empty$ -- 368
+format.name$ -- 74
+if$ -- 985
+int.to.chr$ -- 0
+int.to.str$ -- 16
+missing$ -- 16
+newline$ -- 87
+num.names$ -- 32
+pop$ -- 91
+preamble$ -- 1
+purify$ -- 69
+quote$ -- 0
+skip$ -- 129
+stack$ -- 0
+substring$ -- 261
+swap$ -- 27
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 62
+warning$ -- 15
+while$ -- 40
+width$ -- 18
+write$ -- 175
+(There were 17 warnings)

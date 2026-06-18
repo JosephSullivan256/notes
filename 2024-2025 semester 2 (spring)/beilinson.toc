@@ -1,0 +1,18 @@
+\contentsline {section}{\numberline {1}Beilinson's Resolution of the Diagonal}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Setup}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Tautological Bundle}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Twisted 1-forms}{6}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Image of Composition}{7}{subsection.1.4}%
+\contentsline {subsubsection}{\numberline {1.4.1}Agreeing Opens}{7}{subsubsection.1.4.1}%
+\contentsline {subsubsection}{\numberline {1.4.2}Disagreeing Opens}{7}{subsubsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.5}The Resolution}{8}{subsection.1.5}%
+\contentsline {section}{\numberline {2}A Basis for the Derived Category}{9}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Setup}{9}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Fourier-Mukai Computations}{10}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Proof of Main Theorem}{12}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Applications}{13}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Beilinson Spectral Sequence}{13}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Some Equivalences}{13}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Tool}{13}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Homotopy Category}{14}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Quiver Representations}{16}{subsubsection.3.2.3}%

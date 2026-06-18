@@ -1,0 +1,23 @@
+\contentsline {section}{\numberline {1}Some Definitions/Basics}{2}{section.1}%
+\contentsline {section}{\numberline {2}Representation Theory for $\operatorname {\mathfrak {sl}}_2$}{3}{section.2}%
+\contentsline {section}{\numberline {3}Representation Theory for General Semisimples}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Cartan Subalgebra}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Root Space/Cartan Decomposition}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Many $\operatorname {\mathfrak {sl}}_2\mathbb {C}$ Representations}{8}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Integrality of Eigenvalues}{9}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Use Symmetry to Find Eigenvalues of $H_\alpha $}{9}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Choosing a Direction}{9}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Classifying Representations}{11}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Borel-Weil-Bott}{11}{subsection.3.8}%
+\contentsline {section}{\numberline {4}Representation Theory of $\operatorname {\mathfrak {sl}}_n \mathbb {C}$}{13}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Flag Variety}{15}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Applying Borel-Weil-Bott}{16}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Representation Theory of $\mathfrak {so}(Q)$}{16}{section.5}%
+\contentsline {section}{\numberline {6}Structure of Quadratic Forms}{16}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Basic Definitions}{18}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Isotropic Vectors}{20}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Explicit Description - Even Case}{23}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Explicit Description - Odd Case}{24}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Analysis}{24}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}Low Dimensional Examples}{27}{subsection.6.6}%
+\contentsline {subsection}{\numberline {6.7}Flag Variety}{29}{subsection.6.7}%

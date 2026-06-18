@@ -1,0 +1,275 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{A Note on Deformation Theory}
+\author{}
+\date{May 2026}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+\newcommand{\ft}{\text{ft}}
+\newcommand{\Bl}{\mathrm{Bl}}
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\Hilb}{\mathrm{Hilb}}
+
+\newcommand{\cTor}{\mathcal{T}\hspace{-0.2em}or}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+
+\addbibresource{deformation.bib}
+
+
+\begin{document}
+
+\maketitle
+
+I wanted to make a short note providing intuition and clarifying a few facts about first order deformations of closed subschemes.
+
+\section{Hilbert Scheme}
+
+The functor of points perspective to algebraic geometry is to regard an $S$-scheme as a certain type of functor
+\[(\Sch/S)^\op \to \Set,\]
+and morphisms of schemes as any natural transformation. Let $X,M$ be two such functors, and assume $X$ is representable (at least). Then, the Yoneda lemma tells us
+\[\Hom(X,M) \cong M(X).\]
+
+In particular, we consider the case when $M$ is a \textit{moduli space}. This is a somewhat vague notion (in the sense that every scheme is the moduli space of its own points), but we mean that there is a type of object that you want to parameterize, and you have a definition for a \textit{family} of those objects parameterized by an $S$-scheme $T$. In this case, the functor you want $M$ to represent is
+\[T \mapsto \{\text{families of this type of object parameterized by $T$}\}.\]
+
+We give an example. Fix a $k$-scheme $X$ and a $d\in \Z_{\geq 1}$.
+
+\begin{defn}
+    A \textbf{family of $d$ points on $X$ over (or parameterized by) $T$} is a diagram
+    \[\begin{tikzcd}
+        Z \rar[hook] \ar[dr] & X\times_k T\dar\\
+        & T
+    \end{tikzcd}\]
+    such that the diagonal arrow is flat, the right arrow is a closed embedding, and for each $t\in T$, the base changed diagram
+    \[\begin{tikzcd}
+        Z_t \rar[hook] \ar[dr] & X\times_k \Spec k(t) \dar\\
+        & \Spec k(t)
+    \end{tikzcd}\]
+    is a closed embedding of a length $d$ subscheme $Z_t\hookrightarrow X_{k(t)}$ (e.g., the inclusion of $d$ distinct $k$ points when $k(t)=k$). 
+\end{defn}
+
+\begin{defn}
+    The \textbf{Hilbert functor of $d$ points of $X$}, denoted $X^{[d]}$, is the functor
+    \begin{align*}
+        (\Sch/k)^\op &\longrightarrow \Set\\
+        T &\longmapsto \{\text{families of $d$ points on $X$ over $T$}\}/\sim,
+    \end{align*}
+    where the equivalence relation $\sim$ is an isomorphism of diagrams, which amounts to an isomorphic closed embedding. 
+\end{defn}
+
+\begin{fact}
+    This functor is representable, so we can instead say the \textbf{Hilbert scheme of $d$ points of $X$}, and abuse notation and still write $X^{[d]}$.
+\end{fact}
+
+
+There are more general Hilbert schemes depending on a polynomial $P\in \Q[t]$, denoted $\Hilb^P X$, where we require additionally that $X$ is quasiprojective, and then a family over $T$ is a $Z$ with $t\in T$ fibers being closed subschemes of $X_{k(t)}$ with prescribed Hilbert polynomial $P$.
+
+Note that a $k$-point of $X$ is just a closed subcheme $Z\hookrightarrow X$ with Hilbert polynomial $P$. Setting $P$ to be the constant polynomial $d$, we recover $X^{[d]}$ (at least when $X$ is quasiprojective).
+
+
+
+\section{Deformations}
+
+It is not very obvious that $X^{[d]}$ is always representable, but the proof does embed $X^{[d]}$ in a Grassmannian (which then embeds in a projective space), but it would be trully horrible to reason about $X^{[d]}$ by using its defining equations in some ginormous ambient space.
+
+Instead, we use the moduli functor description to reason about the geometry. Let $D=\Spec k[\eps]/\eps^2$ be the dual numbers. Recall the following bijection:
+
+\begin{prop}
+    Let $M$ be a finite type $k$-scheme with $k$-point $x$. Denote $\fm\leq \cO_{M,x}$ the maximal ideal of the stalk at $x$. Then,
+    \[T_x M = \Hom_k(\fm/\fm^2,k) \leftrightarrow \{\phi \in \Hom_{\Spec k}(\Spec D, X) \mid \phi((\eps))=x\}.\]
+\end{prop}
+
+If we identify $x\in M$ with the map $x: \Spec k \to M$ and denote $i:\Spec k \to \Spec D$ the inclusion of the closed point, we can even rewrite this bijection as
+\[\{\phi \in \Hom_{\Spec k}(\Spec D, X) \mid \phi \circ i = x\}.\]
+
+The advantage here is that when $M$ has a nice moduli description, we can interpret this entirely moduli-theoretically. For example, let $M$ be $\Hilb^P X$. When we unpack the definition of a tangent vector of a $[Z]\in \Hilb^P X$, we instead call it a first-order deformation, but this is just a change in language. 
+
+\begin{defn}
+    Denote $X'=X\times_k \Spec D$. A \textbf{first-order deformation} of $Z \subseteq X$ is a diagram
+    \[\begin{tikzcd}
+        Z' \rar[hook] \ar[dr] & X' \dar\\
+         & \Spec D
+    \end{tikzcd}\]
+    with the diagonal arrow flat, such that the diagram base changes to our given $Z\hookrightarrow X$.
+\end{defn}
+
+
+\begin{rmk}
+    When we consider specifically $P=1$ to study the tangent space of $X^{[1]}=X$, we might think we are exactly recovering the proposition as a special case. However, we are actually doing something slightly different!
+
+    Note that in the proposition, we totally fix $\Spec D$---the right hand side is \textit{not} the set of isomorphism classes of closed embeddings, for two reasons:
+    \begin{itemize}
+        \item We are completely fixing $\Spec D$ up to equality, not isomorphism.
+        \item Not all maps $\Spec D\to X$ are closed embeddings, since we do not need to be surjective on the level of rings by doing a factorization
+        \[\Spec D \to \Spec k \to X\]
+        (where the first map is very much not an embedding, you kill nilpotents).
+    \end{itemize}
+    
+    As for this second point, $\Spec D \to X$ will be a closed embedding unless it represents the 0 tangent vector. But, we do get a morphism $\Spec D \to X'$ which is \textit{always} a closed embedding.
+
+    Furthermore, in general a closed embedding $\Spec D\subseteq X'$ (where we only remember $\Spec D$ as a closed subscheme) is \textit{more} data than a closed subscheme $\Spec D\subseteq X$. Passing to the reduction will exactly correspond to quotienting
+    \[(T_x X \setminus \{0\}) / k^*\]
+    getting the projectivized tangent space.
+
+    For example, for $X=\Spec k[x,y]$, we have several first order deformations of $0\in X$ which are
+    \[Z'_a = V(x-a\eps, y) \subseteq X',\]
+    and when $a\neq 0$ (and maybe $\mathrm{char} k=0$), the image of all of these $Z'_a \to X' \to X$ are just $V(x^2,y)$.
+\end{rmk}
+
+\begin{rmk}
+    In one way or another, however, we do get that
+    \[\{\text{1st-order deformations of $\{x\} \subseteq X$}\} \leftrightarrow \Hom_k(\fm/\fm^2,k),\]
+    but our remark makes this slightly awkward, and we would like generalizations. This leads us to the following.
+\end{rmk}
+
+\begin{prop}
+    \[\{\text{1st-order deformations of $Z\subseteq X$}\} \leftrightarrow \Hom_{\cO_X}(\cI_Z,\cO_Z) \cong H^0(Z,\cN_{Z/X}).\]
+\end{prop}
+
+I want to provide a proof of this proposition that is very well geometrically motivated, so I need to make some comments.
+
+\begin{rmk}
+    Sections of the normal bundle should be thought of as like families of derivations. Recall that a $k$-derivation on $\cO_{X,x}$ is determined by its value on $\fm$, and corresponds to a $\cO_{X,x}$ morphism
+    \[\fm \to \cO_{X,x}/\fm.\]
+    A prototypical example is when $X=\Spec k[x,y]$, $\fm=(x,y)$, and the derivation corresponding to the $e_1$-tangent vector, which is the morphism
+    \begin{align*}
+        \fm &\longrightarrow \cO_{X,x}/\fm\\
+        f &\longmapsto \frac{\partial f}{\partial x}(0),
+    \end{align*}
+    i.e., the derivation picks up the linear term when $f$ is power series expanded in $x$.
+    
+    In general, a section of the normal bundle is a similar type of object, which takes sections $f$ of $\cI_Z$, expands them in a ``direction'', and picks out a linear term. Picking a $z\in Z$, we can specialize a section $\cI_Z\to \cO_X/\cI_Z$ to a tangent vector $\fm_z \to \cO_X/\fm_z$ by {\color{red} how?}
+\end{rmk}
+
+{\color{red} TODO. want to motivate the lifting along $I'\to I$, and how this amounts to Taylor-expanding in the ``direction'' of the deformation.}
+
+
+
+
+\section{Regularity of Certain Hilbert Schemes}
+
+Using this technology, we can prove the regularity of certain Hilbert schemes.
+
+Roughly, for a surface $S$, $S^{[d]}$ is smooth because
+\begin{enumerate}
+    \item $S^{[d]}$ is connected (induction, using projections from the universal family).
+    \item calculate $\dim \Hom_{\cO_X}(\cI_Z,\cO_Z) = 2d$. 
+\end{enumerate}
+
+\begin{prop}
+    $\dim \Hom_{\cO_X}(\cI_Z,\cO_Z) = 2d$.
+\end{prop}
+\begin{proof}
+    First, calculate
+    \[\Hom(\cI_Z,\cO_Z) \cong \Ext^1(\cO_Z,\cO_Z)\]
+    (in analogy to seeing tangent vectors as extensions of skyscraper sheaves). One can see this by hitting
+    \[0\to \cI_Z \to \cO_X \to \cO_Z \to 0\]
+    with $\Ext^*(-,\cO_Z)$, to get
+    \[\Hom(\cO_Z,\cO_Z) \xrightarrow{\rho^*} \Hom(\cO_X,\cO_Z) \xrightarrow{i^*} \Hom(\cI_Z,\cO_Z) \to \Ext^1(\cO_Z,\cO_Z) \to \Ext^1(\cO_S,\cO_Z),\]
+    but note that $\Ext^1(\cO_S,\cO_Z)=H^1(Z,\cO_Z)=0$ and $\rho^*$ is an isomorphism which implies $i^*=0$. Thus, we get
+    \[\Hom(\cI_Z,\cO_Z) \cong \Ext^1(\cO_Z,\cO_Z)\]
+    as desired.
+
+    We can rewrite
+    \[\Ext^i(\cO_Z,\cO_Z) = \Hom_{D^b(X)}(\cO_X,\cO_Z\otimes\cO_Z^\vee[i]),\]
+    where we mean the derived dual, so we are computing
+    \[\cH^1(R\Gamma(\cO_Z\otimes \cO_Z^\vee)).\]
+    Note that
+    \[\Ext^0(\cO_Z,\cO_Z) = \Hom(\cO_Z,\cO_Z) \cong \Gamma(Z,\cO_Z)\]
+    is $n$-dimensional, and
+    \[\Ext_{\cO_X}^2(\cO_Z,\cO_Z) \cong \Hom_{\cO_X}(\cO_Z,\cO_Z\otimes \omega_X)^\vee \cong \Gamma(Z,\cO_Z\otimes \omega_Z)\]
+    is also $n$-dimensional, so that
+    \[\chi(R\Gamma(\cO_Z\otimes \cO_Z^\vee)) = n - \dim \cH^1(R\Gamma(\cO_Z\otimes \cO_Z^\vee)) + n = 2n - \dim \cH^1(R\Gamma(\cO_Z\otimes \cO_Z^\vee)).\]
+    Therefore, we can calculate our dimension using Hirzebruch Riemann Roch:
+    \[2n - \dim \cH^1(R\Gamma(\cO_Z\otimes \cO_Z^\vee)) = \int_X \chern(\cO_Z \otimes \cO_Z^\vee) \todd(T_X),\]
+    where this integral is actually 0, since the Chern character of $\cO_Z$ only exists in top degree (say by Grothendieck Riemann Roch, being a pushforward of along 0 dimensional closed embedding), so the product
+    \[\chern(\cO_Z) \chern(\cO_Z)^\vee \todd(T_X)\]
+    has no terms in the top degree of $X$. Thus,
+    \[\dim \Ext^1(\cO_Z,\cO_Z) = \dim \cH^1(R\Gamma(\cO_Z\otimes \cO_Z^\vee)) = 2n.\]
+\end{proof}
+
+
+\subsection{Nested Hilbert Schemes}
+
+Define $S^{[d_1,\cdots,d_\ell]}$ by an incidence correspondence on the product
+\[S^{[d_1]} \times \cdots \times S^{[d_\ell]}.\]
+
+In particular, for
+\[S^{[d-1,d]} \subseteq S^{[d-1]} \times S^{[d]},\]
+the tangent space to a $[Z\subseteq W]$ is a subspace of
+\[\Hom(\cI_Z,\cO_Z) \times \Hom(\cI_W,\cO_W).\]
+To see this subspace, note that $S^{[d-1,d]}$ is cut out by the relation $[Z]\subseteq [W]$. Denoting $i:\cI_W\to \cI_Z$ the inclusion of ideals and $\rho: \cO_W\twoheadrightarrow \cO_Z$ the restriction, {\color{red} we claim}
+\[T_{[Z\subseteq W]} S^{[d-1,d]} = \{(\phi,\psi) \in \Hom(\cI_Z,\cO_Z) \times \Hom(\cI_W,\cO_W) \mid \phi \circ i = \rho \circ \psi\}.\]
+
+We try to similarly calculate this dimension. It really should have the same dimension as the reduced locus, where we have the flexibility to choose choose $d$ points in an $n$-dimensional space with one ``remaining'' point marked. So, {\color{red} we can construct the reduced locus as}
+\[(S^{\times d} \setminus\{\text{repeated points}\}) / S_{d-1},\]
+where $S_{d-1}$ acts on the last few coordinates. This has dimension $2d$. (You can also see that $S^{[d-1,d]}$ fibers over $S^{[d]}$ generically finite, so $\dim S^{[d-1,d]} = \dim S^{[d]} = 2d$).
+
+Now, to repeat Fogarty's argument to show $S^{[d-1,d]}$ is smooth, we proceed in two steps:
+\begin{itemize}
+    \item Show $S^{[d-1,d]}$ is connected.
+    \item Calculate the tangent space dimension at every closed point of $S^{[d-1,d]}$.
+\end{itemize}
+
+For the first point, we show $S^{[d-1,d]}$ is connected by studying the projection
+\[p: S^{[d-1,d]} \to S^{[d]}.\]
+We want to bootstrap the connectedness of $S^{[d]}$ from Fogarty to get the connectedness of our space. {\color{red} We need to assume $S$ is proper here I believe.}
+
+\begin{proof}
+    Suppose, to the contrary, that $S^{[d-1,d]}$ has a separation $E\sqcup F$ (by closed sets), and we want to argue that $p(E),p(F)$ is a separation of $S^{[d]}$. Since $S$ is proper, so is $S^{[d-1,d]}$ (by a usual valuative criterion argument by existence of flat limits). So, $p(E),p(F)$ are both closed in $S^{[d]}$, so we only need to show they are disjoint and proper.
+
+    To see disjointness, notice that if $W\in p(E)\cap p(f)$, then $p^{-1}(W)$ meets both $E$ and $F$. However, $p^{-1}(W)$ is {\color{blue} connected... why?}.
+\end{proof}
+
+
+
+
+Note that (assuming $S$ is projective) $S^{[d-1,d]}$ is projective (by the valuative criterion) so that $p$ is a closed morphism.  if , then $p(E),p(F)$ are close
+
+Now, $p$ is both closed and surjective, so it i
+
+
+using the following lemma.
+
+\begin{lem}
+    {\color{red} I think I need $f$ to be a quotient map, and I'm not sure when this happens in algebraic geometry (for example I'm not sure in my setting). I might need a more algebraic proof.} Let $f:X\to Y$ be continuous, $Y$ connected, and all fibers $f^{-1}(y)$ connected nonempty. ({\color{red} arguably the empty set isn't connected, because some conventions regard $\emptyset$ as always a proper subset.})
+\end{lem}
+
+\begin{proof}
+    Suppose $X$ is not connected, so has a separation $U\sqcup V$. Since $f^{-1}(y)$ is connected, it must lie entirely in $U$ or $V$, since otherwise $f^{-1}(y)\cap U, f^{-1}(y)\cap V$ provides a separation.
+
+    This (using nonemptyness of fibers) implies that $f^{-1}(f(U))=U$, $f^{-1}(f(V))=V$. We claim that $f(U),f(V)$ form a separation of $Y$, but we first need $f(U),f(V)$ to be open.
+\end{proof}
+
+Since $S^{[d]}$ is connected by Fogarty, we just have to argue that the fibers are all nonempty and connected.
+
+
+
+
+
+
+
+\printbibliography
+
+
+\end{document}

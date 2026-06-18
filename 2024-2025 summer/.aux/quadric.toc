@@ -1,0 +1,5 @@
+\contentsline {section}{\numberline {1}Setup}{1}{section.1}%
+\contentsline {section}{\numberline {2}Quadratic Algebras}{1}{section.2}%
+\contentsline {section}{\numberline {3}Resolution of the Diagonal}{3}{section.3}%
+\contentsline {section}{\numberline {4}Truncating the Resolution}{4}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Spinor Bundles}{4}{subsection.4.1}%

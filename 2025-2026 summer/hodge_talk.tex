@@ -1,0 +1,212 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Hodge Theory Example}
+\author{Joseph Sullivan}
+\date{June 2026}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\bL}{\mathbb{L}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+\newcommand{\ft}{\text{ft}}
+\newcommand{\Bl}{\mathrm{Bl}}
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\Hilb}{\mathrm{Hilb}}
+
+\newcommand{\cTor}{\mathcal{T}\hspace{-0.2em}or}
+\newcommand{\cExt}{\mathcal{E}\hspace{-0.2em}xt}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+\newcommand{\cY}{\mathcal{Y}}
+
+\newcommand{\rSpec}{\underline{\operatorname{Spec}}}
+
+
+
+\addbibresource{hodge_talk.bib}
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+We want to study the Hodge theory of algebraic surfaces. In particular, we'll get our feet wet with double covers of $\P^2$, branched along smooth plane curves of even degree $d$.
+
+I hope to be able to say something about monodromy and period mappings for families of such branched surfaces. Can we construct something analogous to the Legendre family, regarding the choice of a smooth plane curve as an open subset of
+\[\P^2_d = \P \Sym^d V,\]
+where $V$ is the cone over $\P^2$ (so that $\P^2 = \P V$). Recall, $\P^n_d$ is the Hilbert scheme of degree $d$ hypersurfaces.
+
+
+
+\section{Double Covers}
+
+To warm up, we review the story for curves---culminating in the fact that given a choice of $2g+2$ points in $\P^1$, there is a unique double cover $C\to \P^1$ branched along these points, where $C$ is called a \textit{hyperelliptic curve}, which will be genus $g$.
+
+\subsection{Hyperelliptic Curves}
+
+\subsubsection{The \texorpdfstring{$g=1$}{g=1} case (4 branch points)}
+
+The first example (which is actually harder in many ways) is an elliptic curve. Over $\C$, every elliptic curve $E$ can be written (non-uniquely!) for some $\lambda\in \C\setminus\{0,1,\infty\}$ as the projectivization of
+\[y^2 = x(x-1)(x-\lambda)\]
+in $\P^2$. To prove this, you first embed in $\P^2$ as a cubic by
+\begin{itemize}
+    \item Try to show $\cO_E(3p)$ is very ample
+    \item Characterize very ampleness of a bundle as surjectivity of $L \to L|_Z$ for any length 2 subscheme $Z\subseteq C$
+    \item Characterize very ampleness as getting a dimension drop
+    \[h^0(C,L(-p-q)) = h^0(C,L)\]
+    for all $p,q\in C$
+    \item Use Riemann-Roch to show $\cO_E(3p)$ meets this criteria
+    \item Observe that $\cO_E(3p)$ embeds in $\P^{3-1}$ because $h^0(C,\cO_E(3p)) = 3$.
+    \item Then, under the induced embedding $E\to \P^2$, $\cO_{\P^2}(1)$ pulls back as $\cO_E(3p)$ which is degree 3, so $E$ is a smooth degree 3 plane curve.
+\end{itemize}
+Finally, you work hard to change coordinates to get into the $\lambda$-form.
+
+In $\C^2$, this ``Legendre'' form of the elliptic curve admits an obvious 2:1 map to $\C$ by sending
+\begin{align*}
+    \{y^2=x(x-1)(x-\lambda)\} &\longrightarrow \C\\
+    (x,y) &\longmapsto x
+\end{align*}
+which is branched along $0,1,\lambda$. You then want to extend the entire scenario to the projective closure in $\P^2$.
+
+First, we write down the projectivization.
+\[E = V(y^2z - x(x-z)(x-\lambda z)) \subseteq \P^2.\]
+It is smooth at every point of $\A^2 \subseteq \P^2$. At the $\P^1$ at infinity, i.e., $V(z) = \{[x:y:0]\}$, there is only the point $[0:1:0]$ (so this points $\infty$ will be another branch point of the double cover). To check smoothness here, we pick a different chart $D(y)$ and apply the Jacobian criterion. Our curve here becomes
+\begin{equation}\label{other-coords}
+    \frac{z}{y} = \frac{x}{y}\left(\frac{x}{y}-\frac{z}{y}\right)\left(\frac{x}{y} - \frac{\lambda z}{y}\right)
+\end{equation}
+and as usual we will change variables and just write
+\[z = x(x-z)(x-\lambda z),\]
+and the derivative computation is straightforward.
+
+More subtle is writing down the double cover $E\to \P^1$. On the open $D(z)$ (and writing $\frac{x}{z},\frac{y}{z}$ as coordinates instead of $x,y$), we can write the double cover as
+\[\left(\frac{x}{z},\frac{y}{z}\right) \mapsto \left[\frac{x}{z}:1\right] \in \subseteq \P^1.\]
+
+To extend this map to $E$, we define it on the $D(y)$ chart so that it restricts along the overlap $D(xy)$. We would like to write basically the same map, but the problem is that potentially both $x=z=0$, which wouldn't be well-defined. However, we can use our equation \ref{other-coords} to get
+\[\frac{x}{z} = \frac{\frac{x}{y}}{\frac{z}{y}} = \frac{\frac{x}{y}}{\frac{x}{y}\left(\frac{x}{y}-\frac{z}{y}\right)\left(\frac{x}{y}-\frac{\lambda z}{y}\right)} = \frac{1}{\left(\frac{x}{y}-\frac{z}{y}\right)\left(\frac{x}{y}-\frac{\lambda z}{y}\right)},\]
+and now instead write
+\[\left(\frac{x}{y},\frac{z}{y}\right) \mapsto \left[1:\left(\frac{x}{y}-\frac{z}{y}\right)\left(\frac{x}{y}-\frac{\lambda z}{y}\right)\right].\]
+
+Thus, we really do get a smooth double cover $E\to \P^1$ branched at four points.
+
+Sean and Tom talked a bit about the Hodge theory of an elliptic curve, as well as the monodromy and period map for the Legendre family. I wanted to mention some subtlety about ``extending'' the Legendre family to higher genus, in that the projective closure will \textit{not} give a smooth proper curve. We will instead take the closure ``somewhere else'' (as we will also have to do for our double covers of $\P^2$).
+
+\subsubsection{Higher genus (\texorpdfstring{$2g+2$}{2g+2} branch points)}
+
+{\color{red} 
+\begin{itemize}
+    \item show that the naive compactification by homogenization will give a singular curve, or at least an example of this.
+    \item sketch embedding in $\P^{g-1}$ or $\P^1 \times \P^1$.
+\end{itemize}}
+
+
+\subsection{Cyclic Covers}
+
+We now work in higher dimensions, in higher generality for a moment.
+
+\subsubsection{Affine Case}
+
+Let $X=\Spec A$ be an affine variety, $D=V(f)$ an effective divisor, and $m\in \Z_{\geq 1}$. We will construct a new space over $X$ which is a degree $m$ cover branched along $D$. In particular, $D\subseteq X$ will pull back to a divisor $mD'$. In the language of local defining equations, we have added an $m$th root to $f$.
+
+This has a straightforward implementation, as the map
+\[\Spec A[t]/(t^m - f) \xrightarrow{\pi} \Spec A.\]
+
+\begin{prop}
+    The morphism $\pi$ is finite flat. Even more, $A[t]/(t^m - f)$ is a free (as opposed to just locally free/projective, which follows from finite flat) $A$-module with basis $1,t,\dots,t^{m-1}$.
+\end{prop}
+
+\begin{proof}
+    The ring $A[t]/(t^m -f)$ is finite over $A$ because it is generated by the integral element $t$. We now show that $1,t,\dots,t^{m-1}$ form a basis.
+
+    That is, we show that given a linear combination
+    \[\sum_{i=0}^{m-1} a_i t^i \in (t^m - f),\]
+    where $a_i\in A$, we must have all $a_i=0$. That is, for all $g\in A[t]$ we should have
+    \[\left(\sum_{i=0}^{m-1} a_i t^i\right) + (t^m -f)g =0\]
+    implies all $a_i=0$. This has a simple degree analysis---we only have hope of an interesting linear combination if $(t^m - f)g$ has terms with $t$-degree from $0$ to $m-1$, but this is never the case.
+
+    Thus, we are actually asking if $1,\dots,t^{m-1}$ is $A$-linearly independent in $A[t]$ (before quotienting) which is clear.
+\end{proof}
+
+\begin{proof}[Alternate Proof]
+    Denote $B=[t]/(t^m-f)$. We show that over $D(f)$, the morphism is smooth, so we analyze the differentials
+    \[\Omega_{B/A} = B\;dt/d(t^m-f) = B\;dt/ mt^{m-1}dt.\]
+    Over $D(f)$ this is 0, since $t$ becomes a unit (i.e., $\frac{t^{m-1}}{f}$ is an inverse), so at least
+    \[\Spec (A[t]/(t^m-f))_f \to \Spec A_f\]
+    is smooth and therefore flat.
+    
+    Around a point $P\in V(f)$, the morphism is definitely not smooth, but it is still flat. Indeed, we show that the map
+    \[A_P\to (A[t]/(t^m-f))_P\]
+    is flat by showing the target is a free $A_P$ module. We can compute
+    \[(A[t]/(t^m-f))_P = A_P[t]/(t^m-f),\]
+    {\color{red} now I feel doubtful about this.}
+\end{proof}
+
+\begin{rmk}
+    There is much more general statement one can make, as in \cite[Lemma~2.1]{hochster_infinite_1992}.
+\end{rmk}
+
+
+
+\subsubsection{Global Case}
+
+This is an elaboration of \cite[Proposition~4.1.6]{lazarsfeld_positivity_2004}.
+
+We would like to glue these constructions $V(t^m - f)$ where $f$ is the local equation of a Cartier divisor, but we actually need a more particular setup to glue---we will need our transition functions to have $m$th roots to make sense of where to send the various $t$ coordinates.
+
+\begin{prop}
+    Let $X$ be a variety, $L$ a line bundle on $X$, $m\in \Z_{\geq 1}$. Let $s\in \Gamma(X,L^{\otimes m})$ be a nonzero section defining an effective divisor $D=V(s)\subseteq X$. Then, there exists a finite flat covering
+    \[\pi: Y\to X\]
+    where $\pi^* L = L'$ such that $L'$ has section
+    \[s' \in \Gamma(Y,L') \quad \text{with} \quad (s')^m = \pi^* s.\]
+    The divisor $D' = V(s')$ maps isomorphically to $D$. Moreover, if $X$ and $D$ are nonsingular, then so too are $Y$ and $D'$.
+\end{prop}
+
+\begin{rmk}
+    In the statement, we need $s$ to be a section of the $m$th power of a line bundle $L$ for the gluing to make sense, but $s$ by no means needs to be an $m$th power---this is exactly what we are adding by making the cyclic cover.
+\end{rmk}
+
+\begin{proof}[Gluing Proof]
+    We can show that the affine construction glues. Say $L$ is trivialized by open cover $\{U_i\}$ with transition functions $\tau_{ij} \in \cO_X^*(U_{ij})$ (so $L^{\otimes m}$ is trivialized on the same cover, with transition functions $\tau_{ij}^m$).
+
+    Then, we need to produce a
+    \[\phi_{ij}: V(t_i^m - f_i)|_{U_{ij}} \to V(t_j^m - f_j)|_{U_{ij}},\]
+    which is by mapping
+    \[(x,v) \mapsto (x,\tau_{ij} v),\]
+    since if $v^m = f_i(x)$, then $(\tau_{ij} v)^m = \tau_{ij}^m f_i(x) = f_j(x)$ as needed. 
+\end{proof}
+
+\begin{proof}[Global Construction]
+    We should be able to repeat the affine construction globally if we replace our local charts
+    \[U \times \A^1 = \rSpec_{\cO_U}(\Sym^\bullet \cO_U^\vee)\]
+    and $\A^1$ coordinate $t$ with
+    \[\bL \defeq \rSpec_{\cO_X}(\Sym^\bullet L^\vee) \xrightarrow{p} X\]
+    and a ``global'' line bundle coordinate $T\in \Gamma(\mathbb{L},p^*L)$, which we will now explain.
+
+    Geometrically, $T$ will be like a tautological section, in that $T(x,t) = t \in p^* L|_{(x,t)} = L|_x$. More formally, to construct $T$, we... {\color{red} TODO}. 
+\end{proof}
+
+\subsection{Embedding Double Covers of \texorpdfstring{$\P^2$}{the Projective Plane} in Weighted Projective Space}
+
+
+\printbibliography
+
+
+\end{document}

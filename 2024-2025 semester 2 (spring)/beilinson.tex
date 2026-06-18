@@ -1,0 +1,646 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+
+\usepackage{blkarray}
+
+% Comic Sans
+% \usepackage{sansmathfonts}
+% \usepackage{fontspec}
+% \setmainfont{Comic Sans MS}
+
+% \usepackage{fontspec}
+% \setmainfont{Wingdings-Regular.ttf}
+
+% \usepackage{libertine}
+
+% fancy header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+% \rhead{Joseph Sullivan}
+
+\title{Beilinson's Resolution of the Diagonal}
+\author{Joseph Sullivan}
+\date{April 2025}
+
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section*{Plan}
+
+The goal of this talk is to understand a certain 2 page paper of Beilinson entitled ``Coherent Sheaves on $\P^n$ and Problems of Linear Algebra'', as well as some of its implications. Here's the plan:
+\begin{enumerate}
+    \item Write down ``Beilinson's Resolution of the Diagonal'' (a certain locally free resolution of $\cO_{\Delta} \in \Coh(\P^n\times \P^n)$)
+    \item Use this resolution to see how $\cO(-n),\dots,\cO$ (and its ``dual'') form a ``basis'' for the derived category $D^b(\P^n)$ (in the sense that they form a \textit{full strong exceptional collection}).
+    \item Sketch a derived equivalence between $\Coh(\P^n)$ and certain \textit{quiver representations} (a way of equipping a certain directed graph with vector spaces and linear maps).
+\end{enumerate}
+\newpage
+
+
+\section{Beilinson's Resolution of the Diagonal}
+
+\subsection{Setup}
+Write $\P=\P^n$, and denote projections from $\P\times \P$ to its factors as follows.
+\[\begin{tikzcd}[column sep=0cm]
+    & \P\times \P \ar[dl,"q"'] \ar[dr,"p"] &\\
+    \P & & \P
+\end{tikzcd}\]
+Let $\Delta: \P \to \P\times \P$ be the diagonal map. Our goal is to write a locally free resolution of $\cO_\Delta \defeq \Delta_* \cO_\P$ consisting of certain box products. We explain our strategy here.
+
+We have vector bundles $\cO_\P^{n+1}$ and $(\cO_\P^{n+1})^\vee$, and we can form their box product together with an ``evaluation'' map
+\[\cO_\P^{n+1} \boxtimes (\cO_\P^{n+1})^\vee = q^* \cO_\P^{n+1} \otimes p^* (\cO_\P^{n+1})^\vee \cong \cO_{\P\times\P}^{n+1} \otimes (\cO_{\P\times\P}^{n+1})^\vee \xrightarrow{\eval} \cO_{\P\times \P}\]
+by sending
+\[s \otimes \phi \longmapsto \phi(s).\]
+Defined as is, $\eval$ is surjective, so the cokernel is 0. However, we will pick bundles
+\[\cO_\P(-1) \hookrightarrow \cO_\P^{n+1}, \qquad \Omega_\P(1) \hookrightarrow (\cO_\P)^{n+1}\]
+so that the image of restricted $\eval$ is instead the ideal sheaf of $\Delta$, so that the cokernel is $\cO_{\Delta}$ as desired.
+
+Denoting 
+\[\cE = \cO_\P(-1) \boxtimes \Omega_\P(1),\]
+we will be able to start our resolution of $\cO_\Delta$ by
+\[\cE \to \cO_{\P\times \P} \to \cO_\Delta \to 0.\]
+We will then be able to finish up the resolution using the Koszul complex, as in the following proposition.
+
+\begin{prop}
+    Let $\cE$ be a locally free sheaf of rank $r$ on a scheme $X$, and $s\in \Gamma(\cE^\vee)$ a global section of the dual. Then, there is a complex called the \textbf{Koszul complex} 
+    \[0 \to \bigwedge^r \cE \to \cdots \to \bigwedge^1 \cE \to \bigwedge^0 \cE \to \cO_{V(s)} \to 0,\]
+    and if $X$ is locally Cohen-Macaulay and $\codim V(s) = r$, then it is exact.
+\end{prop}
+
+\begin{proof}
+    We can identify $\bigwedge^i \cE$ as a subsheaf of a tensor product, (as in the differential geometry-esque style of wedge product as alternating functionals on the dual)
+    \[\bigwedge^i \cE \hookrightarrow \bigwedge^{i-1} \cE \otimes \cE,\]
+    by hitting the following morphism of presheaves with sheafification
+    \[e_1 \wedge \cdots \wedge e_i \longmapsto \sum_{\ell=1}^i (-1)^\ell e_1 \wedge \cdots \wedge \hat{e_\ell} \wedge \cdots \wedge e_i \otimes e_\ell.\]
+    Then, we have a morphism
+    \[\bigwedge^{i-1} \cE \otimes \cE \to \bigwedge^{i-1} \cE \otimes \cO_X \cong \bigwedge^{i-1} \cE\]
+    from $\cE\xrightarrow{s} \cO_X$. Now, the composition of these morphisms is
+    \[\bigwedge^i \cE \to \bigwedge^{i-1} \cE\]
+    which is referred to as contraction with $s$.
+
+    Now, on stalks, choosing an identification $\cE_x \cong \cO_{X,x}^r$, our morphism $s: \cE_x \to \cO_{X,x}$ gets identified with a morphism $\cO_{X,x}^r \to \cO_{X,x}$ defined by sending the basis $e_1,\dots,e_r$ to germs $f_1,\dots,f_r$. Then, under this identification, the complex we defined is exactly the usual Koszul complex $K(f_1,\dots,f_r)$ on the local ring $\cO_{X,x}$.
+
+    So, this tells us in particular that our sequence of morphisms between sheaves $\bigwedge^i \cE$ is a complex. We can also say something about exactness. Assume now that $X$ is locally Cohen-Macaulay and $\codim V(s)=r$, and let $x\in X$ be a closed point. Then, we want to know that $f_1,\dots,f_r$ is a regular sequence, but this follows from \cite[Theorem 2.1.2]{Bruns_Herzog_1998}, since $\dim \cO_{X,x}/(f_1,\dots,f_r) = r$ by our codimension assumption. So, our complex is exact when we take stalks at any closed point, so our complex is exact.
+\end{proof}
+
+\subsection{Tautological Bundle}
+Consider this copy of $\P$ as having homogeneous coordinates $x_0,\dots,x_n$.
+
+We recall that $\cO_\P(-1)$ is the tautological line bundle, i.e., it naturally can be considered as a subsheaf of $\cO_\P^{n+1}$ (which we think of as having basis vectors $e_0,\dots,e_n$) with a fiber over a closed point $\ell$ (which is itself a line in $\A^{n+1}$) given exactly by $\ell$. To see this, we would try to ``find'' the tautological line bundle by studying only sections
+\[f_0 e_0 + \cdots + f_n e_n\]
+of $\cO_\P^{n+1}$ that are parallel to a point $\ell \in \P$, so we look at the kernel of a map
+\[\cO_\P^{n+1} \to \bigoplus_{0\leq i<j \leq n} \cO_\P(1)\]
+where in the $i,j$ coordinate, we place the morphism $\cO_\P^{n+1}\to \cO_\P(1)$ which is $x_i f_j - x_j f_i$.
+
+This map is nowhere near generically full rank---otherwise we would expect to get a torsion sheaf just from dimension counting. Instead, we can even find a copy of $\cO_\P(-1)$ inside which is
+\[\cO_\P(-1) \xrightarrow{\begin{bmatrix}
+    x_0\\\vdots\\x_n
+\end{bmatrix}} \cO_\P.\]
+Now, we compute over affine opens to see that $\cO_\P(-1)$ is exactly the kernel. Over an affine open $D_+(x_p)$, we can trivialize
+\[\cO_{D_+(x_p)}(1) = x_p\cO_{D_+(x_p)} \xrightarrow[\frac{1}{x_p}]{\cong} \cO_{D_+(x_p)},\]
+and we are just computing the kernel of
+\[\cO_{D_+(x_p)}^{n+1} \to \bigoplus_{0\leq i < j \leq n} \cO_{D_+(x_p)}\]
+where the $p,j\neq p$ entry of the target is given by $f_j - \frac{x_j}{x_p} f_p$, which subsumes all of the other relations (i.e., they are all generated from this), so we get the same kernel from
+\[\cO_{D_+(x_p)}^{n+1} \longrightarrow \bigoplus_{\substack{j=0\\j\neq p}}^n \cO_{D_+(x_p)}\]
+which has as $j$th entry $f_j - \frac{x_j}{x_p} f_p$, and this has kernel
+\[\frac{1}{x_p} \cO_{D_+(x_p)} \xrightarrow{\begin{bmatrix}
+    x_0\\\vdots\\x_n
+\end{bmatrix}} \cO_{D_+(x_p)}^{n+1},\]
+which is exactly $\cO_\P(-1)|_{D_+(x_p)} \hookrightarrow \cO_\P^{n+1}|_{D_+(x_p)}$.
+
+\begin{rmk}
+    This is also how we see $\P^n$ as the moduli space of lines through the origin in $\A^{n+1}$. We have the moduli functor
+    \begin{align*}
+        \cM: (\Sch/k)^\op &\longrightarrow \Set\\
+        S &\longmapsto \{\text{line subbundles of } \cO_S^{n+1} \text{ with fibers injecting in $k^{n+1}$}\}
+    \end{align*}
+    and sending morphisms to pullback. Then, we claim that $\P^n$ represents this functor, with universal family $\cO_{\P^n}(-1) \in \cM(\P^n)$. To check this, we should show that the natural transformation induced by Yoneda, given by
+    \begin{align*}
+        \Hom(S,\P^n) &\longrightarrow \cM(S)\\
+        f &\longmapsto f^*\cO_{\P^n}(-1)
+    \end{align*}
+    is a natural isomorphism. To see this, we see that the a line subbundle $\cL\hookrightarrow \cO_S^{n+1}$ bijects with surjections
+    \[\cO_S^{n+1} \twoheadrightarrow \cL^\vee\]
+    by dualizing (which is surjective because fiberwise surjective by assumption, so by Nakayama it is stalkwise surjective), and isomorphism classes of surjections $\cO^{n+1}$ to a a line bundle exactly biject with maps $f:S\to \P^n$ to projective space which pull back $f^*\cO_{\P^n}(1) = \cL^\vee$, so $f^*\cO_{\P^n}(-1) = \cL$.
+\end{rmk}
+
+\subsection{Twisted 1-forms}
+Consider this copy of $\P$ as having homogeneous coordinates $y_0,\dots,y_n$.
+
+We saw that $\cO_\P(-1)\hookrightarrow \cO_\P^{n+1}$ was a line bundle whose fiber at a point $\ell$ was the line $\ell$ itself. Dual to this picture, we'll show how the vector bundle $\Omega_\P(1)$ sits inside $(\cO_\P^{n+1})^\vee$ such that the fiber at a point $\ell$ are the functionals which vanish (at least) along $\ell$.
+
+Like before, we cut out this sort of tautological vector bundle by studying the kernel of a map
+\begin{align*}
+    (\cO_\P^{n+1})^\vee &\longrightarrow \cO_\P(1)\\
+    \phi &\longmapsto \phi(x_0,\dots,x_n).
+\end{align*}
+The kernel will turn out to be $\Omega_\P(1)$. To see this, first twist the morphism by $\cO(-1)$ so we want to show $\Omega_\P$ is the kernel of the following. 
+\begin{align*}
+    \cO_\P(-1)^{n+1} &\xlongrightarrow{\begin{bmatrix}
+        x_0 & \cdots & x_n
+    \end{bmatrix}} \cO_\P.
+\end{align*}
+% Now, the morphism
+% \[\Omega_\P \to \cO_\P(-1)^{n+1}\]
+% which lands in the kernel is that which evaluates a 1-form at the twisted vector fields
+% \[\frac{\partial}{\partial x_i},\]
+% by which we mean the dual to $dx_i$?
+
+
+% (these live in $\cT_\P(-1)$), which is picking up the coefficient of $dx_i$.
+
+Over $D_+(x_p)$, we are studying the map
+\begin{align*}
+    \cO_\P^{n+1} &\longrightarrow x_p \cO_\P \xrightarrow{\frac{1}{x_p}} \cO_\P\\
+    (f_0,\dots,f_n) &\longrightarrow \sum f_i \frac{x_i}{x_p},
+\end{align*}
+so the kernel is generated by terms $i\neq p$
+\[\frac{x_i}{x_p} e_p - e_i.\]
+We then want to define a map
+\[ \Omega_\P|_{D_+(x_p)} \longrightarrow \cV|_{D_+(x_p)},\]
+and we have the computation
+\[\frac{}{}\]
+
+\subsection{Image of Composition}
+With the ingredients in place, we can form the composition
+\[\cO_\P(-1) \boxtimes \Omega_\P(1) \hookrightarrow \cO_\P^{n+1} \boxtimes (\cO_\P^{n+1})^\vee \to \cO_{\P\times \P},\]
+and our goal, to get the appropriate Koszul complex, is to show that the image is exactly $\cI_\Delta \subseteq \cO_{\P\times \P}$.
+
+The intuition is that an image section $\phi(s)$ will be those which vanish at points $(\ell,\ell)$ (where $\ell$ is a line in $\A^{n+1}$), since this is exactly when $s$ is parallel to $\ell$ and $\phi$ vanishes along $\ell$.
+
+To check this precisely, this now boils down to a coordinate computation. Without loss of generality, we just compute the image of restricted $\eval$ on affine opens
+\[D_+(x_0)\times D_+(y_0), \qquad D_+(x_0)\times D_+(y_n)\]
+(once when they agree, once when they disagree). We will use our characterizations of $\cO_\P(-1)$ and $\Omega_\P(1)$ as kernels to do our coordinate computations.
+
+\subsubsection{Agreeing Opens}
+
+On $D_+(x_0)\times D_+(y_0)$, $\cO_\P(-1)\subseteq \cO_\P^{n+1}$ is generated by the section
+\[e_0 + \frac{x_1}{x_0} e_1 + \dots + \frac{x_n}{x_0} e_n,\]
+and $\Omega_\P(1) \subseteq (\cO_\P^{n+1})^\vee$ is generated by the sections
+\[\frac{y_j}{y_0} e_0^* - e_j^*\]
+for $j=1,\dots,n$. Therefore, the image is generated by the evaluations
+\[\frac{y_j}{y_0} - \frac{x_j}{x_0}\]
+for $j=1,\dots,n$, which exactly generates
+\[\cI_\Delta(D_+(x_0) \times D_+(y_0))\]
+
+\subsubsection{Disagreeing Opens}
+
+On $D_+(x_0)\times D_+(y_n)$, $\cO_\P(-1)\subseteq \cO_\P^{n+1}$ is generated by the section (as before)
+\[e_0 + \frac{x_1}{x_0} e_1 + \dots + \frac{x_n}{x_0} e_n,\]
+while $\Omega_\P(1)\subseteq (\cO_\P^{n+1})^\vee$ is generated by the sections
+\[\frac{y_j}{y_n} e_n^* - e_j^*\]
+for $j=0,\dots,n-1$. Therefore, the image is generated by evaluations
+\[\frac{y_j}{y_n}\frac{x_n}{x_0} - \frac{x_j}{x_0}\]
+for $j=0,\dots,n-1$, which again exactly generate
+\[\cI_\Delta(D_+(x_0) \times D_+(y_n)).\]
+{\color{red} why exactly???}
+
+
+\subsection{The Resolution}
+
+We can therefore write down the resolution
+\[0\to \bigwedge^n \cE \to \cdots \to \bigwedge^1 \cE \to \bigwedge^0 \cE \to \cO_\Delta \to 0,\]
+and some linear algebra tells us that
+\[\bigwedge^i (\cO_\P(-1) \boxtimes \Omega_\P(1)) = \cO_\P(-i) \boxtimes \Omega_\P^i(i),\]
+and so what we've accomplished is show that the complex
+\[0 \to \cO_\P(-n) \boxtimes \Omega_\P^n(n) \to \cdots \to \cO_\P(-1) \boxtimes \Omega_\P^1(1) \to \cO_{\P\times\P} \to 0\]
+is quasi-isomorphic to $\cO_\Delta$. We will from now on denote this complex by $\cE^\bullet$, where we mean $\cE^{-i} = \cO_\P(-i) \boxtimes \Omega_\P^i(i)$ for $i=-n,...,0$ (cohomology indexing).
+
+
+
+\newpage
+\section{A Basis for the Derived Category}
+
+\subsection{Setup}
+
+The fact that $\cO_\Delta$ is quasi-isomorphic to $\cE$ is key to writing down our ``basis''. By basis, we really mean a \textit{full strong exceptional collection}.
+
+\begin{defn}
+    Let $\cD$ be a $k$-linear triangulated category.
+    \begin{itemize}
+        \item An object $E\in \cD$ is \textbf{exceptional} if it has no nontrivial Exts, i.e.,
+        \[\Hom_{\cD}(E,E[\ell]) = \begin{cases}
+            k \cdot \id_E & \text{if $\ell=0$}\\
+            0 & \text{otherwise.}
+        \end{cases}\]
+        \item A sequence of objects
+        \[E_1,\dots,E_n\]
+        is \textbf{exceptional} if all objects are exceptional, and there are no ``backwards'' Exts, i.e.,
+        \[\Hom_\cD(E_i,E_j[\ell])=\begin{cases}
+            k & \text{if $\ell=0$, $i=j$}\\
+            0 & \text{if $\ell\neq 0$, $i=j$}\\
+            0 & \text{if $i>j$.}
+        \end{cases}\]
+        \item A sequence is \textbf{strong} if in addition to being exceptional, the remaining (forward) Exts are all concentrated in degree 0, i.e.,
+        \[\Hom_\cD(E_i,E_j[\ell]) = \begin{cases}
+            k & \text{if $\ell=0,i=j$}\\
+            0 & \text{if $\ell\neq 0$.}
+        \end{cases}\]
+        (so you are still allowed to have ``forwards'' Homs).
+        \item A sequence is \textbf{full} if it generates $\cD$ (i.e., any strictly full triangulated subcategory containing the sequence is equal to $\cD$).
+    \end{itemize}
+\end{defn}
+
+Essentially, a collection of objects are a full strong exceptional collection if the (generalized) Homs are as simple as possible (a sort of orthogonality condition), and the objects generate the entire category.
+
+Our main result is the following.
+
+\begin{thm}\label{beilinson-collection}
+    The following collections of sheaves on $\P^n$ are full strong exceptional sequences:
+    \[\{\cO(-n),\cO(-n+1),\dots,\cO\}\]
+    and
+    \[\{\cO,\Omega^1(1),\dots,\Omega^n(n)\}.\]
+\end{thm}
+
+
+\subsection{Fourier-Mukai Computations}
+To prove this theorem, using our resolution, we will see why $\cO_\Delta$ is important, due to the following definition and proposition.
+
+\begin{defn}
+    Let $X,Y$ be smooth projective varieties, and denote the projections
+    \[\begin{tikzcd}[column sep=0cm]
+        & X\times Y \ar[dl,"q"'] \ar[dr,"p"] &\\
+        X & & Y
+    \end{tikzcd}\]
+    Let $\cP$ be a complex of sheaves in $D^b(X\times Y)$, called a \textbf{Fourier-Mukai kernel}, and define the corresponding \textbf{Fourier-Mukai transform}
+    \begin{align*}
+        \Phi_{\cP}: D^b(X) &\longrightarrow D^b(Y)\\
+        \cE &\longmapsto Rp_*(Lq^*\cE \otimes^L \cP).
+    \end{align*}
+    We can also use the same kernel to go in the reverse direction, which we denote by
+    \begin{align*}
+        \Phi_{\cP}': D^b(Y) &\longrightarrow D^b(X)\\
+        \cE &\longmapsto Rq_*(Lp^*\cE \otimes^L \cP).
+    \end{align*}
+\end{defn}
+
+\begin{prop}
+    Let $\cO_{\Delta}$ be the structure sheaf of the diagonal on $X\times X$, i.e., if $\Delta: X\to X\times_k X$ is the diagonal, $\cO_{\Delta} = \Delta_* \cO_X$. Then,
+    \[\Phi_{\cO_\Delta} \cong 1_{D^b(X)}.\]
+\end{prop}
+
+\begin{proof}
+    First, we note that $\Delta_*\cO_X$, considered as a degree 0 complex, coincides with $R\Delta_* \cO_X$ where $\cO_X$ is considered as a degree 0 complex, since $\Delta$ is a closed immersion (so an affine map).
+    
+    We then compute, by the derived projection formula (which is true even for non-locally free sheaves, since every complex of coherent sheaves has a locally free replacement) the following:
+    \begin{align*}
+        \Phi_{\cO_\Delta}(\cE) &= Rp_*(Lq^*\cE \otimes^L \Delta_* \cO_X)\\
+        &= Rp_*(R\Delta_*(\cO_X \otimes^L L\Delta^*Lq^* \cE))\\
+        &= R(p \circ \Delta)_*(\cO_X \otimes^L L(q\circ \Delta)^* \cE)\\
+        &= R(1_X)_*(\cO_X \otimes^L L(1_X)^* \cE)\\
+        &= \cE
+    \end{align*}
+    (where all the equalities are really only natural isomorphisms). So, indeed $\Phi_{\cO_\Delta} \cong 1_{D^b(X)}$.
+\end{proof}
+
+Our quasi-isomorphism $\cE^\bullet \cong \cO_\Delta$ then tells us, in particular, that
+\[\Phi_{\cE^\bullet} \cong \Phi_{\cO_\Delta} \cong 1_{D^b(\P)}\]
+(and the same is true for the Fourier Mukai transforms in the reverse direction). In some sense, $\cE^\bullet$ gives us a decomposition of the identity, by replacing the single sheaf $\cO_\Delta$ with a complex. This will be key to proving the main theorem, which first relies on a lemma.
+
+\begin{lem}\label{fm-against-vb-box-prod}
+    The Fourier-Mukai transforms $\Phi_{\cE^{-i}}'$ and $\Phi_{\cE^{-i}}'$ send a complex $\cF^\bullet$ to a direct sum of shifts of $\cO(-i)$ and $\Omega^i(i)$ respectively. More specifically,
+    \begin{align*}
+        \Phi_{\cE^{-i}}'(\cF^\bullet) &= \bigoplus H^j(\P,\cF^\bullet\otimes \Omega^i(i))[-j] \otimes_k \cO(-i)\\
+        \Phi_{\cE^{-i}}(\cF^\bullet) &= \bigoplus H^j(\P,\cF^\bullet(-i))[-j] \otimes_k \Omega^i(i).
+    \end{align*}
+\end{lem}
+\begin{proof}
+    We prove the first statement. We compute, using (1) the acyclicity of locally free sheaves for tensor and (2) the derived projection formula, that
+    \begin{align*}
+        \Phi_{\cE^{-i}}'(\cF^\bullet) &= Rq_*(p^* \cF^\bullet \otimes^L \cE^{-i})\\
+        &= Rq_*(p^*\cF^\bullet \otimes (q^* \cO(-i) \otimes p^*\Omega^i(i)))\\
+        &= Rq_*(p^*(\cF^\bullet \otimes \Omega^i(i)) \otimes q^* \cO(-i))\\
+        &= Rq_*(p^*(\cF^\bullet \otimes \Omega^i(i))) \otimes \cO(-i).
+    \end{align*}
+    Now, we have a fiber product square
+    \[\begin{tikzcd}
+        \P\times \P \rar["p"]\dar["q"] & \P\dar["\pi"]\\
+        \P \rar["\tau"] & \Spec k
+    \end{tikzcd}\]
+    so derived flat base change tells us
+    \[Rq_*(p^*(\cF^\bullet \otimes \Omega^i(i))) = \tau^*(R\pi_*(\cF^\bullet \otimes \Omega^i(i))),\]
+    but we can identify $R\pi_*$ with sheaf cohomology $R\Gamma$, and $\tau^*$ as tensoring this complex of $k$-vector spaces with $\cO_\P$, so we in fact get
+    \[Rq_*(p^*(\cF^\bullet \otimes \Omega^i(i))) = R\Gamma(\cF^\bullet \otimes \Omega^i(i)) \otimes_k \cO_\P,\]
+    and even better, $D^b(\Spec k)$ has homological dimension $\leq 1$ ($\Ext^2$ and higher vanish), so a complex actually splits as a direct sum, so we can replace our $R\Gamma$ complex with a direct sum of its cohomologies, so
+    \[Rq_*(p^*(\cF^\bullet \otimes \Omega^i(i))) = \bigoplus H^j(\cF^\bullet \otimes \Omega^i(i))[-j] \otimes_k \cO_\P.\]
+    Now, plugging this into our earlier computation, we get
+    \[\Phi_{\cE^{-i}}'(\cF^\bullet) = \bigoplus H^j(\cF^\bullet \otimes \Omega^i(i))[-j] \otimes_k \cO(-i)\]
+    as desired.
+\end{proof}
+
+
+\subsection{Proof of Main Theorem}
+
+\begin{proof}[Proof of Theorem \ref{beilinson-collection}]
+    We just prove the first collection is a full strong exceptional collection---the other argument is similar.
+
+    It is not difficult to show that the first collection is strong exceptional, just standard cohomology calculations, along the lines of
+    \[\Hom(\cO(-i),\cO(-j)) \cong \Ext^\ell(\cO(-i),\cO(-j)) \cong \Ext^\ell(\cO,\cO(i-j)) \cong H^\ell(\cO(i-j)),\]
+    and then do case work for whether $i<j$ or $\ell=0,n$.
+
+    The much harder result is that this collection is full---that it generates $D^b(\P)$. Pick an object $\cF^\bullet \in D^b(\P)$, which we will try to generate. To see this, split the exact sequence $0\to \cE^\bullet \to \cO_\Delta \to 0$ into short exact sequences
+    \[\begin{tikzcd}[row sep=0cm]
+        0 \rar & \cE^{-n} \rar & \cE^{-n+1} \rar & \cK^{-n+1} \rar & 0\\
+        0 \rar & \cK^{-n+1} \rar & \cE^{-n+2} \rar & \cK^{-n+2} \rar & 0\\
+        & & \vdots & &\\
+        0 \rar & \cK^{-1} \rar & \cE^0 \rar & \cO_\Delta \rar & 0
+    \end{tikzcd}\]
+    where $\cK^{-i} = \ker(\cE^{-i} \to \cE^{-i+1})$. These give distinguished triangles in $D^b(\P\times \P)$, which we can then hit with exact functors
+    \[p^*\cF^\bullet \otimes^L -, \qquad Rq_*\]
+    to get the follwing distignuished triangles.
+    \[\begin{tikzcd}[row sep=0cm]
+        \Phi_{\cE^{-n}}'(\cF^\bullet) \rar & \Phi_{\cE^{-n+1}}'(\cF^\bullet) \rar & \Phi_{\cK^{-n+1}}'(\cF^\bullet) \rar["+1"] & \phantom{}\\
+        \Phi_{\cK^{-n+1}}'(\cF^\bullet) \rar & \Phi_{\cE^{-n+2}}'(\cF^\bullet) \rar & \Phi_{\cK^{-n+2}}'(\cF^\bullet) \rar["+1"] & \phantom{}\\
+        & \vdots & &\\
+        \Phi_{\cK^{-1}}'(\cF^\bullet) \rar & \Phi_{\cE^0}'(\cF^\bullet) \rar & \Phi_{\cO_\Delta}'(\cF^\bullet) \rar["+1"] & \phantom{}
+    \end{tikzcd}\]
+    Starting from the top, we get
+    \[\Phi_{\cK^{-n+1}}'(\cF^\bullet) \in \<\cO(-n),\cO(-n+1)\>\]
+    because it fits into a distinguished triangle where the other two terms are direct sums of shifts of $\cO(-n),\cO(-n+1)$ by the lemma. The next distinguished triangle tells us
+    \[\Phi'_{\cK^{-n+2}}(\cF^\bullet) \in \<\cO(-n),\cO(-n+1),\cO(-n+2)\>,\]
+    and induction will get us
+    \[\cF^\bullet = \Phi_{\cO_\Delta}'(\cF^\bullet) \in \<\cO(-n),\dots,\cO\>,\]
+    so indeed our strong exceptional collection is actually full.
+\end{proof}
+
+
+
+\newpage
+\section{Applications}
+
+\subsection{Beilinson Spectral Sequence}
+
+\begin{thm}
+    Given $\cF \in \Coh(\P)$, there exist spectral sequences
+    \begin{align*}
+        E_1^{p,q} = H^q(\P,\cF(p)) \otimes \Omega^{-q}(-q) & \Longrightarrow \begin{cases}
+            \cF & \text{if $p+q=0$}\\
+            0 & \text{else}
+        \end{cases}\\
+        E_1^{p,q} = H^q(\P,\cF \otimes \Omega^{-p}(-p)) \otimes \cO(q) & \Longrightarrow \begin{cases}
+            \cF & \text{if $p+q=0$}\\
+            0 & \text{else.}
+        \end{cases}
+    \end{align*}
+\end{thm}
+
+We first prove a lemma.
+\begin{lem}
+    Let $F: \cA \to \cB$ be a left exact additive functor between abelian categories with enough injectives. Let $A^\bullet \in D^+(\cA)$. Then, we have a spectral sequence
+    \[R^qF(A^p) \Longrightarrow R^{p+q}F(A^\bullet).\]
+\end{lem}
+\begin{proof}
+    Resolve $A^\bullet$ with an injective double complex $0\to A^\bullet \to I^{\bullet,\bullet}$.
+
+    % , the \textit{Cartan-Eilenberg} resolution
+    % \[0 \to A^\bullet \to I^{\bullet,\bullet}\]
+    % which is such that
+    % \[0\to A^p \to I^{p,\bullet}\]
+    % is an injective resolution, and even better, this induces injective resolutions for $\ker(A^p\to A^{p+1})$, $\im(A^{p-1}\to A^{p})$, and also $H^p(A^\bullet)$. Since injective objects makes SESs split, each $I^{\bullet,q}$ is split, in the sense that
+    % \[0 \to \ker(C^{p,q} \to C^{p+1,q}) \to C^{p,q} \to \im(C^{p,q} \to C^{p+1,q}) \to 0\]
+    % is split.
+    
+    Now to compute $R^q F(A^p)$, we see that $I^{p,\bullet}$ is an injective resolution, so this is $H^q F(I^{p,\bullet})$, which is the vertical cohomology of the double complex $F(I^{\bullet,\bullet})$, which forms the 1st page on the vertical spectral sequence of the double complex converging to the cohomology of the total complex $F(I^{\bullet,\bullet})$.
+
+    On the other hand, the total complex of $I^{\bullet,\bullet}$ is an injective complex quasi-isomorphic to $A^\bullet$, so the $(p+q)$th cohomology of the total complex of $F(I^{\bullet,\bullet})$ is $R^{p+q}F(A^\bullet)$. 
+
+    Thus, we get the desired result.
+\end{proof}
+
+\begin{proof}[Proof of Theorem.]
+    Apply the lemma for $F=p_*$ and $A^\bullet = q^*\cF \otimes \cE^\bullet$, to get spectral sequence
+    \begin{align*}
+        R^q p_*(q^*\cF \otimes \cE^p) &\Longrightarrow R^{p+q} p_*(q^*\cF \otimes \cE^\bullet)\\
+        H^q \Phi_{\cE^p}(\cF) &\Longrightarrow H^{p+q} \Phi_{\cE^\bullet}(\cF),
+    \end{align*}
+    and we apply lemma \ref{fm-against-vb-box-prod} to get the first result (and switch the roles of $p,q$ to get the other result).
+\end{proof}
+
+\subsection{Some Equivalences}
+
+\subsubsection{Tool}
+
+To write down equivalences between triangulated categories, we'll need the following lemma.
+
+\begin{defn}
+    Let $\cC$ be a triangulated category. A \textbf{classical generator} of $\cC$ is an object $C$ such that the smallest saturated (closed under direct summands) strictly full (closed under isomorphisms and contains all morphisms between given objects) triangulated subcategory of $\cC$ containing $C$ is $\cC$ itself.
+\end{defn}
+
+\begin{lem}
+    Let $F:\cC \to \cD$ be an exact functor, which sends a classical generator $C\in \cC$ to a classical generator $F(C)=D$ of $\cD$, such that the induced map
+    \[\End_{\cC}^\bullet(C) \to \End_{\cD}^\bullet(D)\]
+    is an isomorphism. Then, $F$ is an equivalence.
+\end{lem}
+\begin{proof}
+    To show at least $F$ is an equivalence, we show it is fully faithful and essentially surjective.
+    
+    To see fully-faithful, first show that the full subcategory
+    \[T_C = \{X\in \cC \mid \text{$\Hom(C,X) \to \Hom(FC,FX)$ is a bijection}\}\]
+    is a strictly full saturated triangulated subcategory containing $C[i]$ for all $i\in \Z$. This is true---it is clearly closed under direct sums, direct summands, and shifts. To see it is closed under cones, notice that for a distinguished triangle $X\to Y\to Z \to X[1]$ we get a commutative diagram of (long) exact sequence
+    \[\begin{tikzcd}
+        \cdots \rar & \Hom(C,X[1]) \rar \dar["F_{C{,}X[1]}"] & \Hom(C,Z) \rar \dar["F_{C{,}Z}"] & \Hom(C,Y) \rar \dar["F_{C{,}Y}"] & \cdots\\
+        \cdots \rar & \Hom(FC,FX[1]) \rar & \Hom(FC,FZ) \rar & \Hom(FC,FY) \rar & \cdots
+    \end{tikzcd}\]
+    all vertical morphisms are isomorphisms except for potentially every 3rd morphism, but then we apply the 5 lemma to get $F_{C,Z}$ is also an isomorphism. So, $T_C$ has to be all of $\cC$.
+
+    The same argument shows that
+    \[T_X' = \{Y\in \cC \mid F_{X,Y} \text{ is bijective}\}\]
+    is thick (since the previous step told us $C[i]\in T_X'$), so it is also all of $\cC$. This establishes that $F$ is fully faithful.
+
+    Next, $F$ is essentially surjective, because it is exact and has a generator in its image. Thus, $F$ is an equivalence.
+\end{proof}
+
+\subsubsection{Homotopy Category}
+
+The main obstacle to understanding a derived category is just how complicated morphisms are---in general I have no idea how many roofs there are. When we have enough injective/projectives, there are spectral sequences that converge to the $\Hom$ groups in the derived category, but its not like spectral sequences are particularly easy either.
+
+For $\P^n$ in particular, we can take Beilinson's argument a little further and actually get an equivalence between $D^b(\P^n)$ and a homotopy category, where the morphisms are way more tractible.
+
+First, we define some notation.
+\begin{itemize}
+    \item Let $V$ be a vector space (whose elements we consider as geometric vectors), and $V^\vee$ its dual, and set $S= \Sym^\bullet V^\vee$ as usual.
+    \item Let $\grlMod{S}$ the category of graded (left) modules over $S_\bullet$
+    \item Let $M_{[0,n]}(S)$ be the full subcategory of $\grlMod{S}$ consisting of objects which are finite direct sums of $S(-r)$ for $r\in \{0,\dots,n\}$.
+    \item Let $K^b_{[0,n]}(S)$ the homotopy category of bounded complexes in $M_{[0,n]}(S)$.
+\end{itemize}
+
+We can then define an additive functor
+\begin{align*}
+    M_{[0,n]}(S) &\longrightarrow \Coh(\P)\\
+    S(-r) &\longmapsto \tilde{S(-r)}=\cO(-r),
+\end{align*}
+which then passes to chain complex categories and then to homotopy categories (which are triangulated, by source-cylinder-cone-suspension exact triangles)
+\[K^b_{[0,n]}(S) \longrightarrow K^b(\Coh(\P)),\]
+which we can post-compose with the localization functor to get
+\[F: K^b_{[0,n]}(S) \longrightarrow D^b(\P).\]
+In total, this functor just hits a chain complex with usual projective space sheafification/tilde, and likewise for morphisms. The left is relatively easy to understand---morphisms are homotopy classes of honest chain maps---whereas the right is a-priori difficult. The surprising thing is the following.
+
+\begin{thm}
+    The functor $F$ is an equivalence.
+\end{thm}
+\begin{proof}
+    The source category of $F$ is classically generated by the object $\bigoplus_{i=0}^n S(-i)$, the right is classically generated by $\bigoplus_{i=0}^n \cO(-i)$ by Beilinson. By our triangulated category lemma, and by splitting the morphism of direct sums into components, we just need to show
+    \[\Hom_{K^b_{[0,n]}(S)}^\bullet(S(-i),S(-j)) \cong \Hom_{D^b(\P)}^\bullet(\cO(-i),\cO(-j)).\]
+    On either side, the $\Hom$ groups are concentrated in degree 0---on the left because in the homotopy category we'd have no hope of writing an honest chain map, and on the right by an $\Ext$ computation. So, we only have to worry about degree 0 homomorphisms, but this is straightforward---we will get
+    \[\Hom(S(-i),S(-j)) = \Hom(S,S(i-j) = \Sym^{i-j} V^\vee = \Gamma(\cO(i-j)) = \Hom(\cO(-i),\cO(-j)).\]
+\end{proof}
+
+\begin{rmk}
+    We will get an analogous equivalence corresponding to the $\cO,\Omega^1(1),\dots,\Omega^n(n)$ full strong exceptional collection.
+    
+    Define $K_{[0,n]}^b(E)$ to be the homotopy category of bounded complexes valued in finite direct sums of $E(-r)$ (with $r=0,\dots,n$) where $E=\bigwedge^\bullet V$.
+
+    Then, we get a functor
+    \[F': K_{[0,n]}^b(E) \longrightarrow D^b(\P^n)\]
+    which interprets $E(-r)$ as $\Omega^r(r)$.
+\end{rmk}
+
+\subsubsection{Quiver Representations}
+
+Unlike the previous equivalence, the following goes through whenever we have an exceptional collection. We'll see specifically how this works for $\P^n$.
+
+\begin{defn}
+    Let $X$ be a smooth projective variety over $k$. A sheaf $T\in \Coh(X)$ is called a \textbf{tilting sheaf} if
+    \begin{enumerate}
+        \item[(T1)] the algebra $A\defeq \End(T)$ has finite global dimension (i.e., there exists $d\in \Z_{\geq 0}$ such that any module admits a projective resolution of length less than $d$).
+        \item[(T2)] The modules $\Ext^\ell(T,T)=0$ for all $\ell>0$.
+        \item[(T3)] The object \textit{classically generates} $D^b(X)$, i.e., the smallest strictly full saturated (closed under direct summands) triangulated subcategory containing $T$ is $D^b(X)$.
+    \end{enumerate}
+\end{defn}
+
+\begin{prop}
+    Let $E_1,\dots,E_r \in \cA$ be a full strong exceptional collection for $D^b(\cA)$. Then,
+    \[T = \bigoplus_{i=1}^r E_i\]
+    is a tilting object.
+\end{prop}
+
+We're approaching a result which tells us how nice a tilting sheaf is---in the same way the triangulated category generated by a single exceptional object is just $D^b(k)$, we'll see that the triangulated category generated by a tilting sheaf is $D^b(\rmod A)$.
+
+\begin{thm}\label{tilting-quiver}
+    Let $T$ be a tilting sheaf on a projective smooth $X$ over $k$, with $A=\End(T)$. Then, the following functors form an equivalence.
+    \begin{align*}
+        RG= \RHom(T,-): D^b(X) &\longrightarrow D^b(\rmod A)\\
+        LF= - \otimes_A^L T: D^b(\rmod A) &\longrightarrow D^b(X)
+    \end{align*}
+\end{thm}
+\begin{proof}
+    First, we more carefully define the functors.
+    
+    We have the left exact functor $G=\Hom(T,-): \QCoh(X) \to k\text{-}\mathrm{Vec}$, which actually factors through $\rMod A$ because we have an action by precomposition.
+    
+    The category $\QCoh(X)$ has enough injectives, so we can right derive the functor to get
+    \[\RHom(T,-): D^+(\QCoh(X)) \to D^+(\rMod A),\]
+    and usual arguments tell us that this descends to
+    \[RG = \RHom(T,-): D^b(X) \to D^b(\rmod A),\]
+    (we have an Ext spectral sequence to ensure that we get bounded complexes because $\Coh(X)$ has finite global dimension, and morphisms between coherent sheaves are finite dimensional to ensure that precomposed with $D^b(X) \cong D^b_{\Coh(X)}(\QCoh(X)) \hookrightarrow D^b(\QCoh(X))$ will with us finitely generated $A$ modules).
+
+    In the other direction, we have the functor
+    \[F = - \otimes_A T: \rmod A \to \QCoh(X),\]
+    in the following sense.
+    
+    
+    that given $M \in \rmod A$, we get then $\underline{M}$ is in $\rMod \underline{A}$ and $T$ is in $\underline{A} \lMod$, so we can form the $\underline{A}$-balanced tensor product, which is then inherits an $\cO_X$-module structure from $T$ (via left multiplication).
+
+    This functor is right exact, and $\rmod A$ has enough projectives, so we can left derive it to get
+    \[- \otimes_A^L T: D^-(\rmod A) \to D^-(\QCoh(X)),\]
+    and Serre theorems/finite global dimension of $A$ will give sheaf Tor finite dimensions/vanishing to imply that this functor descends to
+    \[LF = - \otimes_A^L T: D^b(\rmod A) \to D^b(X).\]
+
+    Now, we need to show these functors form an equivalence. The assumption T2 for $T$ exactly tells us that $RG(T)=A$, and so we also get a (ring) morphism
+    \[\End^\bullet(T) \xrightarrow{RF} \End^\bullet(A),\]
+    which is an isomorphism because in nonzero degrees both sides are 0 (by Ext vanishing or because $A$ is projective), and then in degree 0, it sends an endomorphism $f:T\to T$ to left multiplication by $f\in A$, which are exactly the endomorphisms of $A$ as a right $A$-module.
+    
+    So, our lemma tells us that $RG$ is an equivalence, but a-priori we do not know that $LF$ is a quasi-inverse. To see this, we first notice that $F\dashv G$ form an adjunction before we derived anything. To see this (it seems slightly subtle because it varies slightly from usual tensor-hom in the sheafiness of it), we will spell out the unit and counit, and check the triangle identities. We have $\eta: 1_{\rMod A} \Rightarrow GF$ by
+    \[\eta_M: M \to \Hom(T,M\otimes_A T)\]
+    where we send $m$ to the morphism $t\mapsto m\otimes t$ (which first is a map to the tensor presheaf, but then we postcompose to get a map to the sheafification). Then, we have $\eps: FG \Rightarrow 1_{\QCoh(X)}$ by
+    \[\eps_\cE: \Hom(T,\cE) \otimes_A T \to \cE\]
+    where we send $\phi \otimes t$ to $\phi(t)$ (which is a map from the presheaf factoring through the sheafification). Then, one checks that the triangle identities hold by computing the compositions on stalks---where sheafification is not a concern.
+\end{proof}
+
+We gave an equivalence $D^b(X) \cong D^b(\rmod A)$, but $\rmod A$ turns out to be a very concrete category---we will recognize $A$ to be a quiver algebra $kQ/I$, so that
+\[\rmod A \cong A^\op \lmod \cong \rep(Q^\op,I^\op).\]
+
+To see the quiver, we write more suggestively $A$ as the algebra of matrices
+\[\begin{bmatrix}
+    \Hom(E_1,E_1)=k & \Hom(E_1,E_2) & \cdots & \Hom(E_1,E_n)\\
+    0 & \Hom(E_2,E_2)=k & \cdots & \Hom(E_2,E_n)\\
+    \vdots & \vdots & \ddots & \vdots\\
+    0 & 0 & \cdots & \Hom(E_n,E_n)=k
+\end{bmatrix}\]
+with multiplication given by matrix multiplication/composition of Homs.
+
+The Jacobson radical $J$ of $A$ will be the strictly upper triangular matrices in our suggestive matrix. To see this, set $J$ the direct sum of all Homs which are not $\Hom(E_i,E_i)$ (the strictly upper triangular matrices), and check (via \cite[I.1.4]{quiver}) that $J$ is nilpotent and $A/J$ is a product of copies of $\C$.
+
+First, $J$ is nilpotent because $J^\ell$ only consists of formal sums of morphisms $E_i\to E_{i+\ell}$, so when $\ell\geq r$, there are no more morphisms to sum over.
+
+Next, $A/J$ is isomorphic to
+\[\prod_{i=1}^r \Hom(E_i,E_i) = \prod_{i=-n}^0 \C,\]
+so indeed a product of fields.
+
+The Jacobson radical is really the tool to find the quiver $Q$. We set the vertices of $Q$ to be a chosen basis for $A/J$, so conveniently we'll choose the basis to be $\id_{E_1},\dots,\id_{E_r}$. Next, we set the arrows from $E_i$ to $E_j$ to be a chosen basis for $\id_{E_j} (J/J^2) \id_{E_i}$.
+
+\begin{eg}
+    Let's understand for
+    \[A = \End(\bigoplus_{i=-n}^{0} \cO(i))\]
+    how to see $A$ as a bound quiver algebra. Our suggestive matrix is the following. 
+    \[\begin{bmatrix}
+        k\cdot \id_{\cO(\text{-}n)} & \Hom(\cO(\text{-}n),\cO(\text{-}n+1)) & \cdots & \Hom(\cO(\text{-}n),\cO)\\
+        0 & k \cdot \id_{\cO(\text{-}n+1)} & \cdots & \Hom(\cO(\text{-}n+1),\cO)\\
+        \vdots & \vdots & \ddots & \vdots\\
+        0 & 0 & \cdots & k\cdot \id_{\cO}
+    \end{bmatrix}= \begin{bmatrix}
+        k & k^{\binom{n+1}{1}} & \cdots & k^{\binom{n+n}{n}}\\
+        0 & k & \cdots & k^{\binom{n+n-1}{n-1}}\\
+        \vdots & \vdots & \ddots & \vdots\\
+        0 & 0 & \cdots & k
+    \end{bmatrix}\]
+    As explained earlier, $J$ is the upper triangular matrices. To compute the arrows from $\cO(i)$ to $\cO(j)$, we compute
+    \[\id_{\cO(j)} (J/J^2) \id_{\cO(i)} = \id_{\cO(j)}J \id_{\cO(i)}/ \id_{\cO(j)} J^2 \id_{\cO(i)}.\]
+    As a first step, we compute $\id_{\cO(j)} J \id_{\cO(i)}$, which is exactly $\Hom(\cO(i),\cO(j))$. Next, we compute
+    \[\id_{\cO(j)} J^2 \id_{\cO(i)},\]
+    which will be the subset of $\Hom(\cO(i),\cO(j))$ that factor as a sum of maps which go through some strictly intermediate $\cO(\ell)$. If $j=i+1$, then no strict factorization is possible. If $j>i+1$, then we always have a strict factorization, since a map $\cO(i)\to \cO(j)$ will be given by a degree $j-i$ homogeneous polynomial, which we can write as a sum of monomials, and then peeling one monomial away we get the factorization.
+
+    So,
+    \[\id_{\cO(j)} (J/J^2) \id_{\cO(i)} \cong \begin{cases}
+        \Hom(\cO(i), \cO(i+1)) & j=i+1\\
+        0 & \text{otherwise.}
+    \end{cases}\]
+    Therefore, we should place $n+1$ arrows between $\cO(i)$ and $\cO(i+1)$ for a chosen basis
+    \[\Hom(\cO(i),\cO(i+1)) = \<x_{i,0},\dots,x_{i,n}\>.\]
+
+    So far, we have the quiver $Q$, now we want to compute the relations, so we study the natural map
+    \[kQ \to A\]
+    given by the universal property of quiver algebras \cite[II.1.8]{quiver}, and we find a generating set of the kernel. We claim that the kernel is generated by terms
+    \[R=\{x_{i+1,p}x_{i,q} - x_{i+1,q}x_{i,p} \mid 0\leq p,q \leq n, -n \leq i \leq 0\}.\]
+    We can see that all of $R$ is in the kernel, since
+    \[x_{p}x_{q} = x_{q}x_{p} \in \Hom(\cO(i),\cO(i+2)).\]
+    Now, we check that $\<R\>$ is the entire kernel by seeing that $kQ/\<R\> \to A$ is injective. In fact, both $k$-algebras here are graded by lengths of paths, so we can show the kernel is 0 by showing each graded piece is 0.
+
+    Suppose
+    \[\sum \alpha_{p_0,\dots,p_r} x_{i+r,p_r} \cdots x_{i,p_0} \in (kQ/\<R\>)_r\]
+    is in the kernel, i.e.,
+    \[\sum \alpha_{p_0,\dots,p_r} x_{p_r} \cdots x_{p_0} = 0 \in \Hom(\cO(i),\cO(i+r)) = k[x_0,\dots,x_n]_r,\]
+    i.e., it is the zero polynomial. This will imply our original term in $kQ/\<R\>$ is 0, since we can use $R$ to put all the monomials in standard order.
+
+    In conclusion, we get that $A$ is the algebra for the (bound) \textbf{Beilinson $\P^n$ quiver}, i.e., the quiver
+    \[\begin{tikzcd}[column sep=1cm]
+        \overset{0}{\bullet} \rar[bend left=1cm, shift left=0.5cm,"x_{1,0}"] \rar[bend left=0.5cm, shift left=0.25cm,"x_{1,1}"] \rar[shift left=0cm, phantom, "\vdots"] \rar[bend left=-1cm, shift left=-0.5cm,"x_{1,n}"] & \overset{1}{\bullet} \rar[bend left=1cm, shift left=0.5cm,"x_{2,0}"] \rar[bend left=0.5cm, shift left=0.25cm,"x_{2,1}"] \rar[shift left=0cm, phantom, "\vdots"] \rar[bend left=-1cm, shift left=-0.5cm,"x_{2,n}"] & \overset{2}{\bullet} \rar[phantom,"\cdots"] & \bullet \ar[phantom, "n\,\text{-}1"{font=\scriptsize,above=2pt}] \rar[bend left=1cm, shift left=0.5cm,"x_{n,0}"] \rar[bend left=0.5cm, shift left=0.25cm,"x_{n,1}"] \rar[shift left=0cm, phantom, "\vdots"] \rar[bend left=-1cm, shift left=-0.5cm,"x_{n,n}"] & \overset{n}{\bullet}
+    \end{tikzcd}\]
+    with the relations
+    \[x_{p,i+1}x_{q,i} - x_{q,i+1}x_{p,i} = 0.\]
+\end{eg}
+
+
+\nocite{*} % Include all references in refs.bib regardless of whether they are referenced or not
+\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliography{beilinson_refs} % Entries are in the refs.bib file
+
+\end{document}

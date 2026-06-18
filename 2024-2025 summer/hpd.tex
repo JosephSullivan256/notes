@@ -1,0 +1,93 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Homological Projective Duality}
+\author{Joseph Sullivan}
+\date{June 2025}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+\begin{document}
+
+\maketitle
+% \tableofcontents
+
+\textbf{Conventions.} For a $\C$ vector space $E$, we regard $\P(E)$ to be the projective space of \textit{lines} in $E$, so
+\[\P(E) = \Proj \Sym^\bullet E^*.\]
+When $V$ is a basepoint free linear system for some line bundle $L$ on $X$, this projective space $\P(V^*)$ is the natural codomain for a morphism from $X$. On $\C$ points, this is just sending
+\[x \longmapsto \C \cdot \eval_x,\]
+i.e., we send $x$ to the ``line'' in the dual space which is scalar multiples of the functional on sections of $V$ which is evaluating them at $x$. This is to be expected---sections of $L$ are coordinates, and we usually want to take $\Proj$ of something resembling coordinates, and indeed
+\[\P(V^*) = \Proj \Sym^\bullet V,\]
+(at least when $V$ is finite dimensional) so that $\Sym^\bullet V$ is like coordinates.
+
+\section{Setup}
+
+Fix $X$ a variety and line bundle $\cO_X(1)$ with basepoint free linear system $V\subseteq H^0(\cO_X(1))$ giving a map $f: X\to \P(V^*)$. In $\P(V^*) \times \P(V)$ we get the incidence correspondence $\cH$ which has as points $x,H$ where $x\in \P(V^*)$ is a point lying on the hyperplane $H$ in $\P(V^*)$ (so a point in $\P(V)$). We pullback the incidence correspondence to $X\times \P(V)$
+\[\cH = \{(x,s) \mid s(x)=0\} \subseteq X\times \P(V)\]
+which is cut out by a section of
+\[H^0(\cO_{X\times \P(V)}(1,1)) \cong H^0(\cO_X(1)) \otimes V^* \cong \Hom(V,H^0(\cO_X(1)))\]
+which corresponds to the inclusion $V\hookrightarrow H^0(\cO_X(1))$.
+
+We should think of $\cH \to X$ as a family, the fiber over $x\in X$ is the set of hyperplanes of $\P(V^*)$ containing $x$.
+
+Now, we can restrict $V$ to a maybe not basepoint free subsystem $L\leq V$ of dimension $\ell$, and set $L^\perp \subseteq V^*$ its annihilator. Then, $\P(L^\perp)\subseteq \P(V^*)$ are the points contained in every hyperplane in $L$. Then, set
+\begin{align*}
+    X_{L^\perp} &\defeq X \times_{\P(V^*)} \P(L^\perp),\\
+    \cH_L &\defeq \cH \times_{\P(V)} \P(L).
+\end{align*}
+In this way, $X_{L^\perp}$ is the points of $X$ contained in every hyperplane in $L$, i.e., $X_{L^\perp}$ is the baselocus of $L$. Then, $\cH_L$ is a family over $X$, where the fiber over $x\in X$ is the set of hyperplanes in $L$ containing $x\in X$.
+
+As we consider the family $\cH_L \to X$, we get the diagram
+\[\begin{tikzcd}
+    X_{L^\perp} \times \P(L) \rar[hook,"j"] \dar["p"] & \cH_L \rar[hook,"\iota"] \dar["\pi"] & X\times \P(L) \ar[ld,"\rho"]\\
+    X_{L^\perp} \rar[hook,"i"] & X. &
+\end{tikzcd}\]
+In this diagram, we observe that generally $x\in X$ has fiber which is $\ell-2$ dimensional (i.e., in the $\ell-1$ dimensional space $\P(L)$ of hyperplanes, vanishing at $x$ is one equation which is generally nontrivial). However, along $X_{L^\perp}$, all hyperplanes in $\P(L)$ contain $x$, so we get the full $\ell-1$ dimensional fiber on this closed subset.
+
+\begin{prop}
+    Suppose $X_{L^\perp}$ has dimensional $\dim X-\ell$ (so it is a complete intersection). Then,
+    \[j_* p^*: D(X_{L^\perp}) \to D(\cH_L)\]
+    is a fully faithful embedding, and we get a semiorthogonal decomposition
+    \[D(\cH_L) = \<D(X_{L^\perp}), \pi^*D(X)(0,1),\dots,\pi^*D(X)(0,\ell-1)\>\]
+    (for twisting, the first argument is from $\cO_X(1)$, the second is from $\cO_{\P(L)}(1)$).
+\end{prop}
+
+One should also check that $\pi^*$ is fully faithful because unit $1\Rightarrow R\pi_*\pi^*$ is an isomorphism, where checking this boils down to checking $R\pi_* \cO_{\cH_L} \cong \cO_X$ and then tensoring/using projection formula (maybe need smoothness assumptions?).
+
+Part of the point here is that the usual Beilinson type exceptional collection for $\P(L)$ would involve twists $\cO,\dots,\cO(\ell-1)$, but here we did not put $\cO$, which was instead covered by $D(X_{L^\perp})$. The point then is that as we bleed into $D(X_{L^\perp})$ by writing down the ``zeroth twist'', we get some interesting overlap.
+
+Assume that $D(X)$ has a \textit{rectangular Lefschetz decomposition}, so there is an admissible subcategory $\cA \subseteq D(X)$ with
+\[D(X) = \<\cA,\cA(1),\dots,\cA(i-1)\>\]
+which lets us refine the proposition to get a decomposition
+\[D(\cH_L) = \<D(X_{L^\perp}), \cA(0,1), \dots, \cA(0,\ell-1), \cA(1,1),\dots,\cA(1,\ell-1),\dots,\cA(i-1,\ell-1)\>.\]
+Now, we screw with this and take some twists of the form $\cA(j,0)$, so we take a ``zeroth twist'' for $\P(L)$, but we'll also make $j\geq 1$ to ensure semiorthogonality (i.e., we don't want to write down too many pieces so that they aren't orthogonal anymore). We can abbreviate notation by recognizing
+\[\<\cA(j,0),\dots,\cA(j,\ell-1)\> = \cA \boxtimes D(\P(L)),\]
+and then we can prove that
+\[\<\cA(1)\boxtimes D(\P(L)),\dots,\cA(i-1)\boxtimes D(\P(L))\>\]
+is a semiorthogonal collection, but some is left over. Define the right orthogonal complement to be $\cC_{\cH_L}$.
+
+Homological projective duality then tells us how $\cC_{\cH_L}$ and $D(X_{L^\perp})$ are built out of each other as the dimension of $L$ grows and shrinks.
+
+
+% \nocite{*} % Include all references in refs.bib regardless of whether they are referenced or not
+% \bibliographystyle{plain} % We choose the "plain" reference style
+% \bibliography{2025summer/koszul_rings} % Entries are in the refs.bib file
+
+\end{document}

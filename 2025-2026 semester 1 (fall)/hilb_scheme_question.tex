@@ -1,0 +1,164 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Hilbert/Quot Scheme Question}
+\author{Joseph Sullivan}
+\date{November 2025}
+
+\usetikzlibrary{decorations.pathmorphing}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+\DeclareMathOperator{\Spin}{Spin}
+
+% \DeclareMathOperator{\Quot}{Quot}
+\DeclareMathOperator{\Hilb}{Hilb}
+\DeclareMathOperator{\Gr}{Gr}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Setup}
+
+Let $S$ be a Noetherian scheme and $E$ a vector bundle on $S$. The Grassmannian $\Gr(q,E)$ represents the following functor.
+\begin{align*}
+    \Gr(q,E): (\Sch/S)^\op &\longrightarrow \Set\\
+    (T\xrightarrow{\phi} S) &\longmapsto \{\phi^* E \twoheadrightarrow V \mid \text{$V$ is a vector bundle of rank $q$ on $T$}\}
+\end{align*}
+
+Let $S$ be a Noetherian scheme, $\P_S^n$ projective space over $S$, and let $F=\cO(-a)^{\oplus r}$ a coherent sheaf on $\P_S^n$. (Eventually we can consider more general $F$ by looking at certain closed subschemes of $\Quot$).
+
+Denote $\pi_S: \P_S^n \to S$, and given a morphism $\phi: T\to S$, denote $\P^n(\phi): \P_T^n \to \P_S^n$.
+
+Let $P\in \Q[z]$ be a polynomial, and define the $\Quot$ functor.
+\begin{align*}
+    \Quot^P(F/\P_S^n/S): (\Sch/S)^\op &\longrightarrow \Set\\
+        (T\to S) &\longmapsto \left\{\parbox{18em}{coherent quotients $F_T\twoheadrightarrow Q$ on $\P_T^n$\\ such that $Q$ is flat over $T$ and $Q_t\defeq Q|_{\P^n_{\kappa(t)}}$\\ has Hilbert polynomial $P$ for all $t\in T$}\right\}
+\end{align*}
+where $F_T$ is the pullback of $F$ along $\P_T^n \to \P_S^n$.
+
+\section{Morphism}
+
+\begin{prop}
+    Fix a polynomial $P\in \Q[z]$, a dimension $n$, and a rank $r$. Then, there exists an $m_0\in \Z$ such that for all $d\geq m_0$, all subsheaves $K\subseteq \cO_{\P^n_k}^{\oplus r}$ with Hilbert polynomial $P$ are $d$-regular.
+\end{prop}
+
+Now fix such an $m_0\in \Z$.
+
+For $d\geq m_0$, define a morphism
+\begin{align*}
+    \Quot^P(F/\P^n_S/S) &\longrightarrow \Gr(P(d),\pi_{S,*}F(d))\\
+    (F_T \twoheadrightarrow Q) &\longmapsto (\pi_{T,*} F_T(d) \twoheadrightarrow \pi_{T,*} Q(d))
+\end{align*}
+(where $\pi_{T,*} F_T(d) \cong (\pi_{S,*} F(d))_T$ by cohomology and base change for $d$ large).
+
+We want to show this morphism is locally closed (in particular that $\Quot^P$ is representable by a locally closed subscheme of $\Gr$). Alper's notes (\url{https://sites.math.washington.edu/~jarod/moduli.pdf}) have convinced me that this morphism is at least a monomorphism of functors, but I am not satisfied with the locally closed part, even blackboxing the flattening stratification.
+
+To show locally closed, I need to show that whenever I have a morphism from a scheme $T$ to the Grassmannian, the fiber product with the $\Quot$ scheme is representable by a locally closed immersion, so I have a diagram
+\[\begin{tikzcd}
+    Y \rar\dar & T \dar\\
+    \Quot^P \rar & \Gr
+\end{tikzcd}\]
+and I want $Y$ representable, $Y\to T$ locally closed. Now, to build $Y$, the claim is that it is a flattening strata for $\P^n_T \to T$... with respect to some coherent sheaf on $\P_T^n$ (which we have to build).
+
+So, the data of $T\to \Gr$ is just a vector bundle quotient
+\[\pi_{T,*} F_T(d) \twoheadrightarrow V,\]
+and the idea is to try to lift it to $T$ to get a ``candidate'' coherent sheaf quotient $F_T\twoheadrightarrow Q$, and then $Y$ should be the restriction of $T$ to the part where $Q$ is flat with correct Hilbert polynomial, i.e., the flattening stratum, which I will denote $T_{P,Q}$, which is characterized by the universal property that $T'\to T$ factors through $T_{P,Q}$ iff $Q$ pullsback to be flat over $T'$ with correct Hilbert polynomial.
+
+\textbf{Goal:} So, we just have to build our candidate $Q$, and then show that $T_{P,Q}$ represents the fiber product.
+
+
+
+\section{Build Candidate Coherent Sheaf Quotient}
+
+Here's how to build $Q$. Call $E$ the kernel of
+\[\pi_{T,*} F_T(d) \twoheadrightarrow V,\]
+giving us a short exact sequence that we can pullback to $\P_T^n$. This gives us
+\[\begin{tikzcd}
+    0 \rar & \pi_T^* E \rar \ar[dr,"\alpha"'] & \pi_T^* \pi_{T,*} F_T(d) \rar \dar & \pi_T^* V \rar \dar & 0\\
+    & & F_T(d) \rar & \coker(\alpha) \rar & 0
+\end{tikzcd} \tag{$*$}\]
+where $\pi_T^* \pi_{T,*} F_T(d) \to F_T(d)$ on fibers over points $t\in T$ is just the evaluate sections map. So, the morphism $\alpha$ is taking the ``global sections'' that cut out $\pi_T^* V$ from $\pi_{T,*} F_T(d)$, then evaluating them. The cokernel seems like a good candidate for $Q(d)$, so define
+\[Q \defeq \coker(\alpha)(-d).\]
+
+Now, we pullback $F_T \twoheadrightarrow Q$ to the projective space over the flattening stratum $T_{P,Q}$ to get a surjection
+\[F_{T_{P,Q}} \twoheadrightarrow Q_{T_{P,Q}},\]
+which gives a morphism
+\[T_{P,Q} \to \Quot^P,\]
+and we claim that this makes $T_{P,Q}$ the fiber product of $T$ and $\Quot^P$.
+
+To prove the claim, we study $T'$ points. Suppose we have
+\[\begin{tikzcd}
+    T' \dar \rar & T \dar\\
+    \Quot^P \rar & \Gr
+\end{tikzcd}\]
+where $T'\to T$ is given by some $\phi$, and $T'\to \Quot^P$ given by a coherent sheaf quotient $F_{T'} \twoheadrightarrow Q'$ (flat over $T'$ with correct Hilbert polynomial on fibers). The square commuting means that
+\[\pi_{T',*}(F_{T'}(d) \twoheadrightarrow Q'(d)) = \pi_{T',*}F_{T'}(d) \twoheadrightarrow \phi^* V.\]
+We want to show there is a unique map to $T_{P,Q}$ commuting with the maps to $T$ and $\Quot^P$. By the universal property of $T_{P,Q}$, we just need to show that the constructed $Q$ on $\P_T^n$ pulls back to be flat on $\P_T'^n$ with correct fibers.
+
+This will amount to pulling back diagram $(*)$ to $P_{T'}^n$. The top row will remain exact because it consists of vector bundles, but we will also want $(\im \alpha)_{T'} = \im \alpha_{T'}$, which is more subtle. Study the exact sequence
+\[0\to \ker \alpha \to \pi_T^* E \to \im \alpha \to 0,\] 
+hmmmmm.
+
+where I can argue that $\im \alpha_{T'}$ is exactly the kernel of
+\[F_T(d) \twoheadrightarrow Q'(d),\]
+so the cokernel will have to just be $Q'(d)$, which is assumed to be flat over $T'$ with the right fibers. And then, we can argue about $\im \alpha_{T'}$ by
+\[\P^n(\phi)^* \pi_T^* V = \pi_{T'}^* \phi^* V = \pi_{T'}^* Q'(d)\]
+
+
+
+
+{\color{red} \textbf{Question.}} How do I show that my candidate coherent sheaf quotient
+\[F_T(d) \twoheadrightarrow Q(d)\]
+will pushforward to my original vector bundle quotient
+\[\pi_{T,*} F_T(d) \twoheadrightarrow V.\]
+
+\textbf{Attempts.} It seems to me that the isomorphism $\pi_{T,*} F_T(d) \twoheadrightarrow V$ should be given by pushing forward the right most vertical map in my diagram, i.e., take
+\[\pi_T^* V \to \coker(\alpha)=Q(d),\]
+then push it forward
+\[V\cong \pi_{T,*} \pi_T^* V \to \pi_{T,*} Q(d),\]
+where this isomorphism is given by the projection formula and the fact that $\pi_{T,*} \cO_{\P^n_T} \cong \cO_T$. 
+
+So, I have a natural map... I just need to see that it is an isomorphism.
+
+\textbf{Fact 1.} The morphism $\pi_T^* V \to Q(d)$ is surjective, since in the square
+\[\begin{tikzcd}
+\pi_T^* \pi_{T,*} F_T(d) \rar \dar & \pi_T^* V \dar\\
+F_T(d) \rar & Q(d)
+\end{tikzcd}\]
+the left vertical map and the bottom horizontal map are surjective (the vertical one by global generation and regularity of the fibers of $F_T(d)$ over $T$, and the horizontal one is projection to a cokernel). So, if I could pin down the kernel $J$ of
+\[\pi_T^*V \to Q(d),\]
+I could have success by showing
+\begin{itemize}
+    \item $\pi_{T,*} J = 0$
+    \item $R^1 \pi_{T,*} J = 0$
+\end{itemize}
+which I could maybe accomplish by showing
+\[H^i(\P^n_{k(t)},J|_{\P^n_{k(t)}}) = 0\]
+for $i=0,1$. But, to do this I need a better hold on $J$... I would like to understand the fibers of $J$ by restricting the surjection $\pi_T^* V \to Q(d)$ to fibers, but $Q(d)$ need not be flat (so I need not get the exactness I want, since the inclusion of a fiber is very much not flat in general).
+
+
+
+% \nocite{*} % Include all references in refs.bib regardless of whether they are referenced or not
+% \bibliographystyle{plain} % We choose the "plain" reference style
+% \bibliography{hilbert_scheme} % Entries are in the refs.bib file
+
+\end{document}

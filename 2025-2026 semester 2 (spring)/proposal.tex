@@ -1,0 +1,125 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Simons Dissertation Fellowship Proposal}
+\author{Joseph Sullivan}
+\date{February 2026}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{Joseph Sullivan}
+
+
+\begin{document}
+
+{\large\textbf{Simons Dissertation Fellowship Proposal}}
+
+
+% My research revolves around \textit{derived categories} in algebraic geometry. Starting with a variety $X$ (or a scheme/a more general type of space), I am interested in both extracting reasonable information/invariants from $X$ (via various cohomology theories) as well as classifying various geometric objects that can be built over $X$, in particular vector bundles and their generalizations (coherent sheaves, and complexes of coherent sheaves).
+
+% The derived category (of coherent sheaves) of $X$ is a tool which helps one approach both of these problems. On one hand, it can be thought of as a ``higher invariant'' \cite{Keller_2007} in that it captures data such as Hochshild cohomology, K-theory, and some Hodge theory. It also is can be considered a more flexible version of the category of vector bundles/coherent sheaves on $X$, but it should also be thought of as a ``higher invariant'' \cite{Keller_2007}, capturing data such as Hochshild cohomology, K-theory, and some Hodge theory. My reasons for interest in the derived category are the following:
+
+% Warming up to the notion of the derived category of $X$, one first considers the collection certain geometric objects built over $X$, called vector bundles. These are then generalized to coherent sheaves, and then eventually to \textit{complexes} of coherent sheaves. The derived category of $X$ collects all of these complexes together into a single gadget.
+
+% My research revolves around \textit{derived categories} in algebraic geometry, more particularly the derived category (of coherent sheaves) of a variety/scheme/space $X$. 
+
+% In particular, the derived category of a variety $X$ should be considered a more flexible version of the category of vector bundles/coherent sheaves on $X$ as well as a ``higher invariant'' \cite{Keller_2007}, capturing data such as Hochshild cohomology, K-theory, and some Hodge theory. My reasons for interest in the derived category are the following:
+
+My research revolves around \textit{derived categories} in algebraic geometry. A derived category is built from (and in some sense improves) a collection of algebraic objects satisfying certain axioms, called an abelian category (for example, the collection of all vector spaces over a given field or abelian groups). In algebraic geometry, we consider the abelian category of coherent sheaves on a variety/scheme/space $X$, where an individual coherent sheaf is a way to attach algebraically varying families of vector spaces to $X$.
+
+The derived category of (coherent sheaves of) $X$ can be considered a more flexible version of the category of vector bundles/coherent sheaves on $X$, but it should also be thought of as a ``higher invariant''\cite{Keller_2007}, capturing data such as Hochshild cohomology, K-theory, and some Hodge theory. My reasons for interest in the derived category are the following:
+\begin{itemize}
+    \item The existence of \textit{semiorthogonal decompositions}, which describe how one derived category is assembled from smaller pieces.
+    \item The existence of interesting derived equivalences between varieties, as in the study of \textit{Fourier-Mukai transforms}, and derived equivalences between varieties and noncommutative algebras (like quiver algebras), as in the study of \textit{tilting theory}.
+    \item The objects in a derived category having good moduli theory---in other words, we can parameterize certain objects of the derived category using a space. More precisely, we parameterize \textit{Bridgeland stable} objects, and our moduli/parameter space changes as we vary a \textit{stability condition} to cross a wall in a certain complex manifold.
+\end{itemize}
+
+% These avenues then all interact with classical questions of algebraic geometry. For example, Orlov's \cite{Orlov_1993} work produces semiorthogonal decompositions through projective bundles and blow-ups, Bridgeland-King-Reid generalize the McKay correspondence through Fourier-Mukai transforms \cite{Bridgeland_King_Reid_2000}, Bayer \cite{Bayer_2016} recovers and generalizes Brill-Noether type theorems by analyzing wall-crossing in the stability manifold.
+
+In more detail, equipping a derived category with a Bridgeland stability condition usually involves first finding a coarser object, called a t-structure. A stability condition and t-structure come in an ``algebraic'' flavor, when the t-structure is transferred over from a quiver via tilting theory, as in \cite{Craw,King}, and then Bridgeland moduli coincide with GIT quiver moduli \cite{King_1994}, as used by \cite{Arcara_Bertram_Coskun_Huizenga_2012}. The ``geometric'' flavor of Bridgeland stability comes about by crafting t-structures from torsion pairs using the Bogomolov inequality, as carried out in Arcara-Bertram for all smooth projective surfaces \cite{Arcara_Bertram_Lieblich_2007}.
+
+As far as the immediate future, I am currently working on a project with my advisor Aaron Bertram, and my peers Jonathon Fleck and Liebo Pan, about applying Bridgeland stability to find further extensions of Reider's theorem and (for surfaces) generalizations of certain theorems controlling the syzygies of a curve embedded by an adjoint divisor.
+
+% More broadly, I like the following program: first understand a derived category by producing semiorthogonal decompositions or equivalences to ``easier'' triangulated categories; and next, use this understanding to produce t-structures on your derived category, which one hopes can be refined to Bridgeland stability conditions.
+
+% \textbf{Preparation}
+
+% In preparation for this work, I have focused on understanding derived categories of familiar varieties by finding semiorthogonal decompositions when possible, and then producing Bridgeland stability conditions on these categories.
+
+% For semiorthogonal decompositions, the theory was kickstarted with the seminal work of Beilinson \cite{Beilinson_1978} for projective space, which was then generalized to quadrics by \cite{Kapranov_1988} by Koszul duality \cite{Beilinson_Ginzburg_Soergel_1996} and representation formulas like Borel-Weil-Bott. In turn, Kuznetsov \cite{Kuznetsov_2005} repeated Kapranov's argument in families for quadric fibrations. King \cite{King} also generalized Beilinson's argument to produce semiorthogonal decompositions for del Pezzo surfaces.
+
+% Next, to produce Bridgeland stability conditions, one first constructs coarser objects called t-structures. In the case of projective space, quadrics, and del Pezzo surfaces, the semiorthogonal decompositions are actually ``full strong exceptional collections'', which induce derived equivalences to quivers via tilting theory \cite{Craw,King}. Transferring the standard heart of a quiver through the equivalence, one can then adapt the theory of GIT quiver moduli \cite{King_1994} as in \cite{Arcara_Bertram_Coskun_Huizenga_2012} to produce so-called \textit{algebraic} Bridgeland stability conditions. This technique has been helpful especially on higher dimensional varieties. On the other hand, Bertram and others have produced so-called geometric stability conditions on \textit{all} surfaces by using torsion pairs and the Bogomolov inequality \cite{Arcara_Bertram_Lieblich_2007}. The project I am working on with Bertram and my peers Fleck and Pan uses these stability conditions.
+
+\textbf{\large Research Plan.}
+
+With Bertram et al, we are seeking to answer questions of the following form, where $S$ is a surface, $D$ is a divisor, and $|K_S+D|^\vee$ the target of the morphism induced by the divisor $K_S+D$, which is the projective space of hyperplanes in $H^0(S,\omega_S(D))$.
+
+\textbf{Question.} \textit{What numerical condition do we need on $D$ to guarantee a given property of $S\dashrightarrow |K_S+D|$?}
+
+If we replace the surface $S$ with a curve $C$ for a moment, the following theorems are known (the first being an almost immediate corollary of Riemann-Roch, the last from \cite{Saint-Donat_1972}).
+
+\begin{center}\renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{c|c}
+        Numerical Condition & Property of Map\\\hline
+        $\deg D > d+1$ & $K_C+D$ is $d$-very ample (i.e., separates $(d+1)$-jets).\\\hline
+        $\deg D > 2$ & The homogeneous ideal $I_C$ of $C\subseteq |K_C+D|^\vee$ is generated by cubics.\\\hline
+        $\deg D > 3$ & The homogeneous ideal $I_C$ of $C\subseteq |K_C+D|^\vee$ is generated by quadrics.
+    \end{tabular}
+\end{center}
+\smallskip
+
+Continuing, one can then ask not just about generation of $I_C$, but also about higher syzygy modules in the minimal resolution of $I_C$. On the other hand, for surfaces, the starting point is Reider's theorem, which gives the following:\vspace{-10pt}
+\begin{center}\renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{c|c}
+        Numerical Condition & Property of Map\\\hline
+        \begin{minipage}{0.35\textwidth}\vspace{5pt}
+            $D^2 > (d+1)^2$ and $D\cdot C> C^2+d$ for all curves with $C^2 \leq 0$
+        \end{minipage} & \begin{minipage}{0.65\textwidth}\vspace{5pt}
+            $H^1(S,\omega_S(D)\otimes I_Z)=0$ for all dimension 0 subschemes of length $\leq d$ (in particular $K_S+D$ is $(d-1)$-very ample)
+        \end{minipage}
+    \end{tabular}
+\end{center}
+\smallskip
+
+This serves as a version of Riemann-Roch for surfaces, and the numerical conditions are sharp. We would then like a theorem controlling generators of $I_S$, and eventually higher syzygies. However, instead of directly asking for $I_S$ to be generated by degree $d$ polynomials, we prove a weaker condition, which is the nefness/positivity of $dH - E$ on the blowup $\mathrm{bl}_S |K_S+D|^\vee$, where $H$ is the hyperplane class and $E$ is the exceptional divisor.
+
+To prove this, we employ Bridgeland stability and a strategy of \cite{Arcara_Bertram_2009}, where we reinterpret the ambient projective space $|K_S+D|^\vee$ as a family of Bridgeland stable complexes on $S$, and in turn $\mathrm{bl}_S |K_S+D|^\vee$ is a family created by wall-crossing on the stability manifold, provided we have our numerical conditions to control the position of walls. We can then control the positivity of $dH-E$ by relating it to the Bayer-Macr\`i nef divisor class which varies linearly in chambers of the stability manifold \cite{Bayer_Macrì_2014}.
+
+
+
+\textbf{\large Career Goals.}
+
+Beyond this current research project, I have aspirations to produce more semiorthogonal decompositions via birational geometry and representation theory. On the horizon, I am excited by the ideas of \cite{Tevelev_Torres_2023,Tevelev_2023} producing semiorthogonal decompositions for moduli spaces of vector bundles on a curve, consisting of derived categories of symmetric powers of the curve. I like two variations of this direction:
+
+\begin{itemize}
+    \item For a genus $g$ hyperelliptic curve associated to a quadric, a theorem of Ramanan \cite{Desale_Ramanan_1976} describes such moduli spaces as Fano varieties of $g-2$ dimensional linear subspaces, so there is good reason \cite{Belmans_Bose_Frei_Gould_Hotchkiss_Lamarche_Petok_Avila_Shah} to conjecture similar semiorthogonal decompositions for Fano varieties of linear subspaces of different dimensions.
+    \item Following the analogy associating quivers with curves and moduli of quiver representations with moduli of vector bundles \cite{Hoskins_2018}, one can also ask for semiorthogonal decompositions of moduli of quiver representations using derived categories of quivers \cite{Petrella_2025,Belmans_Brecan_Franzen_Petrella_Reineke_2025}.
+\end{itemize}
+
+Professionally, my plan is to continue in academia, as I am very much enjoying my experience as a PhD candidate, with respect to research, organizing seminars, and being an instructor. I am enthused by my math, and I want to share it with others.
+
+
+\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliography{proposal_bibliography}
+
+\end{document}

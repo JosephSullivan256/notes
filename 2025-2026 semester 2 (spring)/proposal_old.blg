@@ -1,0 +1,62 @@
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: proposal_old.aux
+The style file: plain.bst
+Database file #1: proposal_bibliography.bib
+Warning--string name "july" is undefined
+--line 9 of file proposal_bibliography.bib
+Warning--empty journal in Arcara_Bertram_Coskun_Huizenga_2012
+Warning--there's a number but no volume in Arcara_Bertram_Coskun_Huizenga_2012
+Warning--empty journal in Arcara_Bertram_Lieblich_2007
+Warning--there's a number but no volume in Arcara_Bertram_Lieblich_2007
+Warning--empty journal in Craw
+Warning--empty year in Craw
+Warning--can't use both author and editor fields in Keller_2007
+Warning--empty journal in Kuznetsov_2005
+Warning--there's a number but no volume in Kuznetsov_2005
+Warning--empty journal in Tevelev_2023
+Warning--there's a number but no volume in Tevelev_2023
+Warning--empty journal in Tevelev_Torres_2023
+Warning--there's a number but no volume in Tevelev_Torres_2023
+You've used 13 entries,
+            2118 wiz_defined-function locations,
+            589 strings with 6130 characters,
+and the built_in function-call counts, 3753 in all, are:
+= -- 361
+> -- 135
+< -- 1
++ -- 57
+- -- 42
+* -- 265
+:= -- 634
+add.period$ -- 43
+call.type$ -- 13
+change.case$ -- 60
+chr.to.int$ -- 0
+cite$ -- 26
+duplicate$ -- 152
+empty$ -- 309
+format.name$ -- 42
+if$ -- 771
+int.to.chr$ -- 0
+int.to.str$ -- 13
+missing$ -- 13
+newline$ -- 72
+num.names$ -- 26
+pop$ -- 65
+preamble$ -- 1
+purify$ -- 47
+quote$ -- 0
+skip$ -- 106
+stack$ -- 0
+substring$ -- 218
+swap$ -- 25
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 50
+warning$ -- 13
+while$ -- 32
+width$ -- 15
+write$ -- 145
+(There were 14 warnings)

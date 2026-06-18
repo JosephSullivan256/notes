@@ -1,0 +1,108 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+
+\title{Complex Curves}
+\author{Joseph Sullivan}
+\date{July 2025}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+\DeclareMathOperator{\Spin}{Spin}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{When is $\omega_C$ Very Ample?}
+
+\begin{defn}
+    A \textbf{curve} is a 1 dimensional complex projective manifold (smooth variety).
+\end{defn}
+
+\begin{defn}
+    The \textbf{genus} of a curve $C$ is
+    \[g = h^0(C,\omega_C) = h^1(C, \cO_C).\]
+\end{defn}
+
+\begin{defn}
+    A curve $C$ is \textbf{hyperelliptic} if it admits a degree 2 map $C\to \P^1$.
+\end{defn}
+
+\begin{thm}[Riemann Roch for Curves]
+    Let $L$ be a line bundle on $C$.
+    \[\chi(L) = \deg L - g + 1.\]
+\end{thm}
+
+Our first main theorem is about when the canonical bundle $\omega_C$ gives a map to projective space. Clearly we need $g\geq 1$ because this is the degree of $\omega_C$, and this is enough to be ample by Riemann Roch/closed embedding test for curves. However, we want to know when $\omega_C$ is \textit{very ample}. We will work towards the following result.
+
+\begin{thm}
+    If $g\geq 1$, either $\omega_C$ is very ample OR $C$ is hyperelliptic (cannot have both).
+\end{thm}
+
+To prove this, we will need bits of Riemann Hurwitz and clever applications of Riemann Roch.
+
+\subsection{Riemann Hurwitz}
+
+\begin{defn}
+    Let $f:X\to Y$ be a dominant map of curves. (A lot of these definitions work more generally).
+    \begin{itemize}
+        \item The \textbf{degree} of $f$ is the degree of the extension of function fields $k(X)/k(Y)$. This will turn out to be the general number of preimages of a closed point.
+        \item For $P\in X$, the \textbf{ramification index} $e_P$ is the valuation of the pullback of a local parameter $t\in \cO_{f(P)}$. Roughly, $t$ parametrizes $Y$, and we're checking how much $f$ vanishes in the $t$ direction to see how many sheets come together.
+        \item If $e_P > 1$, say $f$ is \textbf{ramified} at $P$ and $f(P)$ is a branch point.
+        \item Define $f^*: \Div Y \to \Div X$ by
+        \[f^*(Q) = \sum_{P\mapsto Q} e_P \cdot P\]
+        and extending by linearity. This is compatible with $f^*$ on $\Pic$.
+    \end{itemize}
+\end{defn}
+
+\begin{prop}
+    There is a short exact sequence (conormal sequence, plus injectivity)
+    \[0\to f^* \Omega_Y \to \Omega_X \to \Omega_{X/Y} \to 0.\]
+\end{prop}
+
+\begin{prop}
+    $\Omega_{X/Y}$ is a torsion sheaf supported on the ramification points of $f$, and
+    \[\mathrm{length}(\Omega_{X/Y})_P = e_P -1,\]
+    hence if we define the \textbf{ramification divisor} by
+    \[R = \sum_{P \text{ ramification point}} (e_P-1)\cdot P,\]
+    we get $\Omega_{X/Y} = \cO_R$.
+\end{prop}
+
+\begin{thm}[Riemann Hurwitz]
+    $K_X \sim f^* K_Y + R$, hence
+    \[2g(X) - 2 = (\deg f)(2g(Y)-2) + \sum_{P\in X}(e_P-1).\]
+\end{thm}
+
+\begin{cor}
+    Let $\pi: C\to \P^1$ be a double cover. Then, $\pi$ has $2g+2$ branch points.
+\end{cor}
+\begin{proof}
+    By Riemann-Hurwitz, we get
+    \[2g-2 = 2(0-2)+ \sum_{P\in X} e_P-1,\]
+    and $e_P \leq 2$ {\color{red} because double cover(?)}. So, there are exactly $2g+2$ ramification points.
+\end{proof}
+
+
+% \nocite{*} % Include all references in refs.bib regardless of whether they are referenced or not
+% \bibliographystyle{plain} % We choose the "plain" reference style
+% \bibliography{2025summer/quadric} % Entries are in the refs.bib file
+
+\end{document}

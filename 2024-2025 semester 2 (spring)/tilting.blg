@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: tilting.aux
+The style file: plain.bst
+Database file #1: tilting_refs.bib
+Warning--empty booktitle in craw
+You've used 5 entries,
+            2118 wiz_defined-function locations,
+            521 strings with 4541 characters,
+and the built_in function-call counts, 1200 in all, are:
+= -- 106
+> -- 52
+< -- 0
++ -- 21
+- -- 16
+* -- 53
+:= -- 210
+add.period$ -- 15
+call.type$ -- 5
+change.case$ -- 22
+chr.to.int$ -- 0
+cite$ -- 6
+duplicate$ -- 51
+empty$ -- 115
+format.name$ -- 16
+if$ -- 254
+int.to.chr$ -- 0
+int.to.str$ -- 5
+missing$ -- 5
+newline$ -- 27
+num.names$ -- 10
+pop$ -- 42
+preamble$ -- 1
+purify$ -- 18
+quote$ -- 0
+skip$ -- 37
+stack$ -- 0
+substring$ -- 25
+swap$ -- 5
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 16
+warning$ -- 1
+while$ -- 10
+width$ -- 6
+write$ -- 50
+(There was 1 warning)

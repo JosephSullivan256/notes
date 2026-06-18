@@ -1,0 +1,723 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Brauer Group}
+\author{Joseph Sullivan}
+\date{April 2026}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+\newcommand{\et}{\text{\'{e}t}}
+\newcommand{\Zar}{\mathrm{Zar}}
+\newcommand{\G}{\mathbb{G}}
+
+\newcommand{\sep}{\text{sep}}
+\newcommand{\Br}{\mathrm{Br}}
+\newcommand{\Gal}{\mathrm{Gal}}
+\newcommand{\PGL}{\mathrm{PGL}}
+\newcommand{\Inf}{\mathrm{Inf}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Ab}{\mathrm{Ab}}
+\newcommand{\DiscMod}{\mathrm{DiscMod}}
+
+
+
+
+\usepackage{biblatex}
+\addbibresource{brauer.bib}
+\nocite{*}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+The \textbf{Brauer group} of a scheme $X$ (and its mild variations) is a gadget that has diverse applications:
+\begin{itemize}
+    \item \textbf{algebras:} it parameterizes sheaves of Azumaya algebras (generalizing the classical Brauer group),
+    \item \textbf{cohomology:} it is a cohomological invariant, by being a ``higher'' version of the Picard group, i.e., going from $H^1_{\et}(X,\G_m)$ to $H^2_\et(X,\G_m)$ (in fancier language, going from ``torsors'' to ``gerbes'').
+    \item \textbf{obstructions:} it obstructs (\'etale) projective bundles from lifting to vector bundles, as well as often obstructing universal families on coarse moduli spaces.
+    \item \textbf{noncommutative geometry:} Brauer classes twist the category of coherent sheaves, providing some of the most concrete ``noncommutative'' spaces of concern in algebraic geometry.
+\end{itemize}
+
+The main focus of our series of talks will be to show how this one gadget has all of these features.
+
+\section{Brauer Group of a Field}
+
+\subsection{Overview and Definitions}
+
+We start by defining the Brauer group.
+
+\begin{defn}
+    A \textbf{central simple algebra} (CSA) over a field $k$ is an algebra $A$ over $k$ with $Z(A)=k$ and no nontrivial proper two-sided ideals (so a-priori only simple in the category of algebras, not modules).
+
+    Two CSAs $A$, $B$ are called \textbf{similar} if for some $n,m\in \N$,
+    \[A \otimes_k M_n(k) \cong B \otimes_k M_m(k)\]
+    (which turns out to be identical to \textit{Morita equivalence}, i.e., $A\lmod \cong B\lmod$).
+
+    The \textbf{Brauer group} of $k$ is
+    \[\Br(k) \defeq \{A \text{ central simple algebra}/k\} / \text{similarity},\]
+    which turns out to be a group under $\otimes_k$ (check that a CSA $A$ is \textit{tensor invertible} up to similarity by seeing that $A\otimes_k A^\op \sim k$).
+\end{defn}
+
+This is already a very interesting object, ask any number theorist. Especially interesting are the following cohomological characterization, in terms of group/Galois cohomology, which we will define later. This first characterization in particular is very tractible and useful for computation.
+\begin{thm}\label{H2-Galois-Cohomology}
+    $\Br(k) \cong H^2(k,k^\times) \defeq H^2_{\text{cont}}(\Gal(k_{\sep}/k),k_{\sep}^\times)$.
+\end{thm}
+
+How, to prove the first one, we first go through the following result.
+\begin{prop}
+    $\Br(k) \cong H^1(k,\PGL_\infty) \defeq H^1_{\text{cont}}(\Gal(k_\sep/k),\PGL_\infty(k_\sep))$.
+\end{prop}
+
+Before we sketch these proofs, we review definitions of these $H^i_{\text{cont}}$ objects. To start, we define group cohomology, before giving even more specific definitions.
+
+\subsubsection{Review of Group Cohomology}
+
+For a group $G$ and a $\Z[G]$-module $A$, which is the data of an abelian group $A$ together with a $\Z$-linear $G$-action, i.e., a morphism
+\[G\to \Aut_\Z(A)\]
+where we denote the action of $g\in G$ on $a\in A$ by $g(a)$.
+
+We will spend some time to review group cohomology, and spell out the first cohomology group. In fact, we will see that at least the first cohomology makes sense as a pointed set, even when $A$ is not abelian (it just has a left $G$-action), which is a case we will need to consider.
+
+By definition, group cohomology (with coefficients in an \textit{abelian} group with linear $G$-action) is the derived functor of invariants $(-)^G$, and the invariants functor is naturally isomorphic to $\Hom_{\Z[G]}(\Z,-)$ where $\Z$ has the trivial $G$-action, so
+\[H^1(G,A) = \Ext^1(\Z,A),\]
+and we can compute by first writing down a projective resolution of $\Z$. For a group $G$, there is the \textbf{bar resolution} of $\Z$ (with the trivial $G$-action) by
+\[\left( \cdots \to \Z[G^3] \to \Z[G^2] \to \Z[G] \right) \xrightarrow{\sim_{\text{qis}}} \Z \to 0\]
+sending
+\[[g_0|g_1|\cdots|g_n] \mapsto \left(\sum_{i=1}^n (-1)^{i+1} [g_0|g_1|\cdots|g_{i-1}g_i|\cdots|g_n]\right) + (-1)^n [g_0|g_1|\cdots|g_{n-1}]\]
+(coming from the monad of the extension/restriction of scalars adjunction along the ring inclusion $\Z\to \Z[G]$, i.e., take alternating sums of whiskered counit maps $LR\Rightarrow 1$). Therefore, $H^1(G,A)$ is the cohomology of the complex
+\[\Hom_{\Z[G]}(\Z[G],A) \to \Hom_{\Z[G]}(\Z[G^2], A) \to \Hom_{\Z[G]}(\Z[G^3], A).\]
+Noting that each of the left $\Z[G]$-modules are free, on generators $1,G,G^2$ respectively, we use the free-forget adjunction to consider this as a sequence
+\[\Hom_\Set(\{*\},A) \xrightarrow{d^0} \Hom_\Set(G,A) \xrightarrow{d^1} \Hom_\Set(G^2,A),\]
+and we can compute the differentials as follows (where we denote a function $G^n\to A$ as an indexed tuple $a_{(-,\dots,-)}$). Note that we are writing the abelian group operation for $A$ multiplicatively. For $d^1$, recall that the degree 2 bar resolution map (on a generator) is
+\begin{align*}
+    [1|\sigma|\tau] &\mapsto [\sigma|\tau] - [1|\sigma\tau] + [1|\sigma]\\
+    &= \sigma[1|\tau] - [1|\sigma\tau] + [1|\sigma].
+\end{align*}
+Therefore, the pullback map is given by
+\begin{align*}
+    d^1: \Hom_\Set(G,A) &\longrightarrow \Hom_\Set(G^2,A)\\
+    a_{(-)} &\longmapsto ((\sigma,\tau) \mapsto \sigma(a_{\tau})) (a_{\sigma\tau})^{-1} a_{\sigma},
+\end{align*}
+so the \textit{cocycles} (the elements of the kernel) are given by the preimage of $(\sigma,\tau)\mapsto 1$ in $\Hom_\Set(G^2,A)$, which is exactly given by
+\[
+    \{a_{(-)} \mid a_{\sigma\tau} = a_\sigma \sigma(a_\tau) \text{ for all $\sigma,\tau\in G$}\}.
+\]
+Next, recall that the degree 1 bar resolution map (on a generator) is
+\[[1|\sigma] \mapsto [\sigma] - [1],\]
+so the pullback map is given by (denoting $c$ the image of $*$ under a set map $\{*\}\to A$)
+\begin{align*}
+    d^0: \Hom_\Set(\{*\},A) &\longrightarrow \Hom_\Set(G,A)\\
+    c &\longmapsto (\sigma \mapsto \sigma(c)c^{-1}),
+\end{align*}
+so the \textit{coboundaries} are $A$-orbit maps.
+
+Therefore, two cocycles $a_{(-)}$ and $b_{(-)}$ are \textit{cohomologous} if there exists $c\in A$ such that
+\begin{align*}
+    b_{\sigma}a_{\sigma}^{-1} &= \sigma(c)c^{-1},
+\end{align*}
+which is straightforward in the abelian/commutative setting, but for some reason (which we will see when we define twisted forms) the best way to write this so that we can generalize to the nonabelian setting, is to instead write
+\[a_\sigma = c^{-1} b_\sigma \sigma(c)\]
+(which agrees with above in when everything commutes).
+
+In this way, we can always define, even for $A$ nonabelian,
+\[H^1(G,A) \defeq \{1-cocyles\}\big/ \text{cohomology equiv. relation},\]
+and this carries a natural basepoint which is the cohomology class represented by the cocycle
+\begin{align*}
+    G&\to A\\
+    g &\mapsto 1.
+\end{align*}
+
+\subsubsection{More Specialized Definitions}
+
+Now that we have a handle on group cohomology, we spell out the remaining terms in Theorem \ref{H2-Galois-Cohomology}.
+
+\begin{itemize}
+    \item $k_\sep$ is the separable closure of $k$, i.e., it is the largest separable extension of $k$ inside $\overline{k}$ (so if $k$ is perfect, then $k_\sep=\overline{k}$).
+    \item $H^2(k,k_\sep^\times)$ is the Galois cohomology, which is by definition the (continuous) group cohomology written on the right.
+    \item $H^2_{\text{cont}}(\Gal(k_{\sep}/k),k_{\sep}^\times)$ is \textit{continuous group cohomology} since the (absolute) Galois group is in general/usually infinite, and we should remember its profinite topology, which comes from recognizing that $\Gal(k_\sep/k)$ is the inverse limit of all of the restriction maps $\Gal(k''/k) \to \Gal(k'/k)$ for $k\leq k' \leq k''$ a tower of finite Galois extensions.
+\end{itemize}
+
+In general...
+
+\begin{defn}
+    A \textbf{profinite group} $G$ is an inverse limit of finite groups $G_\alpha$, i.e.,
+    \[G = \varinjlim G_\alpha\]
+    and $G$ has a natural topology by considering each $G_\alpha$ to have the discrete topology, and identifying the inverse limit as a subspace
+    \[G \subseteq \prod_\alpha G_\alpha,\]
+    where the product has the product topology.
+\end{defn}
+
+\begin{rmk}
+    The inverse limit is a closed topological subgroup of $\prod G_\alpha$, it is compact and totally disconnected, and the open subgroups are exactly the closed subgroups of finite index.
+\end{rmk}
+
+One advantage of remembering the profinite topology on a Galois group of an infinite extension, is we get a generalization of the usual Galois correspondence:
+
+\begin{thm}
+    There is a bijection between subextensions of $K/k$ and closed subgroups of $\Gal(K/k)$.
+\end{thm}
+
+\begin{defn}
+    A continuous $G$-module $A$ is one such that the $G$-action is continuous, or equivalently the stabilizer of each $a\in A$ is open in $G$.
+\end{defn}
+
+We will eventually define continuous group cohomology as a certain direct limit of (usual) group cohomologies of $G_\alpha$ valued in certain coefficients coming from $A$. We will need to understand
+\begin{enumerate}
+    \item How to restrict coefficients along a quotient map.
+    \item How to map from group cohomology of a restriction by \textit{inflation maps}.
+\end{enumerate}
+
+\textbf{Step 1.} Given a surjection $G\to G/H$ (thinking one of the maps $G_\beta \to G_\alpha$ in the inverse system), and a $G$-module $A$, we should find natural $G/H$-module coming from $A$. The fixed points $A^H$ is a $G$-submodule where $H$ acts trivially, so the $G$-action descends to a $G/H$ action.
+
+\textbf{Step 2.} We will construct a natural morphism
+\[H^i(G/H, A^H) \to H^i(G, A)\]
+called an \textbf{inflation map}. This can be written very concretely by talking about projective resolutions in $\Z[G]\lMod$ versus $\Z[G/H]\lMod$, but we instead give an abstract derived category description.
+
+Recall that these group cohomologies are just the cohomologies of objects
+\[\RHom_{\Z[G/H]\lMod}(\Z_{G/H}, A^H), \quad \RHom_{\Z[G]\lMod}(\Z_G, A)\]
+which are both objects of $D(\Z\lMod)$ (where we subscript $\Z$ by $G/H$ or $G$ to indicate that this is the restriction of scalars of along a morphism $\Z[G]\to \Z[G/H]\to \Z$). This inflation map is really a map in this derived category. First, recognize that
+\[\Z_{G/H} \cong \Z_G \otimes_{\Z[G]} \Z[G/H] \cong \cH^0(\Z_G \otimes^L_{\Z[G]} \Z[G/H]),\]
+and recall that there is a truncation map to the 0th homology
+\[\Z_G \otimes^L_{\Z[G]} \Z[G/H] \xrightarrow{\tau} \cH^0(\Z_G \otimes^L_{\Z[G]} \Z[G/H])\]
+in the derived category, so we have a morphism
+\[\RHom_{\Z[G/H]\lMod}(\Z_{G/H}, A^H) \xrightarrow{\tau^*} \RHom_{\Z[G/H]\lMod}(\Z_{G} \otimes^L_{\Z[G]} \Z[G/H], A^H),\]
+after which we can apply the extension/restriction of scalars adjunction to get a morphism
+\[\RHom_{\Z[G/H]\lMod}(\Z_{G} \otimes^L_{\Z[G]} \Z[G/H], A^H) \cong \RHom_{\Z[G]\lMod}(\Z_{G}, A^H),\]
+(since $A^H$ restricted to $\Z[G]$ is what we had already been calling $A^H$), and then we can postcompose along the inclusion $A^H\to A$ to finally get our map to
+\[\RHom_{\Z[G]}(\Z_G, A).\]
+Composing all of these maps and taking cohomology objects, we get our inflation map on group cohomology.
+
+\begin{defn}
+    The \textbf{continuous group cohomology} of profinite group $G=\varprojlim G_\alpha$ with coefficients in a continuous $G$-module $A$ is the following direct limit: along surjections $\phi_{\alpha\beta}: G_\beta \to G_\alpha$ defining the inverse system for $G$, get inflation maps
+    \[\Inf_\alpha^\beta: H^i(G_\alpha, A^{U_\alpha}) \to H^i(G_\beta, A^{U_\beta})\]
+    which define a directed system, and then denote
+    \[H_{\text{cont}}^i(G,A) \defeq \varinjlim H^i(G_\alpha,A^{U_\alpha}).\]
+\end{defn}
+
+Finally, this is the sense in which the Brauer group is a (continuous) group cohomology.
+
+
+\subsection{Proof Sketch for $H^1$ Characterization}
+
+Now, we move on towards proving our stated theorems/propositions.
+
+The sketch is as follows (and we will fill in the details):
+\begin{enumerate}
+    \item Work in a relative setting, only studying CSAs \textit{split} by a finite field extension $K/k$.
+    \item Classifying such CSAs of a given dimension/degree by a nonabelian cohomology set $H^1(\Gal(K/k), \PGL_n(K))$.
+    \item Realizing that all Morita equivalence classes of $K$-split CSAs are given by taking a direct limit over $n$, denoted $H^1(\Gal(K/k), \PGL_\infty(K))$.
+    \item Taking a direct limit over $K/k$ separable to get $\Br(k)$ as $H^1_{\text{cont}}(\Gal(k_\sep/k), \PGL_\infty(k_\sep))$.
+\end{enumerate}
+
+\subsubsection{Splitting CSAs}
+
+\begin{prop}
+    Let $A$ be a finite dimensional $k$-algebra, and $K/k$ a finite extension. Then, $A$ is central simple over $k$ iff $A\otimes_k K$ is central simple over $K$.
+\end{prop}
+
+In fact, we can choose $K$ ``large'' enough such that the following holds.
+
+\begin{prop}
+    There exists a finite extension $K/k$ such that $A\otimes_k K \cong M_n(K)$.
+\end{prop}
+
+In particular, $\dim_k A$ is square, since for such a field extension $K/k$, taking $k$-dimensions we get
+\[\dim_k A \cdot [K: k] = [K: k]\cdot n^2,\]
+and we call this $n$ the \textbf{degree} of the CSA over $k$.
+
+We call such a field extension a \textbf{splitting field} for $A$. Note if $F/K/k$ is a tower of field extensions, and $K$ is a splitting field for $A$, then so is $F$ because
+\[A\otimes_k F \cong (A\otimes_k K) \otimes_K F \cong M_n(K)\otimes_K F \cong M_n(F),\]
+and in fact a separable splitting field always exists.
+
+\begin{prop}[Noether, K\"othe]\label{CSA_eventually_split}
+    Every central simple algebra $A$ over $k$ has a splitting field for $A$ which is separable over $k$.
+\end{prop}
+
+So, every CSA is split over $k_\sep$.
+
+
+\subsubsection{Classifying split CSAs of a fixed degree}
+
+For the sake of finiteness, fix a finite Galois extension $K/k$ (and we will take direct limits/unions later). We will instead first try to characterize
+\[\Br(K/k) = \{\text{CSAs$/k$ split over $K$}\}/\text{Morita equivalence},\]
+where we work one degree at a time. Denote
+\[\mathrm{CSA}_k(n) \defeq \{\text{CSAs over $k$ split over $K$ of degree $n$}\}/\text{isomorphism}.\]
+Note that Morita equivalent CSAs of the same $k$-dimension are actually isomorphic (by the alternate characterization of Morita equivalence for CSAs).
+
+We want to characterize this cohomologically, but unfortunately we will need to step outside of the abelian category world and use nonabelian cohomology sets, as defined in the first section.
+
+We will then show that there is a base-point preserving bijection
+\[\mathrm{CSA}_{K|k}(n) \leftrightarrow H^1(\Gal(K/k),\PGL_n(K)).\]
+
+This is the hardest and probably most important step. We abstract to a more general setup.
+
+\begin{defn}
+    Let $V$ be a $k$-vector space, a $\Phi$ a tensor of type $(p,q)$ where $p,q\in \N$, i.e.,
+    \[\Phi \in V^{\otimes p} \otimes_k (V^*)^{\otimes q}.\]
+
+    An isomorphism of pairs $(V,\Phi)\to (W,\Psi)$ is a $k$-isomorphism $f:V\to W$ with
+    \[f^{\otimes q} \otimes (f^{*-1})^{\otimes q}\]
+    maps $\Phi$ to $\Psi$.
+\end{defn}
+
+\begin{rmk}
+    If we regard the space of $(p,q)$-tensors as
+    \[\Hom(V^{\otimes q}, V^{\otimes p}),\]
+    then the condition for being an isomorphism of pairs can also be expressed as a commutative diagram
+    \[\begin{tikzcd}
+        V^{\otimes q} \rar["f^{\otimes q}"] \dar["\Phi"] & W^{\otimes q} \dar["\Psi"]\\
+        V^{\otimes p} \rar["f^{\otimes p}"] & W^{\otimes p}
+    \end{tikzcd}\]
+    which makes sense even when $f$ is not an isomorphism. This also makes it clear, that in the special case that $q=2,p=1$, such an $f$ is a $k$-algebra isomorphism.
+\end{rmk}
+
+We can then base change a pair $(V,\Phi)$ along a field extension $K/k$, which we denote $(V_K, \Phi_K)$, we say that pairs $(V,\Phi),(W,\Psi)$ become isomorphic over $K$ if their base changes become isomorphic.
+
+\begin{defn}
+    Fixing a pair $(V,\Phi)$, if $(W,\Psi)$ becomes isomorphic to it over $K$, we call then say $(W,\Psi)$ is a \textbf{$(K/k)$-twisted form} of $(V,\Phi)$, or a \textbf{twisted form} for short. Denote the set of twisted forms by
+    \[\mathrm{TF}_K(V,\Phi).\]
+\end{defn}
+
+In this way, to calculate $\mathrm{CSA}_{K|k}(n)$, we want to parameterize all $k$-isomorphism classes of $K/k$-twisted forms of
+\[(M_n(k),\text{matrix mult.}),\]
+
+where one should check that such a twisted form is automatically a CSA (i.e., multiplication is still associative with unit, the center is still $k$, and the algebra is still simple).
+
+Going back to the general theory, we parameterize each $k$-isomorphism class of $(K/k)$-twisted forms by Galois theory. The strategy is to prove the following proposition.
+\begin{prop}
+    $\mathrm{TF}_K(V,\Phi) \leftrightarrow H^1(\Gal(K/k),\Aut_K(\Phi))$.
+\end{prop}
+\begin{proof}[Proof Sketch]
+First, given a twisted $K$-form, encoded by a $K$-isomorphism $f$ from our fixed $(V_K,\Phi_K)$ to another $(W_K,\Psi_K)$, we will produce a 1-cocycle, which is a certain type of set function
+\[a_{(-)}: \Gal(K/k) \to \Aut_K(\Phi)\]
+by
+\[a_\sigma \defeq f^{-1} \circ \sigma(f),\]
+where $\sigma(f)$ means conjugating $f$ by $\sigma$, which we are identifying with $1\otimes \sigma \in \Aut(V\otimes_k K)$, to get in total
+\[f^{-1} \circ \sigma \circ f \circ \sigma^{-1},\]
+({\color{red} this looks like a commutator?}), and one checks that this is a 1-cocycle (and this only depends on $(W,\Psi)$, not the choice of isomorphism $f$). One then passes to the cohomology class of the cocycle.
+
+The converse direction works more generally. Given a group $G$ acting on a group $A$ acting on a set $X$ (so in our example, $G=\Gal(K/k)$, $A=\Aut_K(\Phi)$, and $X=V_K$), we take as input a $1$-cocycle $a_{(-)}$ of $G$ with coefficients in $X$, and we produce a twisted $G$-action on $X$. Even better, if $X$ has extra structure and $A$ acts by automorphisms, then the twisted $G$-action will as well---so in our setup, we will go from a 1-cocycle
+\[a_{(-)} \in H^1(\Gal(K/k),\Aut_K(\Phi))\]
+to a twisted $G$-action
+\[G\to \Aut_K(\Phi)\]
+which we denote ${}_a V_K$. Then, we will see that the invariant space
+\[({}_a V_K)^G\]
+yields a twisted form of $(V,\Phi)$, and you get isomorphic twisted forms cohomologous cocycles.
+
+Finally, one should show that these processes are inverse to each other.
+\end{proof}
+
+So far, the proposition gives us
+\[\mathrm{CSA}_{K|k}(n) \leftrightarrow \mathrm{TF}_K(M_n(k),\text{matrix mult.}) \leftrightarrow H^1(\Gal(K/k), \Aut_K(M_n(K))),\]
+(where we mean automorphisms of the $K$-algebra, not $K$-vector space), so the remaining step is to show $\Aut_K(M_n(K)) \cong \PGL_n(K)$.
+
+\begin{prop}[Skolem-Noether]
+    Every $K$-algebra automorphism of $M_n(K)$ are inner, i.e., given by conjugation with some invertible matrix $C$.
+\end{prop}
+
+\begin{cor}
+    The automorphism group of $M_n(K)$ is the projective general linear group $\PGL_n(K)$.
+\end{cor}
+\begin{proof}
+    By the Skolem-Noether theorem, the map
+    \begin{align*}
+        \GL_n(K) &\to \Aut(M_n(K))\\
+        C &\longmapsto (M\mapsto CMC^{-1})
+    \end{align*}
+    is surjective, and as usual for conjugation, the kernel is exactly the center of $\GL_n(K)$, which is $K^* \hookrightarrow \GL_n(K)$ as diagonal matrices.
+\end{proof}
+
+Thus, we indeed get
+\[\mathrm{CSA}_{K|k}(n) \leftrightarrow H^1(\Gal(K/k), \PGL_n(K)).\]
+
+
+\subsubsection{Take the limit $n\to \infty$}
+
+There is a natural map
+\[\mathrm{CSA}_k(n) \to \mathrm{CSA}_k(nm)\]
+which is sending $A\mapsto A\otimes_k M_m(k)$, and you can prove that this is injective.
+
+So, the moral is that by Proposition \ref{CSA_eventually_split}, every CSA appears for a sufficiently large $n$, and given any finite set of CSAs of degrees $n_1,n_2\dots,n_r$, each of their Morita equivalences classes will have unique representatives in $\mathrm{CSA}_k(n_1 n_2\cdots n_r)$. So, we get the entire Brauer group (split by $K/k$) by taking the direct limit of all of these inclusions.
+
+On the other side, from the inclusion of $\GL_n \hookrightarrow \GL_{mn}$ as $m$ copies of block matrices along the diagonal, which then quotients to be a map $\PGL_n\hookrightarrow \PGL_{mn}$, we will get a natural map
+\[H^1(\Gal(K/k), \PGL_n(K)) \to H^1(\Gal(K/k), \PGL_{mn}(K))\]
+which coincides with the above map on $\mathrm{CSA}_k(n)$. Taking the direct limit over these cohomology sets, we get
+\[H^1(\Gal(K/k), \PGL_\infty(K)),\]
+(which you can either view as formal, or you could define $\PGL_\infty$ as this direct limit of $\PGL_n$). So, we get
+\[\Br(K/k) \cong H^1(\Gal(K/k), \PGL_\infty(K)).\]
+
+{\color{red} the infinite one is a group, maybe say a word about this, and about how if $A,B$ are $K$-split, then so is $A\otimes_k B$,}
+
+\subsubsection{Take the limit $K/k$ to $k_\sep/k$}
+
+As in our description of continuous group cohomology, we will get inflation maps, for each Galois tower $L/K/k$,
+\[H^1(\Gal(K/k),\PGL_\infty(K)) \to H^1(\Gal(L/k),\PGL_\infty(L))\]
+(realizing $\PGL_\infty(k_\sep)^{\Gal(k_\sep/K)} = \PGL_\infty(K)$ by Galois theory), and these will coincide ({\color{red} hopefully}) with
+\[\Br(K/k) \hookrightarrow \Br(L/k),\]
+so taking direct limits, we get
+\[\Br(k) \cong H^1_{\text{cont}}(\Gal(k_\sep/k),\PGL_\infty(k_\sep)),\]
+where the right hand side is more commonly denoted by
+\[H^1(k,\PGL_\infty).\]
+
+\subsection{Proof Sketch for $H^2$ Characterization}
+
+We will be very brief here. From the short exact sequence
+\[1\to K^* \to \GL_n(K) \to \PGL_n(K) \to 1,\]
+we get a long exact sequence of group cohomology pointed sets, where the connecting homomorphism is a map
+\[H^1(\Gal(K/k),\PGL_n(K)) \to H^2(\Gal(K/k), K^*),\]
+and one proves that this is injective and commutes with the maps
+\[H^1(\Gal(K/k),\PGL_n(K)) \to H^1(\Gal(K/k), \PGL_{mn}(K)),\]
+which gives an inclusion of the direct limit
+\[H^1(\Gal(K/k),\PGL_\infty(K)) \to H^2(\Gal(K/k), K^*).\]
+
+Then, taking limits over Galois extensions $K/k$, we get a morphism
+\[H_{\text{cont}}^1(\Gal(k_\sep/k), \PGL_\infty(k_\sep)) \to H^2(\Gal(k_\sep/k), k_\sep^*),\]
+and one proves this is a bijection (which isn't obvious).
+
+\section{Intermezzo: From Galois to \'Etale}
+
+\subsection{Smooth and \'Etale Morphisms}
+We recall the definition of a smooth and \'etale maps---unfortunately there are many definitions which are not obviously the equivalent.
+
+\begin{defn}
+    Let $\cP=\{g:U\to V\}$ be a class of morphisms. We say $f:X\to Y$ is \textbf{locally on the source and target} $P$ (or we say $P$ is a \textbf{local model} for $f$) if there exists an open cover $U_i$ of $X$ and $V_i$ of $Y$ with $U_i\subseteq f^{-1}(V_i)$, and each
+    \[f|_{U_i}: U_i \to V_i\]
+    is in $\cP$. 
+\end{defn}
+
+On our way to defining \'etale morphisms, we first define more generally the notion of a smooth morphism, which is like a submersion in differential geometry.
+
+\begin{defn}
+    A morphism $U\to V$ is \textbf{standard smooth of relative dimension $n$} if it is $\Spec$ applied to the $R$-algebra map
+    \[R \to R[x_1,\dots,x_{n+m}]/(f_1,\dots,f_m)=S\]
+    with
+    \[\det\left(\frac{\partial f_i}{\partial x_j}\right)_{1 \leq i,j\leq m}\]
+    invertible as an element of $S$.
+
+    A morphism $X\to Y$ is \textbf{smooth of relative dimension $n$} if it is locally modeled by such standard smooth morphisms.
+\end{defn}
+
+Typically, we produce standard smooth morphisms by taking \textit{any} quotient
+\[R\to R[x_1,\dots,x_{n+m}]/(f_1,\dots,f_m)=S,\]
+and throwing away the nonsmooth locus. That is, if $g\in S$ has
+\[D(g)\subseteq D(\det(\frac{\partial f_i}{\partial x_j}))\]
+(meaning $g\in \sqrt{(\det(\partial f_i/\partial x_j))}$), then we would want to just localize $S$ to get $S_g$, but this isn't obviously standard smooth. To phrase this as a standard smooth morphism, we ``implement'' the localization as usual by appending a variable $t$ and quotienting by $tg-1$, i.e., write the new morphism as
+\[R\to R[t,x_1,\dots,x_{n+m}]/(tg-1,f_1,\dots,f_m)=S_g,\]
+and then our new determinant (for example by cofactor expansion) is simply
+\[g \det(\frac{\partial f_i}{\partial x_j}),\]
+which is now invertible in $S_g$ because clearly $g$ is a unit, and a root of $\det(\partial f_i/\partial x_j)$ is a factor of $g$, so it is also a unit (going back to $g\in \sqrt{(\det(\partial f_i/\partial x_j))}$).
+
+\begin{defn}
+    An \textbf{\'etale morphism} is a smooth morphism of relative dimension 0.
+\end{defn}
+
+However, in this relative dimension 0 case, we have an even better local model than the standard smooth one.
+\begin{defn}
+    A morphism $U\to V$ is called \textbf{standard \'etale} if it is $\Spec$ applied to
+    \[R\to R[x]_g/(f),\]
+    where $f\in R[x]$ is monic and $f'$ is invertible in $R[x]_g/(f)$.
+\end{defn}
+
+In this way we are cooking in the localization (which we had before implemented by adjoining a variable), but we have the advantage now that we only need to add one variable at most. {\color{red} idk how to prove that this local model gives the same class of morphisms, see the stacks project}.
+
+\begin{rmk}
+    We should mention that there are also more intrinsic ways to characterize smooth/\'etale morphisms. In particular, a morphism is \'etale if and only if it is flat, finitely presented, and unramified. We will not prove that this is an equivalent characterization in these notes.
+\end{rmk}
+
+\subsection{\'Etale Site}
+
+Let $\cS$ be a category. We can always make sense of \textit{presheaves} on $\cS$, these are just contravariant functors. However, to make sense of \textit{sheaves}, we need a notion of open covers, which comes from topology.
+
+The idea is that the topology on a set $X$ gives a category $\mathrm{Open}(X)$ whose objects are open sets, morphisms are inclusions, and has a notion of \textit{coverings}, i.e., you say that $\{U_i\hookrightarrow U\}_{i\in I}$ is a covering of $U$ if the union of the $U_i$ is all of $U$, or equivalently the inclusions are jointly surjective, which is to say
+\[\bigsqcup U_i \to U\]
+is surjective.
+
+The notion of coverings will then become a structure that you can put on any category, where we pretend that such a category is $\mathrm{Open}(X)$ for some topological space $X$.
+
+\begin{rmk}
+    For a topological space $X$, a sheaf on $X$ was defined by considering pairwise intersections of opens $U_i\cap U_j$, where $\{U_i\to U\}$ is a cover. One needs to check that
+    \[U_i \times_U U_j = U_i \cap U_j,\]
+    so that fiber products will be the appropriate generalization of intersections.
+\end{rmk}
+
+Without further ado, we define the notion of a \textit{Grothendieck topology} on our category $\cS$.
+
+
+\begin{defn}
+    A \textbf{Grothendieck topology} on $\cS$ is the data of, for each object $X\in \cS$, a set $\Cov(X)$ with elements being sets $\{X_i \to X\}$ called \textit{coverings} of $X$, which satisfies the following axioms:
+    \begin{enumerate}
+        \item (identity) if $X'\to X$ is an isomorphism, then the singleton $\{X'\to X\}$ is in $\Cov(X)$.
+        \item (restriction) if $\{X_i\to X\}\in \Cov(X)$, and $Y\to X$ is a morphism, then the fiber products $X_i \times_X Y$ exist in $\cS$, and $\{X_i\times_X Y\to Y\}\in \Cov(Y)$.
+        \item (composition) if $\{X_i\to X\}_{i\in I}\in \Cov(X)$ and for each $i$, $\{X_{ij}\to X\}_{j\in J_i} \in \Cov(X_i)$, then $\{X_{ij}\to X_i \to X\}_{i\in I, j\in J_i}\in \Cov(X)$.
+    \end{enumerate}
+
+    A pair of a category and a Grothendieck topology on it is called a \textbf{site}.
+\end{defn}
+
+\begin{eg}
+    Let $X$ be a topological space, then $\mathrm{Open}(X)$ with the usual notion of coverings is a site.
+\end{eg}
+
+\begin{rmk}
+    We will then be able to define sheaves on a site, but before we do that we should give the some of the important examples in algebraic geometry. These have two different flavors:
+    \begin{itemize}
+        \item \textit{small sites}, which are more directly analogous to $\mathrm{Open}(X)$, whose objects are only the ``opens'' of a fixed scheme $X$
+        \item \textit{big sites}, which will have objects which aren't ``opens'', usually have the underlying category (i.e., forgetting the Grothendieck topology) be $\Sch$ or $\Sch/S$ for some fixed scheme $S$.
+    \end{itemize}
+
+    Typically, you use small sites when define more classical sheaves (like fiber bundles) over a fixed space. On the other hand, you use large sites in moduli theory, especially when you start considering a scheme $X$ itself to be a sheaf by identifying it with its functor of points $\Hom(-,X)$ via the Yoneda lemma.
+\end{rmk}
+
+We clarify this with some examples.
+
+\begin{defn}
+    The \textbf{(small) Zariski site} on a scheme $X$ is just $\mathrm{Open}(X)$, which is sometimes denoted $X_\Zar$. We spell this out in a way that makes analogies more clear. The small Zariski site consists of
+    \begin{itemize}
+        \item the category $X_\Zar$ whose objects are open immersions $U\hookrightarrow X$, and morphisms are morphisms of $X$-schemes $U\to V$. In other words, the full subcategory of $\Sch/X$ consisting of open immersions,
+        \item with Grothendieck topology defined by $\{U_i\to U\}\in \Cov(U)$ if the maps are open immersions (vacuous because all maps are open immersions here) and jointly surjective.
+    \end{itemize}
+
+    The \textbf{(big) Zariski site} is
+    \begin{itemize}
+        \item the category $\Sch_\Zar$ which is just $\Sch$,
+        \item with Grothendieck topology defined by $\{X_i\to X\}\in \Cov(X)$ if the maps are open immersions and jointly surjective.
+    \end{itemize}
+\end{defn}
+
+
+\begin{defn}
+    The \textbf{(small) \'etale site} on a scheme $X$ is
+    \begin{itemize}
+        \item the category $X_\et$ whose objects are \'etale morphisms $U\to X$, and morphisms are morphisms of $X$-schemes $U\to V$. In other words, the full subcategory of $\Sch/X$ consisting of \'etale morphisms,
+        \item with Grothendieck topology defined by $\{U_i\to U\}\in \Cov(U)$ if the maps are \'etale (vacuous because all maps are \'etale here) and jointly surjective.
+    \end{itemize}
+    The \textbf{(large) \'etale site} is
+    \begin{itemize}
+        \item the category $\Sch_\et$ which is just $\Sch$,
+        \item with Grothendieck topology defined by $\{X_i \to X\}\in \Cov(X)$ if the maps are \'etale and jointly surjective.
+    \end{itemize}
+\end{defn}
+
+To define a presheaf on $\Sch_\et$, you are really doing a very global construction, and you need to make sense of the presheaf evaluated at any scheme. Defining a presheaf on $X_\et$ is only making sense of the presheaf defined on a generalized open (an \'etale morphism).
+
+We now define a sheaf on a site.
+
+\begin{defn}
+    Let $\cS$ be a site, and $F: \cS^\op \to \Set$ a presheaf. We say $F$ is a sheaf if for all coverings $\{X_i\to X\} \in \Cov(X)$ for all $X\in \cS$, we have the equalizer diagram
+    \[\bullet \to F(X) \to \prod F(X_i) \rightrightarrows \prod F(X_i \times_X X_j).\]
+\end{defn}
+
+The collection of sheaves of abelian groups (being a reflective subcategory of presheaves) form an abelian category, which we will denote
+\[\Ab(\cS).\]
+
+
+\subsection{Galois as special case of \'Etale}
+
+We saw for the Brauer group of a field, we had to analyze Galois cohomology, whereby you take a field $k$ and a discrete $G_k=\Gal(k_\sep,k)$-module $M$ (meaning $M$ has the discrete topology, and the stabilizers of the $G_k$ action are open), and we analyze
+\[H_{\text{cont}}^i(G_k,M).\]
+This is actually subsumed by \'etale cohomology.
+
+\begin{prop}
+    \[\Ab((\Spec k)_\et) \cong \DiscMod_{G_k},\]
+    where $\DiscMod_{G_k}$ is the abelian category of $G_k$ modules. Furthermore, global sections $\Gamma$ on the left becomes invariants $(-)^{G_k}$ on the right, so that their derived functors---\'etale cohomology and Galois cohomology---coincide.
+\end{prop}
+
+{\color{red} wait when $k_\sep/k$ is not finite and you need to do continuous group cohomology, is it really true that Galois cohomology is still the right derived functor of invariants?}
+
+To see this correspondence, we first need to understand the structure of $(\Spec k)_\et$, which is to understand all of the \'etale covers of $\Spec k$. These are disjoint unions of standard \'etale maps, which are $\Spec$ of finite separable extensions.
+
+Now, we characterize sheaves.
+\begin{lem}
+    An \'etale presheaf on $(\Spec k)_\et$ is a sheaf if and only if
+    \begin{itemize}
+        \item For any disjoint union $\coprod U_i$ we have
+        \[\cF(U_i) = \prod \cF(U_i),\]
+        \item For all finite, separable extensions $k''/k'/k$ such that $k''/k'$ is Galois, we have
+        \item $\cF(\Spec k') = \cF(\Spec k'')^{\Gal(k''/k')}$.
+    \end{itemize}
+\end{lem}
+
+\begin{proof}
+    Assume conditions 1 and 2 hold, and we prove $\cF$ is a sheaf, so we need to take a cover $\{U_i\to U\}$. Using 1, we can actually assume the cover is just $U''\to U'$ where $U,U'$ are connected, so they are just a finite separable field extension
+    \[\Spec k'' \to \Spec k' = \Spec (k''/k').\]
+    Even better, we can assume $k''/k'$ is Galois, since we could have embedded $k''$ in a finite Galois extension $L$, and then $L/k''$ and $L/k'$ are both Galois, and proving the sheaf condition for both of these should prove the sheaf condition for $k''/k'$.
+
+    So, now take $k''/k'$ Galois, and then the sheaf condition is the following
+    \[\bullet \to \cF(\Spec k') \to \cF(\Spec k'') \rightrightarrows \cF(\Spec k'' \times_{\Spec k'} \Spec k'').\]
+    Understanding
+    \begin{align*}
+        k''\otimes_{k'} k'' &\cong \prod_{\Gal(k''/k')} k''\\
+        x\otimes y &\mapsto (xg(y))_g,
+    \end{align*}
+    {\color{red} why??} this then ammounts to the exactness of
+    \[\cF(\Spec k') \to \cF(\Spec k'') \rightrightarrows \prod_{\Gal(k''/k')} \cF(\Spec k''),\]
+    which follows from 2.
+\end{proof}
+
+\begin{proof}[Proof of Proposition]
+    Given an abelian \'etale sheaf $\cF$, send it to
+    \[\colim_{\substack{k_\sep\supseteq k'\supseteq k,\\ k'/k \text{ Galois}}} \cF(k'),\]
+    and conversely, given a discrete $G_k$ module $M$, send it to the sheaf $\overline{M}$ mapping
+    \[\Spec k' \mapsto M^{\Gal(k_\sep/k')}\]
+\end{proof}
+
+
+
+\section{Brauer Group of a Scheme}
+
+\subsection{Overview and Definitions}
+
+Before getting into the technicalities, we give some motivation.
+
+In the case of fields, we had defined the Brauer group to parameterize certain algebras, and we saw that it coincided with a certain cohomology. However, for the case of a scheme $X$ these two notions diverge, giving us two concepts:
+\begin{itemize}
+    \item Define the \textit{Brauer group} $\Br(X)$ to be equivalence classes of (sheaves of) Azumaya algebras.
+    \item Define the \textit{cohomological Brauer group} $\Br'(X) \defeq H^2_\et(X,\G_m)$,
+\end{itemize}
+and it will turn out that we only have an injection $\Br(X)\hookrightarrow \Br'(X)$, or even better
+\[\Br(X) \cong \Br'(X)_{\text{torsion}},\]
+but we will not be able to prove this in these notes.
+
+Now, we describe these terms in detail. We first work locally before defining the Brauer group for a scheme. So, let $(R,\fm,k)$ be a local ring.
+
+Before, $\Br(k)$ classified CSAs up to Morita equivalence. We need to find the appropriate analogue for more general rings, and we do this by characterizing a CSA as a $\otimes_k$ invertible algebra up to Morita equivalence.
+
+\begin{defn}
+    An \textbf{Azumaya algebra} over $R$ is a (associative unital) $R$-algebra $A$ (not necessarily commutative) such that
+    \[A\otimes_R A^\op \sim_{\text{Morita}} R,\]
+    and again, it turns out that Azumaya algebras $A,B$ are Morita equivalence iff there exist $n,m\in \N$ such that
+    \[A\otimes_R M_n(R) \cong B\otimes_R M_m(R).\]
+
+    The \textbf{Brauer group} of $R$ is
+    \[\Br(R) \defeq \{A \text{ Azumaya algebra }/R\}/\text{similarity}.\]
+\end{defn}
+
+Now, let $X$ be a locally Noetherian scheme.
+
+\begin{defn}
+    An $\cO_X$-algebra $A$ is called an \textbf{Azumaya algebra} if it is coherent as an $\cO_X$-module and if, for all closed points $x\in X$, $A_x$ is an Azumaya algebra over $\cO_{X,x}$.
+\end{defn}
+
+\begin{rmk}
+    In particular, each $A_x$ has to be a free finite rank $\cO_{X,x}$-module (forgetting the algebra structure), so $A$ is a locally free finite rank $\cO_X$-module. Furthermore, this condition on closed points $x\in X$ implies the condition for \textit{all} points $x\in X$.
+\end{rmk}
+
+\begin{defn}
+    We say Azumaya algebras $A,B$ are \textbf{similar} if there exist locally free finite rank $\cO_X$-modules $E,F$ such that
+    \[A\otimes_{\cO_X} \cEnd_{\cO_X}(E) \cong B \otimes_{\cO_X} \cEnd_{\cO_X}(F).\]
+
+    The \textbf{Brauer group} of $X$ is then
+    \[\Br(X) \defeq \{A \text{ Azumaya algebra}/X\}/\text{similarity},\]
+    which is a group under $\otimes_{\cO_X}$.
+\end{defn}
+
+We then have similar cohomological characterizations.
+
+\begin{thm}
+    There is a canonical injective homomorphism $\Br(X) \hookrightarrow H^2(X_\et, \G_m)=Br'(X)$. Even more, this injection gives $\Br(X) \cong \Br'(X)_{\text{torsion}}$.
+\end{thm}
+
+This can be proved more directly than our proof for fields by considering ``gerbes'', which are a higher categorical version of torsors. Or, we can repeat our proof as in the field case, but we have to be careful about our definitions---in the field case, we analyzed $H^i_{\text{cont}}(\Gal(k_\sep/k),A)$, which was by definition the direct limit over Galois extensions, but in the scheme/\'etale situation, there are two contenders:
+\begin{itemize}
+    \item Cech \'etale cohomology, which is the direct limit of Cech cohomology along every \'etale cover of $X$.
+    \item \'Etale cohomology, which is the right derived functor of global sections for sheaves on the \'etale site.
+\end{itemize}
+For the case $X=\Spec k$ or more generally any $X$ quasi-projective over an affine scheme so that we can apply \cite{milne_etale_2025,Theorem 2.12}, these coincide, i.e., there are canonical isomorphisms
+\[\check{H}^p(X_\et, F) \xrightarrow{\cong} H^p(X_\et,F).\]
+
+Now, our cohomological characterization of the Brauer group will again go through this step:
+
+\begin{thm}
+    The set of isomorphism classes of Azumaya algebras of rank $n^2$ over $X$ is given by $\check{H}^1(X_\et, \PGL_n)$.
+\end{thm}
+
+This is a very similar story to that of the Galois/field case, where we studied twisted forms. This is also analogous to the $\check{H}^1(X, \GL_n)$ characterization of vector bundles as cocycles. For vector bundles, the idea is that a vector bundle is locally given by $\cO_X^{\oplus n}$, and the sheaf of automorphisms is then exactly $\GL_n$. We will then understand that Azumaya algebras are \textit{\'etale locally} given by $M_n$, and the sheaf of automorphisms is $\PGL_n$. There is some subtlety here that we do not explain ({\color{red} pay 134 of Milne}), where any Azumaya algebra will give a cocycle, but to see that a cocycle gives an Azumaya algebra you need to study some descent theory.
+
+In any case, the story needs at least these two lemmas:
+
+\begin{lem}
+    A coherent $\cO_X$-algebra $A$ is an Azumaya algebra if and only if there exists a covering $\{U_i \to X\}$ in the \'etale topology on $X$ such that for each $i$ there exists $r_i$ such that
+    \[A\otimes_{\cO_X} \cO_{U_i} \cong M_{r_i}(\cO_{U_i}).\]
+\end{lem}
+
+\begin{proof}
+    This follows from splitting theory---at a point $x\in X$, $A_x$ is an Azumaya algebra over $\cO_{X,x}$, and so $A_x/\fm_x$ is a CSA over $k(x)$, and then there exists a Galois extension $k'/k(x)$ such that the base change
+    \[A_x/\fm_x \otimes_{k(x)} k' \cong M_n(k'),\]
+    and then you need to {\color{red} lift this construction to a neighborhood by Nakayama/Hensel nonsense}.
+\end{proof}
+
+\begin{lem}
+    The \'etale sheaf of automorphisms of $M_n(\cO_X)$ is $\PGL_n \cO_X$.
+\end{lem}
+
+
+\section{Geometric Applications of the Brauer Group}
+
+We recall a version of \'etale descent:
+
+\begin{prop}
+    Let $\pi:U\to X$ be an \'etale cover (or more generally fpqc), and $H\in \QCoh(U)$ with \textit{descent datum}, i.e., considering the projections from either $U\times_X U\times_X U$ or $U\times_X U$ to $X$, we ask for the data of
+    \[\phi: p_1^*H \to p_2^*H\]
+    satisfying the \textit{cocycle condition}
+    \[p_{23}^* \phi \circ p_{12}^* \phi = p_{13}^* \phi.\]
+    Then, $(H,\phi)$ descends to a $G\in \QCoh(X)$, i.e., there exists an isomorphism
+    \[f: H \to \pi^*G\]
+    such that $p_1^*f = p_2^*f \circ \phi$, and $(G,f)$ is unique up to unique isomorphism.
+\end{prop}
+
+Now, we can ask, what if we have $H,\phi$ such that
+\[p_{23}^* \phi \circ p_{12}^* \phi \neq p_{13}^* \phi,\]
+but instead
+\[p_{23}^* \phi \circ p_{12}^* \phi = \alpha p_{13}^* \phi,\]
+where $\alpha\in \check{C}^2(U\to X,\cO_X^*)$ is a Cech 2-cocycle which represents an element of the Brauer group.
+
+In this case, we cannot descend $(H,\phi)$ to an honest quasicoherent sheaf on $X$, but instead we just define this sort of descent data as a \textit{twisted sheaf}, which forms an abelian category
+\[\QCoh(X,\alpha).\]
+
+This is a good idea because twisted sheaves arise in nature---it happens for example that a moduli functor fails to be representable/have a universal family is due to an obstruction in the Brauer group, but we can have some success anyways by studying twisted sheaves instead.
+
+We should also consider the derived category of $\Coh(X,\alpha)$ itself to be a ``noncommutative scheme'', which have an interesting Morita type theory.
+
+
+
+% \subsubsection{Galois vs \'Etale}
+
+% {\color{red} show that Galois cohomology is exactly \'etale cohomology of a point.} \url{https://www.math.columbia.edu/~calebji/WeilII.pdf}
+
+% \subsubsection{Why Cohomological Brauer Group?}
+
+% {\color{red} interpret element of $H_\et^1(X,\PGL_n)$ as \'etale projective bundle, and show that Brauer class is failure to lift to \'etale vector bundle, which is the same as a Zariski vector bundle}
+
+% \subsubsection{Why Azumaya Algebras?}
+
+% {\color{red} sheaves over Azumaya algebras are the same as twisted sheaves by Brauer class}
+
+
+{\color{red} add Alper's notes to references.}
+
+\printbibliography
+
+
+
+
+\end{document}

@@ -1,0 +1,61 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{vakil_rising_2025}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=fd27b54a95453be8ed6a0951d5bc5075}{%
+           family={Vakil},
+           familyi={V\bibinitperiod},
+           given={Ravi},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Princeton}%
+      }
+      \list{publisher}{1}{%
+        {Princeton University Press}%
+      }
+      \strng{namehash}{fd27b54a95453be8ed6a0951d5bc5075}
+      \strng{fullhash}{fd27b54a95453be8ed6a0951d5bc5075}
+      \strng{fullhashraw}{fd27b54a95453be8ed6a0951d5bc5075}
+      \strng{bibnamehash}{fd27b54a95453be8ed6a0951d5bc5075}
+      \strng{authorbibnamehash}{fd27b54a95453be8ed6a0951d5bc5075}
+      \strng{authornamehash}{fd27b54a95453be8ed6a0951d5bc5075}
+      \strng{authorfullhash}{fd27b54a95453be8ed6a0951d5bc5075}
+      \strng{authorfullhashraw}{fd27b54a95453be8ed6a0951d5bc5075}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{isbn}{978-0-691-26867-5 978-0-691-26868-2}
+      \field{pagetotal}{1}
+      \field{shorttitle}{The rising sea}
+      \field{title}{The rising sea: foundations of algebraic geometry}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb PDF:C\:\\Users\\Joseph\\Zotero\\storage\\DQLZQRVU\\Vakil - 2025 - The rising sea foundations of algebraic geometry.pdf:application/pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

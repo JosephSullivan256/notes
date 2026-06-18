@@ -1,0 +1,115 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{hochster_infinite_1992}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=c7c9cc8ab5314ab003e975baea959e94}{%
+           family={Hochster},
+           familyi={H\bibinitperiod},
+           given={Melvin},
+           giveni={M\bibinitperiod}}}%
+        {{hash=49af009026a83f443cd9c5fccdab067d}{%
+           family={Huneke},
+           familyi={H\bibinitperiod},
+           given={Craig},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{6bca6d92e534cabc83972a149e0cf3ca}
+      \strng{fullhash}{6bca6d92e534cabc83972a149e0cf3ca}
+      \strng{fullhashraw}{6bca6d92e534cabc83972a149e0cf3ca}
+      \strng{bibnamehash}{6bca6d92e534cabc83972a149e0cf3ca}
+      \strng{authorbibnamehash}{6bca6d92e534cabc83972a149e0cf3ca}
+      \strng{authornamehash}{6bca6d92e534cabc83972a149e0cf3ca}
+      \strng{authorfullhash}{6bca6d92e534cabc83972a149e0cf3ca}
+      \strng{authorfullhashraw}{6bca6d92e534cabc83972a149e0cf3ca}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0003486X}
+      \field{journaltitle}{The Annals of Mathematics}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{number}{1}
+      \field{shortjournal}{The Annals of Mathematics}
+      \field{title}{Infinite Integral Extensions and big Cohen--Macaulay Algebras}
+      \field{urlday}{14}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{volume}{135}
+      \field{year}{1992}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{53}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.2307/2946563
+      \endverb
+      \verb{file}
+      \verb PDF:C\:\\Users\\Joseph\\Zotero\\storage\\XH52TZF2\\Hochster and Huneke - 1992 - Infinite Integral Extensions and big Cohen--Macaulay Algebras.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.jstor.org/stable/2946563?origin=crossref
+      \endverb
+      \verb{url}
+      \verb https://www.jstor.org/stable/2946563?origin=crossref
+      \endverb
+    \endentry
+    \entry{lazarsfeld_positivity_2004}{incollection}{}{}
+      \name{author}{1}{}{%
+        {{hash=51ae79eec6b038af1767dc682795527d}{%
+           family={Lazarsfeld},
+           familyi={L\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berlin Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{51ae79eec6b038af1767dc682795527d}
+      \strng{fullhash}{51ae79eec6b038af1767dc682795527d}
+      \strng{fullhashraw}{51ae79eec6b038af1767dc682795527d}
+      \strng{bibnamehash}{51ae79eec6b038af1767dc682795527d}
+      \strng{authorbibnamehash}{51ae79eec6b038af1767dc682795527d}
+      \strng{authornamehash}{51ae79eec6b038af1767dc682795527d}
+      \strng{authorfullhash}{51ae79eec6b038af1767dc682795527d}
+      \strng{authorfullhashraw}{51ae79eec6b038af1767dc682795527d}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{isbn}{978-3-540-22528-7}
+      \field{note}{Num Pages: 387}
+      \field{shorttitle}{Positivity in algebraic geometry. 1}
+      \field{title}{Positivity in algebraic geometry. 1: Classical setting: line bundles and linear series}
+      \field{year}{2004}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb Table of Contents PDF:C\:\\Users\\Joseph\\Zotero\\storage\\ECZV92JM\\Lazarsfeld - 2004 - Positivity in algebraic geometry. 1 Classical setting line bundles and linear series.pdf:application/pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

@@ -1,0 +1,214 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+
+% Comic Sans
+% \usepackage{sansmathfonts}
+% \usepackage{fontspec}
+% \setmainfont{Comic Sans MS}
+
+% \usepackage{fontspec}
+% \setmainfont{Wingdings-Regular.ttf}
+
+% \usepackage{libertine}
+
+% fancy header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{Joseph Sullivan}
+
+\title{Koszul Duality}
+\author{Joseph Sullivan}
+\date{January 2025}
+
+\newcommand{\reg}{\mathrm{reg}}
+\newcommand{\sing}{\mathrm{sing}}
+\newcommand{\Pic}{\mathrm{Pic}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\FS}{\mathrm{FS}}
+\newcommand{\Alb}{\mathrm{Alb}}
+\newcommand{\CMan}{\text{$\C$-$\mathsf{Man}$}}
+
+\newcommand{\ev}{\mathrm{ev}}
+
+\newcommand{\Hol}{\mathrm{Hol}}
+
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Tor}{\mathrm{Tor}}
+
+\DeclareMathOperator{\Weil}{Weil}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\CDiv}{CDiv}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\height}{height}
+\DeclareMathOperator{\Ass}{Ass}
+\renewcommand{\div}{\operatorname{div}}
+
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\Cl}{Cl}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{An Example}
+
+\subsection{Setup}
+We start with a computation. Let $k$ be a field, $V$ a $k$-vector space, and $S=\Sym^\bullet V$ the symmetric algebra on $V$ (which is just the $k$-polynomial ring on a basis $E^1,\dots,E^n$ of $V$).
+
+The ring $S$ is graded, with the module $k=S_0\cong S/S_+$. Our task is to compute the Ext algebra
+\[\Ext_S^\bullet(k,k),\]
+by which we mean the direct sum of all $\Ext_S^i(k,k)$ equipped with multiplication by the Yoneda product (which is either thought of as composition in the derived category of $\Ext_S^i(k,k)=\Hom_{D^b(S)}(k,k[i])$ or as concatenation of extensions).
+
+To compute in the derived category, we will want to replace $k$ (thought of as a complex concentrated in degree 0) with a quasi-isomorphic object, a projective resolution given by the Koszul complex:
+\[0\to \bigwedge^n V \otimes_k S \to \cdots \to \bigwedge^1 V \otimes_k S \to \bigwedge^0 V \otimes_k S \to 0,\]
+which we will denote by $P^\bullet$ (where $P^i=\bigwedge^{-i} V \otimes_k S$).
+
+When we say that $P^\bullet$ is a projective resolution of $k$, we mean that each term is projective, and we have a map $P^\bullet \xrightarrow{\eps} k$ sending $\bigwedge^0 V \otimes_k S \to k$ (by evaluating $s\in S$ at $0$) which is a quasi-isomorphism. This will turn out to mean that $P^\bullet$ is an exact complex, except at $P^0$, where the map $P^{-1}\to P^0$ has cokernel $k$.
+
+Now, with this in mind,
+\[\Hom_{D^b(S)}(k,k[i]) \cong \Hom_{D^b(S)}(P^\bullet,k[i]) \cong \Hom_{D^b(S)}(P^\bullet, P^\bullet[i]),\]
+where we get the isomorphism by pre/post composing a morphism $k\to k[i]$ with the isomorphism (in $D^b(S)$) $P^\bullet \cong k$.
+
+Now, it is a theorem on derived categories that
+\[\Hom_{D^b(S)}(k, k) \cong \Hom_{K^b(S)}(P^\bullet, k[i]) \cong \Hom_{K^b(S)}(P^\bullet, P^\bullet[i]),\]
+that is, when the domain object is a complex consisting of projective objects, morphisms in the derived category are those coming from the homotopy category.
+
+Now, to compute the $\Ext$ algebra, we will start with the more straightforward computation
+\[\bigwedge^i V^\vee \cong \Hom_{K^b(S)}(P^\bullet,k[i]),\]
+but then we will work out explicitly how this is isomorphic to $\Hom_{K^b(S)}(P^\bullet,P^\bullet[i])$, because it will allow us to compute multiplication. Finally, by using these isomorphisms, we will see that in the diagram
+\begin{cd}
+    \Hom_{K^b(S)}(P^\bullet,P^\bullet[i]) \otimes \Hom_{K^b(S)}(P^\bullet[i],P^\bullet[i+j]) \dar \rar & \Hom_{K^b(S)}(P^\bullet,P^\bullet[i+j]) \dar\\
+    \bigwedge^i V^\vee \otimes \bigwedge^j V^\vee \rar & \bigwedge^{i+j} V^\vee
+\end{cd}
+the bottom arrow is given by the familiar multiplication
+\[(f_1\wedge \cdots \wedge f_i) \wedge (g_1 \wedge \cdots g_j) = f_1 \wedge \cdots \wedge f_i \wedge g_1 \wedge \cdots \wedge g_j.\]
+
+\subsection{Computation}
+
+\subsubsection*{Step 1.}
+We write down an isomorphism
+\[\bigwedge^i V^\vee \cong \Hom_{K^b(S)}(P^\bullet, k[i]).\]
+To get the isomorphism, we recognize that the data is given by a chain map $P^\bullet \to k[i]$ is a $S$-module morphism
+\[\bigwedge^i V \otimes_k S \longrightarrow k\]
+that precomposes to 0 under the boundary map $\bigwedge^{i+1} V \otimes_k \to \bigwedge^i V \otimes_k S$, but this extra condition is vacuous because any $S$-module morphism to $k=S/S_+$ will kill
+\[S_+ (\bigwedge^i V \otimes_k S)\]
+which contains the image of the boundary map.
+
+So, the data is exactly
+\[\Hom_S(\bigwedge^i V \otimes_k S, k),\]
+and here we can write down a morphism
+\begin{align*}
+    \bigwedge^i V^\vee &\longrightarrow \Hom_S(\bigwedge^i V \otimes_k S, k)\\
+    f_1\wedge\cdots\wedge f_i &\longmapsto (v_1\wedge \cdots \wedge v_i \mapsto \det [f_p(v_q))]_{pq}
+\end{align*}
+This is an isomorphism, since one can check this is a surjection by picking a basis $e_1,\dots,e_n$ of $V$ (and $e_1^\vee,\dots,e_n^\vee$ of $V^\vee$ the dual basis) and recognizing that for $I\subseteq \{1,\dots,n\}$ with $|I|=i$,
+\[e_I^\vee \mapsto e^I \otimes (S\to k)\]
+which span the target, and then both vector spaces have the same dimension.
+
+\subsubsection*{Step 2.}
+Now, we want to carry over this isomorphism
+\[\bigwedge^i V^\vee \cong \Hom_{K^b(S)}(P^\bullet, k[i]) \cong \Hom_{K^b(S)}(P^\bullet,P^\bullet[i]).\]
+To do so, given $\omega \in \bigwedge^i V^\vee$, we want to produce a morphism $P^\bullet\to P^\bullet[i]$, such that after composing with $P^\bullet[i] \xrightarrow{\eps[i]} k[i]$, we get the morphism described in Step 1. The general theory tells us that
+\[\Hom_{K^b(S)}(P^\bullet,P^\bullet[i]) \xrightarrow{\eps[i]_*} \Hom_{K^b(S)}(P^\bullet, k[i])\]
+is an isomorphism, so as soon as we find any chain map realizing $\omega$, we are done (in the sense that we have realized the homotopy class of the chain map).
+
+So, we need to build a chain map as in the diagram.
+\begin{equation}\label{extend-to-koszul}
+\begin{tikzcd}
+    \cdots \rar & \bigwedge^{i+1} V \otimes_k S \rar \dar[dashed] & \bigwedge^i V \otimes_k S \rar \dar[dashed] & \bigwedge^{i-1} V \otimes_k S \rar \dar[dashed] & \cdots\\
+    \cdots \rar & \bigwedge^1 V \otimes_k S \rar & \bigwedge^0 V \otimes_k S \rar \dar["\eps"] & 0 \rar & \cdots\\
+    & & k & &
+\end{tikzcd}
+\end{equation}
+
+
+We can understand the maps in the Koszul complex by taking the embeddings
+\begin{align*}
+    \bigwedge^{r+1} V &\longrightarrow \bigwedge^{r} V \otimes_k V\\
+    v_1\wedge \cdots \wedge v_{r+1} &\longmapsto \sum_{\ell=1}^{r+1} (-1)^\ell (v_1 \wedge \cdots \wedge \hat{v_\ell} \wedge \cdots \wedge v_{r+1}) \otimes v_\ell.
+\end{align*}
+tensoring them with $S$, and composing with the multiplication (tensored with $\bigwedge^r V$)
+\[V \otimes_k S \longrightarrow S.\]
+In this way, our goal is to get commuting squares (when $j\geq i$)
+\begin{equation}\label{koszul-boundary}
+\begin{tikzcd}
+    \bigwedge^{j+1} V \rar \dar[dashed, "\iota_\omega^{j+1}"] & \bigwedge^{j} V \otimes V \dar[dashed, "\iota_\omega^j \otimes \id_V"]\\
+    \bigwedge^{j-i+1} V \rar &  \bigwedge^{j-i} V \otimes V
+\end{tikzcd}
+\end{equation}
+which we will then tensor with $S$ and compose with the $V$ multiplication on $S$ to get our desired chain map. In this way, we have reduced the problem to linear algebra, where our task is to find a certain natural map $\bigwedge^{j} V \to \bigwedge^{j-i} V$ induced by $\omega \in \bigwedge^i V^\vee$.
+
+This will be some sort of interior multiplication, a map
+\[\bigwedge^i V^\vee \otimes \bigwedge^j V \longrightarrow \bigwedge^{j-i} V.\]
+Writing down this morphism takes some combinatorics. Denote $J=\{1,\dots,j\}$, and for any subset $I=\{i_1<\cdots<i_i\}\subseteq J$, we can define
+\[\sgn_J(I) = \sum_{\ell=1}^i (i_\ell-\ell) \mod{2} \mapsto \{-1,1\}\]
+which measures how many moves it takes (while keep $I\setminus J$ in order) to get from $J$ to $\{1,\dots,j\} \subseteq I$. Now, we define
+\begin{align*}
+    \bigwedge^i V^\vee \otimes \bigwedge^j V &\longrightarrow \bigwedge^{j-i} V\\
+    (f_1\wedge \cdots \wedge f_i) \otimes (v_1\wedge \cdots \wedge v_j) &\longmapsto \sum_{\substack{I\subseteq J\\ |I|=i}} (\sgn_J I) \det[f_p(v_{i_q})]_{pq} v_{J\setminus I}.
+\end{align*}
+We need to check that this is well-defined, in the sense that we have really defined a set function
+\[(V^\vee)^{\times i} \times V^{\times j} \to \bigwedge^{j-i} V,\]
+and we want to see that it factors through the projection to the tensor of wedges. We will need to check multilinearity and alternating properties.
+
+First, it is straightforward to check that this is multilinear in $f_1,\dots,f_i,v_1,\dots,v_j$. Next, to check that it is alternating on the first $i$ factors or last $j$ factors, we can check without loss of generality that when either $f_1=f_2$ or $v_1=v_2$, we get 0.
+
+When $f_1=f_2$, every term of the sum is zero, since we are evaluating determinants of matrices with repeat rows. When $v_1=v_2$, the picture is more complicated. We do some case work:
+
+\textbf{Summands with $\{1,2\}\subseteq I$.} In this case, the determinant will have repeat columns, so each of these summands are 0.
+
+\textbf{Summands with $\{1,2\}\cap I = \emptyset$.} In this case, $v_{J\setminus I}$ will have a wedge factor $v_1\wedge v_2$, which is 0, so each of these summands are 0.
+
+\textbf{Summands with $|\{1,2\}\cap I|=1$.} Here, the summands need not be 0, but we want to argue that they ``cancel each other out''. We have a bijection
+\[\{I\subseteq J \mid 1\in I, 2\not\in I\} \cong \{I \subseteq J \mid 2\in I, 1\not\in J\},\]
+just by sending the flipping first index $i_1$ from $1$ to $2$ or vice versa. Denote this by $I\mapsto -I$, which satisfies the $\sgn_J -I = -\sgn_J I$. This will mean that the summand corresponding to $I$ and that corresponding to $-I$ will have opposite signs and annihilate each other.
+
+Thus, we have succeeded in defining our interior multiplication map. Specializing to $i=j$, we get
+\begin{align*}
+    \bigwedge^i V^\vee \otimes \bigwedge^i V &\longrightarrow \bigwedge^0 V \cong k\\
+    (f_1\wedge \cdots \wedge f_i) \otimes (v_1 \wedge \cdots \wedge v_j) &\longmapsto \det[f_p(v_q)],
+\end{align*}
+so, assuming this interior multiplication gives us an actual chain map, this specialization tells us that it lifts the chain map $P^\bullet \to k[i]$ induced by an $\omega\in \bigwedge^i V^\vee$.
+
+Now, we show that the interior multiplication actually gives a chain map, i.e., that it actually commutes with Koszul boundaries, so we will check that a beefed up version of diagram (\ref{koszul-boundary}) commutes:
+\begin{cd}[column sep=2cm]
+    \bigwedge^i V^\vee \otimes \bigwedge^{j+1} V \rar["\id_{\bigwedge^i V^\vee} \otimes d"] \dar["\iota^{j+1}"] & \bigwedge^i V^\vee \otimes \bigwedge^j V \otimes V \dar["\iota^j \otimes \id_V"] \\
+    \bigwedge^{j-i+1} V \rar & \bigwedge^{j-i} V \otimes V
+\end{cd}
+We check commutativity by evaluating these maps on basis elements. Let $e^\vee_{I'} \otimes e_{\tilde{J}} \in \bigwedge^i V^\vee \otimes \bigwedge^{j+1} V$. Going right, we get
+\[e^\vee_{I'} \otimes \left(\sum_{\ell=1}^{j+1}(-1)^\ell e_{\tilde{J}\setminus \{\tilde{j}_\ell\}} \otimes e_{\tilde{j}_\ell}\right),\]
+which then maps down to
+\[\sum_{\ell=1}^{j+1} \sum_{I\subseteq J_\ell=\tilde{J}\setminus \{j_\ell\}} \sgn_{J_\ell}(I) \det[e^\vee_{i'_p}(e_{j_{i_q})}]_{pq} e_{J_\ell \setminus I} \otimes e_{\tilde{j}_\ell}.\]
+Now, the determinant factor is given by the Kronecker delta $\delta_{I'I}$, i.e., it is 1 when $I=I'$, and zero otherwise. For each $\ell$, either $\tilde{j}_\ell \in I'$ and then we will not get $I'$ when iterating through $I\subseteq J_\ell$, or $\tilde{j}_\ell \not\in I'$ and we do get $I'$. This will tell us that our term is given by
+\[\sum_{\tilde{j}_\ell \not\in I'} \sgn_{J_\ell}(I') e_{J_\ell \setminus I'} \otimes e_{\tilde{j}_\ell}.\]
+
+Now, we compute the other direction. Again starting with $e^\vee_{I'} \otimes e_{\tilde{J}}$, we first go down to get
+\[\sum_{I\subseteq \tilde{J}} \sgn_{\tilde{J}}(I) \det[e^\vee_{i'_p}(e_{\tilde{j}_{i_q}})] e_{\tilde{J}\setminus I},\]
+but the determinant will only be nonzero when $I=I'$, so we just get the term
+\[\sgn_{\tilde{J}}(I') e_{\tilde{J}\setminus I'}.\]
+Denote $\hat{J}=\tilde{J}\setminus I'$. This then maps to the right to get
+\[\sgn_{\tilde{J}}(I) \sum_{\ell=1}^{j-i+1} (-1)^\ell e_{\hat{J} \setminus \{\hat{j}_\ell\}} \otimes e_{\hat{j}_\ell}.\]
+Up to sign this is correct, one should check more carefully to see it is fully correct.
+
+Now, we see that a given $\omega \in \bigwedge^i V^\vee$, we really can construct a lift as in diagram (\ref{extend-to-koszul}), which we denote by $\iota^\bullet_\omega$, by tensoring $S$ with interior multiplication by $\omega$.
+
+\textbf{Step 3.}
+
+Now, we compute the multiplication between $\omega\in \bigwedge^i V^\vee$ and $\eta\in \bigwedge^j V^\vee$, by computing the composition
+\[\iota_\eta^{j} \circ \iota_\omega^{i+j}: \bigwedge^{i+j} V \to k,\]
+(which maybe should be tensored with $S$) and we check that this corresponds to $\eta \wedge \omega$. We again compute on a basis. Suppose $\omega = e_{I'}^\vee$ and $\eta = e_{J'}^\vee$. If $I',J'$ are not disjoint, we expect multiplication to be 0. So, assume they are not disjoint, and let $K$ be a length $i+j$ subset. Evaluating first $\iota_\omega^{i+j}$ on $e_K$, we only get a nonzero value if $I'\subseteq K$, and in that case we get
+\[e_K \mapsto \sgn_K(I') e_{K\setminus I'},\]
+but then under $\iota_\eta^{j}$ we get 0 because $J'\not\subseteq K\setminus I'$.
+
+So, now assume $I',J'$ are disjoint. We will similarly expect to get just the indicator function (up to sign) on $e_K$, and indeed this works out---if $K$ doesn't contain both $I',J'$, then one of the computations will be 0. Otherwise, $K=I' \sqcup J'$, and we will get exactly the product of signs.
+
+This tells us $\iota_\eta^{j} \circ \iota_\omega^{i+j} = \iota_{\eta \wedge \omega}^{i+j}$, which tells us that the multiplication in $\Ext_S^\bullet(k,k)$ is exactly that of $\bigwedge^\bullet V^\vee$.
+
+\end{document}

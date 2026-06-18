@@ -1,0 +1,144 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{addona_solving_2025}{article}{}{}
+      \name{author}{17}{}{%
+        {{hash=d45a3f8057fa9eddc980f1f04d175824}{%
+           family={Addona},
+           familyi={A\bibinitperiod},
+           given={Patrick},
+           giveni={P\bibinitperiod}}}%
+        {{hash=db2f606c1056ea1f0314f416f183001a}{%
+           family={Bockenhauer},
+           familyi={B\bibinitperiod},
+           given={Ethan},
+           giveni={E\bibinitperiod}}}%
+        {{hash=3faf2e99872633c0f5e1e5c54f1c48ee}{%
+           family={Brubaker},
+           familyi={B\bibinitperiod},
+           given={Ben},
+           giveni={B\bibinitperiod}}}%
+        {{hash=e33cc3ae72faa8d46de9b1e5dcf53be5}{%
+           family={Cauthorn},
+           familyi={C\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=ff89f0416991e3a680498dd0d2cd8b4d}{%
+           family={Conefrey-Shinozaki},
+           familyi={C\bibinithyphendelim S\bibinitperiod},
+           given={Cianan},
+           giveni={C\bibinitperiod}}}%
+        {{hash=0388095717ccf47980086fb9f719b3ba}{%
+           family={Donze},
+           familyi={D\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=ef45d75ebc4c76bd3750adc7a8e3d8bb}{%
+           family={Dudarov},
+           familyi={D\bibinitperiod},
+           given={William},
+           giveni={W\bibinitperiod}}}%
+        {{hash=5a670d0837c414e967f211c712974eb5}{%
+           family={Dukes},
+           familyi={D\bibinitperiod},
+           given={Jessamyn},
+           giveni={J\bibinitperiod}}}%
+        {{hash=65ffbdf80f2d30d9926be36befa61ba0}{%
+           family={Hardt},
+           familyi={H\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=7393fc44d85091e5b9ab4f39033edc43}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Cindy},
+           giveni={C\bibinitperiod}}}%
+        {{hash=38ccdf40f92756ca45ef0d0233f989b0}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Jigang},
+           giveni={J\bibinitperiod}}}%
+        {{hash=55622f58b282ac721a2269b140132301}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Yanli},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=539d9f104205846f6373d37b713da363}{%
+           family={Puthanveetil},
+           familyi={P\bibinitperiod},
+           given={Neelima},
+           giveni={N\bibinitperiod}}}%
+        {{hash=7c9d0da77d419738da0df601b6ab91af}{%
+           family={Qudsi},
+           familyi={Q\bibinitperiod},
+           given={Zain},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=b9d5b8d87fa366047ec71653c0b422f8}{%
+           family={Simons},
+           familyi={S\bibinitperiod},
+           given={Jordan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=94389a97405cf0e602766ed7952feea3}{%
+           family={Sullivan},
+           familyi={S\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod}}}%
+        {{hash=e6ae6b8d24b8f4003ae7c11b313fca80}{%
+           family={Young},
+           familyi={Y\bibinitperiod},
+           given={Autumn},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{ec60f72c22a9813b273c22e241301efe}
+      \strng{fullhash}{9d3224fe033730f74a490c1663d66054}
+      \strng{fullhashraw}{9d3224fe033730f74a490c1663d66054}
+      \strng{bibnamehash}{ec60f72c22a9813b273c22e241301efe}
+      \strng{authorbibnamehash}{ec60f72c22a9813b273c22e241301efe}
+      \strng{authornamehash}{ec60f72c22a9813b273c22e241301efe}
+      \strng{authorfullhash}{9d3224fe033730f74a490c1663d66054}
+      \strng{authorfullhashraw}{9d3224fe033730f74a490c1663d66054}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Given an arbitrary choice of two sets of nonzero Boltzmann weights for n-color lattice models, we provide explicit algebraic conditions on these Boltzmann weights which guarantee a solution (i.e., a third set of weights) to the Yang–Baxter equation. Furthermore, we provide an explicit one-dimensional parametrization of all solutions in this case. These n-color lattice models are so named because their admissible vertices have adjacent edges labeled by one of n colors with additional restrictions. The two-colored case specializes to the six-vertex model, in which case our results recover the familiar quadric condition of Baxter for solvability. The general n-color case includes important solutions to the Yang–Baxter equation like the evaluation modules for the quantum affine Lie algebra \$\$U\_q({\textbackslash}hat\{{\textbackslash}mathfrak \{sl\}\}\_n)\$\$. Finally, we demonstrate the invariance of this class of solutions under natural transformations, including those associated with Drinfeld twisting.}
+      \field{day}{9}
+      \field{issn}{0219-3094}
+      \field{journaltitle}{Annals of Combinatorics}
+      \field{month}{7}
+      \field{shortjournal}{Annals of Combinatorics}
+      \field{title}{Solving the n-Color Ice Model}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.1007/s00026-025-00770-1
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/s00026-025-00770-1
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/s00026-025-00770-1
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

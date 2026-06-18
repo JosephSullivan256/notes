@@ -1,0 +1,77 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+
+% Comic Sans
+% \usepackage{sansmathfonts}
+% \usepackage{fontspec}
+% \setmainfont{Comic Sans MS}
+
+% \usepackage{fontspec}
+% \setmainfont{Wingdings-Regular.ttf}
+
+% \usepackage{libertine}
+
+% fancy header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+% \rhead{Joseph Sullivan}
+
+\title{Tilting Sheaves}
+\author{Joseph Sullivan}
+\date{March 2025}
+
+
+
+
+\begin{document}
+
+\section{Question}
+
+Let $R$ be a ring and $D(R\lMod)$ be its derived category. We will always use cohomology indexing.
+
+\textbf{Question:}
+\begin{itemize}
+    \item Let $\phi:M\to N$ a morphism in $R\lMod$. How do we write $\ker \phi$ and $\coker \phi$ as iterated cones? {\color{red} oops you can't, you need one of the truncation functors to do this.}
+    \item In particular, this would tell us how to write $\im \phi$ using cones, since
+    \[\im \phi = \ker (N \to \coker \phi).\]
+    \item Even better, this would tell us how to use $R$ to generate a finitely generated ideal $I=(x_1,\dots,x_t) \leq R$, since this is the image of
+    \[R^t \xrightarrow{\begin{bmatrix}
+        x_1 & \cdots & x_t
+    \end{bmatrix}} R,\]
+    so we will get an upper bound on
+    \[\mathrm{level}^R(I).\]
+\end{itemize}
+
+\section{Cone}
+
+Recall that the cone over a chain map $f:M^\bullet \to N^\bullet$ is the total complex over the double complex where $N^\bullet$ is put on top of $M^\bullet$, i.e., write the diagram
+\[\begin{tikzcd}
+    \cdots \rar & N^i \rar & N^{i+1} \rar & \cdots\\
+    \cdots \rar & M^i \uar \rar & M^{i+1} \uar \rar & \cdots
+\end{tikzcd}\]
+and sum the diagonals to get
+\[C(f) = \Big(\cdots \to M^{i+1} \oplus N^{i} \to M^{i+2} \oplus N^{i+1} \to \cdots\Big),\]
+where the differential is given by
+\begin{align*}
+    d_{C(f)}(m^{i+1},n^i) &= (-d_M(m^{i+1}), f(m^{i+1}) + d_N(n^i))
+\end{align*}
+(the negative signs are a convention---you need to do some sign change in order to make it so that the result is a complex, but many choices work).
+
+\section{Kernel and Cokernels}
+
+First, considering $M,N \in D(R\lMod)$ as degree 0 complexes and $\phi$ a morphism in the derived category, we have the following distinguished triangle,
+\[M \xrightarrow{\phi} N \to \Big(0\to M\xrightarrow{\phi} N\to 0\Big) \to M[1]\]
+where the chain complex $0\to M\to N\to 0$ has $M$ in degree $-1$ and $N$ in degree $0$ (we use cohomology indexing).
+
+Next, observe that we have a distinguished triangle
+\[\ker\phi[1] \to \Big(0 \to M \to N \to 0\Big) \to \Big(0 \to 0 \to \coker\phi \to 0 \Big) \to \ker\phi,\]
+since the cone over the first morphism is given by
+\[0 \to \ker \phi \to M \to N \to 0,\]
+which is quasi-isomorphic to just $\coker\phi$.
+
+\end{document}

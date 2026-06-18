@@ -1,0 +1,188 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Koszul Rings}
+\author{Joseph Sullivan}
+\date{September 2025}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+\makeatletter
+\newcommand{\ostar}{{\mathbin{\mathpalette\make@circled{*}}}}
+\newcommand{\make@circled}[2]{%
+  \ooalign{$\m@th#1\smallbigcirc{#1}$\cr\hidewidth$\m@th#1#2$\hidewidth\cr}%
+}
+\newcommand{\smallbigcirc}[1]{%
+  \vcenter{\hbox{\scalebox{0.7}{$\m@th#1\bigcirc$}}}%
+}
+\makeatother
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Syzygies and Hilbert's Syzygy Theorem}
+
+For this discussion, $k$ is a semisimple ring (usually a field), and $S$ is a $\Z_{\geq 0}$-graded $k$-algebra with $S_0 = k$. Denote $\fm = S_+ = S_{\geq 1}$ the \textbf{irrelevant ideal}. In particular, $S/\fm \cong S_0 = k$ as rings, but this also gives $k$ an $S$-module structure.
+
+\begin{defn}
+    A \textbf{minimal free resolution} of a graded $S$-module $M$ is an exact sequence
+    \[\cdots \to P_2 \xrightarrow{d_2} P_1 \xrightarrow{d_1} P_0 \xrightarrow{\eps} M \to 0\]
+    with $P_i$ free and such that $\im d_i \subseteq \fm P_{i-1}$. In other words, the differentials represented as matrices have only positive degree entries. This is equivalent to the resolution being minimal with respect to chain map inclusion.
+
+    We refer to $\im d_i$ as the $i$th \textbf{syzygy module}.
+\end{defn}
+
+
+\begin{thm}
+    Let $S=k[x_1,\dots,x_n]$ where $k$ is a field. Let $M$ be a finitely generated graded $S$-module. Then, the $n$th syzygy module is free. (Equivalently, $P_{n+1}=0$ in the minimal free resolution).
+\end{thm}
+\begin{proof}
+    Say the minimal free resolution of $M$ is
+    \[\cdots \to P_2 \xrightarrow{d_2} P_1 \xrightarrow{d_1} P_0 \xrightarrow{\eps} M \to 0.\]
+    Since the $P_i$s are in particular projective, we can use this to compute $\Tor^S_i(M,k)$. Truncating away $M$ and tensoring with $k=S/\fm$ (as an $S$-module), the differentials vanish and we get
+    \[\Tor^S_i(M,k) = P_i \otimes_S k,\]
+    i.e., while $\Tor^S_i(M,k)$ has the structure of a graded $S$-module, at least as a $k$-vector space, it is just $k^r$ where $r$ is the free rank of $P_i$ as an $S$-module (forgetting the grading). So, to show $P_{n+1}$ vanishes, it suffices to show $\Tor^S_{n+1}(M,k)=0$.
+
+    So, we compute $\Tor^S_{n+1}(M,k)$ by a different means, namely resolving $k$. The sequence $x_1,\dots,x_n$ is a regular sequence, so $\Kos(x_1,\dots,x_n)$ resolves
+    \[S/(x_1,\dots,x_n) = S/\fm \cong k,\]
+    at least as an $S$-module, but in fact we can put gradings on everything, so
+    \[\Tor^{n+1}_S(M,k) = H_{n+1}(M \otimes_S \Kos(x_1,\dots,x_n)),\]
+    which is 0 because the Koszul complex has no terms that far.
+\end{proof}
+
+
+
+\section{Duality}
+
+We will always denote by $*$ the $k$-linear dual, with potential sidedness, i.e., $V^*$ for left duals, and ${}^* V$ for right duals (depending on whether the original $V$ was a left or right $k$-module).
+
+Let $X$ be a graded $A{-}k{-}$bimodule. Define
+\[{}^\ostar X\]
+as a $k-A-$bimodule with graded pieces
+\[({}^\ostar X)_i = {}^*(X_{-i}),\]
+with left $k$-multiplication by scaling, and right $A$ multiplication by precomposing a functional by left multiplication.
+
+As a set, ${}^\ostar X$ is a large subspace of ${}^* X$ that actually carries a grading. (think products vs direct sums issue of finite support)
+
+
+
+\section{Koszul Ring}
+
+First, we give another interpretation of $\Kos(x_1,\dots,x_n)$. In general, we got a Koszul complex on an $A$-module $M$ by picking a morphism
+\[M\xrightarrow{d} A\]
+(in our case $S^n\to S$ by $e_i\to x_i$) and generating a DGA, i.e., define
+\[\wedge^i M \to \wedge^{i-1} M\]
+by Leibniz.
+
+In our case, the variables are symmetric, so we should expect the Koszul complex to at least be $S_n$ equivariant, but even better, it turns out it is $\GL W$ equivariant, where $W=\<x_1,\dots,x_n\>_k$. So, our description of this Koszul complex should involve $W$ in a crucial way. To do this, first recognize
+\[S = \Sym^\bullet W\]
+for $W=\<x_1,\dots,x_n\>$, and let $V=W^*=\<e_1,\dots,e_n\>$ be its dual vector space. Now, a term in the complex is
+\[\wedge^i S^{\oplus n} \cong S \otimes_k \wedge^i W \cong S\otimes_k {}^*(\wedge^i V)\cong\Hom_{-k}(\wedge^i V, S).\]
+
+% Since the boundary maps in the Koszul complex turn out to be graded degree $+1$, since $|x_i|=1$, we can study the boundary maps by looking at a graded piece. Then, our boundary maps can be considered as going from
+% \[\Sym^i W \otimes_k \wedge^j W \to \Sym^{i+1} W \otimes_k \wedge^{j-1} W\]
+% which is about contracting a tensor from $\wedge^j W$ into $\Sym^i W$. This is by identifying the wedge product with a subalgebra of the tensor product, the skew symmetric elements
+% \begin{align*}
+%     \bigwedge^j W &\hookrightarrow \bigotimes^j W,\\
+%     \alpha = w_1\wedge \cdots \wedge w_j &\longmapsto \frac{1}{j!} \sum_{\sigma \in S_j} (\sgn(\sigma)) w_{\sigma(1)} \otimes \cdots \otimes w_{\sigma(j)}
+% \end{align*}
+% which in particular has image in
+% \[W \otimes \bigwedge^{j-1} W.\]
+% Then, we can multiply the extracted copy of $W$ into the symmetric algebra
+% \[\Sym^i W \otimes_k W \to \Sym^{i+1} W.\]
+
+% We can also think of the total space of this Koszul complex as
+% \[\Sym^\bullet W \otimes_k \bigwedge^\bullet W,\]
+% with the $d$ differential $(+1,-1)$ graded. By our original description, we see that $d$ is a left $\Sym^\bullet W$-module morphism, but it's also a right $\bigwedge^\bullet W$-module morphism, since
+% \[d(p\otimes \sigma \wedge \alpha) = \]
+
+
+
+
+Then, to specify the Koszul boundary, which will be graded $+1$ because all $|x_i|=1$, we just have to specify the graded pieces. Consider a graded piece as
+\[\Hom_{-k}(\bigwedge^j V, \Sym^i W) \to \Hom_{-k}(\bigwedge^{j-1} V, \Sym^{i+1} W)\]
+by the composition
+\[\Hom_{-k}(\bigwedge^j V, \Sym^i W) \to \Hom_{-k}(\bigwedge^j V \otimes W, \Sym^i W \otimes W) \to \Hom_{-k}(\bigwedge^{j-1} V, \Sym^{i+1} W)\]
+where the last map is pullback by contraction $\bigwedge^{j} V \otimes_k W \to \bigwedge^{j-1} V$ and multiplication $\Sym^{i} W \otimes_k W \to \Sym^{i+1} W$.
+
+(where contraction is first the ``differential geometry'' embedding
+\begin{align*}
+    \bigwedge^j V &\hookrightarrow \bigotimes^j V,\\
+    \alpha = v_1\wedge \cdots \wedge v_j &\longmapsto \frac{1}{j!} \sum_{\sigma \in S_j} (\sgn(\sigma)) v_{\sigma(1)} \otimes \cdots \otimes v_{\sigma(j)}
+\end{align*}
+with image in $\bigwedge^{j-1} V \otimes V$, followed by the evaluation pairing $V\otimes W\to k$. One can then check that this composition is
+\[p \cdot x_{\ell_1}\wedge \cdots \wedge x_{\ell_j} \longmapsto p\sum_{i=1}^j (-1)^{i+1} x_{\ell_i} x_{\ell_1}\wedge \cdots \wedge \hat{x_{\ell_i}} \wedge \cdots \wedge x_{\ell_j},\]
+which after unraveling matches the usual Koszul boundary.)
+
+We can then think of the total space of this Koszul complex as
+\[\Sym^\bullet W \otimes_k {}^\ostar (\wedge^\bullet V)\]
+(for now, because $\wedge^\bullet V$ is finite dimensional, there is no finite support issue, but we do have to worry about the grading/module structure), and the differential is a $(+1,+1)$ graded bimodule morphism (I'm having trouble seeing how this is a right $\wedge^\bullet V$ morphism when $k$ is noncommutative).
+
+
+
+
+
+
+
+
+\section{Internal Hom and Ext Algebras}
+
+Let $\cA$ be an abelian category (say with enough projectives/injectives), and $A$ and object. Define
+\[\Ext^\bullet(A,A) = \bigoplus \Ext^i(A,A)\]
+the \textbf{Ext Algebra} as an abelian group by this direct sum decomposition (possibly enriched if $\cA$ is), and a ring via the \textbf{Yoneda cup product}, which can be described in the derived category as follows: given
+\[\phi \in \Ext^i(A,A)\cong \Hom_{D(\cA)}(A,A[i]), \qquad \psi \in \Ext^j(A,A) \cong \Hom_{D(\cA)}(A,A[j]),\]
+define $\phi\circ \psi$ as
+\[\psi[i]\circ \phi \in \Hom_{D(\cA)}(A,A[i+j]) \cong \Ext^{i+j}(A,A).\]
+This is all nice and good, but how do we compute this?
+
+Let $A^\bullet, B^\bullet \in \Kom(\cA)$. Define the complex
+\[\cHom^\bullet(A^\bullet,B^\bullet)\]
+by setting (do opposite sign for homology convention?)
+\[\cHom^i(A^\bullet,B^\bullet) = \bigoplus_k \Hom(A^k,B^{k+i})\]
+the collection of degree $i$ maps from graded objects (ignoring the differential), and setting
+\[d: \cHom^i(A^\bullet, B^\bullet) \to \cHom^{i+1}(A^\bullet, B^\bullet)\]
+by $d(f) = f\circ d_A - (-1)^{|f|} d_B\circ f$. In this way, $d(f)=0$ exactly when $f:A^\bullet\to B[i]^\bullet$ is a chain map (recall that the differential changes sign per shift). Furthermore, $\im (d)\subseteq \cHom^i(A^\bullet,B^\bullet)$ are exactly nullhomotopic chain maps. So,
+\[H^i(\cHom^\bullet(A^\bullet,B^\bullet)) \cong \Hom^i_{K(\cA)}(A^\bullet,B^\bullet),\]
+and this isomorphism respect composition.
+
+Now, by the lifting properties of projective/injective modules, if we assume either $A^\bullet$ is a complex of projective or $B^\bullet$ is a complex of injectives, then
+\[\Hom^i_{K(\cA)}(A^\bullet, B^\bullet) = \Hom^i_{D(\cA)}(A^\bullet,B^\bullet).\]
+This isomorphism also respects composition, in the sense that the diagram commutes.
+\[\begin{tikzcd}
+\Hom_K(A^\bullet,B^\bullet) \otimes \Hom_K(B^\bullet, C^\bullet) \rar \dar & \Hom_K(A^\bullet, C^\bullet) \dar\\
+\Hom_D(A^\bullet,B^\bullet) \otimes \Hom_D(B^\bullet, C^\bullet) \rar & \Hom_D(A^\bullet, C^\bullet)
+\end{tikzcd}\]
+
+All this being said, we in some sense can get our hands on the object
+\[\Ext^\bullet_S(k,k)\]
+by taking a projective resolution $P^\bullet \to k$, and computing
+\[H^\bullet \cEnd_S^\bullet(P^\bullet,P^\bullet)\]
+as a ring (i.e., multiplication is by taking lifts). (Another way to see that multiplication descends is to observe a Leibniz rule for the differential of a product, to see that nullhomotopic tensors give a nullhomotopic product.)
+
+
+
+
+
+\end{document}

@@ -1,0 +1,166 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+
+% Comic Sans
+% \usepackage{sansmathfonts}
+% \usepackage{fontspec}
+% \setmainfont{Comic Sans MS}
+
+% \usepackage{fontspec}
+% \setmainfont{Wingdings-Regular.ttf}
+
+% \usepackage{libertine}
+
+% fancy header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+% \rhead{Joseph Sullivan}
+
+\title{Tilting Sheaves}
+\author{Joseph Sullivan}
+\date{March 2025}
+
+\newcommand{\reg}{\mathrm{reg}}
+\newcommand{\sing}{\mathrm{sing}}
+\newcommand{\Pic}{\mathrm{Pic}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\FS}{\mathrm{FS}}
+\newcommand{\Alb}{\mathrm{Alb}}
+\newcommand{\CMan}{\text{$\C$-$\mathsf{Man}$}}
+
+\newcommand{\ev}{\mathrm{ev}}
+
+\newcommand{\Hol}{\mathrm{Hol}}
+
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Tor}{\mathrm{Tor}}
+
+\newcommand{\cL}{\mathcal{L}}
+
+\DeclareMathOperator{\Weil}{Weil}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\CDiv}{CDiv}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\height}{height}
+\DeclareMathOperator{\Ass}{Ass}
+\renewcommand{\div}{\operatorname{div}}
+
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Coh}{Coh}
+\DeclareMathOperator{\RHom}{RHom}
+\newcommand{\rmod}{\mathrm{mod}\text{-}}
+\newcommand{\rMod}{\mathrm{Mod}\text{-}}
+
+\newcommand{\lmod}{\text{-}\mathrm{mod}}
+\newcommand{\lMod}{\text{-}\mathrm{Mod}}
+
+
+
+\begin{document}
+
+\maketitle
+
+\section{}
+
+\begin{defn}
+    We say that a strictly full triangulated subcategory $\cD'$ of a triangulated category $\cD$ is \textbf{saturated}/\textbf{\'epaisse} if it closed under direct summands.
+
+    Write $\<E\>$ for the smallest strictly full saturated triangulated subcategory of $\cD$ containing $E$, and say that $E$ \textbf{classically generates} $\cD$ if $\<E\>=\cD$.
+\end{defn}
+
+\begin{rmk}\label{induction-triangulated-cat}
+    For any $E\in \cD$, there is actually an explicit description of $\<E\>$. To get a strictly full saturated triangulated subcategory containing $\<E\>$, one might start with $\{E\}$, and then repeatedly throw in shifts, cones, direct sums, direct summands, etc. The miracle is that if you do this countable many times (unioning the results), you actually get all of $\<E\>$ \cite[Lemma 13.36.2]{stacks-project}. This then gives us the following induction strategy to prove properties of $\<E\>$ \cite[Remark 13.36.7]{stacks-project}.
+
+    \textbf{Induction.} Let $T$ be a property enjoyed by objects of $\cD$ (where we write $T(A)$ to mean $T$ holds for $A$), and suppose
+    \begin{enumerate}[(1)]
+        \item (base case) $T(E[n])$ for all $n\in \Z$,
+        \item if $T(K)$ and $T(L)$, then $T(K\oplus L)$,
+        \item if $T(K\oplus L)$ then $T(K)$ and $T(L)$,
+        \item if $K\to L \to M \to K[1]$ is a distinguished triangle and $T$ holds for two of them, then $T$ holds for the third,
+    \end{enumerate}
+    then $T$ holds for all objects in $\<E\>$.
+\end{rmk}
+
+\begin{defn}
+    Let $X$ be a smooth projective variety over $k$. A sheaf $T\in \Coh(X)$ is called a \textbf{tilting sheaf} if
+    \begin{enumerate}
+        \item[(T1)] the algebra $A\defeq \End(T)$ has finite global dimension (i.e., there exists $d\in \Z_{\geq 0}$ such that any module admits a projective resolution of length less than $d$).
+        \item[(T2)] The modules $\Ext^\ell(T,T)=0$ for all $\ell>0$.
+        \item[(T3)] The object classically generates $D^b(\Coh(X))$.
+    \end{enumerate}
+\end{defn}
+
+{\color{red} I think I need a lemma like this to prove the result I need, but I'm stuck on its proof. I'm not sure if this is even true---maybe the non functoriality of cones will make it too hard to write down a natural isomorphism in general... or maybe something like the $3\times 3$ lemma can help? Unclear.}
+
+\begin{lem}
+    Suppose $E$ classically generates a triangulated category $\cD$, and $F: \cD\to \cD$ is an exact functor which sends $E$ to an object isomorphic to $E$ and is identity on $\Hom_{\cD}(E,E[i]) \to \Hom_{\cD}(E,E[i])$ (after pre/post composing with the isomorphism).
+
+    Then, $F$ is naturally isomorphic to $1_\cD$.
+\end{lem}
+\begin{proof}
+    We will use induction as in Remark \ref{induction-triangulated-cat}. Let $T$ be the property of objects $A\in \cD$ that $F: \Hom(E,A) \to \Hom(FE,FA)$ is an isomorphism, and we check properties (1)-(4).
+
+    The base case (1) holds by assumption, (2) and (3) hold because $T$ is additive, and (4) follows from the 5-lemma, where we get a morphism of LES after applying $\Hom(E,-)$ and $\Hom(FE,-)$ to the distinguished triangle and its image under $F$. Thus, $T$ holds for all of $\cD$.
+
+    Now, fixing $B$ for the right argument of $\Hom$, same strategy proves show for the property $T_B$ for all of $\cD$, where $T_B(A)$ iff $\Hom(B,A) \to \Hom(FB,FA)$ is an isomorphism---so $F$ is fully faithful.
+
+    Next, we show that $A\cong FA$. Denote this property by $S$. The base case (1) holds by assumption, (2) and (3) because $T$ is additive, and we check (4) on a distinguished triangle $K\to L \to M \to L[1]$. For example, assume $P(K), P(L)$, so by TR3 for triangulated categories we get
+    \begin{cd}
+        K \rar \dar & L \rar \dar & M \rar \dar[dashed] & K[1] \dar\\
+        FK \rar & FL \rar & FM \rar & FK
+    \end{cd}
+    so we at least get a morphism $M\to FM$, and this is an isomorphism by hitting the diagram with the Yoneda embedding and applying the 5-lemma.
+
+    Now, we want to assemble these isomorphisms (or variations of them) into a natural transformation $1_\cD \Rightarrow F$. {\color{red} How???}
+\end{proof}
+
+\newpage
+\begin{thm}
+    Let $T$ be a tilting sheaf on a projective smooth variety $X$ over $k$, with $A=\End(T)$. Then, the following functors form an equivalence.
+    \begin{align*}
+        \RHom(T,-): D^b(X) &\longrightarrow D^b(A^\op \lmod)\\
+        - \otimes_A^L T: D^b(\rmod A) &\longrightarrow D^b(X)
+    \end{align*}
+\end{thm}
+\begin{proof}
+    First, we more carefully define the functors.
+    
+    We have the left exact functor $F=\Hom(T,-): \QCoh(X) \to k\text{-}\mathrm{Vec}$, which actually factors through $\rMod A$ because we have an action by precomposition.
+    
+    The category $\QCoh(X)$ has enough injectives, so we can right derive the functor to get
+    \[\RHom(T,-): D^+(\QCoh(X)) \to D^+(\rMod A),\]
+    and usual arguments tell us that this descends to
+    \[RF = \RHom(T,-): D^b(X) \to D^b(\rmod A).\]
+
+    In the other direction, we have the functor
+    \[G = - \otimes_A T: \rmod A \to \QCoh(X),\]
+    in the sense that given $M$ \in $\rmod A$, we get then $\underline{M}$ is in $\rMod \underline{A}$ and $T$ is in $\underline{A} \lMod$, so we can form the $\underline{A}$-balanced tensor product, which is then inherits an $\cO_X$-module structure from $T$ (via left multiplication).
+
+    This functor is right exact, and $\rmod A$ has enough projectives, so we can left derive it to get
+    \[- \otimes_A^L T: D^-(\rmod A) \to D^-(\QCoh(X)),\]
+    and Serre theorems/finite global dimension of $A$ will give sheaf Tor finite dimensions/vanishing to imply that this functor descends to
+    \[LG = - \otimes_A^L T: D^b(\rmod A) \to D^b(X).\]
+
+    Now, we need to show these functors form an equivalence. First, we compute
+    \[RF\circ LG(A) = RF(A\otimes_A^L T) \cong \RHom_{\cO_X}(T,T) = \Hom_{\cO_X}(T,T) = A\]
+    by the assumption that the $\Ext$s of $T$ are concentrated in degree 0 for a tilting sheaf. Even more, we can trace through to see that
+    \[RF\circ LG: \Hom_{D^b(\rmod A)}(A,A) \to \Hom_{D^b(\rmod A)}(A,A),\]
+    is identity (after post/pre composing with the isomorphisms $A\cong RF\circ LG(A)$) since a right $A$-module homomorphism $f:A\to A$ is left multiplication by some element in $A$, which is post composition by a $T$ endomorphism $\phi$. This $\phi \in A$ will be first sent to $\phi \in \Hom(T,T)$ which will then be sent to post composition by $\phi$ in
+    \[\Hom_{\rmod A}(\Hom_{\cO_X}(T,T),\Hom_{\cO_X}(T,T)) = \Hom_{\rmod A}(A,A)\]
+    as desired.
+
+    So far $RF\circ LG$ looks like identity on $A$ and morphisms $A\to A$, but we want identity on all of $D^b(\rmod A)$. 
+\end{proof}
+
+\nocite{*} % Include all references in refs.bib regardless of whether they are referenced or not
+\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliography{2025spring/beilinson_refs} % Entries are in the refs.bib file
+
+\end{document}

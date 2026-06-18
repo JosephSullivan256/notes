@@ -1,0 +1,5 @@
+\standalonepreambles
+\subpreamble{chapters/ch1_homological_algebra.tex}
+\usepackage [subpreambles=true]{standalone}\usepackage {import}\usepackage {{../mystyle}}\tikzset {wb/.style={->,preaction={draw, line width=5pt, white}}}
+\endsubpreamble
+\endstandalonepreambles

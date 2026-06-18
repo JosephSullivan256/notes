@@ -1,0 +1,28 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+
+\title{Basic Algebraic Geometry}
+\author{Joseph Sullivan}
+\date{April 2023}
+
+\begin{document}
+
+\maketitle
+
+\begin{defn}
+    An assignment $\cF$ is called a \textbf{sheaf of functions to $S$} on a topological space $X$ if it assigns to each open set $U\subseteq X$ a set of functions $U\to S$ (each called a \textbf{section}) denoted $\cF(U)$, satisfying the \textbf{sheaf property}:
+
+    Given any open cover $U=\bigcup_{i\in I} U_i$ of some open set $U_i$ and a collection of sections $f_i\in \cF(U_i)$ with
+    \[f_i|_{U_i\cap U_j} = f_j|_{U_i\cap U_j},\]
+    there exists a section $f\in \cF(U)$ with $f|_{U_i} = f_i$. That is, we can glue sections together.
+\end{defn}
+
+\begin{rmk}
+    There is a more general notion of sheaves, where each $\cF(U)$ is instead a set (or an object in some category). This definition takes more care, however. Since sets aren't functions $U\to S$, there isn't a default notion of restriction. Instead, a more general sheaf requires one to specify restriction maps for ever $U\supseteq V$ inside $X$, and there are axioms about how the restriction maps interact.
+
+    Additionally, the sheaf property is slightly more subtle. Rather than just needing to be able to glue sections together, you need to also assert that the result of gluing is unique. This is automatic for sheaves of functions, since a function is determined by how it evaluates on points---this isn't true or necessarily even applicable for general sheaves.
+\end{rmk}
+
+\end{document}

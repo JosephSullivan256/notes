@@ -1,0 +1,27 @@
+\begin{thebibliography}{1}
+
+\bibitem{quiver}
+Ibrahim Assem, Daniel Simson, and Andrzej Skowro\'nski.
+\newblock {\em Elements of the Representation Theory of Associative Algebras}.
+\newblock Cambridge University Press, 2006.
+
+\bibitem{stacks-project}
+The Stacks~Project Authors.
+\newblock Stacks project.
+
+\bibitem{Bruns_Herzog_1998}
+Winfried Bruns and H.~Jürgen Herzog.
+\newblock {\em Cohen-Macaulay Rings}.
+\newblock Cambridge Studies in Advanced Mathematics. Cambridge University Press, 2 edition, 1998.
+
+\bibitem{calThesis}
+John~R. Calabrese.
+\newblock On a theorem by beilinson, 2009.
+\newblock Available at \url{http://poisson.phc.unipi.it/~calabrese/}.
+
+\bibitem{craw}
+Alastair Craw.
+\newblock Explicit methods for derived categories of sheaves.
+\newblock 2007.
+
+\end{thebibliography}

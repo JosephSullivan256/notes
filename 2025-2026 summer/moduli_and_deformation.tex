@@ -1,0 +1,236 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Moduli and Deformation Theory}
+\author{}
+\date{June 2026}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+\newcommand{\ft}{\text{ft}}
+\newcommand{\Bl}{\mathrm{Bl}}
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\Hilb}{\mathrm{Hilb}}
+
+\newcommand{\cTor}{\mathcal{T}\hspace{-0.2em}or}
+\newcommand{\cExt}{\mathcal{E}\hspace{-0.2em}xt}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+\newcommand{\cY}{\mathcal{Y}}
+
+
+
+\addbibresource{moduli_and_deformation.bib}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Deformation Theory for Some Stacks}
+
+As we go through the different definitions of first order deformations, we are having to track the data of an isomorphism. I wanted to give a stacky justification as to why this is the correct thing to do.
+
+\section{Hypersurfaces}
+
+Fix a field $k$ and a pair of dual $n+1$-dimensional vector spaces $V,W$ over $k$. I will sometimes like to think of $V$ as ``geometric'' and $W$ are ``coordinates'', but sometimes it will be convenient to swap this view.
+
+Our task is to study the moduli space of degree $d$ hypersurfaces of $\P V$ (the projective space of lines in $V$).
+
+This is one example of a Hilbert scheme, where your Hilbert polynomial is
+\[P(m) = h_{\cO_{\P V}}(m) - h_{\cO_{\P V}(-d)}(m) = \binom{n+m}{n} - \binom{n+m-d}{n}.\]
+
+\begin{prop}
+    $\P \Sym^d W$ is the Hilbert scheme of degree $d$ hypersurfaces.
+\end{prop}
+
+We give a discussion to motivate this result.
+
+\subsection{Intuition}
+
+Concretely, we should think of $\P V$ as our usual $\P^n$, where $\P^n$ in turn is $\Proj$ of the polynomial ring $\Sym^\bullet W = k[x_0,\dots,x_n]$ (notice the dual).
+
+We are then claiming the moduli space of degree $d$ hypersurfaces is
+\[\P k[x_0,\dots,x_n]_d\]
+the projective space of lines in the vector space $k[x_0,\dots,x_n]_d$. We should guess this because a $k$-point of $\P \Sym^d W$ is a line through $\Sym^d W$, i.e., the span of a degree $d$ polynomial $f\in k[x_0,\dots,x_n]_d$.
+
+\subsection{Projective space as a moduli space}
+
+Most classically, we like to think of the projective space $\P V$ as the set of 1-dimensional subspace of $V$---this already sounds like a moduli space, since $\P V$ is parameterizing some algebro-geometric object. However, we should see that this respects families in some sense.
+
+Complicating things, it will turn out to be slightly better to think $\P V$ actually as the set of 1-dimensional quotients of the dual $W$. This is really equivalent, since for $L$ 1-dimensional, $L \hookrightarrow V$ is the same data as $W \twoheadrightarrow L^\vee$.
+
+The reason for the switch is essentially because $(-)|_{p} \cong (-) \otimes_{\cO_T} k(p)$ preserves surjections, not injections (but this is only because we allow ``more'' morphisms of sheaves than we classically allow for vector bundles a la differential geometry).
+
+To formulate $\P V$ as the moduli space of 1-dimensional quotients of $W$, we first remember how to write maps to projective space.
+
+\begin{rmk}
+    Recall that a morphism to projective space $T\to \P k^{n+1}$ is exactly the same data as a line bundle $L$ on $T$ together with a surjection (global generation of)
+    \[\cO_T \otimes_k k^{n+1} \twoheadrightarrow L.\]
+    Informally, this works because the at each point $t\in T$, the surjection gives values to $x_0,\dots,x_n$ in $L|_t\cong k$ (where at least one $x_i\neq 0$ because of surjectivity), which gives a point $[x_0:\dots:x_n]$ in projective space. It is no problem that $L|_t$ is not literally $k$ and needs an identification, since we only needed to find the point up to scaling anyways.
+
+    This $L$ will then be the pullback of $\cO(1)$, which is the ``universal'' way of assigning values of $x_0,\dots,x_n$ in projective space $\P^n$.
+
+    More formally, we get a map to projective space as follows. The surjection $\cO_T \otimes_k k^{n+1}\to L$ is a row matrix
+    \[\begin{bmatrix}
+        f_0 & f_1 & \cdots & f_n
+    \end{bmatrix}\]
+    where each $f_i$ is a global section of $L$, and surjectivity means that there are no common zeros among the $f_i$. Essentially, we want to define
+    \begin{align*}
+        T &\to \P k^{n+1}\\
+        t &\mapsto [f_0(t): f_1(t): \cdots: f_n(t)],
+    \end{align*}
+    where all of the $f_i(t) \in L|_t$, which we can identify with $k$ in any way we want (since all identifications are the same up to scaling). However, we really want to define this scheme theoretically.
+    
+    So, given the data of $L$ with this surjection, we produce a map $T\to \P k^{n+1}$ by first noting that on $D(f_i)$, $L$ becomes trivialized because
+    \[\cO_{D(f_i)} \xrightarrow{f_i} L|_{D(f_i)}\]
+    is an isomorphism. Then, on $D(f_i)$, we would want to be able to write down something like
+    \begin{align*}
+        D(f_i) &\to \P k^{n+1}\\
+        t &\mapsto [\frac{f_0(t)}{f_i(t)}: \cdots : \frac{f_{n}(t)}{f_i(t)}] \in D_+(x_i) \cong \A^n,
+    \end{align*}
+    and this time we really can make sense of this scheme theoretically, by defining the map $D(f_i) \to \A^n$. Recall that a map to affine $n$-space is the same data as giving $n$-functions, so we just write down
+    \[\frac{f_0}{f_i},\dots,\frac{f_n}{f_i}\]
+    (omitting $\frac{f_i}{f_i}=1$). Then, one should check that these maps $D(f_i)\to U_i$ assemble into a map $T\to \P k^{n+1}$ by checking the pieces identify on restriction.
+\end{rmk}
+
+\begin{rmk}
+    We can rephrase the above in a coordinate-free way. A morphism
+    \[T \to \P V\]
+    is (still) equivalent to the data of a line bundle $L$ on $T$ and a surjection
+    \[\cO_T \otimes_k W \xrightarrow{e} L.\]
+    One can show that this works by picking coordinates, but it is useful to note that the resulting set function on $k$-points can be described more intrinsically as
+    \begin{align*}
+        T &\to \P V\\
+        t &\mapsto \<e|_p: W \to L|_p\>,
+    \end{align*}
+    where $e|_p$ is a 1-dimensional quotient of $W$, which as discussed is the same data as a 1-dimensional subspace of $V$.
+\end{rmk}
+
+
+Finally, slightly reformulating the previous discussion, we are just saying that $\P V$ is the moduli space of 1-dimensional quotients of $W$. An individual 1-dimensional quotient is a surjection
+\[W \to L,\]
+where $L$ is a vector space, or equivalently a line bundle on $\Spec k$.
+
+Correspondingly, a family over $T$ of 1-dimensional quotients is a surjection
+\[\cO_T \otimes W \to L,\]
+where now $L$ is a line bundle on $T$. This becomes a moduli functor $F: (\Sch/k)^\op \to \Set$ sending $T/k$ to all such surjections.
+
+Our previous discussion gives a bijection between
+\begin{center}
+    Maps $T\to \P V$ \qquad surjections $\cO_T \otimes W \to L$,
+\end{center}
+which is in fact natural (commutes with pullbacks $S\to T$), so this gives a natural isomorphism between the moduli functor $F$ and $\Hom(-,\P V)$, so indeed $\P V$ \textit{is} the moduli space of 1-dimensional quotients of $W$.
+
+
+\subsection{Proof (in many words)}
+
+Now we show that $\P \Sym^d W$ is the Hilbert scheme of degree $d$ hypersurfaces. Thinking moduli-theoretically, we want to establish a bijection between the Hilbert scheme functor and the moduli functor of 1-dimensional quotients of $(\Sym^d W)^\vee$.
+
+That is, given a family of hypersurfaces over a $k$-scheme $T$
+\[\begin{tikzcd}
+    Y \rar[phantom, sloped, "\subseteq"] \ar[dr] & \P V \times T \dar\\
+    & T
+\end{tikzcd}\]
+($Y\to T$ flat), we should cook up a corresponding surjection
+\[\begin{tikzcd}
+    \cO_T \otimes_k (\Sym^d W)^\vee \rar[two heads, "e"] & L.
+\end{tikzcd}\]
+We should then check that this procedure is a bijection and that it is \textit{natural}, i.e., commute with pullbacks along a morphism $S\to T$.
+
+
+\subsubsection{Along a fiber}
+
+At the end of the day, this procedure is just copying the ``intuition'', but instead in families. So, we start by thinking carefully about the case when $T=\Spec k$ so that a family of hypersurfaces is just one hypersurface. Let $Y\subseteq \P V$ be a $\Spec k$ point of the Hilbert scheme. It will have a defining degree $d$ equation $f$, and we wanted to send $Y$ to
+\[\<f\> \hookrightarrow k[x_0,\dots,x_n]_d\cong \Sym^d W,\]
+or dually
+\[(\Sym^d W)^\vee \twoheadrightarrow \<f\>^\vee.\]
+
+In aims of generalizing, we should recognize that the defining equation $f$ comes as a section
+\[f\in \Gamma(\P V, \cI_Y(d))\subseteq \Gamma(\P V, \cO_{\P V}(d))=\Sym^d W,\]
+so the inclusion of the 1-dimensional subspace \textit{is}
+\[\Gamma(\P V, \cI_Y(d) \hookrightarrow \cO_{\P V}(d)),\]
+and the 1-dimensional quotient is just the dual. To do this more generally, we will just realize that $\Gamma$ is pushforward to our base $T=\Spec k$
+
+\subsubsection{In total}
+
+We try to repeat the strategy from before, but do it over all of $T$ rather than just over an individual $k$-point $t\in T$. We first fix notation for projections.
+
+\[\begin{tikzcd}[column sep=0cm]
+& \P V \times T \ar[dl,"p"'] \ar[dr, "q"] &\\
+\P V & & T
+\end{tikzcd}\]
+
+Now, to repeat the strategy, we should take the short exact sequence cutting out $Y\subseteq \P V \times T$
+\[0 \to \cI_Y \to \cO_{\P V \times T} \to \cO_Y \to 0,\]
+then twist by $d$ to study the degree $d$ part
+\[0 \to \cI_Y \otimes p^*\cO_{\P V}(d) \to p^*\cO(d)_{\P V} \to \cO_Y \otimes p^*\cO_{\P V}(d) \to 0,\]
+then pushforward to $T$ to turn things into vector spaces (smeared along $T$, i.e., a sheaf) to get an injection
+\[q_*(\cI_Y \otimes p^*\cO_{\P V}(d)) \hookrightarrow q_*(p^*\cO_{\P V}(d)).\]
+Flat base change will tell you 
+\[q_*(p^*\cO_{\P V}(d)) \cong \cO_T \otimes_k \Sym^d W,\]
+and some playing with cohomology and base change will show $q_*(\cI_Y \otimes p^*\cO_{\P V}(d))$ is a line bundle, but we postpone the details until later.
+
+Finally, we should take duals with $\cHom(-,\cO_T)$ and show that this is a surjection to get our family of 1-dimensional quotients of $(\Sym^d W)^\vee$.
+
+\subsubsection{Applying Cohomology and Base Change}
+
+\subsubsection*{Application 1}
+
+Now, we show that $q_*(\cI_Y \otimes p^*\cO_{\P V}(d))$ is a line bundle. First, $\cI_Y = \cO_{\P V \times T}(-Y)$ is a line bundle because it is the ideal sheaf of a Cartier divisor. So,
+\[\cO_{\P V \times T}(-Y) \otimes p^*\cO_{\P V}(d) \in \Coh(\P V \times T)\]
+is flat over $T$ because it is a line bundle on $\P V \times T$, which is itself flat over $T$.
+
+Now, cohomology and base change theorems \cite[Theorem 25.1.6]{vakil_rising_2025} will tell us that over every point $t\in T$ (or just closed points, or dense points), if we can prove the ``restriction'' morphism
+\[q_*(\cI_Y \otimes p^*\cO_{\P V}(d))|_t \to H^0(\P V \times \Spec k(t), (\cI_Y \otimes p^*\cO_{\P V}(d))|_{\P V \times \Spec k(t)})\]
+is surjective, then the pushforward is a vector bundle with rank the same as either vector space (which will have to be isomorphic). This would be applying the base change theorem in degree 0. To get this surjectivity, we in turn apply the base change theorem in higher degree, so we need surjectivity from a $R^\ell q_*(-)|_t$ to an $H^\ell$.
+
+Now, recognize that the right hand side is the cohomology of
+\[(\cI_Y \otimes p^*\cO_{\P V}(d))|_{\P V \times \Spec k(t)} \cong \cO_{\P V \times \Spec k(t)},\]
+essentially the $Y$ and $d$ cancel out in the fiber. More formally, we are taking the twisted ideal sheaf short exact sequence
+\[0\to \cI_Y \otimes p^*\cO_{\P V}(d) \to p^*\cO_{\P V}(d) \to \cO_Y \otimes p^*\cO_{\P V}(d)\to 0\]
+and restricting to $\P V \times \Spec k(t)$ (i.e., tensoring over $\cO_{\P V \times T}$ with $\cO_{\P V \times \Spec k(t)}$), which will still be exact because the flatness of $\cO_Y$ will make a $\cTor_1$ vanish ({\color{red} I think my justification is a little bogus here, I need to figure this out}), so the restricted twisted ideal is the kernel of
+\[\cO_{\P V \times \Spec k(t)}(d) \to \cO_{Y_t}(d),\]
+which is $\cO_{\P V \times \Spec k(t)}$, since $Y_t$ is a degree $d$ hypersurface.
+
+Now, $\cO_{\P V \times \Spec k(t)}$ has dimension 1 cohomology in degree 0, but no higher cohomology. Now we apply cohomology and base change in degree 1---the vanishing for this right hand side sheaf fiber will force the restriction to be surjective/an isomorphism, forcing the higher direct image to be 0 and in particular locally free, which forces our surjection in degree 0.
+
+Thus, $q_*(\cI_Y \otimes p^*\cO_{\P V}(d))$ is locally free of rank 1.
+
+\subsubsection*{Application 2}
+
+Now, we show that the dual to the map
+\[\begin{tikzcd}q_*(\cI_Y \otimes p^*\cO_{\P V}(d)) \rar[hook,"i"] & q_*(p^* \cO_{\P V}(d))\end{tikzcd}\]
+is surjective. The obstruction to surjectivity is $\cExt^1_{\cO_T}(\coker i,\cO_T)$, and we would hope $\coker i$ would just be $q_*$ applied to the cokernel upstairs, i.e.,
+\[q_*(\cO_Y \otimes p^* \cO_{\P V}(d)),\]
+and the obstruction to this is the term
+\[R^1 q_*(\cI_Y \otimes p^*\cO_{\P V}(d)).\]
+We will succeed on both accounts. First, to get this $R^1 q_*$ term to vanish, argue by cohomology and base change literally as before (we had already analyzed that the relevant $H^1$s vanish, so that the fibers of $R^1 q_*$ vanish, so $R^1 q_*(-)=0$).
+
+Next,, we get the $\cExt^1$ term to vanish by arguing
+\[\coker i = q_*(\cO_Y \otimes p^* \cO_{\P V}(d))\]
+is locally free, again by cohomology and base change, getting a surjectivity of restriction to fibers in degree 0, which follows from $R^1 q_*$ vanishing because it has 0 fibers.
+
+
+
+
+
+\printbibliography
+
+
+\end{document}

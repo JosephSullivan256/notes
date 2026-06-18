@@ -1,0 +1,167 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Quadric}
+\author{Joseph Sullivan}
+\date{June 2025}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+\DeclareMathOperator{\Spin}{Spin}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Setup}
+
+Let $E$ be a finite dimensional $\C$ vector space, $\<-,-\>$ a nondegenerate symmetric bilinear form on $E$, and $Q$ the associated quadratic form (we will identify the equation and the projective variety cut out of $\P E$). We will write $E$ to mean the quadratic space, a pair of a vector space and a quadratic form. These notes will describe how to get a full strong exceptional collection on the quadric
+\[Q\subseteq \P E = \Proj \Sym^\bullet E^*.\]
+
+
+\section{Quadratic Algebras}
+
+Corresponding to $Q$ is the homogeneous coordinate ring
+\[B = B(E) = \Sym^\bullet E^*/(Q),\]
+which is a quadratic algebra, so in our study we will also study the quadratic dual, which we will refer to as a \textit{graded} Clifford algebra
+\[A = A(E) = T^\bullet E/(Q(\eta)\xi^2 + Q(\xi)\eta^2).\]
+We can also be conveniently describe it by adding a degree $2$ symbol $h$ to stand for (a multiple of) any nonzero $\xi^2$, i.e.,
+\[A \cong T(E\oplus h)/(Q(\xi) h - \xi^2, \xi h - h\xi).\]
+(The relation $Q(\xi)h=\xi^2$ is also equivalent to $2\<\xi,\eta\>h = \xi \eta + \eta \xi$ at least when the characteristic of the field is not 2).
+
+This really generalizes the story of projective space, where we study the rings $\Sym^\bullet E^*$ and $\bigwedge^\bullet E$ which are again quadratic duals.
+
+\begin{prop}
+    $A$ and $B$ are Koszul rings.
+\end{prop}
+\begin{proof}
+    Check that the associated Koszul complex
+    \[\cdots \to A_2^* \otimes B \to A_1^* \otimes B \to A_0^* \otimes B \to \C \to 0\]
+    is exact. {\color{red} this is apparently a well-known thing, this is the ``Tate resolution''?}
+\end{proof}
+
+We will use this Koszul/quadratic duality in particular in how it relates modules and linear projective complexes, as in the following proposition.
+
+\begin{prop}
+    Let $A,B$ be quadratic dual algebras. Then,
+    \[\grlMod{A} \simeq \LCom_B,\]
+    where $\LCom_B$ is the category of linear projective complexes over $B$.
+\end{prop}
+\begin{proof}
+    We define the functors forming the inverse equivalence. Let $M$ be a graded $B$-module. We define a complex $\cL(M)$
+    \[\cdots \to M_{k} \otimes A \to M_{k+1} \otimes A \to \cdots,\]
+    where the differential is the data of a map
+    \[M_{k} \to M_{k+1} \otimes A_1.\]
+    We get this differential by considering the multiplication map
+    \[M_k \otimes B_1 \to M_{k+1},\]
+    which we tensor with $A_1=B_1^*$ and precompose with the map
+    \[M_k \otimes k \to M_k \otimes A_1 \otimes B_1\]
+    sending $1\in k$ to $\eval \in A_1\otimes B_1$.
+
+    Going backwards, we take a linear projective complex $(M^k,d)$ and define a $B$-module $M$ by first defining the $k$-vector space
+    \[M = \bigoplus M^k,\]
+    and to define the $B$-module structure, we just need to give $B_1$ multiplication (satisfying the relations). For $b\in B_1$ and $m\in M_k$, we define
+    \[b\cdot m \defeq \eval_b(d(1\otimes m))\]
+    since $d(1\otimes m) \in A_1 \otimes M_{k+1}$.
+\end{proof}
+
+In particular, the Koszul complex for resolving $\C$ as a $B$-module is $\cL(A^*)$.
+
+
+\section{Resolution of the Diagonal}
+
+Now, our strategy to find a full strong exceptional collection for $Q$ is to repeat Beilinson's strategy for $\P E$. We recall that Beilinson's resolution of the diagonal is a complex of the form
+\[\cdots \to \Omega^i(i) \boxtimes \cO(-i) \to \Omega^{i-1}(i-1) \boxtimes \cO(-i+1) \to \cdots,\]
+and in fact we can recognize the $\Omega^i(i)$ as twists of kernels in the Koszul complex for $\P E$, i.e., the Euler sequence implies
+\[\Omega^i \cong \ker\left(\bigwedge^i E \otimes_\C \cO(-i) \to \bigwedge^{i-1} E \otimes_\C \cO(-i+1)\right).\]
+In analogy, we might expect
+\[\Psi_i \defeq \ker\left(A_i^* \otimes_\C \cO \to A_{i-1}^* \otimes_\C \cO(1)\right)\]
+to play an important role.
+
+In Beilinson's argument, the resolution of the diagonal was the Koszul complex for $\Delta \subseteq \P E \times \P E$ being a local complete intersection cut out by (the dual of) the evaluation section of the bundle $\Omega^1(1) \boxtimes \cO(-1)$.
+
+Likewise, for Kapranov's argument we will use a Koszul complex in the product, but this is in the sense of quadratic/Koszul duality, not the regular sequence Koszul complex---this is because it just isn't true that $\Delta_Q$ is the zero locus of a section of some sort of evaluation pairing (the bundle $\Omega^1(1)|_Q$ is too high rank). So, we will need a more sophisticated resolution, which in our case will be infinite.
+
+\begin{prop}
+    There is a complex of sheaves on $Q\times Q$
+    \[\cdots \to \Psi_2 \boxtimes \cO(-2) \to \Psi_1 \boxtimes \cO(-1) \to \cO_{Q \times Q} \to 0\]
+    which is a resolution of the diagonal.
+\end{prop}
+
+\begin{proof}
+    We will write down this complex by working instead with graded modules. Equipping $Q\times Q$ with the very ample bundle $\cO_{Q\times Q}(1,1)$, we get the section ring
+    \[B^2 = \bigoplus_i B_i \otimes B_i.\]
+    Now, before we lift $\Psi_j \boxtimes \cO(-j)$ to a graded $B^2$-module, we replace it by the quasi-isomorphic complex
+    \[A_j^* \otimes_\C \cO \to A_{j-1}^* \otimes_\C \cO(1) \to \cdots \to A_0^* \otimes_\C \cO(j),\]
+    (where $A_j^* \otimes_\C \cO$ is in cohomological degree 0) which, after applying $\cO(-j) \boxtimes (-)$, lifts to the graded complex of $B^2$-modules
+    \[\bigoplus_i B_{i-j} \otimes A_j^* \otimes B_i \to \bigoplus_i B_{i-j} \otimes A_{j-1}^* \otimes B_{i+1} \to \cdots \to \bigoplus_i B_{i-j} \otimes A_0^* \otimes B_{i+j}.\]
+    So, to specify our desired complex
+    \[\cdots \to \Psi_2 \boxtimes \cO(-2) \to \Psi_1 \boxtimes \cO(-1) \to \cO_{Q \times Q},\]
+    we can specify a double complex of graded $B^2$ modules lifting these bundles, of the shape
+    \[\begin{tikzcd}
+        \cdots &&&\\
+        \cdots \rar \uar &\bigoplus_i B_{i-2} \otimes B_{i+2} &&\\
+        \cdots \rar \uar &\bigoplus_i B_{i-2} \otimes A_1^* \otimes B_{i+1} \rar \uar & \bigoplus_i B_{i-1} \otimes B_{i+1} &\\
+        \cdots \rar \uar &\bigoplus B_{i-2} \otimes A_2^* \otimes B_i \rar \uar & \bigoplus_i B_{i-1} \otimes A_1^* \otimes B_i \rar \uar & \bigoplus_i B_i\otimes B_i
+    \end{tikzcd}\]
+    To specify this double complex, we just declare for a fixed $i$, the rows/columns are the Koszul complex tensored with some copy of $B_i$.
+
+    Now, we want to compute the homology of the total complex of this double complex, and see that it 0 except for at the rightmost index, where it is $\bigoplus_i B_{2i}$, which is a graded $B^2$-module corresponding to $\cO_\Delta$ (just compute $\Gamma_*(\cO_\Delta)$).
+
+    To compute the homology, we fix a grading degree $i$ and compute the homology---this is easy, since the rows will be Koszul complexes which are exact, except for when there is a single term $B_{i-i}\otimes B_{2i} \cong B_{2i}$ as desired. (Some extra care is warranted---making sure the $B^2$-action is correct, but essentially this is it).
+\end{proof}
+
+\section{Truncating the Resolution}
+
+So, we have a resolution of the diagonal, but this isn't too interesting to us yet because it is infinite in length---we don't have for example a full exceptional collection (if we take all $\cO(-i)$ or $\Psi_i$ we would at least get a full collection, but we cannot hope for exceptional because we have ``too many'' sheaves).
+
+So, we hope that we can truncate the resolution by taking a kernel at some step, but still get a box tensor so we can repeat Beilinson's argument to get a small full collection (but we will still have to do work later to see that it is strong/exceptional). To recognize this kernel, we need to define the \textit{spinor bundles}.
+
+\subsection{Spinor Bundles}
+
+\subsubsection{Representation Theoretic Description}
+
+We can apply tools from representation theory to study the quadric by recognizing $Q$ as a homogeneous space for the algebraic group/Lie group
+\[\mathrm{SO}(Q) \defeq \{A\in \GL(E) \mid Q(A\xi) = Q(\xi) \text{ for all } \xi \in E, \det A = 1\}.\]
+We pick the Borel subgroup of $\mathrm{SO}(Q)$ to be...
+
+\subsubsection{Algebraic Description}
+
+There are two ways to construct the Spinor bundle(s) on a quadric that we will need, both making use of the (usual) \textbf{Clifford algebra}. Define
+\[\Cl(E) \defeq A(E)/(h-1)\]
+which is a $\Z/2\Z$-graded algebra. This is more usually defined from scratch as
+\[T^\bullet E/(\xi^2 - Q(\xi)).\]
+This will contain as a subalgebra the Lie algebra $\mathfrak{so}(E)$, which is the Lie algebra to the algebraic group
+\[\mathrm{SO}(E) \defeq \{A\in \GL(E) \mid Q(A\xi) = Q(\xi) \text{ for all } \xi \in E, \det A = 1\}.\]
+The point is that $\mathrm{SO}(E)$ is \textit{not} simply connected, so its Lie algebra will have \textit{more} representations, most importantly the spin representations.
+
+First, we give a representation theoretic description. Let $\Spin(E)$ denote the complex spin group on $E$ associated to the quadratic form $Q$, which we can realize concretely as
+
+
+
+Let $\Cl(E) = A(E)/(h-1)$ be the usual Clifford algebra, which is a $\Z/2\Z$-graded algebra. We have two cases
+
+
+
+\nocite{*} % Include all references in refs.bib regardless of whether they are referenced or not
+\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliography{quadric} % Entries are in the refs.bib file
+
+\end{document}

@@ -1,0 +1,509 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+
+
+\newcommand{\LMod}{\text{-}\mathrm{Mod}}
+\newcommand{\Group}{\mathrm{Group}}
+\newcommand{\Ring}{\mathrm{Ring}}
+\newcommand{\ab}{\mathrm{ab}}
+
+\DeclareMathOperator{\Psh}{Psh}
+\DeclareMathOperator{\Sh}{Sh}
+
+
+
+
+% \newcommand{\cupstring}[2]{
+%     \fill[#1] (0.5,0) arc (0:180:0.5) -- (-0.5,0.5) -- (0.5,0.5);
+%     \fill[#2] (-0.5,0) arc (180:0:0.5);
+%     \draw (0.5,0) arc (0:180:0.5);
+% }
+
+\title{Category Theory}
+\author{Joseph Sullivan}
+\date{March 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{String Diagrams}
+
+\section{Adjunctions}
+
+\textbf{Conventions.} Whenever the functors $F,G$ appear, unless otherwise specified, $F$ will be a left adjoint (think \underline{F}ree) and $G$ will be a right adjoint (think for\underline{G}et or underlyin\underline{G}).
+
+We will give three equivalent formulations of adjunctions.
+
+\begin{defn}
+    An \textbf{adjunction} is the data of categories $\cC,\cD$, functors $F:\cC\to \cD$, $G:\cD\to \cC$, and a natural isomorphism
+    \[\alpha: \Hom(F(-),-) \xRightarrow{\cong} \Hom(-,G(-))\]
+    (so where these are functors valued on $\cC^\op \times \cD$).
+    We will often write a morphism $Fc \to d$ as $f^\flat$, and its image under the natural isomorphism as $f^\sharp$ (think left is lower pitch, right is higher pitch), and we will call them \textbf{left/right transposes} of each other.
+\end{defn}
+
+A convenient characterization of the naturality of the isomorphism between the hom set functors is the following. Essentially, we can not just transpose morphisms, but also commutative squares.
+\begin{prop}
+    A bijective assignment $\Hom(Fc,d) \to \Hom(c,Gd)$ is natural (in $\cC^\op \times \cD$) exactly when the commutativity of all such diagrams are equivalent.
+    \[\begin{tikzcd}
+        Fc \rar["f^\flat"] \dar["Fh"] & d \dar["k"]\\
+        Fc' \rar["g^\flat"] & d'
+    \end{tikzcd} \qquad \leftrightsquigarrow\qquad
+    \begin{tikzcd}
+        c \rar["f^\sharp"] \dar["h"] & Gd \dar["Gk"]\\
+        c' \rar["g^\sharp"] & Gd'
+    \end{tikzcd}\]
+\end{prop}
+
+\begin{defn}
+    An \textbf{adjunction} is the data of categories $\cC,\cD$, functors $F:\cC\to\cD$, $G:\cD\to \cC$, and natural transformations $\eta: 1_\cC \Rightarrow GF$ called the \textbf{unit} and $\eps: GF\Rightarrow 1_\cD$ called the \textbf{counit}, making the diagrams commute, called the \textbf{triangle/zigzag identities}.
+    \begin{equation}
+    \begin{tikzcd}
+        F \rar[Rightarrow,"F\eta"] \ar[dr,Rightarrow,"1_F"'] & FGF \dar[Rightarrow,"\eps F"]\\
+        & F
+    \end{tikzcd}\qquad \begin{tikzcd}
+        G \rar[Rightarrow,"\eta G"] \ar[dr,Rightarrow,"1_G"'] & GFG \dar[Rightarrow,"G \eps"]\\
+        & G
+    \end{tikzcd} \label{counit and unit relations}
+    \end{equation}
+\end{defn}
+
+In either definition, call $F$ the \textbf{left adjoint} and $G$ the \textbf{right adjoint}. We will often leave either the natural isomorphism $\alpha$ or the unit/counit $\eta,\eps$ implicit, and write the remaining data of the adjunction as a diagram
+\[\adjunction{\cC}{\cD}{F}{G},\]
+where $F \dashv G$ means $F$ is left adjoint to $G$.
+
+\begin{prop}
+    These definitions are equivalent (with the correspondence written in the proof).
+\end{prop}
+\begin{proof}
+    The correspondence is as follows. Starting with the hom-set natural isomorphism $\alpha$, define $\eta,\eps$ by whiskering $\alpha$ with $1_{\cC^\op}\times F$ or $G^\op \times 1_{\cD}$, and then getting components by looking at images of identity morphisms. Formally, we write
+    \begin{align*}
+        \Hom(F(-),F(-)) &\Longrightarrow \Hom(-,GF(-))\\
+        1_F &\longmapsto \eta\\
+        \Hom(FG(-),-) &\Longleftarrow \Hom(G(-),G(-))\\
+        \eps &\longmapsfrom 1_G,
+    \end{align*}
+    but at the end of the day we check naturality using the naturality of the hom set natural isomorphism. Note that $\eta_c$ is the right transpose of $1_{Fc}$, and $\eps_d$ is the left transpose of $1_{Gd}$. We can then check that $\eta,\eps$ satisfy the triangle identities by seeing that the commutative diagrams are transposes,
+    \[\begin{tikzcd}
+        Fc \rar["1_{Fc}"] \dar["F\eta_c"] & Fc \dar["1_{Fc}"]\\
+        FGCc \rar["\eps_{Fc}"] & Fc
+    \end{tikzcd} \qquad\leftrightsquigarrow\qquad
+    \begin{tikzcd}
+        c \rar["\eta_c"] \dar["\eta_c"] & GFc \dar["1_{GFc}"]\\
+        GFc \rar["1_{GFc}"] & GFc
+    \end{tikzcd}\]
+    where the right diagram obviously commutes, and similarly for the other triangle identity.
+
+    Conversely, starting with $\eta,\eps$, define the hom-set natural isomorphism by
+    \[\Hom(F(-),-) \xrightarrow{G} \Hom(GF(-),G(-)) \xrightarrow{\eta^*} \Hom(-,G(-))\]
+    and backwards by
+    \[\Hom(-,G(-)) \xrightarrow{F} \Hom(F(-),FG(-)) \xrightarrow{\eps_*} \Hom(F(-),-),\]
+    and use the triangle identities to see that these are inverse to each other.
+\end{proof}
+
+We have one more characterization of adjunctions, which is to see the left/right adjoint of a given functor as a collection of universal objects, in analogy to the universal property of free vector spaces.
+
+The setup for free vector spaces is that we already have a functor $G: \mathrm{Vec}_k \to \Set$, the forgetful functor, and we want to go backwards in a universal way. Recall that the free vector space $FS$ on a set $S$ together with the inclusion $\eta_S: S\hookrightarrow GFS$ satisfies the following universal property: for any vector space $V$, given a set function $S\to GV$, we get a unique morphism $FS\to V$ which such that the inclusion $S\hookrightarrow GFS$ composed with $GFS\to GV$ is our given set function.
+
+More concisely, the universal property is the objectwise assertion on sets $S$ that there exists vector space $FS$ and set function $\eta_S: S\to GFS$ such that
+\[\Hom(FS,-) \xrightarrow{G} \Hom(GFS,G(-)) \xrightarrow{\eta_S^*} \Hom(S,G(-)),\]
+is an isomorphism.
+
+This gives us the following definition of an adjunction.
+
+\begin{defn} \label{adjunction-representability}
+    Given a functor $G: \cD\to \cC$, a \textbf{left adjoint} is the data of choices of objects $FC \in \cD$ and morphisms $\eta_C: C \to GFC$ in $\cC$ such that each composition
+    \[\Hom(FC,-) \xrightarrow{G} \Hom(GFC,G(-)) \xrightarrow{\eta_C^*} \Hom(C,G(-))\]
+    is an isomorphism (for a fixed argument $D$).
+
+    Dually, given a functor $F:\cC\to \cD$, a \textbf{right adjoint} is the data of choices of objects $GD \in \cC$ and morphisms $\eps_D: FGD \to D$ in $\cD$ such that each composition
+    \[\Hom(-,GD) \xrightarrow{F} \Hom(F(-),FGD) \xrightarrow{(\eps_D)_*} \Hom(F(-),D)\]
+    is an isomorphism (for a fixed argument $C$).
+\end{defn}
+
+Now, for example, given $G:\cD\to \cC$ and the data of each $FC$ and $\eta_C: C\to GFC$, we can form a functor $F: \cC\to \cD$ by taking a morphism $C\xrightarrow{f} C'$, post composing with $\eta_{C'}$ to get
+\[C\xrightarrow{f} GFC',\]
+using the assumption to lift $f$ to $FC\to FC'$. Then, one can check that $F,G$ form an adjunction, that $\eta$ becomes a natural transformation, and it is the unit of the adjunction.
+
+Conversely, this composition is exactly how the hom set bijection is given in terms of the unit.
+
+\begin{rmk}
+    In fact, by Yoneda, giving a \textit{natural} transformation
+    \[\Hom(FC,-) \Rightarrow \Hom(C,G(-))\]
+    is the data of giving an element $\Hom(C,GFC)$, so we could have restated the definition \ref{adjunction-representability} as just that every functor $\Hom(C,G(-))$ is representable (the components of the unit come for free).
+\end{rmk}
+
+\begin{cor}
+    Given a functor $G:\cD\to \cC$, there is a unique (up to unique natural isomorphism) left adjoint $F:\cC\to \cD$ (where the natural isomorphism is unique if we include with $F$ the data of the unit $\eta$).
+\end{cor}
+\begin{proof}
+    Given another left adjoint $F':\cC\to \cD$, in both cases we are just choosing natural isomorphisms
+    \[\Hom(FC,-) \cong \Hom(C,G(-)) \cong \Hom(F'C,-),\]
+    (the choice of natural isomorphism is the data of the unit), so composing the natural isomorphisms/their inverses, we get
+    \[\Hom(FC,-) \Rightarrow \Hom(F'C,-)\]
+    which by Yoneda gives $\mu_C: FC\to F'C$. Now, the naturality of $\eta$ will tell us that $\mu$ is also natural, so indeed we get $F\cong F'$ by $\mu$.
+\end{proof}
+
+\subsection{Adjoint Equivalences}
+
+Recall the following definition.
+\begin{defn}
+    Functors $F:\cC\to\cD$, $G:\cD\to\cC$ and natural transformations $\eta:1_\cC \Rightarrow GF$, $\eps: FG \Rightarrow 1_\cD$ form an \textbf{equivalence} if $\eta,\eps$ are natural isomorphisms.
+\end{defn}
+
+Formally an equivalence looks like an adjunction but stronger, but actually we need not satisfy the triangle/zigzag identities---there is nothing in the rules about how $\eta,\eps$ interact. In the case that the data $(F,G,\eta,\eps)$ form an adjunction as well as an equivalence, we call the data an \textbf{adjoint equivalence}.
+
+However, we have the following miracle!
+
+\begin{prop}
+    Let $(F,G',\eta',\eps')$ be an equivalence of $\cC, \cD$. Let $G: \cD\to \cC$ be any functor together with a natural isomorphism $\eta: 1_\cC \Rightarrow GF$. Then, there exists a unique $\eps: FG \Rightarrow 1_\cD$ such that $(F,G,\eta,\eps)$ is an adjoint equivalence. 
+\end{prop}
+
+\begin{proof}
+    {\color{red} TODO.}
+\end{proof}
+
+\section{Monads}
+This is joint with Simon Bohun.
+
+\subsection{Notes}
+
+\subsubsection{Recap: Monads, Algebras, Adjunctions}
+
+\begin{defn}
+    A \textbf{monad} on a category $\cC$ is a triple ($T$, $\mu: T^2 \Rightarrow T$, $\eta: \id_\cC \Rightarrow T$) such that the following diagrams commute.
+    \begin{center}
+    \begin{tikzcd}
+        T^3 \rar[Rightarrow,"\mu T"] \dar[Rightarrow,"T\mu"] & T^2 \dar[Rightarrow,"\mu"]\\
+        T^2 \rar[Rightarrow,"\mu"] & T
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+        1_\cC T \rar[Rightarrow,"\eta T"] \ar[dr,Rightarrow,"1_T"'] & T^2 \dar[Rightarrow,"\mu"] & T1_\cC \lar[Rightarrow,"T \eta"'] \ar[dl,Rightarrow,"1_T"]\\
+        & T &
+    \end{tikzcd}    
+    \end{center}
+\end{defn}
+
+\begin{defn}
+    Let $\cC$ be a category and $(T,\eta: 1_C \Rightarrow T, \mu: T^2\Rightarrow T)$ be a monad on it. A \textbf{$T$-algebra} is a pair $(A,a:TA \to A)$ where $A$ is an object of $\cC$, satisfying the following conditions:
+    \begin{center}
+        \begin{tikzcd}
+            A \ar[dr,"1_A"'] \rar["\eta_A"] & TA \dar["a"]\\
+            & A
+        \end{tikzcd}
+        \qquad
+        \begin{tikzcd}
+            T^2 A \rar["\mu_A"] \dar["Ta"] & TA \dar["a"]\\
+            TA \rar["a"] & A
+        \end{tikzcd}
+    \end{center}
+\end{defn}
+
+\begin{defn}
+    Let $\cC$ be a category and $(T,\eta,\mu)$ be a monad on it. The \textbf{Eilenberg-Moore} category (or the category of \textbf{$T$-algebras}), denoted $\cC^T$, is the category with
+    \begin{itemize}
+        \item objects: $T$-algebras $(A,a:TA\to A)$
+        \item morphisms: a morphism from $(A,a:TA\to A)$ to $(B,b:TB\to B)$ is a morphism $f:A\to B$ in $\cC$ such that the diagram commutes.
+        \[\begin{tikzcd}
+            TA \dar["a"]\rar["Tf"] & TB\dar["b"]\\
+            A \rar["f"] & B
+        \end{tikzcd}\]
+    \end{itemize}
+\end{defn}
+
+\begin{prop}
+    Let $\adjunction{\cC}{\cD}{F}{G}$ be an adjunction with unit $\eta: 1_\cC \Rightarrow GF$ and counit $\eps: FG \Rightarrow 1_\cD$. Define $T=GF$, $\mu=G\eps F: T^2 \Rightarrow T$, and $\eta = \eta$. Then,
+    \[(T,\eta,\mu)\]
+    is a monad on $\cC$.
+\end{prop}
+
+\begin{proof}
+    Let $C\in\cC.$ The associativity condition for a monad is a special case of ``horizontal composition'' of natural transformations (see Riehl Lemma 1.7.4).
+    
+    Spelled out, naturality of $\varepsilon$ implies that for any $\varphi:FGFC\to FC$ there is an arrow $\varepsilon_{FGFC}\implies\varepsilon_{FC},$ i.e. a commutative diagram
+    \[\begin{tikzcd}
+        FGFGFC \dar["FG\varphi",swap]\rar["\varepsilon_{FGFC}"] & FGFC\dar["\varphi"]\\
+        FGFC \rar["\varepsilon_{FC}",swap] & FC
+    \end{tikzcd}\]
+    Replacing $\varphi$ with $\varepsilon_{FC}$ and applying $G$ to this square gives a commutative square \[\begin{tikzcd}
+        T^3C \dar["T\mu_C",swap]\rar["\mu_{TC}"] & T^2C\dar["\mu_C"]\\
+        T^2C \rar["\mu_C",swap] & TC
+    \end{tikzcd}\]
+    natural in $C.$ This gives associativity of the multiplication map $\mu=G\varepsilon F.$ The unit property follows easily from the commutative diagrams in (\ref{counit and unit relations})
+\end{proof}
+
+
+\newpage
+\begin{prop}
+    Let $\cC$ be a category and $(T,\eta,\mu)$ be a monad on it. There is a functor $G^T: \cC^T \to \cC$ which sends a $T$-algebra $(A,a:TA\to A)$ to $A$ and a $T$-algebra morphism $(A,a)\xrightarrow{f} (B,b)$ to the underlying morphism $A\xrightarrow{f} B$ in $\cC$.
+    
+    This functor has a left adjoint $F^T: \cC \to \cC^T$
+    \[\adjunction{\cC}{\cC^T}{F^T}{G^T}\]
+    where $F^T$ sends
+    \begin{itemize}
+        \item an object $A$ to the $T$-algebra $(TA,\mu_A: T(TA) \to TA)$,
+        \item a morphism $A\xrightarrow{f} B$ to $(TA,\mu_A) \xrightarrow{Tf} (TB,\mu_B)$.
+    \end{itemize}
+    We will call $F^T A = (TA,\mu_A)$ the \textbf{free $T$-algebra on $A$}.
+\end{prop}
+
+\begin{construction}
+    Let $\adjunction{\cC}{\cD}{F}{G}$ be an adjunction with unit $\eta$, counit $\eps$. We have associated monad $(T=GF,\mu=F\eps G, \eta=\eta)$, which then gives an adjunction $\adjunction{\cC}{\cC^T}{F^T}{G^T}$.
+
+    We will define the \textbf{comparison functor} $K: \cD \to \cC^T$ which will fit into the following diagram.
+    \[\begin{tikzcd}[column sep=1.5cm, row sep=1.5cm]
+        \cD \ar[rr,"K"] \ar[dr, shift left=1ex, "G",""{name=G}] & & \cC^T \ar[dl,shift left=1ex, "G^T",""{name=GT}]\\
+        & \cC \ar[ul,shift left=1ex, "F",""{name=F}]\ar[ur, shift left=1ex, "F^T",""{name=FT}] & \ar[from=F, to=G,phantom,"\dashv"{sloped, allow upside down, auto=false}] \ar[from=FT, to=GT,phantom,"\dashv"{sloped, allow upside down, auto=false}]
+    \end{tikzcd}\]
+    Warning! We will not require every composition of arrows to commute in this diagram---specifically, we will \textit{not} require $K = F^T \circ G$. Instead, we will only require $G^T K = G$ and $K F = F^T$.
+    
+    Now, we define $K$ by sending
+    \begin{itemize}
+        \item an object $D$ of $\cD$ to a $T$-algebra $(GD,G\eps_D: TGD \to GD)$,
+        \item a morphism $D\xrightarrow{f'} D'$ to a morphism $GD \xrightarrow{G f'} GD'$.
+    \end{itemize}
+\end{construction}
+
+\begin{defn}
+    A functor $\cD \xrightarrow{G} \cC$ is called \textbf{monadic} if it admits a left adjoint $\cC \xrightarrow{F} \cD$ such that the comparison functor
+    \[\cD \xrightarrow{K} \cC^T\]
+    is an equivalence of categories.
+\end{defn}
+
+Thus, if we can find a monadic functor with source $\cD,$ then the category $\cD$ can be viewed as some sort of category of $T$-algebras.
+
+
+\subsubsection{Towards Beck's Monadicity Theorem}
+
+Motivated by the example of the monad $(T,\eta,\mu)$ from the free forget adjunction $\adjunction{\Set}{\Z\LMod}{F}{U}$, we understand how monads give us something like presentations. Given an abelian group $A$ (which is a $T$-algebra for this monad), we can start our presentation by generating $A$ using the counit of the adjunction
+\[FU A \twoheadrightarrow A.\]
+Usually we would pick out the kernel of this morphism, and then similarly generate it to get the presentation---writing $A$ as a cokernel of a morphism of free $\Z$-modules.
+
+In the more general context of an arbitrary monad $(T,\eta,\mu)$, we will settle for writing our $T$-algebra as a coequalizer of free algebras. We will see the following.
+
+\begin{prop}\label{Prop T-algebras as coequalizers}
+    Let $(T,\eta,\mu)$ be a monad on $\cC$, and let $(A,a:TA\to A)$ be a $T$-algebra. Then, the following is a coequalizer diagram in $\cC^T$.
+    \[\begin{tikzcd}
+        (T^2 A, \mu_{TA}) \rar[shift left=0.5ex,"Ta"] \rar[shift right=0.5ex, "\mu_A"'] & (TA,\mu_A) \rar["a"] & (A,a)
+    \end{tikzcd}\]
+    So, we can present $(A,a)$ as a coequalizer of free $T$-algebras.
+\end{prop}
+
+This will be deduced from a more general statement, which requires some terminology.
+
+\begin{defn}
+    A \textbf{split coequalizer} is a diagram
+    \[\begin{tikzcd}
+        x \rar[shift left=0.5ex, "f"] \rar[shift right=0.5ex, "g"'] & y \rar["h"] \lar[bend left=60, "t"] & z \lar[bend left, "s"]
+    \end{tikzcd}\]
+    such that $hf=hg$, $hs=1_z$, $gt=1_y$, and $ft=sh$.
+\end{defn}
+
+This is a slightly odd definition---the point is somehow that equations are nice because functors automatically preserve them, unlike universal properties.
+
+From the equations, we get
+\begin{itemize}
+    \item $z$ (together with the map $h$) is a cone under the diagram $x \rightrightarrows y$.
+    \item $t$ is a subsection of $g$.
+    \item $s$ is a subsection of $h$.
+\end{itemize}
+and the last equation $ft=sh$ is weird (the roles of $f,g$ are asymmetric).
+
+\begin{lem}
+    In the foregoing setting, $(z,h)$ is the coequalizer of $f,g:x\rightrightarrows y$, and any functor preserves this coequalizer diagram.
+\end{lem}
+\begin{proof}
+    Suppose $h':y\to z'$ satisfies $h'f=h'g.$ Put $k=h's:z\to z'.$ By the conditions of a split coequalizer, we have $$kh=h'sh=h'ft=h'gt=h',$$ giving a factorization of $h'$ through $h.$ This factorization is unique, because if $k'h$ is some other factorization of $h',$ then we have $$k'=k'hs=hs=khs=k.$$
+    
+    A functor preserves the coequalizer diagram because a split coequalizer is just asserting equations, and functors preserve equations.
+\end{proof}
+
+\begin{eg}
+    For any algebra $(A,a:TA\to A)$ for a monad $(T,\eta,\mu)$ on $\cC$, the diagram
+    \[\begin{tikzcd}
+        T^2 A \rar[shift left=0.5ex, "Ta"] \rar[shift right=0.5ex, "\mu_A"'] & TA \rar["a"] \lar[bend left=60, "\eta_{TA}"] & A \lar[bend left, "\eta_A"]
+    \end{tikzcd}\]
+    is a split coequalizer in $\cC$. While the morphisms $Ta,\mu_A, a$ lift to morphisms in $\cC^T$, the ``splittings'' $\eta_A$, $\eta_{TA}$ do \textit{not}.
+\end{eg}
+
+\begin{defn}
+    Given a functor $G: \cD \to \cC$,
+    \begin{itemize}
+        \item A \textbf{$G$-split coequalizer} is a parallel pair $f,g: x\rightrightarrows y$ in $\cD$ together with an extension of the parallel pair $Gf,Gg: Gx\rightrightarrows Gy$ to a split coequalizer
+        \[\begin{tikzcd}
+        Gx \rar[shift left=0.5ex, "Gf"] \rar[shift right=0.5ex, "Gg"'] & Gy \rar["h"] \lar[bend left=60, "t"] & z \lar[bend left, "s"]
+        \end{tikzcd}\]
+        in $\cC$.
+
+        \item $G$ \textbf{creates coequalizers of $G$-split pairs} if any $G$-split coequalizer admits a coequalizer in $\cD$ whose image under $G$ is isomorphic to the underlying coequalizer, and any lift of the coequalizer underlying the $G$-split coequalizer is a coequalizer in $\cD$. That is, if
+        \[\begin{tikzcd}
+        Gx \rar[shift left=0.5ex, "Gf"] \rar[shift right=0.5ex, "Gg"'] & Gy \rar["h"] \lar[bend left=60, "t"] & z \lar[bend left, "s"]
+        \end{tikzcd}\]
+        is a $G$-split coequalizer, then there exist $\tilde{z}$ and $h:y\to \tilde{z}$ in $\cD$ such that $z\cong G\tilde{z}$ and (after post composing with isomorphism) $h=G(y\xrightarrow{\tilde{h}} \tilde{z})$ such that
+        \[\begin{tikzcd}
+        x \rar[shift left=0.5ex, "f"] \rar[shift right=0.5ex, "g"'] & y \rar["\tilde{h}"] & \tilde{z}
+        \end{tikzcd}\]
+        is a coequalizer diagram in $\cD$. Furthermore, for any $\tilde{z}$ and $y \xrightarrow{\tilde{h}} \tilde{z}$ which maps down isomorphically to $z,h$, the diagram $x\rightrightarrows y \xrightarrow{\tilde{h}} \tilde{z}$ is a coequalizer diagram.
+    \end{itemize}
+\end{defn}
+
+\begin{prop}
+    For any monad $(T,\eta,\mu)$ on a category $\cC$, the functor $G^T: \cC^T \to \cC$ (strictly) creates coequalizers of $G^T$-split pairs.
+\end{prop}
+
+\begin{thm}[Beck's Monadicity Theorem]
+    A right adjoint functor $G: \cD \to \cC$ is monadic if and only if it creates coequalizers of $U$-split pairs.
+\end{thm}
+
+\subsubsection{Beck's weak monadicity theorem}
+Often it is the case that the full force of the monadicity theorem is unnecessary; in particular, if one only wishes to show that a functor is monadic, then it can be easier to utilize a weaker or cruder incarnation of the monadicity theorem. Another motivation for the following theorem is that composition of functors does not respect monadicity. However the composition of functors satisfying the conditions in the weak monadicity theorem will again satisfy those conditions.
+
+We call a pair of arrows $f,g:x\rightrightarrows y$ a reflexive pair if there exists an arrow $i:y\to x$ such that $fi=1_y=gi.$
+
+A functor $G:\cD\to\cC$ is said to reflect isomorphisms if $t\in\mathcal{M}or(\cD),$ is an isomorphism whenever $Gt$ is an isomorphism.
+
+\begin{thm}
+    Let $G:\cD\to\cC$ be a functor with a left adjoint, let $T$ be the monad on $\cC$ corresponding to this adjunction, and let $K:\cD\to\cC^T$ be the comparison functor.
+    \begin{enumerate}[i)]
+        \item If $\cD$ has coequalizers of reflexive pairs, then the comparison functor $K$ has a left adjoint $L.$
+        \item Moreover, if $G$ preserves all the coequalizers of reflexive pairs, then the unit of the adjunction $L\dashv K$ is an isomorphism.
+        \item Assuming (i) and (ii), if $G$ also reflects isomorphisms, then the counit of the adjunction $L\dashv K$ is an isomorphism.
+    \end{enumerate}
+    Hence, if all three conditions are satisfied, then $G$ is monadic.
+\end{thm}
+
+\newpage
+\subsubsection{Applications}
+
+The upshot of proving that a functor $G: \cD\to \cC$ is monadic is to carry over all of the nice formal properties of $G^T: \cC^T \to \cC$. One particular nice property is that $G^T$ \textit{creates limits} (all the ones that $\cC$ has).
+
+\begin{defn}
+    Let $G: \cD\to \cC$ be a functor, and $\{s: J \to \cD\}$ a class of diagrams. We say
+    \begin{itemize}
+        \item $G$ \textbf{reflects those limits} if when a cone over $s$ satisfies that its image under $G$ is a limit for $Gs$, then the original cone was a limit for $s$.
+        \item $G$ \textbf{creates those limits} if when $Gs: J\to \cC$ has a limit in $\cC$, then it lifts to a limit of $s$, and also $G$ is required to reflect these limits.
+    \end{itemize}
+\end{defn}
+
+\begin{prop}\label{create-limits}
+    A monadic functor $G: \cD \to \cC$ creates
+    \begin{enumerate}[(i)]
+        \item all limits that $\cC$ has,
+        \item all colimits that $\cC$ has and the monad and its square preserve.
+    \end{enumerate}
+\end{prop}
+
+\begin{eg}
+    $\Group$, $\Ring$, and $R\LMod$ are all complete, since their forgetful functors to $\Set$ are all monadic, and $\Set$ is complete.
+\end{eg}
+
+For applications of Beck's theorem, read
+
+\begin{itemize}
+    \item \url{https://ncatlab.org/nlab/show/bar+construction}
+    \item \url{https://ncatlab.org/nlab/show/monadic+descent}
+\end{itemize}
+
+\begin{eg}
+    Gelfand duality: By realizing the category of unital $C^*$-algebras and the opposite category of compact Hausdorff spaces as equivalent to some category of $T$-algebras, and then seeing that these two categories of $T$-algebras coincide, one obtains Gelfand duality, viz. the equivalence of categories between unital $C^*$-algebras and the opposite category of compact Hausdorff spaces.
+\end{eg}
+
+\begin{eg}
+    Faithfully flat descent: Given a faithfully flat morphism of rings, $A\to B,$ one can show that the functor $A\LMod \to B\LMod$ given by $M\mapsto M\otimes_AB$ is comonadic. In fact, using the dual of the weak monadicity theorem, this is easy to see. It is clear that the functor has a right adjoint, viz. $\Hom_B(B,-).$ Then flatness of $B$ implies the tensor preserves finite products, and faithful flatness implies it reflects isomorphisms.
+    
+    Then $A$-modules can be realized as some kind of coalgebras over the comonad associated to the tensor-hom adjunction. It can be seen that in fact these coalgebras precisely encode the necessary descent data on a $B$-module to yield an $A$-module.
+\end{eg}
+
+
+\newpage
+\subsection{Problems}
+
+\begin{problem}
+    Let $G$ be a group with identity $e,$ let $T$ denote the endofunctor on $\Set$ which sends a set $X$ to $G\times X,$ define $\eta:1_{\Set}\Rightarrow T$ by $\eta_X:x\mapsto (e,x)$ and $\mu:T^2\Rightarrow T$ by $\mu_X:(g_1,g_2,x)\mapsto(g_1g_2,x).$ Show that $(T,\mu,\eta)$ is a monad, and describe its $T$-algebras.
+\end{problem}
+\bigskip
+
+\begin{problem}
+    Let $R$ be a ring. Describe a monad on $\Z\LMod$ whose $T$-algebras are $R$-modules.
+    % If $R$ is a field, describe a monad on $\Set$ whose $T$-algebras are $R$-vector spaces.
+    % {Hint.} Key features of a vector space are its basis and that we can take linear combinations of elements.
+\end{problem}
+\bigskip
+
+\begin{problem}\label{free-forget-problem}
+    Recall the free forget adjunction $\adjunction{\Set}{\Z\LMod}{F}{U}$ with unit $\eta$, counit $\eps$, which induces a monad $(T=UF, \mu=U\eps F, \eta=\eta)$ on $\Set$. Show $U$ is monadic (i.e., the comparision functor $K:\Z\LMod \to \Set^T$ is an equivalence),
+    \begin{enumerate}[(i)]
+        \item by hand,
+        \item by Beck's theorem.
+    \end{enumerate}
+
+    \textit{Hint.} To show $U$ is monadic by hand, show that $K$ is fully faithful and essentially surjective on objects. Show fully faithful first. Then, essentially surjective on objects amounts to starting with a $T$-algebra and recognizing it as coming from an abelian group. If you get stuck, read the answer to this question.
+    
+    \url{https://math.stackexchange.com/questions/276604/the-free-abelian-group-monad}
+\end{problem}
+\bigskip
+
+% \begin{problem}
+%     Repeat Problem \ref{free-forget-problem} with the extension/restriction of scalars adjunction
+%     \[\adjunction{\Z\LMod}{R\LMod}{R \otimes_\Z (-)}{U}.\]
+% \end{problem}
+
+\begin{problem}
+    A \textbf{reflective subcategory} of a category $\cC$ is a full subcategory $\cA$ so that the inclusion admits a left adjoint, called the \textbf{reflector} or \textbf{localization}.
+    \[\adjunction{\cC}{\cA}{r}{i}\]
+    \begin{enumerate}[(i)]
+        \item Let $\Group \xrightarrow{(-)^\ab} \Z\LMod$ be the abelianization functor, i.e., the functor sending $G$ to $G^\ab = G/[G,G]$ and morphisms $G\xrightarrow{f} H$ descend to morphisms $G^\ab \xrightarrow{f^\ab} H^\ab$. We also have an embedding $\Z\LMod \xhookrightarrow{i} \Group$ (i.e., the category of abelian groups is a full subcategory of the category of groups). Prove that
+        \[\adjunction{\Group}{\Z\LMod}{(-)^\ab}{i}\]
+        is an adjunction, so $\Z\LMod$ is a reflective subcategory of $\Group$.
+
+        \bigskip
+        
+        \item Let $X$ be a topological space, and recall the sheafification functor $\Psh(X) \xrightarrow{s} \Sh(X)$ ((pre)sheaves of sets, let's say). See that this makes $\Sh(X) \xhookrightarrow{i} \Psh(X)$ a reflective subcategory.
+
+        \bigskip
+
+        \item Let $\cA \xhookrightarrow{i} \cC$ be a reflective subcategory with reflector $\cC \xrightarrow{r} \cA$. Prove that $i$ is monadic, by hand.
+
+        \textit{Hint 1.} Show $K$ is fully faithful as follows. The comparison functor satisfies in particular $G^T K = i$, where $i$ is fully faithful, so we get a diagram
+        \[\begin{tikzcd}
+            \cA(A{,}A') \rar \ar[rr,bend left=15,"\cong"] & \cC^T(KA{,}KA') \rar & \cC(G^T K A{,} G^T K A)
+        \end{tikzcd}\]
+        Deduce that $K$ is fully faithful by showing that the second map (from $\cC^T$ homs to $\cC$ homs) is an isomorphism (so you can cancel it).
+
+        \textit{Hint 2.} Show $K$ is essentially surjective on objects as follows. Let $(C,c:irC\to C)$ be a $T$-algebra (object in $\cC^T$). Show that $K(rC) \cong (C,c)$, where
+        \[K(rC) = (irC, i\eps_{rC}: irirC \to irC).\]
+        Check that $\eps_C: irC \to C$ (in $\cC$) lifts to a $T$-algebra morphism $K(rC) \to (C,c)$ (in $\cC^T$). To see that $\eps_C$ is an isomorphism, prove the following fact.
+        
+        \textit{Fact.} In an adjunction $\adjunction{\cC}{\cD}{F}{G}$, if $G$ is fully faithful, then the counit $\eps$ is a natural isomorphism (i.e., each component has an inverse).
+
+        \bigskip
+        
+        \item Conclude the reflective subcategories of complete categories are complete.
+    \end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{rmk}
+    Since monadic functors create all limits, this tells us that we don't have to check that the category of sheaves has e.g., kernels or products---these will be computed in presheaves and automatically lift to sheaves!
+
+    More broadly, if $\cC$ is a complete category, then $\Psh_\cC(X)$ is complete because it is a functor category valued in a complete category, and then $\Sh_\cC(X)$ is complete because it is a reflective subcategory of $\Psh_\cC(X)$.
+\end{rmk}
+
+\bigskip
+
+\begin{problem}[Proving Proposition \ref{create-limits}]
+    Let $(T,\eta,\mu)$ be a monad on a category $\cC$, so $G^T: \cC^T \to \cC$ is a monadic functor. Prove that $G^T$ \textit{creates all limits} that $\cC$ has, i.e., if $s: J\to \cC^T$ is a diagram in $\cC^T$ such that
+    \[\lim G^Ts\]
+    exists in $\cC$, then $\lim s$ exists in $\cC^T$, and $G^T(\lim s) \cong \lim G^T s$.
+
+    \textit{Hint.} See Riehl's \textit{Category Theory in Context} Theorem 5.6.5 if you get stuck.
+\end{problem}
+
+\end{document}

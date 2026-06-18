@@ -1,0 +1,15 @@
+PWD c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2022spring_or_older
+INPUT c:/texlive/2023/texmf.cnf
+INPUT c:/texlive/2023/texmf-dist/web2c/texmf.cnf
+INPUT c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2022spring_or_older/sheaves.tex
+OUTPUT sheaves.log
+INPUT c:/texlive/2023/texmf-dist/tex/latex/base/article.cls
+INPUT c:/texlive/2023/texmf-dist/tex/latex/base/article.cls
+INPUT c:/texlive/2023/texmf-dist/tex/latex/base/size12.clo
+INPUT c:/texlive/2023/texmf-dist/tex/latex/base/size12.clo
+INPUT c:/texlive/2023/texmf-dist/tex/latex/base/size12.clo
+INPUT c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT c:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty

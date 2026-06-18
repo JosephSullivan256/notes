@@ -1,0 +1,497 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Project}
+\author{}
+\date{January 2026}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+\newcommand{\ft}{\text{ft}}
+\newcommand{\Bl}{\mathrm{Bl}}
+
+\newcommand{\cTor}{\mathcal{T}\hspace{-0.2em}or}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+\addbibresource{project_bibliography2.bib}
+
+
+\begin{document}
+
+% \maketitle
+
+\section{Families of Complexes}
+
+% We need a notion of a flat family of complexes on a $X\to \Spec \C$. Our presentation is just reiterating \cite{macri_lectures_2019}, though \cite{bayer_stability_2021} also has a very good summary.
+
+% Denote $\Sch$ the big \`etale site on the category of schemes locally of finite type over $\C$. For such a scheme $B\in \Sch$, say that a complex $E\in D(\mathrm{QCoh}(X\times B))$ is \textit{$B$-perfect} if locally over $B$, it is isomorphic to a bounded complex of flat sheaves over $B$ of finite presentation. Say a complex is \textit{universally gluable} if $Rf_* R\Hom(\cE,\cE) \in D(\cO_S)^{\geq 0}$, which is equivalent to $\Ext^i(\cE_b,\cE_b)=0$ for all $i<0$ and all geometric points $b\in B$.
+
+% There exists a 2-functor
+% \[\mathfrak{M}: \Sch^\op \to \mathrm{Gpd}\]
+% sending $B$ to
+% \[\{\cE \in D_{B\mathrm{-perf}}(X\times B) \mid \text{universally gluable}\},\]
+% where $\cE_b$ is the restriction $\cE|_{X\times \{b\}}$, which is a nice stack.
+
+% As an aside, we note that the collection of complexes (which $B$ is sent to) forms a groupoid, with quasi-isomorphisms as the morphisms. ({\color{red} but this is not in general a set? or do we take a skeleton of the groupoid, i.e., restrict to isomorphism classes, but include automorphisms}). Then, to full specify this as a 2-functor, we would also need to say
+% \begin{itemize}
+%     \item where to send morphisms of schemes (but this is easy---for $f:B'\to B$, just use $Lf^*$)
+%     \item where to send 2-morphisms (but since $\Sch^\op$ is a 1-category, this amounts to, for each commutating triangle $B''\xrightarrow{g} B' \xrightarrow{f} B$ of schemes, picking out a natural transformation between the groupoid functors $(f\circ g)^*$ and $g^*\circ f^*$ {\color{red} is this what is meant by a 2-functor? this makes sense to me}).
+% \end{itemize}
+
+% One feature of $B$-perfect complexes, as summarized by \cite{bayer_stability_2021}, is that for any $\Spec k = \{b\} \xrightarrow{i} B$, the derived restriction $\cE_b$ makes sense as a bounded complex, which need not be true for pullback along non-flat maps when $B$ has singularities.
+
+% Universally gluable is somehow needed to show that this is a stack, where descent is proved in BBD lemma 3.2.4. (and maybe if you do higher category theory/derived algebraic geometry, you can drop this assumption... but again I think Bridgeland (semi)stable things probably automatically satisfy this because they are in the heart of a t-structure.)
+
+% {\color{red} It's not clear to me how to define the moduli functor for Bridgeland (semi)stable complexes... just require that over each point $\Spec \C$ you get a Bridgeland (semi)stable complex? And then you stackify this substack, which coincidentally mods out by the equivalence relation which is tensoring by pullbacks of line bundles from the base... Do we also quotient out by S-equivalence? Anything else? }
+
+
+\subsection{First Family}
+
+Let $X$ be a smooth projective variety of dimension $n$, and $D$ an ample divisor. The adjoint bundle $\omega_X(D)$ induces a map
+\[X \dashrightarrow |K_X+D|^\vee = \P(H^0(X,\omega_X(D))^\vee).\]
+This ambient projective space can be considered a family of Bridgeland stable objects. Given an individual closed point $\<f\> \in |K_X+D|^\vee$, we can identify
+\begin{align*}
+    |K_X+D|^\vee &\cong \P(H^0(X,\omega_X(D))^\vee)\\
+    &\cong \P H^n(X,\cO_X(-D))\\
+    &\cong \P \Hom_{D^b(X)}(\cO_X,\cO_X(-D)[n]),
+\end{align*}
+to consider $f$ as a morphism $\cO_X\to \cO_X(-D)[n]$, and taking the cone (our convention is to put cones in front), we get distinguished triangle
+\[\to C_f \to \cO_X \to \cO_X(-D)[n] \to,\]
+where $C_f$ only depends on $f$ up to scaling, so we can really identify $\<f\>$ with $C_f$.
+
+Now, to do this in families, we will build a complex $C_{|K_X+D|^\vee}$ on $X\times |K_X+D|^\vee$ (i.e., a family over $|K_X+D|^\vee$ of complexes on $X$). To build this complex, we write down a distinguished triangle
+\[\to C_{|K_X+D|^\vee} \to \cO_{X\times |K_X+D|^\vee} \to \cO_X(-D) \boxtimes \cO_{|K_X+D|^\vee}(1)[n] \to\]
+which is determined by (the $k$-span of) a morphism in
+\[\Hom_{D^b(X\times |K_X+D|^\vee)}(\cO_{X\times |K_X+D|^\vee}, \cO_X(-D) \boxtimes \cO_{|K_X+D|^\vee}(1)[n]),\]
+which gets identified with
+\begin{align}\label{family1-identifications}
+    H^n(X\times|K_X+D|^\vee, \cO_X(-D) \boxtimes \cO_{|K_X+D|^\vee}(1)) &\cong H^n(X,\cO_X(-D)) \otimes_k H^0(|K_X+D|^\vee, \cO_{|K_X+D|^\vee}(1))\notag\\
+    &\cong H^0(X,\omega_X(D))^\vee \otimes_k H^0(X, \omega_X(D))\notag\\
+    &\cong \End_k(H^0(X,\omega_X(D)))
+\end{align}
+which has a natural element, being the identity map. We will denote this morphism $\eps$. Now, we should see that the cone over this map, which we denote $C_{|K_X+D|^\vee} \defeq C_\eps$, actually assembles the various $C_f$ into a single family on $|K_X+D|^\vee$. That is, we claim the following.
+
+\begin{prop}
+    Let $\<f\> \in |K_X+D|^\vee$ be a closed point, and
+    \[i: X\cong X\times \{\<f\>\} \hookrightarrow X \times |K_X+D|^\vee\]
+    be the inclusion of the fiber over $\<f\>$. Then,
+    \[Li^* C_{|K_X+D|^\vee} \cong C_f.\]
+\end{prop}
+
+\begin{proof}
+    Before we start, we fix notation. Abbreviate $\P\defeq |K_X+D|^\vee$. Pick a basis $e_1,\dots,e_\ell$ for $H^0(X,\omega_X(D))^\vee$, with dual basis $x_1,\dots,x_r$. Write $f=\sum a_i e_i$.
+    
+    Now, to study the pullback $Li^* C_\P$, we study the triangle that defines it. The functor $Li^*$ is exact, so when we apply it to the triangle
+    \[C_{\P} \to \cO_{X\times \P} \xrightarrow{\eps} \cO_X(-D) \boxtimes \cO_{\P}(1)[n] \to C_\P[1],\]
+    we will again get an exact triangle. We need to understand this 3rd term of the triangle. Pulling back, we get
+    \[Li^*(\cO_X(-D) \boxtimes \cO_{\P}(1)) \cong i^*p^*\cO_X(-D) \otimes i^*q^* \cO_\P(1),\]
+    where $i^*p^*\cO_X(-D)\cong \cO_X(-D)$, and $i^*q^* \cO_\P(1)$ can be computed by pulling back instead along the equal composition
+    \[X\cong X\times \{\<f\>\} \to \{\<f\>\} \xhookrightarrow{j} \P,\]
+    where now the pullback $j^*\cO_\P(1)$ is clearly the trivial line bundle $\cO_{\{\<f\>\}}$, but we need to fix this isomorphism up to scaling by requiring that $j^*x_i = a_i\in k=\cO_{\{\<f\>\}}$ on the nose. So in total, the pullback of the 3rd term is $\cO_X(-D)$.
+
+    This means our pulled back exact triangle is of the form
+    \[Li^* C_{\P} \to \cO_X \xrightarrow{Li^* \eps} \cO_X(-D)[n]\to Li^* C_\P[1],\]
+    so our task is to verify that $Li^*\eps$ agrees with $f$ (up to scaling). So, this amounts to computing $Li^*$ on morphisms
+    \[\Hom_{X\times\P}(\cO_{X\times \P},\cO_X(-D)\boxtimes \cO_\P(1)[n]) \to \Hom_X(\cO_X,\cO_X(-D)[n]).\]
+    Essentially by the triangle/zigzag axiom of the adjunction $Li^* \dashv Ri_*$, this can be computed by first postcomposing with the unit morphism $1\Rightarrow Ri_*Li^*$, and then applying the adjunction isomorphism, as in
+    \begin{align*}
+        \Hom_{X\times\P}(\cO_{X\times \P},\cO_X(-D)\boxtimes \cO_\P(1)[n]) &\to \Hom_{X\times \P}(\cO_X,Ri_*Li^*(\cO_X(-D)\boxtimes \cO_\P(1))[n])\\
+        &\cong \Hom_{X\times \P}(\cO_{X\times \P},i_*\cO_X(-D))\\
+        &\xrightarrow{\cong} \Hom_{X}(i^*\cO_{X\times \P},\cO_X(-D)),
+    \end{align*}
+    which, after translating to cohomology, becomes the usual pullback map
+    \[H^n(X\times \P, \cO_X(-D)\boxtimes\cO_\P(1)) \to H^n(X,\cO_X(-D))\]
+    along $i$.
+    
+    Now, we chase through everything. Recall our basis $e_1,\dots,e_\ell$ of $H^n(X,\cO_X(-D))$ and our dual basis, under the Serre duality pairing, $x_1,\dots,x_\ell$ for $H^0(X,\omega_X(D))$.
+
+    Our first series of identifications takes $\eps=\id\in \End_k(H^0(X,\omega_X(D)))$, and maps
+    \[\begin{tikzcd}[column sep=0.5cm, row sep=0cm]
+        \End_k(H^0(X,\omega_X(D))) \rar & H^n(X,\cO_X(-D)) \otimes_k H^0(X,\omega_X(D))\\
+        \eps \rar[mapsto] & \sum_i e_i \otimes x_i.
+    \end{tikzcd}\]
+    We then apply the Kunneth formula and restriction to get
+    \[\begin{tikzcd}[column sep=0.5cm, row sep=0cm]
+    H^n(X,\cO_X(-D)) \otimes_k H^0(\P,\cO_\P(1)) \rar & H^n(X\times \P,\cO_X(-D)\boxtimes \cO_\P(1)) \rar & H^n(X,\cO_X(-D))\\
+    e_i,x_i \ar[r,mapsto] & e_i\otimes x_i \ar[r,mapsto] & e_i x_i|_{\<f\>} = j^*x_i \cdot e_i,
+    \end{tikzcd}\]
+    where $j:\{\<f\>\}\hookrightarrow \P$ is from before. Recall that we fixed our identifications so that $j^*x_i = a_i$, so indeed we see that the image of $\sum_i e_i\otimes x_i$ is $f$. Thus, $Li^* C_\P \cong C_f$.
+\end{proof}
+
+
+\section{Second Family}
+
+Assume $D$ is sufficiently positive so that $K_X+D$ is very ample, so $e:X\to |K_X+D|^\vee$ is an embedding. When we move our stability condition across a wall, we will destabilize exactly the complexes corresponding to $x\in X \hookrightarrow |K_X+D|^\vee$. It turns out that the correct thing to do is to replace $X\subseteq |K_X+D|^\vee$ with the projectivization of its normal bundle (i.e., a blowup) and to show that
+\[Y=\Bl_X |K_X+D|^\vee\]
+supports a new family of complexes on $X$, which will then be stable across the wall.
+
+\subsection{Complexes on $X$ from $X$}
+
+Before we build a family of complexes on $Y$, we will focus on understanding the unstable locus $e:X\hookrightarrow |K_X+D|^\vee$. First, we will get an alternative distinguished triangle describing a complex $C_{e_x}$ over a single point of $x\in X$. Next, we will understand globally the family of complexes on the unstable locus, by getting an alternative distinguished triangle describing the complex $C_X\defeq Le^* C_{|K_X+D|^\vee}$.
+
+To find these triangles, we will appeal to the octahedral axiom.
+
+\begin{rmk}
+    Recall the analogy between the third isomorphism theorm and the octahedral axiom: if we denote the cone (for a moment placing them on the right) over a morphism $A\to C$ by $C/A$, so that $C/A$ fits in the distinguished triangle
+    \[\to C\to C/A \to A[1]\to,\]
+    and if we have a factorization $A\to B\to C$ (not a distinguished triangle) where each morphism has respective cone $B/A$, $C/B$, our notation suggests a distinguished triangle
+    \[\to B/A \to C/A \to C/B \to.\]
+    This existence of this triangle, together with several commutative diagrams, is the content of the octahedral axiom. For the purposes of destabilizing, this can be useful if for example $B/A$ has greater slope than $C$.
+\end{rmk}
+
+\subsubsection{Unstable complexes (pointwise)}
+
+First, we understand the complexes corresponding to $x\in X$, i.e., the $C_{e_x}$. We will fit these into distinguished triangles, which will eventually give the walls that destabilize (when we have the right numerical conditions).
+
+Recall that a closed point $x\in X$ (up to scaling) gives an element
+\[e_x\in H^0(X,\omega_X(D))^\vee \cong H^n(X,\cO_X(-D)[n])\]
+which is evaluating sections at $x$, which corresponds to (up to scaling) a morphism in the derived category $e_x: \cO_X \to \cO_X(-D)[n]$. We claim that we can factor this as a composition
+\[\cO_X \xrightarrow{\rho} \cO_x \to \cO_X(-D)[n],\]
+which is to say, that pullback by $\rho$
+\[\Hom(\cO_X,\cO_X(-D)[n]) \xleftarrow{\rho^*} \Hom(\cO_x, \cO_X(-D)[n])\]
+has $e_x$ in its image. By Serre duality, $\rho^*$ corresponds to a morphism
+\begin{align*}
+    \Hom(\cO_X(-D),\omega_X)^\vee &\leftarrow \Hom(\cO_X(-D),\cO_x \otimes \omega_X)^\vee,\\
+    H^0(X,\omega_X(-D))^\vee &\leftarrow H^0(\{x\},\omega_X(-D)|_x)^\vee
+\end{align*}
+which is dual to the map $\omega_X(-D)\to \omega_X(-D)|_x$. In other words, the dual of this map ``is'' the inclusion $\{x\}\hookrightarrow |K_X+D|^\vee$. Finally, asking for our factorization now amounts to asking that $e_x$ (in the left hand side), which is evaluation at $x$ (up to scaling), comes from restricting $\omega_X(-D)$ to $x$, which is tautological. So, indeed, we get our factorization $\cO_X\to \cO_x \to \cO_X(-D)[n]$.
+
+Now, we denote this second morphism by $\cO_x\xrightarrow{x} \cO_X(-D)[n]$, and we apply the octahedral axiom to our factorization to get the triangle
+\[\to C_\rho \to C_{e_x} \to C_x \to,\]
+and $C_\rho$ is just $\cI_x$ by the usual ideal sheaf exact sequence, so our triangle simplifies to
+\[\to \cI_x \to C_{e_x} \to C_x \to.\]
+So, with our goal of understanding $C_{e_x}$, we try to understand $C_x$ better. For this purpose, we try to understand the triangle (\ref{skyscraper-triangle}) defining $C_x$ by applying derived dual $(-)^\vee = R\cHom(-,\cO_X)$. Applying the functor term-by-term, first we apply Grothendieck duality along $i:\{x\}\to X$ (which has relative dimension $-n$) to get
+\[R\cHom_X(Ri_*\cO_x,\cO_X) \cong Ri_* R\cHom_{x}(\cO_x,i^*\omega_X^{-1}\otimes i^*\cO_X[-n]) \cong \cO_x[-n].\]
+We also have
+\[R\cHom(\cO_X(-D)[n],\cO_X) \cong \cO_X(D)[-n],\]
+which together give us the triangle
+\[\leftarrow C_x^\vee \leftarrow \cO_x[-n] \leftarrow \cO_X(D)[-n] \leftarrow\]
+which identifies
+\[C_x^\vee \cong \cI_x(D)[1-n],\]
+so
+\[C_x \cong \cI_x^\vee(-D)[n-1].\]
+Finally, this means that $C_{e_x}$ fits into the triangle
+\[\to \cI_x \to C_{e_x} \to \cI_x^\vee (-D)[n-1] \to.\]
+
+\subsubsection{Unstable complexes (globally)}
+
+Even better than a triangle describing a single $C_{e_x}$, we will build an exact triangle (on $X\times X$) describing the assembled $C_{e_x}$ as a family $C_X$ over $X$.
+
+The family $C_X$ which is given by restricting the triangle defining $C_{|K_X+D|^\vee}$, i.e.,
+\[\to C_X \to \cO_{X\times X} \xrightarrow{\eps} \cO_X(-D) \boxtimes \omega_X(D)[n] \to .\]
+Now, to repeat the story, we need a factorization of $\eps$
+\[\cO_{X\times X} \xrightarrow{\rho} \cO_\Delta \xrightarrow{\delta} \cO_X(-D) \boxtimes \omega_X(D)[n],\]
+which amounts to checking that $\eps$ is in the image of precomposition by $\rho^*$
+\[\Hom(\cO_{X\times X},\cO_X(-D)\boxtimes\omega_X(D)[n]) \leftarrow \Hom(\cO_\Delta,\cO_X(-D)\boxtimes\omega_X(D)[n]).\]
+This is the same sort of story as before. By Serre duality, $\rho^*$ corresponds to a morphism
+\[\Hom(\cO_X(-D)\boxtimes\omega_X(D),\omega_{X\times X}[n])^\vee \leftarrow \Hom(\cO_X(-D)\boxtimes\omega_X(D),\cO_\Delta\otimes \omega_{X\times X}[n])^\vee,\]
+which is dual to restriction $\omega_{X\times X} \to \cO_\Delta \otimes \omega_{X\times X}$ along the diagonal. Making further identifications, this is a morphism
+\begin{align*}
+    H^n(X\times X, \omega_X(D)\boxtimes \cO_X(-D))^\vee \leftarrow & H^n(X\times X, \cO_\Delta \otimes (\omega_X(D),\cO_X(-D)))^\vee\\
+    &\cong H^n(X, \omega_X(D)\otimes \cO_X(-D))^\vee,
+\end{align*}
+and by the Kunneth formula and Kodaira vanishing, this left hand term is just
+\[(H^0(X,\omega_X(D)) \otimes H^n(X,\cO_X(-D)))^\vee.\]
+Then, one can inspect that the morphism
+\begin{equation}\label{pushforward-from-diagonal} (H^0(X,\omega_X(D)) \otimes H^n(X,\cO_X(-D)))^\vee \leftarrow H^n(X, \omega_X(D)\otimes \cO_X(-D))^\vee
+\end{equation}
+is dual to the usual cup product of cocycle classes/composition in the derived category. Now, we try to reach $\eps$. We pick an isomorphism $H^n(X,\omega_X)\cong k$, a basis $x_1,\dots,x_\ell$ of $H^0(X,\omega_X(D))$, and the Serre dual basis $e_1,\dots,e_\ell$ for $H^n(X,\cO_X(-D))$. Then, $\eps$ is identified with
+\[\sum e_i\otimes x_i,\]
+(notice the $x$ and $e$ are swapped, because it is a functional). At this point, it is quick to see this $\eps$ is indeed reached, since dual to (\ref{pushforward-from-diagonal}) is, in our basis,
+\begin{align*}
+    H^0(X,\omega_X(D)) \otimes H^n(X,\cO_X(-D)) &\longrightarrow k\\
+    x_i\otimes e_j &\longmapsto \delta_{ij},
+\end{align*}
+and this functional itself \textit{is} $\eps = \sum e_i\otimes x_i$. That is, $1_k$ is a functional on $H^n(X,\omega_X)$, and pulling back the Yoneda cup product/composition, we send $1_k$ in (\ref{pushforward-from-diagonal}) to $\eps$. Thus, we get our desired factorization.
+
+Now that we have the factorization, denote by $C_\Delta$ the cone over
+\[\cO_\Delta \to \cO_X(-D)\boxtimes \omega_X(D)[n],\]
+so that the octahedral axiom applied to our composition gives the triangle
+\[\to \cI_\Delta \to C_X \to C_\Delta \to.\]
+Similar to before, we try to understand $C_\Delta$ by applying derived dual $(-)^\vee = R\cHom(-,\cO_{X\times X})$ to the triangle defining $C_\Delta$. We apply the functor term-by-term. Applying Grothendieck duality for $i:X\to \Delta \hookrightarrow X\times X$ the inclusion of the diagonal, we have
+\begin{align*}
+    R\cHom_{X\times X}(\cO_\Delta,\cO_{X\times X}) &\cong R\cHom_{X\times X}(Ri_*\cO_X, \cO_{X\times X})\\
+    &\cong Ri_* R\cHom_X(\cO_X,i^*\cO_{X\times X} \otimes \omega_X \otimes i^*(\omega_{X\times X}^{-1}) [-n])\\
+    &= Ri_* R\cHom_X(\cO_X,\omega_X^{-1}[-n])\\
+    &= i_* \omega_X^{-1}[-n].
+\end{align*}
+Next,
+\[R\cHom_{X\times X}(\cO_X(-D)\boxtimes \omega_X(D)[n],\cO_{X\times X}) \cong \cO_X(D) \boxtimes \omega_X^{-1}(-D)[-n],\]
+so we have the triangle
+\[\leftarrow C_\Delta^\vee \leftarrow i_* \omega_X^{-1}[-n] \leftarrow \cO_X(D) \boxtimes \omega_X^{-1}(-D)[-n] \leftarrow,\]
+which has the advantage that the morphism of the right two terms is a (shift of a) nonzero morphism
+\[\cO_X(D)\boxtimes \omega_X^{-1}(-D) \xrightarrow{\phi} i_* \omega_X\]
+of sheaves in
+\begin{align*}
+    \Hom(\cO(D)\boxtimes \omega_X^{-1}(-D), i_* \omega_X^{-1}) &= \Hom(i^*(\cO(D) \boxtimes \omega_X^{-1}(-D)), \omega_X^{-1})\\
+    &= \Hom(\omega_X^{-1},\omega_X^{-1})
+\end{align*}
+so it is unique up to scaling. In fact, we can recognize the target of $\phi$ as
+\[i_*i^*(\cO(D)\boxtimes \omega_X^{-1}(-D)) \cong i_* \omega_X^{-1},\]
+so (up to scaling) our morphism has to be the unit map of the $i^* \dashv i_*$ adjunction, which can be computed, by the projection formula, as
+\[(\cO_{X\times X} \to i_*i^*(\cO_{X\times X})) \otimes (\cO(D)\boxtimes \omega_X^{-1}(-D)),\]
+which makes it clear that $\phi$ is a surjective map with kernel
+\[\cI_{\Delta} \otimes (\cO_X(D)\boxtimes \omega_X^{-1}(-D)),\]
+which implies
+\[C_\Delta^\vee \cong \cI_{\Delta} \otimes (\cO_X(D)\boxtimes \omega_X^{-1}(-D))[1-n],\]
+so
+\[C_\Delta \cong \cI_\Delta^\vee \otimes (\cO_X(-D)\boxtimes \omega_X(D))[n-1].\]
+Therefore, our triangle describing the family $C_X$ over $X$ becomes
+\[\to \cI_\Delta \to C_X \to \cI_\Delta^\vee \otimes (\cO_X(-D) \boxtimes \omega_X(D))[n-1] \to.\]
+
+\subsection{Elementary Modifications}
+
+We take a moment to talk about the general theory of elementary modifications of complexes in the derived category. Let $X$ smooth projective, $i:D\hookrightarrow X$ a smooth (effective) Cartier divisor, and $C\in D^b(X)$. We want to modify $C$ along the divisor $D$.
+
+We modify $C$ according to a ``quotient'' of $C$ along the divisor. That is, we take as input a distinguished triangle
+\[\to K \to Li^* C \xrightarrow{f} Q \to\]
+in $D^b(D)$. Then, we have the composition
+\[C \to i_* Li^* C \xrightarrow{i_*f} i_* Q\]
+of the unit of the $Li_* \dashv i_*$ adjunction with $Ri_*f$. Denote $B$ the cone over this composition, which is what we will call our elementary modification of $C$.
+
+In other words, $B$ is defined by the following distinguished triangle
+\[\to B \to C \to i_*Q \to.\]
+
+This elementary modification is ``reversible'' in the following sense:
+
+\begin{prop}
+    The elementary modification of the complex $C$ on $X$ along $i:D\hookrightarrow X$ by $Li^*C\to Q$ fits into a distinguished triangle
+    \[\to Q\otimes \cO_D(-D) \to Li^* B \to K \to,\]
+    and the elementary modification of $B$ along $D$ by this $Li^*B\to K$ recovers $C(-D)$.
+\end{prop}
+
+\begin{rmk}
+We first say a word about the proof in the classical elementary modification setting, where $C,Q$ are vector bundles, and $f$ is a surjection. The proof is simply to consider the short exact sequence defining $B$ (now as a kernel), take the long exact sequence in $\cTor^{\cO_X}(-,\cO_D)$ to pullback to get
+\[0\to \cTor_1^{\cO_X}(Q,\cO_D) \to i^* B \to i^* C \to Q \to 0\]
+(by flatness of $i^*C$). Then, you focus on the first three terms instead of the last (in the derived category, this will be ``rotating the triangle''). Last, replace $i^*C$ with the image of $i^*B$, which is exactly $K$, and compute $\cTor_1^{\cO_X}(Q,\cO_D)\cong Q(-D)$.
+
+The proof will be different in the derived setting, because we will instead be using derived pullback $Li^*$, which already incorporates all $\cTor^{\cO_X}(-,\cO_D)$ and is also exact.
+\end{rmk}
+
+\begin{proof}
+    Pull back the distinguished triangle defining $B$ to get
+    \[\to Li^* B \to Li^* C \to Li^* i_* Q \to.\]
+    Already this is different from the classical setting, because $Li^* i_* Q$ is \textit{not} $Q$, we have twisted $Q$ with normal data of $D$. We do however have the counit map $\eps_Q: Li^* i_* Q\to Q$ for the $Li^* \dashv i_*$ adjunction, and applying the octahedral axiom to the composition
+    \[Li^*C \xrightarrow{q} Li^*i_* Q \xrightarrow{\eps_Q} Q,\]
+    which is none other than starting map $Li^*C \xrightarrow{f} Q$, we get the triangle
+    \[\to C_q \to C_f \to C_{\eps_Q}\to,\]
+    which simplifies (in particular using \ref{cone-of-counit} for $C_{\eps_Q}$) to the triangle
+    \[\to Li^* B \to K \to Q\otimes \cO_D(-D)[1]\to,\]
+    which rotates to our desired triangle
+    \[\to Q\otimes \cO_D(-D) \to Li^*B \to K \to.\]
+
+    Then, one can check that the cone over the composition
+    \[B\to i_*Li^* B \to i_*K\]
+    recovers $C(-D)$, since the octahedral axiom places such a cone it in a distinguished triangle
+    \[\to B\otimes \cO_X(-D) \to (-) \to i_* Q\otimes \cO_X(-D)\to,\]
+    so one only needs to check that the morphism $i_* Q\otimes\cO_X(-D) \to B\otimes \cO_X(-D)[1]$ is correct. {\color{red} probably follows from all of the commuting diagrams in the octahedral axiom}.
+    
+    % In the classical elementary modification of a vector bundle, we would recognize that exactness tells us that $i^* B$ maps surjectively onto the subobject $K$ of $i^* C$, and then we would analyze the kernel by computing $\cTor_1^{\cO_X}(i^*i_*Q,\cO_D)$, since identifying $i_*$ pushforwards with coherent sheaves annihilated by $\cI_D$, we pullback becomes tensoring with $\cO_D$ as an $\cO_X$-module.
+
+    % In the derived setting, the proof is different, because (1) the cone plays a slightly different role than a kernel, and (2) the derived pullback $Li^*$ adds normal bundle data of $\cO_D$ to a coherent sheaf, and (3) we no longer can identify $D^b(D)$ as a full subcategory of $D^b(X)$ simply by $i_*$, because this functor is no longer full (in general we have new extensions in the ambient $X$).
+
+    % Somehow, these effects cancel out and the result is still true ({\color{red}or maybe in the underived setting, the $\cTor_1^{\cO_X}$ computation was a coincidence for divisors?}).
+
+    % Now, to prove this in the derived setting, 
+
+    % We apply the octahedral axiom to our composition
+    % \[C \xrightarrow{\eta_C} Ri_* Li^* C \xrightarrow{Ri_*f} Ri_* Q\]
+    % to get the triangle
+    % \[\to C_{\eta_C} \to B \xrightarrow{\overline{Ri_* f}} C_{Ri_* f} \to.\]
+    % By the projection formula, this unit map $\eta_C$ is actually
+    % \[(\cO_X \to Ri_* Li^* \cO_X) \otimes C,\]
+    % so the cone over $\eta_C$ is just the tensor product of the ideal sheaf with $C$, i.e., $C(-D)$.
+
+    % Next, since $Ri_*$ is an exact functor, it preserves cones, so
+    % \[C_{Ri_* f} \cong Ri_* C_f = Ri_* K.\]
+
+    % So far, this means our distinguished triangle is
+    % \[\to C(-D) \to B \to Ri_* K \to.\]
+
+    % Now, we apply the exact functor $Li^*$. This gives
+    % \[\to Li^*C \otimes \cO_D(-D) \to Li^* B \to Li^* Ri_* K \to.\]
+
+    % For $\eps_K$ the component along $K$ for counit map of the $Li^*\dashv Ri_*$ adjunction, we then have maps
+    % \[\begin{tikzcd}
+    % \phantom{*}\rar & {Li^* C \otimes \cO_D(-D)} \dar["f \otimes \cO_D(-D)"] \rar & {Li^* B} \rar & {Li^* Ri_* K} \dar["\eps_K"] \rar & \phantom{*}\\
+    %  & Q \otimes \cO_D(-D) & & K &
+    % \end{tikzcd}\]
+    % {\color{blue}
+    % and we want to push down $Li^*B$. Applying the octahedral axiom to the composition
+    % \[Li^*B \xrightarrow{Li^*\overline{Ri_* f}} Li^*Ri_* K \xrightarrow{\eps_K} K,\]
+    % we get distinguished triangle
+    % \[C_{Li^*\overline{Ri_* f}} \to C_{\eps_K \circ Li^*\overline{Ri_* f}} \to C_{\eps_K},\]
+    % which simplifies to
+    % \[\to Li^*C \otimes \cO_D(-D) \to C_{\eps_K \circ Li^*\overline{Ri_* f}} \to K\otimes_D(-D)[1] \to \]
+    % }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    % and our goal is to fill in the bottom row with $Li^*B$ to make it a distinguished triangle. The idea is to apply the $3\times 3$ lemma to \textit{some} $2\times 2$ commutative square which will be extended to a $3\times 3$ diagram with exact rows and columns. We are eventually ancitipating the following diagram (which we justify later):
+    % \[\begin{tikzcd}
+    %     &\phantom{*} \dar & \phantom{*} \dar & \phantom{*} \dar & \\
+    %     \phantom{*} \rar & K\otimes \cO_D(-D) \dar \rar & 0 \dar \rar & K\otimes \cO_D(-D)[1] \rar \dar & \phantom{*}\\
+    %     \phantom{*} \rar & Li^* C \otimes \cO_D(-D) \rar \dar & Li^* B \rar\dar & Li^* Ri_* K \rar\dar & \phantom{*}\\
+    %     \phantom{*} \rar & Q\otimes \cO_D(-D) \rar \dar & Li^*B \rar \dar & K \rar \dar & \phantom{*}\\
+    %     & \phantom{*} & \phantom{*} & \phantom{*} & 
+    % \end{tikzcd}\]
+    % The reason we anticipate this diagram is because we want the bottom middle row entry to be $Li^* B$ to prove the proposition, which then forces the top middle entry to be 0. We knew the top left entry would be $K\otimes \cO_D(-D)$ by twisting the original given sequence with $f$, and then we would need the top right entry to be $K\otimes \cO_D(-D)[1]$ to fill in the top row.
+
+    % Now, we observe that the top right $2\times 2$ square commutes trivially, so to get our $3\times 3$ diagram, we just need to check that all of the cones and morphisms are correct. In particular, the top right vertical triangle comes from corollary \ref{cone-of-counit}. {\color{red} one should check that the we don't get an unexpected cone in the bottom right instead of $Q\otimes \cO_D(-D)$, since the $3\times 3$ lemma is not very transparent.}
+    
+    % This then gives us our $3\times 3$ diagram, and in particular the bottom exact row proves our proposition.
+\end{proof}
+
+
+
+\section{Appendix}
+
+\subsection{Derived Self-Intersection}
+
+Let $X$ be a smooth projective variety, and $i: Z\hookrightarrow X$ be a codimension $r$ smooth closed subscheme cut out by a regular section $s$ of a vector bundle $E$ on $X$.
+
+We will compute the \textbf{derived self-intersection}, $Li^* Ri_* \cO_Z$. Note that $i$ is an affine map, so $Ri_*=i_*$.
+
+\begin{prop}
+    $Li^*i_* \cO_Z = \bigoplus_{i=0}^r \wedge^i E^\vee|_D[i]$
+\end{prop}
+
+\begin{proof}
+    The section $s\in \Gamma(X,E)$ exactly gives a surjection
+    \[\wedge^1 E^\vee=E^\vee \xrightarrow{s} \cI_Z \hookrightarrow \cO_X,\]
+    which starts a Koszul complex $\Kos(s)$ quasi-isomorphic to $i_* \cO_Z$,
+    \[\Kos(s) = \left(0\to \wedge^r E^\vee \to \cdots \to \wedge^1 E^\vee \to \wedge^0 E^\vee \to 0\right).\]
+    Now, $\Kos(s)$ consists entirely of locally free sheaves, so we can compute $Li^*$ just by usual pullback $i^*$. Furthermore, on trivialization of $E$, where $s$ in coordinates is $(f_1,\dots,f_r)$, the differentials consist of matrices of the $f_i$, but these become 0 on $Z$. Thus, $i^* \Kos(s)$ is just
+    \[\bigoplus_{i=0}^r \wedge^i E^\vee|_D[i],\]
+    which computes $Li^* i_* \cO_Z$.
+\end{proof}
+
+\begin{prop}\label{push-pull}
+    Let $K\in D^b(Z)$, then
+    \[Li^* i_* K = \bigoplus_{i=0}^r \wedge^i E^\vee|_D \otimes K [i].\]
+\end{prop}
+\begin{proof}
+    Recall that, by definition,
+    \[i^*(-) \cong i^{-1}(-) \otimes^L_{i^{-1}\cO_X} \cO_Z,\]
+    so ``deriving both sides'', we get
+    \[Li^*(-) \cong i^{-1}(-) \otimes^L_{i^{-1}\cO_X} \cO_Z.\]
+    The advantage of this formulation is that $i^{-1}$ is an exact functor and left inverse to $i_*$ in the derived category.
+    
+    Note, we are slightly abusing notation to write $i_*$ to refer to both functors
+    \[D^b(Z)\to D^b(X), \qquad D^b(i^{-1}\cO_X\lMod) \to D^b(\cO_X\lMod),\]
+    (since both functors are computed in the same way on the underlying sheaf of abelian groups). These two are related by $i_*(-)$ in the first sense being the same as $i_*((-)|_{i^{-1}\cO_X})$ for the second meaning of $i_*$, but this is essentially just type-checking.
+
+    So, we have
+    \[Li^*i_*(K) \cong i^{-1}i_*(K) \otimes_{i^{-1}\cO_X}^L \cO_Z.\]
+
+    Now recall that for $s$ the section of $E$ cutting out $Z$, $i_*\cO_Z$ as a $\cO_X$-module is quasi-isomorphic to $\Kos(s)$, so that
+    \[\cO_Z \cong i^{-1}i_*\cO_Z \cong i^{-1}\Kos(s),\]
+    where $i^{-1}\Kos(s)$ is a complex of flat $i^{-1}\cO_X$-modules. Now, we get
+    \begin{align*}
+        Li^*i_*(K) &\cong K \otimes_{i^{-1}\cO_X} i^{-1}\Kos(s)\\
+        &\cong K \otimes_{\cO_D} \cO_D \otimes_{i^{-1}\cO_X} i^{-1}\Kos(s)\\
+        &\cong K \otimes_{\cO_D} i^*\Kos(s)\\
+        &\cong \bigoplus_{i=0}^r \wedge^i E^\vee|_D \otimes_{\cO_D} K[i].
+    \end{align*}
+\end{proof}
+
+\begin{cor}\label{cone-of-counit}
+    The cone over the counit map $\eps_K: Li^* i_* K \to K$ of the $Li^* \dashv i_*$ adjunction is (quasi-)isomorphic to
+    \[\bigoplus_{i=1}^r \wedge^i E^\vee|_D \otimes K[i].\]
+\end{cor}
+
+\begin{proof}
+    % {\color{red} prove this! need to work out what the counit map is... but in any case this must cancel out just the $i=0$ term of the direct sum.}
+
+    % Recall that the component of the counit along an object $A$ for an adjunction $F\dashv G$ is computed by taking the image of $1_{GA}$ under the isomorphism
+    % \begin{align*}
+    %     \Hom(GA,GA) &\xrightarrow{\cong} \Hom(FGA,A)\\
+    %     1_{GA} &\mapsto \eps_A
+    % \end{align*}
+    % but more concretely, in our derived setting, we will find an acyclic replacement $P\to GA$ and instead understand the image
+    % \begin{align*}
+    %     \Hom(P,GA) &\to \Hom(FP,A)\\
+    %     \phi &\mapsto \phi^\flat.
+    % \end{align*}
+    % wait no good.
+
+
+    % Recall that the counit morphism for a coherent sheaf $\cF \in \Coh(D)$
+    % \[\eps_\cF: i^* i_* \cF \to \cF\]
+    % in the case of $i$ a closed embedding is trivial---we can see this either by noticing the right adjoint $i_*$ is fully-faithful, or by computing affine locally for $\Spec B\subseteq X$, $\Spec B/I = \Spec B \cap Z$, and $\cF|_{\Spec B/I} = \tilde{M}$, that
+    % \[i^*i_* \cF|_{\Spec B/I} \cong B/I \otimes_B M_B \cong M/IM \cong M.\]
+
+    % So, the idea is... what?
+    % {\color{red} I think I need to look up how to derive an adjunction... because there's something nontrivial about this locally free replacement. I'm anticipating that the counit should be...}
+
+    % OH. Maybe this is easier to understand as a tensor-hom adjunction? Should be a morphism
+    % \[K\otimes_{\cO_D} i^*\Kos(s) \to K\]
+    % which is some sort of evaluation... Maybe easier to understand at earlier step which is
+    % \[i^{-1}i_* K\otimes_{i^{-1}\cO_X} i^{-1}\Kos(s) \to K\]
+    % which makes sense in the category of complexes of modules over $i^{-1}\cO_X$... the counit should just be ``multiplication'', where $K$ has the structure of a module over $i^{-1}\Kos(s)$, via restriction of scalars along the quasi-isomorphism $i^{-1}\Kos(s) \to \cO_Z$? This seems kind of good to me.
+    
+    % Or maybe I have to do this derived to figure out the map...
+    % We can describe this affine locally as follows: Let $\Spec B$ be an affine open of $X$, $\Spec B/I$ the pullback to $Z$, and let $\cF|_{\Spec B/I} \cong \tilde{M}$. Then, on the level of commutative algebra $i^* i_* \cF$ is given by
+    % \[B/I \otimes_B M_B \cong M/IM = M\]
+    % and the counit is just identity $M\to M$. This reflects the fact that $i_*$ is fully-faithful, since we can compute $i_*$ on morphisms by
+    % \[\Hom(\cF,\cG) \xrightarrow{\eps_\cF^*} \Hom(i^*i_*\cF, \cG) \xrightarrow{\cong} \Hom(i_*\cF, i_* \cG),\]
+    % so $i_*$ an isomorphism on morphisms is equivalent to the counit being an isomorphism.
+
+    % However, the story gets more complicated in the derived category, because while $i_*$ is no longer fully-faithful for complexes not concentrated in a single degree.
+
+    % {\color{red} attempt 2}
+    Appropriately expressed, the adjunction $Li^*\dashv i_*$ lifts to the category of chain complexes as the composition of the $i^{-1}\dashv i_*$ adjunction and a certain tensor-hom adjunction, as in
+    \begin{align*}
+        i^{-1}(-) \otimes_{i^{-1}\cO_X} i^{-1}\Kos(s) \quad \dashv &\quad i_*\cHom_{i^{-1}\cO_X}(i^{-1}\Kos(s),-)\\
+        &\cong \cHom_{\cO_X}(\Kos(s),i_*(-)),
+    \end{align*}
+    where nothing is derived, which gives us a chain isomorphism
+    \[\Hom(i^{-1}(-)\otimes_{i^{-1}\cO_X} i^{-1}\Kos(s), -) \cong \Hom(-,\cHom(\Kos(s),i_*(-)).\]
+    Now, the counit is the image of the identity chain map under this isomorphism in the following sense:
+    \begin{align*}
+        \Hom(\cHom(\Kos(s),i_*(K)),\cHom(\Kos(s),i_*(K))) &\xrightarrow{\cong} \Hom(i^{-1}(\cHom(\Kos(s),i_*(K)))\otimes_{i^{-1}\cO_X} i^{-1}\Kos(s),K)\\
+        &\cong \Hom(\cHom(i^{-1}\Kos(s),K) \otimes_{i^{-1}\cO_X} i^{-1}\Kos(s),K)\\
+        1 &\mapsto \eps_K,
+    \end{align*}
+    so $\eps_K$ is essentially evaluation. As in the proof of the previous proposition, we can ``throw in'' extra $\cO_D$ tensor factors using the fact that $K$ is a $\cO_D$ module, so that in fact $\eps_K$ becomes a more transparent evaluation in
+    \[\Hom(\cHom(i^*\Kos(s),K)\otimes_{\cO_D} i^*\Kos(s),K).\]
+    Again writing $i^*\Kos(s)\cong \bigoplus_{i=0}^r \wedge^i E^\vee|_D[i]$, we see that $\eps_K$ is the evaluation
+    \[\Hom(\bigoplus_{i=0}^r)\]
+    {\color{red}no i'm doing something bs}
+
+\end{proof}
+
+% \bibliographystyle{plain} % We choose the "plain" reference style
+% \bibliography{project_bibliography2}
+
+\printbibliography
+
+\end{document}

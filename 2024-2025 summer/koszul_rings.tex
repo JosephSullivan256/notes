@@ -1,0 +1,183 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Koszul Duality}
+\author{Joseph Sullivan}
+\date{June 2025}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+We give a brief outline of Koszul rings. For more details, see \cite[Section 2]{Beilinson_Ginzburg_Soergel_1996}.
+
+\section{Characterizations and First Implications}
+
+We start with some motivation. One useful feature of the symmetric algebra of a vector space over a field $k$ (or more generally a free module over a semisimple ring $k$) is the Koszul complex resolving $k$. From this resolution, we get for example the Hilbert syzygy theorem, Mumford's regularity theorem, etc. It also hints at a relationship between the symmetric algebra and the exterior algebra (will see more on this later).
+
+To define a Koszul ring in general, we essentially take the Koszul complex resolving $k$ as an axiom.
+
+\begin{defn}
+    A \textbf{Koszul ring} is a $\Z_{\geq 0}$-graded ring $A$ with $k=A_0$ semisimple such that there exists a \textit{linear projective resolution of $k$} as a graded left $A$-module, i.e., a long exact sequence
+    \[\cdots \to P^2 \to P^1 \to P^0 \to k \to 0\]
+    such that $P^i = A P^i_i$ (i.e., generated in degree $i$).
+\end{defn}
+
+\begin{rmk}
+    We make a few comments.
+    \begin{itemize}
+        \item We apologize for breaking the (co)homology indexing convention by having descending superscripts---we do this so we can easily distinguish between homological degree (superscript) and grading degree (subscript).
+        \item The linear projective resolution of $k$ is unique up to unique isomorphism, since being linear forces it to be a minimal resolution.
+    \end{itemize}
+\end{rmk}
+
+We now give some implications/characterizations of Koszul rings. From now on, $A$ will always indicate a $\Z_{\geq 0}$-ring with $k=A_0$ semisimple. Denote $\hom$ graded $\Hom$, and $\ext$ the derived functor of $\hom$.
+
+\begin{prop}
+    $A$ is Koszul iff $n\neq i$ implies $\ext^i_A(k,k(n))=0$.
+\end{prop}
+
+In other words, Koszul rings are ``as close to semisimple as possible'' in that there are very few extensions. Next, we will see that Koszul rings are a special type of quadratic algebra.
+
+\begin{defn}
+    A \textbf{quadratic algebra} is a graded ring over $k$ generated in degree 1 with relations generated in degree 2, i.e.,, isomorphic to
+    \[T M / (R)\]
+    where $M=A_1$ is a $k$-bimodule and $R \subseteq M\otimes_k M$.
+\end{defn}
+
+\begin{prop}
+    The statement $n\neq i$ implies $\ext^i_A(k,k(n))$ for
+    \begin{itemize}
+        \item $i\leq 1$ implies $A$ is generated in degree 1.
+        \item $i\leq 2$ implies $A$ is a quadratic algebra.
+    \end{itemize}
+    In particular, Koszul algebras are quadratic algebras.
+\end{prop}
+
+Next, we can ask which quadratic algebras are Koszul. It turns out we can always define a Koszul complex, but it need not be exact.
+
+\begin{construction}
+    Let $A=TV/(R)$ be a quadratic algebra. First, we define what will be the terms in a complex. Define $k$-bimodules $K_i^i$ by
+    \[K_i^i = \bigcap_{\nu = 0}^{i-2} V^{\otimes \nu} \otimes R \otimes V^{\otimes i-\nu -2} \leq V^{\otimes i}\]
+    and put $K^i = A\otimes_k K_i^i$. Notice for $i=0,i=1$, the intersection inside $V^{\otimes i}$ is indexed by an empty set, so we mean that
+    \[K^0 = A \otimes_k V^{\otimes 0} = A, \qquad K^1 = A\otimes_k V.\]
+    For $i=2$, there's only one term in the intersection, and we get $K^2 = A \otimes_k R$.
+
+    Now, we define a differential $d: K^i \to K^{i-1}$ by restricting the multiplication/contraction map
+    \[d: A\otimes V^{\otimes i} \to A \otimes V^{\otimes i-1}\]
+    to $K^i \to K^{i-1}$ (checking that $d(K^i) \subseteq K^{i-1}$). Then, $d^2=0$ because, roughly speaking, we baked the degree 2 $R$ into $K^i$, so after applying $d$ twice we get a full copy of $R$ inside the tensor component of $A$, where $R$ is 0. {\color{red} justify this better.}
+
+    Now, the complex
+    \[\cdots \to K^2 \to K^1 \to K^0 \to 0\]
+    is called the \textbf{Koszul complex}. It need not in general be a resolution of $k$ (i.e., an exact complex everywhere except in homological degree 0, where $\coker(K^1 \to K^0) \cong k$).
+\end{construction}
+
+\begin{prop}
+    $A=TV/(R)$ is Koszul iff the Koszul complex is a resolution of $k$.
+\end{prop}
+
+\begin{proof}
+    If the Koszul complex is a resolution of $k$, then we have our desired linear projective resolution for our original definition of Koszul rings.
+
+    Conversely, if $A$ is Koszul, we can show vanishings of the homologies of the Koszul complex inductively, using $\ext$ vanishings to see that if homology at homological degree $p$ exists, it is generated in grading degree $p+1$, but then one can now check this by hand.
+\end{proof}
+
+
+
+\section{Duality}
+
+There's a somewhat better way of describing the Koszul complex, using the notion of a quadratic dual.
+
+\begin{defn}
+    Let $V$ be a $k$-module, $R\subseteq V\otimes V$. The \textbf{quadratic dual} $A^!$ to $A=TV/(R)$ is the algebra
+    \[TV^*/(R^\perp)\]
+    where $R^\perp \subseteq (V\otimes V)^*$ is defined as
+    \[R^\perp = \{f\in (V\otimes V)^* \mid f(R)=0\}.\]
+\end{defn}
+
+\begin{eg}
+    Let $V$ be a finite dimensional $k$-vector space, then
+    \[\Sym^\bullet V = TV/(v_i v_j - v_j v_i)\]
+    and
+    \[\wedge^\bullet V^* = TV^*/(f_i f_j + f_j f_i)\]
+    are quadratic duals (check!).
+\end{eg}
+
+Then, notice that
+\[A^!_i = (V^*)^{\otimes i} / \sum_{\nu = 0}^i (V^*)^{\otimes i-\nu-2} \otimes R^\perp \otimes (V^*)^{\otimes \nu},\]
+so that (dualing at a right $k$-module since we had originally dualed $V$ as a left $k$-module)
+\[{}^*(A^!_i) = \bigcap_{\nu = 0}^{i-2} V^{\otimes \nu} \otimes R \otimes V^{\otimes i-\nu-2} = K_i^i,\]
+so we can consider the Koszul complex as having terms
+\[\cdots \to A\otimes {}^*(A^!_2) \to A\otimes {}^*(A^!_1) \to A\otimes {}^*(A^!_0) \to 0\]
+or maybe even better consider the terms as $\Hom(A_i^!, A)$ in the category of right $k$-modules. We can then describe the differential as the composition
+\[\Hom(A_i^!, A) \to \Hom(A_i^! \otimes V, A\otimes V) \to \Hom(A_{i-1}^!, A)\]
+where the first map is tensoring by $\id_V$, and the second is defined by precomposing by
+\[A^!_i = A^!_i \otimes k \xrightarrow{(\text{-})\otimes \eval} A^!_i \otimes V^* \otimes V \xrightarrow{\text{multiplication}} A^!_{i+1} \otimes V\]
+and postcomposing by multiplication $A\otimes V\to A$.
+
+
+\section{Linear Projective Complexes}
+
+See \cite{Villa_Saorin}.
+
+\begin{defn}
+    Let $A$ be a $\Z_{\geq 0}$-graded algebra. Denote $\LCom_A$ the category of \textbf{linear complexes of projectives}, which has
+    \begin{itemize}
+        \item objects cochain complexes $(P^\bullet, d)$ with each $P^k$ a projective graded left $A$-module such that $P^k$ is generated in degree $k$,
+        \item morphisms usual chain maps.
+    \end{itemize}
+\end{defn}
+
+We will assume $k=A_0$ is a field, and this will also make projective graded modules over $A$ the same as tensor products of a graded $k$-vector spaces with $A$.
+
+\begin{prop}
+    Let $A,B$ be quadratic dual algebras. Then,
+    \[\grlMod{A} \simeq \LCom_B.\]
+\end{prop}
+\begin{proof}
+    We define the functors forming the inverse equivalence. Let $M$ be a graded $B$-module. We define a cochain complex
+    \[\cdots \to M_{k} \otimes A \to M_{k+1} \otimes A \to \cdots,\]
+    where the differential is the data of a map
+    \[M_{k} \to M_{k+1} \otimes A_1.\]
+    We get this differential by considering the multiplication map
+    \[M_k \otimes B_1 \to M_{k+1},\]
+    which we tensor with $A_1=B_1^*$ and precompose with the map
+    \[M_k \otimes k \to M_k \otimes A_1 \otimes B_1\]
+    sending $1\in k$ to $\eval \in A_1\otimes B_1$.
+
+    Going backwards, we take a linear projective complex $(M^k,d)$ and define a $B$-module $M$ by first defining the $k$-vector space
+    \[M = \bigoplus M^k,\]
+    and to define the $B$-module structure, we just need to give $B_1$ multiplication (satisfying the relations). For $b\in B_1$ and $m\in M_k$, we define
+    \[b\cdot m \defeq \eval_b(d(1\otimes m))\]
+    since $d(1\otimes m) \in A_1 \otimes M_{k+1}$.
+\end{proof}
+
+\begin{rmk}
+    The result can be stated in a stronger way---for any graded algebra, we can associate a quadratic algebra to it, and then linear projective complexes over the original are equivalent to modules over the quadratic dual of the associated algebra.
+\end{rmk}
+
+\nocite{*} % Include all references in refs.bib regardless of whether they are referenced or not
+\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliography{koszul_rings} % Entries are in the refs.bib file
+
+\end{document}

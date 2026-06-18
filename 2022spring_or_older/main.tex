@@ -1,0 +1,129 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mystyle}
+
+\title{Algebraic Geometry}
+\author{Joseph Sullivan}
+\date{June 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Basic Notions}
+
+\begin{convention}
+    All rings are commutative with identity. $A$ is a ring.
+\end{convention}
+
+\begin{defn}
+    The \textbf{spectrum} of $A$, denoted $\Spec A$, is the set of prime ideals of $A$. For $P\teq A$ prime, we write $[P]\in \Spec A$ to emphasize $[P]$ as a point.
+    
+    Element $a\in A$ are called \textbf{functions} on $\Spec A$, and their \textbf{value} at $[P]$ is $a \pmod{P} \in A/P$.
+    
+    Generators $x_1,\dots,x_r$ of $A$ are called \textbf{coordinates}.
+\end{defn}
+
+\begin{eg}
+    \begin{itemize}
+        \item Affine line over $k=\overline{k}$: $\A_k^1 \defeq \Spec k[x]$ has prime ideals $(x-a)$ and $(0)$.
+        \item $\Spec \Z$ has prime ideals $(0)$ and $(p)$.
+        \item The \textbf{dual numbers} $\Spec k[\eps]/(\eps^2)$ has a single point $(\eps)$ and functions $a+b\eps$. Note that $a+b\eps$ and $a$ evaluate the same at $(\eps)$, but are distinct functions. This is the fault of nilpotents.
+        \item Real affine line $\A_\R^1 = \Spec \R[x]$ has prime ideals $(0)$, $(x-a)$, and $(x^2+ax+b)$ (irreducible quadratic).
+        \item $\A_\Q^1$ has points $(f)$ for $f$ an irreducible polynomial over $\Q$.
+    \end{itemize}
+\end{eg}
+
+To characterize affine space $\A_k^n \defeq \Spec k[x_1,\dots,x_n]$ more generally, we have the Nullstellensatz (prove later).
+
+\begin{thm}[Hilbert's Weak Nullstellensatz]
+    Assume $k=\overline{k}$. Then, the maximal ideals of $k[x_1,\dots,x_n]$ are precisely those ideals of the form $(x_1-a_1,\dots,x_n-a_n)$ for $a_i\in k$.
+\end{thm}
+
+\begin{thm}[Hilbert's Nullstellensatz]
+    Let $k$ be any field. Then, every maximal ideal of $k[x_1,\dots,x_n]$ has residue field a finite extension of $k$.
+\end{thm}
+
+\begin{proof}[Nullstellensatz implies Weak]
+    Ideals $(x_1-a_1,\cdots,x_n-a_n)$ are maximal because of the evaluation map. Conversely, let $\m \teq k[x_1,\dots,x_n]$ be maximal. Then,
+    \[k[x_1,\dots,x_n]/\m = k(\overline{x_1},\dots,\overline{x_n})\]
+    is a finite extension of $k$, so it must be $k$ itself because it is algebraically closed. Thus, $\overline{x_i}=a_i \in k$, so by the universal property of polynomial rings, this quotient map is exactly the evaluation at $(a_1,\dots,a_n)$ map. Therefore, it has kernel $\m=(x_1-a_1,\dots,x_n-a_n)$.
+\end{proof}
+
+\begin{prop}
+    Any integral domain $A$ which is a finite $k$-algebra (i.e., $\dim_k A <\infty$) must be a field.
+\end{prop}
+
+\begin{proof}
+    We look for an inverse for a nonzero $a\in A$. The map
+    \begin{align*}
+        \mu_a: A &\longrightarrow A\\
+        x &\longmapsto ax
+    \end{align*}
+    is injective because $A$ is an integral domain, i.e., $ax=0$ implies $x=0$ because $a\neq 0$. Then, since $\dim_k A <\infty$, and injective endomorphism is an isomorphism (e.g., by rank-nullity). Thus, $1\in A$ has a preimage $\mu_a^{-1}(1)$ which is the inverse to $a$. Thus, $A$ is a field.
+\end{proof}
+
+\begin{defn}
+    By the lattice isomorphism theorem, $\Spec A/I$ is a subset of $\Spec A$.
+\end{defn}
+
+\begin{prop}
+    Let $S\subseteq A$ be multiplicative. Then,
+    \begin{align*}
+        \{\text{prime ideals } P\teq S^{-1}A\} &\longrightarrow \{\text{prime ideals } P\teq A, \quad P\cap S=\emptyset\}\\
+        P &\longmapsto P^c\\
+        P &\longmapsfrom P^e.
+    \end{align*}
+\end{prop}
+
+\begin{prop}\label{distunion}
+    $\Spec A = \bigcup_{i\in I} D(f_i)$ if and only if $A=(f_i)_{i\in I}$.
+\end{prop}
+
+\begin{proof}
+    First, assume $\Spec A = \bigcup_{i\in I} D(f_i)$. Let $J=(f_i)_{i\in I}$. Suppose to the contrary that $J\subsetneq A$, so $J$ is proper and can be extended to a prime ideal $P$. Then, $J\subseteq P$ implies $P\in V(J)$, but $V(J)$ is outside $D(f_i)$ for all $i\in I$. Therefore, $\{D(f_i)\}$ is not a cover, which is a contradiction.
+    
+    Next, assume $A=(f_i)_{i\in I}$. Then, for every prime ideal $P\teq A$, in particular $1\not\in P$. We can write $1=\sum a_i f_i$, so in particular we cannot have all $f_i\in P$. Therefore, for some $i\in I$, $f_i\not\in P$, so $P\in D(f_i)$. Thus, $\{D(f_i)\}$ is a cover of $\Spec A$.
+\end{proof}
+
+\begin{prop}
+    $\Spec A$ is quasicompact (i.e., compact as a topological space).
+\end{prop}
+
+\begin{proof}
+    It suffices to show compactness on a basic open cover. Let $\{D(f_i)\}_{i\in I}$ be a basic open cover. By proposition \ref{distunion}, $J=(f_i)=\Spec A$. Thus, $1\in (f_i)$, so
+    \[1 = \sum_{k=1}^n a_{i_k} f_{i_k}.\]
+    Therefore, $\Spec A = (f_{i_1},\dots,f_{i_k})$, so
+    \[\Spec A = \bigcup_{k=1}^n D(f_{i_k}).\]
+    Thus, $\{D(f_{i_1},\dots,D(f_{i_k})\}$ is a finite subcover of $\Spec A$.
+\end{proof}
+
+\begin{prop}
+    Let $A$ be a ring. Then,
+    \[\bigcap_{P \text{ prime}} P = \sqrt{(0)}\]
+\end{prop}
+
+\begin{proof}
+    Since $P$ prime implies $P$ radical, we have $(0)\subseteq P$ implies $\sqrt{(0)}\subseteq \sqrt{P} = P$. Thus, we only need to show the forward inclusion.
+    
+    Let $f\not\in \sqrt{(0)}$. We want to find a prime ideal (a point) $P$ such that $f\not\in P$ (i.e., $P\not\in V(f)$). So, we check that $D(f)$ is non empty.
+    
+    Algebraically, we have a correspondence between prime ideals not meeting $\{1,f,f^2,\dots\}$ and prime ideals of $A_f$, so we need to show $A_f$ has a prime ideal, e.g. a maximal ideal. Since we can extend any proper ideal $I$ to a maximal ideal, we just need to show $A_f$ is nonzero. Otherwise, if $1=0$ in $A_f$, by definition there exists $n\in \N$ such that
+    \begin{align*}
+        f^n\cdot 1 = 0
+    \end{align*}
+    in $A$, so $f\in \sqrt{(0)}$. This contradicts our initial assumption, so $A_f$ is nonzero. Thus, the ideal $(0)$ is proper and can be extended to a maximal ideal $\m$, which corresponds to a prime ideal $P=\m \cap A$ that does not contain $f$. Thus, $f\not\in \bigcap P$.
+\end{proof}
+
+
+\section{Sheaf of Regular Functions}
+
+\begin{prop}
+    Let $P\teq R$ be a prime ideal. Then,
+    \[R_P = \colim_{P \in D(f)} R_f\]
+\end{prop}
+
+
+
+\end{document}

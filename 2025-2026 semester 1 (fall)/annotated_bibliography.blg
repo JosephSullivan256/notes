@@ -1,0 +1,69 @@
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: annotated_bibliography.aux
+The style file: plain.bst
+Database file #1: annotated_bibliography.bib
+Warning--string name "june" is undefined
+--line 11 of file annotated_bibliography.bib
+Warning--string name "june" is undefined
+--line 17 of file annotated_bibliography.bib
+Warning--empty journal in Beckmann_Belmans_2022
+Warning--there's a number but no volume in Beckmann_Belmans_2022
+Warning--empty journal in Belmans_Bose_Frei_Gould_Hotchkiss_Lamarche_Petok_Avila_Shah
+Warning--empty year in Belmans_Bose_Frei_Gould_Hotchkiss_Lamarche_Petok_Avila_Shah
+Warning--empty journal in Chen_Vilonen_Xue_2020
+Warning--there's a number but no volume in Chen_Vilonen_Xue_2020
+Warning--empty journal in Chen_Vilonen_Xue_2021
+Warning--there's a number but no volume in Chen_Vilonen_Xue_2021
+Warning--empty journal in Cheng_Perry_Zhao_2025
+Warning--there's a number but no volume in Cheng_Perry_Zhao_2025
+Warning--empty journal in Jiang_Leung_2021
+Warning--there's a number but no volume in Jiang_Leung_2021
+Warning--empty journal in Kuznetsov_2015
+Warning--there's a number but no volume in Kuznetsov_2015
+Warning--empty journal in Tevelev_2023
+Warning--there's a number but no volume in Tevelev_2023
+Warning--empty journal in Tevelev_Torres_2023
+Warning--there's a number but no volume in Tevelev_Torres_2023
+You've used 14 entries,
+            2118 wiz_defined-function locations,
+            593 strings with 6540 characters,
+and the built_in function-call counts, 4100 in all, are:
+= -- 385
+> -- 219
+< -- 0
++ -- 87
+- -- 72
+* -- 321
+:= -- 742
+add.period$ -- 52
+call.type$ -- 14
+change.case$ -- 77
+chr.to.int$ -- 0
+cite$ -- 32
+duplicate$ -- 142
+empty$ -- 280
+format.name$ -- 72
+if$ -- 797
+int.to.chr$ -- 0
+int.to.str$ -- 14
+missing$ -- 13
+newline$ -- 83
+num.names$ -- 28
+pop$ -- 70
+preamble$ -- 1
+purify$ -- 64
+quote$ -- 0
+skip$ -- 94
+stack$ -- 0
+substring$ -- 149
+swap$ -- 5
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 56
+warning$ -- 18
+while$ -- 31
+width$ -- 16
+write$ -- 166
+(There were 20 warnings)

@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Exceptional Collection Note}
+\author{Joseph Sullivan}
+\date{November 2025}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+
+\begin{document}
+
+\maketitle
+
+\begin{prop}
+    Let $X\hookrightarrow \P^n_\C$ be a smooth closed subscheme of dimension $m<n$. Then, $\cO_X(-n),\dots,\cO_X$ can never be an exceptional collection.
+\end{prop}
+
+\begin{proof}
+    I want to exhibit non-vanishing for some
+    \[\Ext^i(\cO_X, \cO_X(-k)) = H^i(X,\cO_X(-k))\]
+    for any $i$ and $1\leq k \leq n$. It seems to me that the least likely cohomology to vanish is $H^m(X,\cO_X(-n))$, which by Serre duality is $H^0(X, \cO_X(n) \otimes \omega_X)$. We argue that $\omega_X$ is $n$-regular, by showing that
+    \[H^i(X,\omega_X(n-i)) = 0,\]
+    for $i>0$, which follows from Kodaira vanishing (since we only consider up to $i=m$, and $n>m$). So, $\omega_X(n)$ is globally generated, so being nonzero as a sheaf means that
+    \[H^0(X,\cO_X(n)\otimes \omega_X) \neq 0.\]
+    Thus, the collection is not exceptional.
+\end{proof}
+
+
+\end{document}

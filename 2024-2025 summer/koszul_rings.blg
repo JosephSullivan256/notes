@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: koszul_rings.aux
+The style file: plain.bst
+Database file #1: koszul_rings.bib
+Warning--empty journal in Villa_Saorin
+Warning--empty year in Villa_Saorin
+You've used 2 entries,
+            2118 wiz_defined-function locations,
+            509 strings with 4358 characters,
+and the built_in function-call counts, 624 in all, are:
+= -- 55
+> -- 31
+< -- 0
++ -- 12
+- -- 10
+* -- 49
+:= -- 113
+add.period$ -- 5
+call.type$ -- 2
+change.case$ -- 11
+chr.to.int$ -- 0
+cite$ -- 4
+duplicate$ -- 21
+empty$ -- 47
+format.name$ -- 10
+if$ -- 121
+int.to.chr$ -- 0
+int.to.str$ -- 2
+missing$ -- 2
+newline$ -- 12
+num.names$ -- 4
+pop$ -- 13
+preamble$ -- 1
+purify$ -- 9
+quote$ -- 0
+skip$ -- 14
+stack$ -- 0
+substring$ -- 37
+swap$ -- 1
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 8
+warning$ -- 2
+while$ -- 5
+width$ -- 3
+write$ -- 20
+(There were 2 warnings)

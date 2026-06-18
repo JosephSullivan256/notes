@@ -1,0 +1,269 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{bertram_moduli_1992}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=8a5b475249c01d8aa99f2275128c1037}{%
+           family={Bertram},
+           familyi={B\bibinitperiod},
+           given={Aaron},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{8a5b475249c01d8aa99f2275128c1037}
+      \strng{fullhash}{8a5b475249c01d8aa99f2275128c1037}
+      \strng{fullhashraw}{8a5b475249c01d8aa99f2275128c1037}
+      \strng{bibnamehash}{8a5b475249c01d8aa99f2275128c1037}
+      \strng{authorbibnamehash}{8a5b475249c01d8aa99f2275128c1037}
+      \strng{authornamehash}{8a5b475249c01d8aa99f2275128c1037}
+      \strng{authorfullhash}{8a5b475249c01d8aa99f2275128c1037}
+      \strng{authorfullhashraw}{8a5b475249c01d8aa99f2275128c1037}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{1}
+      \field{issn}{0022-040X}
+      \field{journaltitle}{Journal of Differential Geometry}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{number}{2}
+      \field{shortjournal}{J. Differential Geom.}
+      \field{title}{Moduli of rank-2 vector bundles, theta divisors, and the geometry of curves in projective space}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{volume}{35}
+      \field{year}{1992}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.4310/jdg/1214448083
+      \endverb
+      \verb{file}
+      \verb PDF:C\:\\Users\\Joseph\\Zotero\\storage\\5WS5T2C9\\Bertram - 1992 - Moduli of rank-2 vector bundles, theta divisors, and the geometry of curves in projective space.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://projecteuclid.org/journals/journal-of-differential-geometry/volume-35/issue-2/Moduli-of-rank-2-vector-bundles-theta-divisors-and-the/10.4310/jdg/1214448083.full
+      \endverb
+      \verb{url}
+      \verb https://projecteuclid.org/journals/journal-of-differential-geometry/volume-35/issue-2/Moduli-of-rank-2-vector-bundles-theta-divisors-and-the/10.4310/jdg/1214448083.full
+      \endverb
+    \endentry
+    \entry{holme_varieties_1988}{inbook}{}{}
+      \name{author}{3}{}{%
+        {{hash=fb419cce69a40e012460ad4e3ca93a3d}{%
+           family={Ein},
+           familyi={E\bibinitperiod},
+           given={Lawrence},
+           giveni={L\bibinitperiod}}}%
+        {{hash=1249d4c8877c098355d267da038c837b}{%
+           family={Eisenbud},
+           familyi={E\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=8e3e305ee12d27fcc3ec4eb96c27ce0e}{%
+           family={Katz},
+           familyi={K\bibinitperiod},
+           given={Sheldon},
+           giveni={S\bibinitperiod}}}%
+      }
+      \name{bookauthor}{2}{}{%
+        {{hash=20edbb8b36ed09db1d7bbdf02b42fdd9}{%
+           family={Holme},
+           familyi={H\bibinitperiod},
+           given={Audun},
+           giveni={A\bibinitperiod}}}%
+        {{hash=98b351268b0835979808c48d1a9225ff}{%
+           family={Speiser},
+           familyi={S\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berlin, Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer Berlin Heidelberg}%
+      }
+      \strng{namehash}{736404aa0015782dabf0e6ec31ca3db0}
+      \strng{fullhash}{736404aa0015782dabf0e6ec31ca3db0}
+      \strng{fullhashraw}{736404aa0015782dabf0e6ec31ca3db0}
+      \strng{bibnamehash}{736404aa0015782dabf0e6ec31ca3db0}
+      \strng{authorbibnamehash}{736404aa0015782dabf0e6ec31ca3db0}
+      \strng{authornamehash}{736404aa0015782dabf0e6ec31ca3db0}
+      \strng{authorfullhash}{736404aa0015782dabf0e6ec31ca3db0}
+      \strng{authorfullhashraw}{736404aa0015782dabf0e6ec31ca3db0}
+      \strng{bookauthorbibnamehash}{d065a1702885a2d30b5233fa715d4ac6}
+      \strng{bookauthornamehash}{d065a1702885a2d30b5233fa715d4ac6}
+      \strng{bookauthorfullhash}{d065a1702885a2d30b5233fa715d4ac6}
+      \strng{bookauthorfullhashraw}{d065a1702885a2d30b5233fa715d4ac6}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{In this note we consider cases in which a curve in pr which is scheme theoretically the intersection of quadrics necessarily has homogeneous ideal generated by quadrics. The first case in which this does not happen is for a general elliptic octic in p5; we give a proof of this using the surjectivity of the period map for K3 surfaces.}
+      \field{booktitle}{Algebraic Geometry Sundance 1986}
+      \field{isbn}{978-3-540-19236-7 978-3-540-39157-9}
+      \field{langid}{english}
+      \field{shorttitle}{Varieties cut out by quadrics}
+      \field{title}{Varieties cut out by quadrics: Scheme-theoretic versus homogeneous generation of ideals}
+      \field{urlday}{12}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{volume}{1311}
+      \field{year}{1988}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{51\bibrangedash 70}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1007/BFb0082908
+      \endverb
+      \verb{file}
+      \verb PDF:C\:\\Users\\Joseph\\Zotero\\storage\\Q2RW4GV6\\Holme et al. - 1988 - Varieties cut out by quadrics Scheme-theoretic versus homogeneous generation of ideals.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://link.springer.com/10.1007/BFb0082908
+      \endverb
+      \verb{url}
+      \verb http://link.springer.com/10.1007/BFb0082908
+      \endverb
+    \endentry
+    \entry{ein_lectures_nodate}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=fb419cce69a40e012460ad4e3ca93a3d}{%
+           family={Ein},
+           familyi={E\bibinitperiod},
+           given={Lawrence},
+           giveni={L\bibinitperiod}}}%
+        {{hash=51ae79eec6b038af1767dc682795527d}{%
+           family={Lazarsfeld},
+           familyi={L\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{c099acc5a122d7451dac90acf4e383ff}
+      \strng{fullhash}{c099acc5a122d7451dac90acf4e383ff}
+      \strng{fullhashraw}{c099acc5a122d7451dac90acf4e383ff}
+      \strng{bibnamehash}{c099acc5a122d7451dac90acf4e383ff}
+      \strng{authorbibnamehash}{c099acc5a122d7451dac90acf4e383ff}
+      \strng{authornamehash}{c099acc5a122d7451dac90acf4e383ff}
+      \strng{authorfullhash}{c099acc5a122d7451dac90acf4e383ff}
+      \strng{authorfullhashraw}{c099acc5a122d7451dac90acf4e383ff}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{Lectures on the Syzygies and Geometry of Algebraic Varieties}
+      \verb{file}
+      \verb PDF:C\:\\Users\\Joseph\\Zotero\\storage\\S7M9RBMB\\Ein and Lazarsfeld - Lectures on the Syzygies and Geometry of Algebraic Varieties.pdf:application/pdf
+      \endverb
+    \endentry
+    \entry{fantechi_fundamental_2005}{collection}{}{}
+      \name{editor}{1}{}{%
+        {{hash=d56a34207a036c7f985fb9b555a49dac}{%
+           family={Fantechi},
+           familyi={F\bibinitperiod},
+           given={Barbara},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Providence, R.I}%
+      }
+      \list{publisher}{1}{%
+        {American Mathematical Society}%
+      }
+      \strng{namehash}{d56a34207a036c7f985fb9b555a49dac}
+      \strng{fullhash}{d56a34207a036c7f985fb9b555a49dac}
+      \strng{fullhashraw}{d56a34207a036c7f985fb9b555a49dac}
+      \strng{bibnamehash}{d56a34207a036c7f985fb9b555a49dac}
+      \strng{editorbibnamehash}{d56a34207a036c7f985fb9b555a49dac}
+      \strng{editornamehash}{d56a34207a036c7f985fb9b555a49dac}
+      \strng{editorfullhash}{d56a34207a036c7f985fb9b555a49dac}
+      \strng{editorfullhashraw}{d56a34207a036c7f985fb9b555a49dac}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{shorttitle}
+      \field{isbn}{978-0-8218-3541-8}
+      \field{number}{v. 123}
+      \field{pagetotal}{339}
+      \field{series}{Mathematical surveys and monographs}
+      \field{shorttitle}{Fundamental algebraic geometry}
+      \field{title}{Fundamental algebraic geometry: Grothendieck's {FGA} explained}
+      \field{year}{2005}
+      \field{dateera}{ce}
+      \keyw{Geometry,Algebraic,Grothendieck categories,Grothendieck groups}
+    \endentry
+    \entry{schwarzenberger_secant_1964}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=bd6018f18cb940c423581ac5ab5d58ca}{%
+           family={Schwarzenberger},
+           familyi={S\bibinitperiod},
+           given={R.\bibnamedelimi L.\bibnamedelimi E.},
+           giveni={R\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \strng{namehash}{bd6018f18cb940c423581ac5ab5d58ca}
+      \strng{fullhash}{bd6018f18cb940c423581ac5ab5d58ca}
+      \strng{fullhashraw}{bd6018f18cb940c423581ac5ab5d58ca}
+      \strng{bibnamehash}{bd6018f18cb940c423581ac5ab5d58ca}
+      \strng{authorbibnamehash}{bd6018f18cb940c423581ac5ab5d58ca}
+      \strng{authornamehash}{bd6018f18cb940c423581ac5ab5d58ca}
+      \strng{authorfullhash}{bd6018f18cb940c423581ac5ab5d58ca}
+      \strng{authorfullhashraw}{bd6018f18cb940c423581ac5ab5d58ca}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{00246115}
+      \field{journaltitle}{Proceedings of the London Mathematical Society}
+      \field{langid}{english}
+      \field{month}{4}
+      \field{number}{2}
+      \field{shortjournal}{Proceedings of the London Mathematical Society}
+      \field{title}{The Secant Bundle of a Projective Variety}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{volume}{s3-14}
+      \field{year}{1964}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{369\bibrangedash 384}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1112/plms/s3-14.2.369
+      \endverb
+      \verb{file}
+      \verb PDF:C\:\\Users\\Joseph\\Zotero\\storage\\A74EJNS9\\Schwarzenberger - 1964 - The Secant Bundle of a Projective Variety.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://doi.wiley.com/10.1112/plms/s3-14.2.369
+      \endverb
+      \verb{url}
+      \verb http://doi.wiley.com/10.1112/plms/s3-14.2.369
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
