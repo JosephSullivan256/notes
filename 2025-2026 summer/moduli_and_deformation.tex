@@ -7,6 +7,8 @@
 \author{}
 \date{June 2026}
 
+\usepackage{bbm}
+
 \DeclareMathOperator{\Kom}{Kom}
 \DeclareMathOperator{\Cyl}{Cyl}
 \DeclareMathOperator{\Stab}{Stab}
@@ -33,6 +35,7 @@
 \newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
 \newcommand{\cY}{\mathcal{Y}}
 
+\newcommand{\Groupoid}{\mathrm{Groupoid}}
 
 
 \addbibresource{moduli_and_deformation.bib}
@@ -42,9 +45,72 @@
 
 \maketitle
 
-\section{Deformation Theory for Some Stacks}
+\section{Deformations and Stacks}
 
-As we go through the different definitions of first order deformations, we are having to track the data of an isomorphism. I wanted to give a stacky justification as to why this is the correct thing to do.
+With the Hilbert and Picard scheme, the definition of a first order deformation was what we expected, but for coherent sheaves the definition is perhaps slightly surprising---why do we have to track this data of an isomorphism?
+
+We give a stacky justification.
+
+\subsection{Grothendieck Construction}
+Recall that there is a correspondence, called the \textit{Grothendieck construction}, between
+\begin{center}
+    sheaves valued in groupoids \qquad $\longleftrightarrow$ \qquad stacks of groupoids
+\end{center}
+where such a sheaf on a site $\cC$
+\[F: \cC^\op \to \Groupoid\]
+gets sent to the fibered category
+\[\cX \xrightarrow{\pi} \cC\]
+which has objects being pairs $(C, X)$ where $C\in \cC$ and $X\in F(C)$, and morphisms $(C,X) \to (C',X')$ being the data of a morphism $f: C\to C'$ in $\cC$ inducing a functor
+\[f^*: F(C') \to F(C)\]
+together with an (iso)morphism $f^*X' \to X$. Finally, the functor $\pi$ sends a pair $(C,X)$ to just $C$.
+
+You can then recover $F$ by setting $F(C)$ to be the \textit{fiber category}, i.e., objects being pairs $(C,X)$ where $C$ is our fixed object, but $X$ can vary, and only allowing morphisms ``over the identity'', that is, we force the map $f: C\to C$ to be the identity. You will then get pullback functors satisfying the necessary axioms by making a choice of pullback objectwise.
+
+\subsection{First Order Deformations as a Groupoid}
+
+From the groupoid perspective, it seems clear---a first order deformation of $x \in F(\Spec k)$ should be an object $v \in F(\Spec D)$ such that along the inclusion of the closed point $i: \Spec k \to \Spec D$, we get
+\[i^* v = x.\]
+Notice the equality---this is the correct thing to do when $F$ is a functor to $\Set$. This still works for functors to $\Groupoid$, but in practice equality is very hard to work with---you need to make sure your algebro-geometric objects are nailed down on the nose.
+
+Instead, recall that $i^*$ is a functor of groupoids
+\[F(\Spec D) \xrightarrow{i^*} F(\Spec k),\]
+and we can then ask about the preimage of $x$, which should itself be a groupoid. Recall that preimages in algebraic geometry are constructed as fiber products, and so similarly we should define the preimage $(i^*)^{-1}(x)$ to be the following fiber product.
+\[\begin{tikzcd}
+    (i^*)^{-1}(x) \rar\dar & F(\Spec D) \dar["i^*"]\\
+    \mathbbm{1} \rar["x"] & F(\Spec k)
+\end{tikzcd}\]
+But we should review fiber products of groupoids.
+
+\subsection{Fiber Products of Groupoids}
+Suppose we have a diagram of groupoids
+\[\begin{tikzcd}
+    & \mathcal{U} \dar["F"]\\
+    \mathcal{V} \rar["G"] & \mathcal{W}
+\end{tikzcd}\]
+You might imagine $\mathcal{U},\mathcal{V}$ are categories of sheaves on open sets $U,V$, and $W = U \cap V$. The fiber product will be one way of constructing the category of sheaves on the union.
+
+The fiber product $\mathcal{U} \times_{\mathcal{W}} \mathcal{V}$ should be characterized by a 2-universal property, which defines it only up to equivalence (not isomorphism). You can in particular get this 2-universal property by defining the fiber product in an ``evil'' way, where you take
+\begin{itemize}
+    \item objects to be pairs $(u,v) \in \mathcal{U}\times \mathcal{V}$ such that $F(u)=G(v)$ with literal equality,
+    \item morphisms $(u,v) \to (u',v')$ to be pairs of arrows $f:u\to u'$, $g:v\to v'$ such that $F(f)=G(g)$.
+\end{itemize}
+but this is exactly the sort of set theory problem we want to avoid. For example, consider $\P^1_{[x:y]}$ with its cover $U=D_+(x)=\Spec k[\frac{y}{x}]$ and $V=D_+(y)=\Spec k[\frac{x}{y}]$. To specify a nontrivial line bundle like $\cO(1)$, it is \textit{not} enough to write down isomorphism classes of the line bundle restricted to opens such that they happen to be isomorphic on the overlap---that is, the data of $\cO_U$ and $\cO_V$ could have actually been the local data for any line bundle $\cO(d)$.
+
+Instead, our ``evil'' approach rectifies this lack of data by saying we cannot just remember an isomorphism class---we need to honestly remember sheaves on a literal opens $U,V$ (not just isomorphic schemes) of $\P^1$. Then, with $\cO(1)|_U, \cO(1)|_V$ we can actually recover $\cO(1)$, since to define a sheaf you only need to know its sections/restriction maps over open sets forming a base of the topology, and open subsets of $U,V$ form a base.
+
+This is confusing---the much more familiar approach to defining a line bundle on an open cover is to define transition functions to rigidify our local data. This motivates this non-``evil'' definition of the fiber product of groupoids. Define $\mathcal{U} \times_{\mathcal{W}} \mathcal{V}$ to be the category with
+\begin{itemize}
+    \item objects to be triples $(u,v,\alpha)$ where $u\in \mathcal{U},v\in \mathcal{V}$, and $\alpha: F(u) \to G(v)$ a chosen isomorphism.
+    \item morphisms $(u,v,\alpha)\to (u',v',\alpha')$ to be pairs $(f,g)$ where $f: F(u)\to F(u'),g: G(v)\to G(v')$ such that the following diagram commutes.
+    \[\begin{tikzcd}
+        F(u) \rar["F(f)"] \dar["\alpha"] & F(u') \dar["\alpha'"]\\
+        G(v) \rar["G(g)"] & G(v')
+    \end{tikzcd}\] 
+\end{itemize}
+
+\subsection{Non-Evil First Order Deformations}
+
+{\color{red} Now let's apply our knowledge.}
 
 \section{Hypersurfaces}
 
