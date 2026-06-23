@@ -110,7 +110,7 @@ This is confusing---the much more familiar approach to defining a line bundle on
 
 \subsection{Non-Evil First Order Deformations}
 
-{\color{red} Now let's apply our knowledge.} Repeating the definition in our special case, the first order deformations are the groupoid, which is the preimage $(i^*)^{-1}(x)$. Denoting the unique object $\bullet\in \mathbbm{1}$, our definition of the fiber product $F(\Spec D)\times_{F(\Spec k)} \mathbbm{1}$ specializes to the category with
+Now let's apply our knowledge. Repeating the definition in our special case, the first order deformations are the groupoid, which is the preimage $(i^*)^{-1}(x)$. Denoting the unique object $\bullet\in \mathbbm{1}$, our definition of the fiber product $F(\Spec D)\times_{F(\Spec k)} \mathbbm{1}$ specializes to the category with
 \begin{itemize}
     \item objects $(v,\bullet,\alpha)$, where $v\in F(\Spec D)$ and $\alpha: i^*(v) \to x$ an isomorphism
     \item morphisms $(v,\bullet,\alpha) \to (v',\bullet,\alpha')$ to be pairs $(\phi,1_\bullet)$ where $\phi: i^*(v) \to i*(v')$ such that the following diagram commutes.
@@ -124,7 +124,7 @@ We might as well omit the bullet $\bullet$ and just write our objects as pairs $
 
 For example, we can consider the stack/sheaf of groupoids of coherent sheaves on $X$ (which is, say, a proper Noetherian $k$-scheme to make sure our definitions are correct). Denote this gadget by $\Coh_X$. This will have the fiber $\Coh_X(T)$ over a $k$-scheme $T$ to be the groupoid of coherent sheaves on $X\times_k T$ flat over $T$. Given a morphism $T' \xrightarrow{f} T$, we get a pullback functor $f^*$ from coherent sheaves on $X\times T$ to those on $X\times T'$.
 
-In this setup, the groupoid of first order deformations of $\cF \in \Coh_X(\Spec k)$ will be a pair $(\cF',\alpha)$, where $\cF'\in \Coh_X(\Spec D)$ is a coherent sheaf on $X\times_k \Spec D$ flat over $\Spec D$, and for $i:\Spec k\to \Spec D$ the inclusion oft the closed point, $\alpha$ is an isomorphism
+In this setup, the groupoid of first order deformations of $\cF \in \Coh_X(\Spec k)$ will consist of objects which are pairs $(\cF',\alpha)$, where $\cF'\in \Coh_X(\Spec D)$ is a coherent sheaf on $X\times_k \Spec D$ flat over $\Spec D$, and for $i:\Spec k\to \Spec D$ the inclusion of the closed point, $\alpha$ is an isomorphism
 \[i^* \cF' \xrightarrow{\alpha} \cF.\]
 
 Finally, a morphism of first order deformations $(\cF_1',\alpha_1) \to (\cF_2',\alpha_2)$ is a morphism $\cF_1'\xrightarrow{\phi} \cF_2'$ such that the triangle commutes.
@@ -293,7 +293,7 @@ Now, recognize that the right hand side is the cohomology of
 \[(\cI_Y \otimes p^*\cO_{\P V}(d))|_{\P V \times \Spec k(t)} \cong \cO_{\P V \times \Spec k(t)},\]
 essentially the $Y$ and $d$ cancel out in the fiber. More formally, we are taking the twisted ideal sheaf short exact sequence
 \[0\to \cI_Y \otimes p^*\cO_{\P V}(d) \to p^*\cO_{\P V}(d) \to \cO_Y \otimes p^*\cO_{\P V}(d)\to 0\]
-and restricting to $\P V \times \Spec k(t)$ (i.e., tensoring over $\cO_{\P V \times T}$ with $\cO_{\P V \times \Spec k(t)}$), which will still be exact because the flatness of $\cO_Y$ will make a $\cTor_1$ vanish ({\color{red} I think my justification is a little bogus here, I need to figure this out}), so the restricted twisted ideal is the kernel of
+and restricting to $\P V \times \Spec k(t)$, i.e., tensoring over $\cO_{\P V \times T}$ with $\cO_{\P V \times \Spec k(t)}$, which is tensoring over $\cO_T$ with $\cO_{\Spec k(t)}$. The restricted sequence is still exact because the flatness of $\cO_Y$ will make a $\cTor_1^{\cO_T}$ vanish, so the restricted twisted ideal is the kernel of
 \[\cO_{\P V \times \Spec k(t)}(d) \to \cO_{Y_t}(d),\]
 which is $\cO_{\P V \times \Spec k(t)}$, since $Y_t$ is a degree $d$ hypersurface.
 

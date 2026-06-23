@@ -1,15 +1,15 @@
 # Fdb version 4
-["biber moduli_and_deformation"] 1781823804.61629 "moduli_and_deformation.bcf" "moduli_and_deformation.bbl" "moduli_and_deformation" 1782175186.92026 0
-  "moduli_and_deformation.bcf" 1782175186 108635 bf16b4dc52878a0040d601e8a21f7b81 "pdflatex"
+["biber moduli_and_deformation"] 1781823804.61629 "moduli_and_deformation.bcf" "moduli_and_deformation.bbl" "moduli_and_deformation" 1782187496.36348 0
+  "moduli_and_deformation.bcf" 1782187495 108635 bf16b4dc52878a0040d601e8a21f7b81 "pdflatex"
   "moduli_and_deformation.bib" 1781823757 1074 ad7fd182c25ae47397709ca5f11ae380 ""
   (generated)
   "moduli_and_deformation.bbl"
   "moduli_and_deformation.blg"
   (rewritten before read)
-["pdflatex"] 1782175184.02921 "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/moduli_and_deformation.tex" "moduli_and_deformation.pdf" "moduli_and_deformation" 1782175186.92143 0
+["pdflatex"] 1782187490.82478 "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/moduli_and_deformation.tex" "moduli_and_deformation.pdf" "moduli_and_deformation" 1782187496.36683 0
   "../mystyle.sty" 1779162080 7486 419bf7a733384ffd3037c882e710bf20 ""
   "c:/Users/Joseph/.texlive2026/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk" 1781853605 8424 8fa95a0c6b11be36ab42fae4ecf6c5c7 ""
-  "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/moduli_and_deformation.tex" 1782175180 21307 ebeaa86011510441c31873ea465d1642 ""
+  "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/moduli_and_deformation.tex" 1782187488 21303 464345559b220db3c89089c533ee0e10 ""
   "c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1774645957 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1774648300 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1774647181 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -248,11 +248,11 @@
   "c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1774807776 5619402 045890036aad9b52b154ef5568e59d3a ""
   "c:/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774808032 3636409 c2b0a166d2bf555ff46a28337d0684bf ""
   "c:/texlive/2026/texmf.cnf" 1774807730 713 e69b156964470283e0530f5060668171 ""
-  "moduli_and_deformation.aux" 1782175186 2460 34d8e77ae8ca776de8c1933ae1b0a383 "pdflatex"
+  "moduli_and_deformation.aux" 1782187495 2460 34d8e77ae8ca776de8c1933ae1b0a383 "pdflatex"
   "moduli_and_deformation.bbl" 1781823807 2111 1e03ea5c098500adf76d69241a799979 "biber moduli_and_deformation"
-  "moduli_and_deformation.out" 1782175186 2177 0720173c283b13cf06cadfb44de24a86 "pdflatex"
-  "moduli_and_deformation.run.xml" 1782175186 2443 4e78d194f0904214d54c30067a42b1aa "pdflatex"
-  "moduli_and_deformation.tex" 1782175180 21307 ebeaa86011510441c31873ea465d1642 ""
+  "moduli_and_deformation.out" 1782187495 2177 0720173c283b13cf06cadfb44de24a86 "pdflatex"
+  "moduli_and_deformation.run.xml" 1782187495 2443 4e78d194f0904214d54c30067a42b1aa "pdflatex"
+  "moduli_and_deformation.tex" 1782187488 21303 464345559b220db3c89089c533ee0e10 ""
   (generated)
   "moduli_and_deformation.aux"
   "moduli_and_deformation.bcf"
