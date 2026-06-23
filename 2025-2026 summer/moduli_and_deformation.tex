@@ -84,15 +84,15 @@ But we should review fiber products of groupoids.
 \subsection{Fiber Products of Groupoids}
 Suppose we have a diagram of groupoids
 \[\begin{tikzcd}
-    & \mathcal{U} \dar["F"]\\
-    \mathcal{V} \rar["G"] & \mathcal{W}
+    & \mathcal{U} \dar["f"]\\
+    \mathcal{V} \rar["g"] & \mathcal{W}
 \end{tikzcd}\]
 You might imagine $\mathcal{U},\mathcal{V}$ are categories of sheaves on open sets $U,V$, and $W = U \cap V$. The fiber product will be one way of constructing the category of sheaves on the union.
 
 The fiber product $\mathcal{U} \times_{\mathcal{W}} \mathcal{V}$ should be characterized by a 2-universal property, which defines it only up to equivalence (not isomorphism). You can in particular get this 2-universal property by defining the fiber product in an ``evil'' way, where you take
 \begin{itemize}
     \item objects to be pairs $(u,v) \in \mathcal{U}\times \mathcal{V}$ such that $F(u)=G(v)$ with literal equality,
-    \item morphisms $(u,v) \to (u',v')$ to be pairs of arrows $f:u\to u'$, $g:v\to v'$ such that $F(f)=G(g)$.
+    \item morphisms $(u,v) \to (u',v')$ to be pairs of arrows $\phi:u\to u'$, $\psi:v\to v'$ such that $f(\phi)=g(\psi)$.
 \end{itemize}
 but this is exactly the sort of set theory problem we want to avoid. For example, consider $\P^1_{[x:y]}$ with its cover $U=D_+(x)=\Spec k[\frac{y}{x}]$ and $V=D_+(y)=\Spec k[\frac{x}{y}]$. To specify a nontrivial line bundle like $\cO(1)$, it is \textit{not} enough to write down isomorphism classes of the line bundle restricted to opens such that they happen to be isomorphic on the overlap---that is, the data of $\cO_U$ and $\cO_V$ could have actually been the local data for any line bundle $\cO(d)$.
 
@@ -100,17 +100,40 @@ Instead, our ``evil'' approach rectifies this lack of data by saying we cannot j
 
 This is confusing---the much more familiar approach to defining a line bundle on an open cover is to define transition functions to rigidify our local data. This motivates this non-``evil'' definition of the fiber product of groupoids. Define $\mathcal{U} \times_{\mathcal{W}} \mathcal{V}$ to be the category with
 \begin{itemize}
-    \item objects to be triples $(u,v,\alpha)$ where $u\in \mathcal{U},v\in \mathcal{V}$, and $\alpha: F(u) \to G(v)$ a chosen isomorphism.
-    \item morphisms $(u,v,\alpha)\to (u',v',\alpha')$ to be pairs $(f,g)$ where $f: F(u)\to F(u'),g: G(v)\to G(v')$ such that the following diagram commutes.
+    \item objects to be triples $(u,v,\alpha)$ where $u\in \mathcal{U},v\in \mathcal{V}$, and $\alpha: f(u) \to g(v)$ a chosen isomorphism.
+    \item morphisms $(u,v,\alpha)\to (u',v',\alpha')$ to be pairs $(\phi,\psi)$ where $\phi: f(u)\to f(u'),\psi: g(v)\to g(v')$ such that the following diagram commutes.
     \[\begin{tikzcd}
-        F(u) \rar["F(f)"] \dar["\alpha"] & F(u') \dar["\alpha'"]\\
-        G(v) \rar["G(g)"] & G(v')
+        f(u) \rar["f(\phi)"] \dar["\alpha"] & f(u') \dar["\alpha'"]\\
+        g(v) \rar["g(\psi)"] & g(v')
     \end{tikzcd}\] 
 \end{itemize}
 
 \subsection{Non-Evil First Order Deformations}
 
-{\color{red} Now let's apply our knowledge.}
+{\color{red} Now let's apply our knowledge.} Repeating the definition in our special case, the first order deformations are the groupoid, which is the preimage $(i^*)^{-1}(x)$. Denoting the unique object $\bullet\in \mathbbm{1}$, our definition of the fiber product $F(\Spec D)\times_{F(\Spec k)} \mathbbm{1}$ specializes to the category with
+\begin{itemize}
+    \item objects $(v,\bullet,\alpha)$, where $v\in F(\Spec D)$ and $\alpha: i^*(v) \to x$ an isomorphism
+    \item morphisms $(v,\bullet,\alpha) \to (v',\bullet,\alpha')$ to be pairs $(\phi,1_\bullet)$ where $\phi: i^*(v) \to i*(v')$ such that the following diagram commutes.
+    \[\begin{tikzcd}
+        i^*(v) \rar["i^*(\phi)"] \dar["\alpha"] & i^*(v') \dar["\alpha'"]\\
+        x \rar["1_x"] & x
+    \end{tikzcd}\] 
+\end{itemize}
+
+We might as well omit the bullet $\bullet$ and just write our objects as pairs $(v,\alpha)$.
+
+For example, we can consider the stack/sheaf of groupoids of coherent sheaves on $X$ (which is, say, a proper Noetherian $k$-scheme to make sure our definitions are correct). Denote this gadget by $\Coh_X$. This will have the fiber $\Coh_X(T)$ over a $k$-scheme $T$ to be the groupoid of coherent sheaves on $X\times_k T$ flat over $T$. Given a morphism $T' \xrightarrow{f} T$, we get a pullback functor $f^*$ from coherent sheaves on $X\times T$ to those on $X\times T'$.
+
+In this setup, the groupoid of first order deformations of $\cF \in \Coh_X(\Spec k)$ will be a pair $(\cF',\alpha)$, where $\cF'\in \Coh_X(\Spec D)$ is a coherent sheaf on $X\times_k \Spec D$ flat over $\Spec D$, and for $i:\Spec k\to \Spec D$ the inclusion oft the closed point, $\alpha$ is an isomorphism
+\[i^* \cF' \xrightarrow{\alpha} \cF.\]
+
+Finally, a morphism of first order deformations $(\cF_1',\alpha_1) \to (\cF_2',\alpha_2)$ is a morphism $\cF_1'\xrightarrow{\phi} \cF_2'$ such that the triangle commutes.
+\[\begin{tikzcd}[column sep=0cm]
+    i^*\cF_1 \ar[dr,"\alpha_1"']\ar[rr, "\phi"] && i^* \cF_2 \ar[dl,"\alpha_2"]\\
+    & \cF &
+\end{tikzcd}\]
+
+This exactly recovers Hartshorne's definition of a first order deformation of a coherent sheaf, and our task is to classify these objects up to isomorphism (i.e., find the connected components of this groupoid).
 
 \section{Hypersurfaces}
 
