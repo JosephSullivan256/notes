@@ -480,9 +480,43 @@
     \end{rmk}
 
     \item {\color{blue} How to show the Hilbert schemes of points on a surface are smooth?}
+    
+    See argument below. Roughly,
+    \begin{itemize}
+        \item Compute tangent space dimension.
+        \item Show that $S^{[d]}$ is connected by surjecting onto it with $S^{[d-1,d]}$, and show $S^{[d-1,d]}$ is smooth by showing its fibers over $S^{[d-1]}$ are smooth. Apply induction.
+    \end{itemize}
 
     \item {\color{blue} How to describe the divisors $D^{[d]}$ when $D$ is a divisor on $S$? Or how to do this at least when $d=2$?}
     
+    Some of this works in greater generality. Let $X$ be a smooth projective $k$-scheme. We first say how to turn a line bundle $L$ on $X$ into a line bundle $L^{[d]}$ on $X^{[d]}$. Then, we give a construction for a divisor $D$, and show that $\cO_X(D)^{[d]}$ matches $\cO_{X^{[d]}}(D^{[d]})$.
+    
+    To define $L^{[d]}$, we first build $L^{\boxtimes d}$ on $X^{\times d}$ and argue that it descends to $X^{(d)}=\Sym^d X$. Concretely, we give a construction over affines, and aruge that this patches together. First, we find an affine around any given tuple. Since $X\subseteq \P^N$, we can find a hyperplane $H$ dodging all points of this, so $X\setminus H \cong \Spec A$ is an affine chart covering such points. Then $\Spec (A^{\otimes_k d})^{S_d}$ is an affine chart of $X^{(d)}$ containing our tuple. We show how $L^{\boxtimes d}$ descends along
+    \[\Spec A^{\otimes_k d} \to \Spec (A^{\otimes_k d})^{S_d},\]
+    in the sense of producing a line bundle $L^{(d)}$ downstairs whose pullback is $L^{\boxtimes d}$. If $L \cong \tilde{M}$ for an $A$-module $M$, then $L^{\boxtimes d}$ is
+    \[M \otimes_k M \otimes_k \cdots \otimes_k M,\]
+    which itself has an $S_n$ action, and the descended module is just the invariants
+    \[(M^{\otimes_k d})^{S_d}\]
+    which has a natural diagonal action by $(A^{\otimes_k d})^{S_d}$, and satisfies
+    \[(M^{\otimes_k d})^{S_d} \otimes_{(A^{\otimes_k d})^{S_d}} (A^{\otimes_k d}) \cong (M^{\otimes_k d}).\]
+    {\color{red} Why? I guess this is clear when $M=A$ for sufficiently small opens, and then I should check that this respects localization?}
+    
+    Finally, we pull back $L^{(n)}$ along the Hilbert-Chow morphism $X^{[d]} \to \Sym^d X$. Note that this entire construction respects tensor products, i.e.,
+    \[(L\otimes M)^{[d]} \cong L^{[d]} \otimes M^{[d]}.\]
+
+    Now, we define $D^{[d]}$. We assume without loss of generality that $D$ is a prime divisor (so for a general $D$ we define $D^{[d]}$ using $\Z$-linearity). Then, define $D^{[d]}\subseteq X^{[d]}$ as an effective Cartier divisor (i.e., a closed subscheme locally cut out by a single nonzerodivisor) as the reduced closed subscheme structure on the set of $[Z\subseteq X] \in X^{[d]}$ which meet $D$, i.e., $Z$ contains a point of $D$.
+
+    We define $D^{[d]}$ more precisely. Recall that the Hilbert scheme affords a universal family
+    \[\begin{tikzcd}
+        \mathcal{Z} \rar & X\times X^{[d]} \dar \rar & X\\
+        & X^{[d]} &
+    \end{tikzcd}\]
+    Also inside $X\times X^{[d]}$ is $D\times X^{[d]}$, and we can form the intersection $\mathcal{Z} \cap (D\times X^{[d]})$, so that along the projection $X^{[d]}$, the fiber over a $Z$ is the subscheme $Z\cap D \subseteq X$. In this way, the fiber is nonempty exactly when $Z\cap D \neq \emptyset$, so we should consider $D^{[d]}$ to be the (scheme-theoretic) image of
+    \[\mathcal{Z} \cap (D \times X^{[d]}) \to X^{[d]}.\]
+    The image will already be closed (at least when $X$ is projective/proper). The fibers are all 0 dimensional, so the image has the s
+
+    We need to check that this is actually an effective Cartier divisor---we can probably only hope to prove this for a surface so that we just have to show $D^{[d]}$ is pure codimension 1 and closed (or maybe take the closure).
+
     \item {\color{blue} show that analog of hyperelliptic curves are boundary examples. That is, show that when $f:S\to \P^2$ is a finite map of degree $d$, then
     \[D = f^*(-K_{\P^2}) \text{ satisfies } D^2=9d\]
     and $(K_S+D)^{[d]}-E$ is not ample.}

@@ -1,0 +1,3 @@
+- Proof and applications of Grothendieck Riemann Roch
+- Proof of Bogomolov inequality (maybe using char p methods like in Langer's paper?), and construct Bridgeland stability conditions
+- K3 surfaces... maybe prove global Torelli?

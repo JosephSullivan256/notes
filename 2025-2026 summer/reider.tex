@@ -1,0 +1,160 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{../mystyle}
+
+\title{Reider's Theorem, More and Less}
+\author{}
+\date{January 2026}
+
+\DeclareMathOperator{\Kom}{Kom}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Slice}{Slice}
+\DeclareMathOperator{\chern}{ch}
+\DeclareMathOperator{\todd}{td}
+
+\DeclareMathOperator{\Kos}{Kos}
+
+\DeclareMathOperator{\ext}{ext}
+%\DeclareMathOperator{\hom}{hom}
+
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\LCom}{\mathcal{LC}}
+\newcommand{\ft}{\text{ft}}
+\newcommand{\Bl}{\mathrm{Bl}}
+\newcommand{\Gr}{\mathrm{Gr}}
+
+\newcommand{\rk}{\mathrm{rk}}
+
+\newcommand{\cTor}{\mathcal{T}\hspace{-0.2em}or}
+
+\newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+\addbibresource{reider.bib}
+
+
+\begin{document}
+
+\maketitle
+
+Let $S$ be a smooth projective surface over $\C$.
+
+\section{Strategy}
+
+Going back to the ideas of \cite{arcara_reiders_2009}, we will prove variants of Reider's theorem by finding suitable Bridgeland stability conditions.
+
+Specifically, to show a line bundle $\omega_S(C)$ is $d$-very ample, we will get the vanishing
+\[H^1(S,\cI_Z \otimes \omega_S(C)) = 0,\]
+as $Z$ ranges over all length $d$ subschemes. This cohomology group can be rewritten (with the help of Serre duality) as
+\begin{align*}
+    \Ext_{\cO_S}^1(\cO_S(-C),\cI_Z \otimes \omega_S) &= \Ext_{\cO_S}^1(\cI_Z, \cO_S(-C))^\vee\\
+    &= \Hom_{D^b(S)}(\cI_Z, \cO_S(-C)[1])^\vee.
+\end{align*}
+To preclude any nonzero morphism $\cI_Z\to \cO_S(-C)[1]$ in the derived category, we will then find a Bridgeland stability condition with $\cI_Z,\cO_S(-C)[1]$ both (semi)stable but such that $\cI_Z$ has greater slope.
+
+\section{Stability}
+
+\subsection{Review}
+We use notation from \cite{bertram_two_2026}, which includes a choice of smooth coordinates for a ``slice'' (of a chart) of the stability manifold. Specifically, we get a stability condition for each $(x,y)$ inside the parabola $x>\frac{1}{2}y^2$, which is the data of a central charge $Z_{(x,y)}$ and a heart of a bounded t-structure $\cA_{-y}$.
+\begin{align*}
+    Z_{(x,y)}(E) &= (-\chern_2(E), c_1(E) \cdot H) + (\rk E) (x,y)\\
+    \cA_{-y} &= \{E \in D^b(S) \mid -\mu_{\min}(\cH^0(E)) < y \leq -\mu_{\max}(\cH^{-1}(E)), \; \cH^{i}(E)=0 \text{ for } i\neq -1,0\}
+\end{align*}
+
+We recall here that as we increase $y$, we make the following trade:
+\begin{itemize}
+    \item We \textit{gain} $H$-semistable coherent sheaves with low $H$-slope, like $\cO_S(-nC)$
+    \item We \textit{lose} shifts of $H$-semistable coherent sheaves with low $H$-slope, like $\cO_S(-nC)[1]$.
+\end{itemize}
+In particular, an Mumford $H$-stable coherent sheaf $\cF$ appears in the category when $y>-\mu(\cF)$.
+
+Note that when $\cF$ is \textit{not} $H$-semistable, we have to wait a while after we lose $\cF[1]$ before we gain $\cF$. For instance, on $\P^2$ for $\cF = \cO_{\P^2}(-1)\oplus \cO_{\P^2}(1)$, we have Harder-Narasimhan filtration
+\[0 \leq \cO_{\P^2}(1) \leq \cO_{\P^2}(-1)\oplus\cO_{\P^2}(1),\]
+so has maximal $H$-slope $\mu_{\max}(\cF) = 1$ and minimal slope $\mu_{\min}(\cF)=-1$. Therefore, $\cF[1]$ leaves the category once $y>-(1)$, but $\cF$ only joins the category once $y>-(-1)$.
+
+Also important is a description of (numerical) walls, which are lines through \textit{points of indeterminacy} $I(E)$ of objects $E \in D^b(S)$, which are points $I(E)\in \R^2$ such that $Z_{I(E)}(E)=0$. These have coordinates
+\[I(E) = \left(\frac{\chern_2 E}{\rk E}, -\mu\, E\right).\]
+Any $H$-semistable coherent sheaf $\cF$ (or a shift, which has identical point of indeterminacy) has $I(\cF)$ outside or on the parabola---this a version of the Bogomolov inequality. Alternatively, we can rephrase this argument as follows: if $\cF$ is $H$-semistable, then $\cF \in \cA_{-\mu \cF}$ so it is in the category at $I(\cF)$, so $(x,y)$ cannot give a stability condition because the central charge sends an object to 0. Thus, $(x,y)$ is outside the parabola.
+
+When $\cF$ fails to be semistable, like our example $\cF=\cO_{\P^2}(-1) \oplus \cO_{\P^2}(1)$, we might have $I(\cF)$ inside the parabola, but it will occur at a $y$ such that $\cF\not\in \cA_{-y}$. For example, for this $\cF$,
+
+\[I(\cF) = \left(\frac{\chern_2(\cO_{\P^2}(-1))+\chern_2(\cO_{\P^2}(1))}{2}, \frac{-(-1)-(1)}{2}\right) = \left(\frac{1}{2}, 0\right),\]
+
+and indeed, $\cO_{\P^2}(-1) \oplus \cO_{\P^2}(1) \not\in \cA_{0}$ as discussed earlier.
+
+
+
+\subsection{\texorpdfstring{$\cO_S(-C)$}{O(-C)} and Bogomolov-sharp Sheaves}
+
+Now, we analyze when $\cO_S(-C)[1]$ is (semi)stable. First, we describe how, for an $H$-semistable torsion free coherent sheaf $F$, might $F$ or $F[1]$ be destabilized. In particular, we need to know what a sub/quotient looks like in one of our hearts $\cA_{-y}$.
+
+\begin{lem}\label{subs-and-quots-of-ss-sheaves-in-tilts}
+    Let $F$ be as above. Then,
+    \begin{enumerate}[label=(\arabic*)]
+        \item If $K\leq F$ in $\cA_{-y}$ with cokernel $Q$, then, by the long exact sequence in $\Coh(S)$ cohomology,
+        \[0\to \cH^{-1}(K) \to 0 \to \cH^{-1}(Q) \to \cH^0(K) \to F \to \cH^0(Q)\to 0\]
+        $K$ is itself a sheaf.
+
+        \item If $F[1] \twoheadrightarrow Q$ is a surjection in $\cA_{-y}$ with kernel $K$, then, by the long exact sequence in $\Coh(S)$ cohomology,
+        \[0\to \cH^{-1}(K) \to F \to \cH^{-1}(Q) \to \cH^0(K) \to 0 \to \cH^0(Q)\to 0,\]
+        $Q[-1]$ is itself a sheaf.
+    \end{enumerate}
+\end{lem}
+
+\begin{lem}
+    Let $F$ as before. Suppose there exists $(x,y)$ such that $F$ is semistabilized by some proper subobject $E\leq F$ in $\cA_{-y}$. Then, $I(E)$ lies above $I(F)$, i.e. $-\mu(E) > -\mu(F)$, and $I(E)$ is on the same side of the parabola as $I(F)$.
+\end{lem}
+\begin{proof}
+    Since $E,F \in \cA_{-y}$, we know
+    \[y> -\mu(E), -\mu(F).\]
+    CONFUSED.
+    By virtue of being in the category $E\in \cA_{-y}$, we get $I(E)$ outside the parabola.
+\end{proof}
+
+Now, we apply this lemma to get the stability of $\cO_S(-C)[1]$ and friends, using the observation that
+\[I(\cO_S(-C)[1]) = \left(\frac{C^2}{2}, C^2\right)\]
+is exactly on the parabola. In this sense, $\cO_S(-C)[1]$ is Bogomolov-sharp (the inequality became an equality), and we will show such Bogomolov-sharp object are stable in the following sense.
+
+\begin{prop}
+    Let $F\in \Coh(S)$ be $H$-stable and torsion free such that $I(F)$ lands on the parabola $x=\frac{1}{2}y^2$. Then,
+    \begin{enumerate}[label=(\arabic*)]
+        \item $F$ is $(x,y)$ semistable for all $(x,y)$ in the parabola with $y>-\mu(F)$.
+        \item $F[1]$ is $(x,y)$ semistable for all $(x,y)$ in the parabola with $y\leq -\mu(F)$.
+    \end{enumerate}
+\end{prop}
+
+\begin{proof}
+    We show (1). Let $(x,y)$ be inside the parabola with $y>-\mu(F)$, and suppose there exists a short exact sequence
+    \[0\to E \to F \to F/E \to 0\]
+    in $\cA_{-y}$ with $E$ destabilizing $F$.
+    
+    To get a contradiction, our strategy is as follows.
+    \begin{itemize}
+        \item Bound the positions of $I(E),I(F)\in \R^2$, forming a (numerical) wall for $F$.
+        \item Argue that $(x,y)$ is above this wall (i.e., on the ``compact'' side), since $E$ destabilizes $F$.
+        \item Contradict that $(x,y)$ is inside the parabola.
+    \end{itemize}
+    By lemma \ref{subs-and-quots-of-ss-sheaves-in-tilts}, $E$ is itself a coherent sheaf. Since $F\in \cA_{-y}$, we need $y> -\mu(F)$. Since $E\in \cA_{-y}$, we also need $y> -\mu_{\min}(E) > -\mu(E)$.
+
+    We want to argue that $-\mu(E) > -\mu(F)$ is actually
+    
+    
+    We show that $E$ cannot destabilize 
+    Our strategy is to show that any wall through $F[1]$ is disjoint from these $(x,y)$.
+    
+    Suppose $F[1]$ is destabilized at some $(x,y)$ in the parabola with $y\leq -\mu(F)$, witnessed by a short exact sequence
+    \[0\to E\to F[1] \to F[1]/E \to 0\]
+    in $\cA_{-y}$, such that
+    \(\nu_{(x,y)}(E)>\nu_{(x,y)}(F).\)
+    In particular, for $E$ to even be in the category, we need
+    \[-\mu(E) < y,\]
+    so $I(E)$ is strictly below both $(x,y)$ and $I(F)$.
+    
+\end{proof}
+
+\printbibliography
+
+
+\end{document}
