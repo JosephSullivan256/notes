@@ -5,7 +5,7 @@
 
 \title{Reider's Theorem, More and Less}
 \author{}
-\date{January 2026}
+\date{July 2026}
 
 \DeclareMathOperator{\Kom}{Kom}
 \DeclareMathOperator{\Cyl}{Cyl}
@@ -95,27 +95,61 @@ Now, we analyze when $\cO_S(-C)[1]$ is (semi)stable. First, we describe how, for
     \begin{enumerate}[label=(\arabic*)]
         \item If $K\leq F$ in $\cA_{-y}$ with cokernel $Q$, then, by the long exact sequence in $\Coh(S)$ cohomology,
         \[0\to \cH^{-1}(K) \to 0 \to \cH^{-1}(Q) \to \cH^0(K) \to F \to \cH^0(Q)\to 0\]
-        $K$ is itself a sheaf.
+        $K$ is itself a sheaf with $\mu_{\min(K)}>-y$.
 
         \item If $F[1] \twoheadrightarrow Q$ is a surjection in $\cA_{-y}$ with kernel $K$, then, by the long exact sequence in $\Coh(S)$ cohomology,
         \[0\to \cH^{-1}(K) \to F \to \cH^{-1}(Q) \to \cH^0(K) \to 0 \to \cH^0(Q)\to 0,\]
-        $Q[-1]$ is itself a sheaf.
+        $Q[-1]$ is itself a sheaf with $\mu_{\max}(Q[-1])\leq -y$.
     \end{enumerate}
 \end{lem}
 
 \begin{lem}
-    Let $F$ as before. Suppose there exists $(x,y)$ such that $F$ is semistabilized by some proper subobject $E\leq F$ in $\cA_{-y}$. Then, $I(E)$ lies above $I(F)$, i.e. $-\mu(E) > -\mu(F)$, and $I(E)$ is on the same side of the parabola as $I(F)$.
+    Let $F$ be $H$-stable torsion free. Suppose there exists $(x,y)$ such that $F$ is semistabilized by some proper subobject $E\xrightarrow{\phi} F$ in $\cA_{-y}$. Then, $I(E)$ lies above $I(F)$, i.e. $-\mu(E) > -\mu(F)$, and $I(E)$ is on the same side of the parabola as $I(F)$.
 \end{lem}
+
+\begin{eg}
+    If $E\xrightarrow{\phi} F$ was a subobject in $\Coh(S)$, then the lemma is obvious by the stability of $F$. Furthermore, if $E$ was $H$-semistable, then $\mu(E) \leq \mu(\im_{\Coh(S)} E)$, and the chain of inequalities still gives us $\mu(E) < \mu(F)$. So, a good stress test might be the following composition
+    \[E=\cO \oplus \cO(1)^a \twoheadrightarrow \cO = F\]
+    which we denote $\phi:E\to F$, so that $\mu(E) = 1-\eps$ whereas $\mu(F) = 0$. To make this a subobject in some $\cA_{-y}$, we need the cone $F/E$ of $E\to F$ to be in $\cA_{-y}$, and since
+    \[\cH_{\Coh(S)}^{-1}(F/E) = \ker_{\Coh(S)} \phi,\]
+    this occurs exactly when the $\Coh(S)$ kernel $\cO(1)^a$ satisfies $-\mu_{\max}(\ker \phi) = -1 \geq y$. Thus, we have to choose $y\leq -1$ to make this a subobject, and we also need to choose $y>0$ to make $E$ part of the category. Thus, this isn't a counterexample. So, there is a tradeoff:
+    \begin{itemize}
+        \item To increase the slope of $E$ while still being a subobject of $F$ in $\cA_{-y}$, we need to make $E\to \im \phi$ a nontrivial $\Coh(S)$ quotient, and in fact this should be a quotient destabilizer so that $E$ can have bigger $H$-slope.
+        \item When $E$ becomes more $H$-unstable, it is harder for $E$ to be in the category $\cA_{-y}$.
+    \end{itemize}
+    We need to show that these two effects ``cancel out'', and force $-\mu(E) > -\mu(F)$.
+\end{eg}
+
 \begin{proof}
-    Since $E,F \in \cA_{-y}$, we know
-    \[y> -\mu(E), -\mu(F).\]
-    CONFUSED.
-    By virtue of being in the category $E\in \cA_{-y}$, we get $I(E)$ outside the parabola.
+    First, assume $\rk F > 0$, since otherwise the lemma is automatic. Continuing, since $E,F \in \cA_{-y}$, we know
+    \[y> -\mu_{\min}(E), -\mu(F).\]
+
+    For $E\xrightarrow{\phi} F$ to be a monomorphism in $\cA_{-y}$, need the cone $C(\phi)\in \cA_{-y}$, which in particular means is the requirement that
+    \[
+        \mu_{\max}(\cH^{-1}(C(\phi))) = \mu_{\max}(\ker_{\Coh(S)} \phi) \leq -y
+    \]
+    Denote this kernel by $K$. If $K=0$, then $E$ injects in $F$ in $\Coh(S)$ and we win by $H$-stability of $F$. Otherwise, $K\neq 0$, is torsion free (by virtue of finite slope), so has positive rank. On the other extreme, we also cannot have $K=E$, since then
+    \[\mu(E) \leq -y, \qquad \mu(E) > -y.\] 
+    So, $E/K$ is nonzero. Now, we have short exact sequence in $\Coh(S)$
+    \[0\to K \to E \to E/K\to 0,\]
+    which gives
+    \[H\cdot c_1(E) = H\cdot c_1(K) + H\cdot c_1(E/K), \tag{$\star$}\]
+    and since $E/K \leq F$ is a nonzero subobject in $\Coh(S)$ with $F$ torsion free, we know $E/K$ is torsion free and
+    \[1 \leq \rk E - \rk K \leq \rk F, \qquad \mu(E/K) < \mu(F).\]
+    In particular, $\rk E\geq 1$, so it has finite $H$-slope, and we can use ($\star$) to solve for $\mu(E)$, giving us the equation
+    \[\mu(E) = \frac{\rk(K)\mu(K)}{\rk E} + \frac{\rk(E/K) \mu(E/K)}{\rk E}.\]
+    Plugging in our other inequalities, in particular using
+    \[\mu(K) \leq -y < \mu(F)\]
+    we get
+    \begin{align*}
+        \mu(E) &< \frac{\rk(K)}{\rk(E)}\mu(F) + \frac{\rk(E) - \rk(K)}{\rk(E)}\mu(F)\\
+        &= \mu(F).
+    \end{align*}
 \end{proof}
 
 Now, we apply this lemma to get the stability of $\cO_S(-C)[1]$ and friends, using the observation that
 \[I(\cO_S(-C)[1]) = \left(\frac{C^2}{2}, C^2\right)\]
-is exactly on the parabola. In this sense, $\cO_S(-C)[1]$ is Bogomolov-sharp (the inequality became an equality), and we will show such Bogomolov-sharp object are stable in the following sense.
+is exactly on the parabola. In this sense, $\cO_S(-C)[1]$ is \textit{Bogomolov-sharp} (the inequality became an equality), and we will show such Bogomolov-sharp object are stable in the following sense.
 
 \begin{prop}
     Let $F\in \Coh(S)$ be $H$-stable and torsion free such that $I(F)$ lands on the parabola $x=\frac{1}{2}y^2$. Then,

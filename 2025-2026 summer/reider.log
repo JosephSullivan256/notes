@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  17 JUL 2026 17:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  18 JUL 2026 16:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -968,15 +968,17 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 41
 {c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 Package hyperref Info: bookmark level for unknown lem defaults to 0 on input line 93.
  [2{c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-Package hyperref Info: bookmark level for unknown prop defaults to 0 on input line 121.
+Package hyperref Info: bookmark level for unknown eg defaults to 0 on input line 111.
  [3]
-LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 157.
+Package hyperref Info: bookmark level for unknown prop defaults to 0 on input line 155.
+ [4]
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 191.
  (c:/texlive/2026/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2024/11/19 v2.5n Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 157.
- [4] (./reider.aux)
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 191.
+ [5] (./reider.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -988,18 +990,18 @@ Package logreq Info: Writing requests to 'reider.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33364 strings out of 467525
- 636325 string characters out of 5423209
- 1537658 words of memory out of 5000000
- 61687 multiletter control sequences out of 15000+600000
+ 33371 strings out of 467525
+ 636420 string characters out of 5423209
+ 1538655 words of memory out of 5000000
+ 61690 multiletter control sequences out of 15000+600000
  639958 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 140i,10n,135p,1159b,1372s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 140i,12n,135p,1159b,1372s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on reider.pdf (4 pages, 193512 bytes).
+Output written on reider.pdf (5 pages, 200462 bytes).
 PDF statistics:
- 163 PDF objects out of 1000 (max. 8388607)
- 119 compressed objects within 2 object streams
- 22 named destinations out of 1000 (max. 500000)
+ 171 PDF objects out of 1000 (max. 8388607)
+ 126 compressed objects within 2 object streams
+ 26 named destinations out of 1000 (max. 500000)
  45 words of extra memory for PDF output out of 10000 (max. 10000000)
 
