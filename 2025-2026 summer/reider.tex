@@ -3,6 +3,8 @@
 
 \usepackage{../mystyle}
 
+\usetikzlibrary{patterns,patterns.meta}
+
 \title{Reider's Theorem, More and Less}
 \author{}
 \date{July 2026}
@@ -103,26 +105,27 @@ Now, we analyze when $\cO_S(-C)[1]$ is (semi)stable. First, we describe how, for
     \end{enumerate}
 \end{lem}
 
-\begin{lem}
-    Let $F$ be $H$-stable torsion free. Suppose there exists $(x,y)$ such that $F$ is semistabilized by some proper subobject $E\xrightarrow{\phi} F$ in $\cA_{-y}$. Then, $I(E)$ lies above $I(F)$, i.e. $-\mu(E) > -\mu(F)$, and $I(E)$ is on the same side of the parabola as $I(F)$.
+\begin{lem}\label{H-slope-bound-for-destabilizers}
+    Let $F$ be $H$-stable torsion free. Suppose there exists $(x,y)$ in the parabola such that $F$ is semistabilized by some proper subobject $E\xrightarrow{\phi} F$ in $\cA_{-y}$. Then, $(x,y)$ is above $I(E)$ above $I(F)$, i.e. $y > -\mu(E) > -\mu(F)$.
 \end{lem}
 
-\begin{eg}
-    If $E\xrightarrow{\phi} F$ was a subobject in $\Coh(S)$, then the lemma is obvious by the stability of $F$. Furthermore, if $E$ was $H$-semistable, then $\mu(E) \leq \mu(\im_{\Coh(S)} E)$, and the chain of inequalities still gives us $\mu(E) < \mu(F)$. So, a good stress test might be the following composition
-    \[E=\cO \oplus \cO(1)^a \twoheadrightarrow \cO = F\]
-    which we denote $\phi:E\to F$, so that $\mu(E) = 1-\eps$ whereas $\mu(F) = 0$. To make this a subobject in some $\cA_{-y}$, we need the cone $F/E$ of $E\to F$ to be in $\cA_{-y}$, and since
-    \[\cH_{\Coh(S)}^{-1}(F/E) = \ker_{\Coh(S)} \phi,\]
-    this occurs exactly when the $\Coh(S)$ kernel $\cO(1)^a$ satisfies $-\mu_{\max}(\ker \phi) = -1 \geq y$. Thus, we have to choose $y\leq -1$ to make this a subobject, and we also need to choose $y>0$ to make $E$ part of the category. Thus, this isn't a counterexample. So, there is a tradeoff:
-    \begin{itemize}
-        \item To increase the slope of $E$ while still being a subobject of $F$ in $\cA_{-y}$, we need to make $E\to \im \phi$ a nontrivial $\Coh(S)$ quotient, and in fact this should be a quotient destabilizer so that $E$ can have bigger $H$-slope.
-        \item When $E$ becomes more $H$-unstable, it is harder for $E$ to be in the category $\cA_{-y}$.
-    \end{itemize}
-    We need to show that these two effects ``cancel out'', and force $-\mu(E) > -\mu(F)$.
-\end{eg}
+% \begin{eg}
+%     If $E\xrightarrow{\phi} F$ was a subobject in $\Coh(S)$, then the lemma is obvious by the stability of $F$. Furthermore, if $E$ was $H$-semistable, then $\mu(E) \leq \mu(\im_{\Coh(S)} E)$, and the chain of inequalities still gives us $\mu(E) < \mu(F)$. So, a good stress test might be the following composition
+%     \[E=\cO \oplus \cO(1)^a \twoheadrightarrow \cO = F\]
+%     which we denote $\phi:E\to F$, so that $\mu(E) = 1-\eps$ whereas $\mu(F) = 0$. To make this a subobject in some $\cA_{-y}$, we need the cone $F/E$ of $E\to F$ to be in $\cA_{-y}$, and since
+%     \[\cH_{\Coh(S)}^{-1}(F/E) = \ker_{\Coh(S)} \phi,\]
+%     this occurs exactly when the $\Coh(S)$ kernel $\cO(1)^a$ satisfies $-\mu_{\max}(\ker \phi) = -1 \geq y$. Thus, we have to choose $y\leq -1$ to make this a subobject, and we also need to choose $y>0$ to make $E$ part of the category. Thus, this isn't a counterexample. So, there is a tradeoff:
+%     \begin{itemize}
+%         \item To increase the slope of $E$ while still being a subobject of $F$ in $\cA_{-y}$, we need to make $E\to \im \phi$ a nontrivial $\Coh(S)$ quotient, and in fact this should be a quotient destabilizer so that $E$ can have bigger $H$-slope.
+%         \item When $E$ becomes more $H$-unstable, it is harder for $E$ to be in the category $\cA_{-y}$.
+%     \end{itemize}
+%     We need to show that these two effects ``cancel out'', and force $-\mu(E) > -\mu(F)$.
+% \end{eg}
 
 \begin{proof}
     First, assume $\rk F > 0$, since otherwise the lemma is automatic. Continuing, since $E,F \in \cA_{-y}$, we know
-    \[y> -\mu_{\min}(E), -\mu(F).\]
+    \[y> -\mu(F), -\mu_{\min}(E) \geq -\mu(E),\]
+    so at least $(x,y)$ is above $I(E)$, $I(F)$.
 
     For $E\xrightarrow{\phi} F$ to be a monomorphism in $\cA_{-y}$, need the cone $C(\phi)\in \cA_{-y}$, which in particular means is the requirement that
     \[
@@ -143,12 +146,39 @@ Now, we analyze when $\cO_S(-C)[1]$ is (semi)stable. First, we describe how, for
     we get
     \begin{align*}
         \mu(E) &< \frac{\rk(K)}{\rk(E)}\mu(F) + \frac{\rk(E) - \rk(K)}{\rk(E)}\mu(F)\\
-        &= \mu(F).
+        &= \mu(F).\qedhere
     \end{align*}
+
+    % {\color{red} Finally, we need to see that $I(E)$ is outside the parabola. AHHH!!! If $E$ is $H$-semistable, certainly this is true because $E[1]\in \cA_{-\mu(E)}$ is in the category at the height of $I(E[1])=I(E)$. Otherwise, if $E$ has a nontrivial Harder-Narasimhan filtration, there will be a nontrivial ``gap'' where $E$ is not in the category, and the gap contains the height $-\mu(E)$. So, this argument does \textit{not} work if $E$ is not $H$-semistable.
+    
+    % So, maybe I should argue that $\frac{\chern_2(E)}{\rk(E)}$ is sufficiently negative? I mean, I want the inequality
+    % \begin{align*}
+    %     x &\leq \frac{1}{2}y^2\\
+    %     \frac{\chern_2(E)}{\rk(E)} &\leq \frac{1}{2}\mu(E)^2\\
+    %     \chern_2(E) &\leq \frac{(H\cdot c_1(E))^2}{2\rk(E)}\\
+    %     &\leq \frac{H^2 c_1(E)^2}{2\rk(E)} \tag{Hodge Index},
+    % \end{align*}
+    % but this is not obvious to me (and not clear if helpful...).
+    % }
 \end{proof}
 
-Now, we apply this lemma to get the stability of $\cO_S(-C)[1]$ and friends, using the observation that
-\[I(\cO_S(-C)[1]) = \left(\frac{C^2}{2}, C^2\right)\]
+\begin{lem}\label{between-parabola}
+    With the same assumption as lemma \ref{H-slope-bound-for-destabilizers}, but also assuming $E$ is $(x,y)$-semistable, $I(E)$ is outside the parabola and on the same side of the parabola as $I(F)$.
+\end{lem}
+\begin{proof}
+    $I(E)$ is outside of the parabola by a variant of the Bogomolov inequality for $(x,y)$ semistable objects ({\color{red} add reference/collect Bayer-Macr\`i-Toda theorem here too}). Then $(x,y)$ above $I(E)$ above $I(F)$ as in lemma \ref{H-slope-bound-for-destabilizers} implies the result.
+\end{proof}
+
+\begin{lem}\label{large-volume-limit}
+    Let $F$ be an $H$-semistable torsion free sheaf. Then, $F$ is $(x,-\mu(F)+\eps)$ semistable for $x\gg 0$ and $0<\eps\ll 1$.
+\end{lem}
+
+\begin{proof}
+    {\color{red} prove or cite this!! probably also need more in my applications to be careful...}
+\end{proof}
+
+Now, we apply these lemma to get the stability of $\cO_S(-C)[1]$ and friends, using the observation that
+\[I(\cO_S(-C)[1]) = \left(\frac{C^2}{2}, \|C\|\right)\]
 is exactly on the parabola. In this sense, $\cO_S(-C)[1]$ is \textit{Bogomolov-sharp} (the inequality became an equality), and we will show such Bogomolov-sharp object are stable in the following sense.
 
 \begin{prop}
@@ -160,33 +190,75 @@ is exactly on the parabola. In this sense, $\cO_S(-C)[1]$ is \textit{Bogomolov-s
 \end{prop}
 
 \begin{proof}
-    We show (1). Let $(x,y)$ be inside the parabola with $y>-\mu(F)$, and suppose there exists a short exact sequence
+    We show (1). By $H$-stability, $F$ will be $(x,-\mu(F)+\eps)$ semistable for $x\gg 0$ and $0<\eps \ll 1$ as in lemma \ref{large-volume-limit}, and $F$ will \textit{remain} $(x,y)$-semistable until just after a wall, which is a line through $I(F)$. Let $(x,y)$ be on the first destabilizing wall ({\color{red} maybe define this by saying that $E$ destabilizes $F$ in all neighborhoods of the wall?}) counterclockwise to the positive horizontal ray from $I(F)$, and let
     \[0\to E \to F \to F/E \to 0\]
-    in $\cA_{-y}$ with $E$ destabilizing $F$.
-    
-    To get a contradiction, our strategy is as follows.
-    \begin{itemize}
-        \item Bound the positions of $I(E),I(F)\in \R^2$, forming a (numerical) wall for $F$.
-        \item Argue that $(x,y)$ is above this wall (i.e., on the ``compact'' side), since $E$ destabilizes $F$.
-        \item Contradict that $(x,y)$ is inside the parabola.
-    \end{itemize}
-    By lemma \ref{subs-and-quots-of-ss-sheaves-in-tilts}, $E$ is itself a coherent sheaf. Since $F\in \cA_{-y}$, we need $y> -\mu(F)$. Since $E\in \cA_{-y}$, we also need $y> -\mu_{\min}(E) > -\mu(E)$.
-
-    We want to argue that $-\mu(E) > -\mu(F)$ is actually
-    
-    
-    We show that $E$ cannot destabilize 
-    Our strategy is to show that any wall through $F[1]$ is disjoint from these $(x,y)$.
-    
-    Suppose $F[1]$ is destabilized at some $(x,y)$ in the parabola with $y\leq -\mu(F)$, witnessed by a short exact sequence
-    \[0\to E\to F[1] \to F[1]/E \to 0\]
-    in $\cA_{-y}$, such that
-    \(\nu_{(x,y)}(E)>\nu_{(x,y)}(F).\)
-    In particular, for $E$ to even be in the category, we need
-    \[-\mu(E) < y,\]
-    so $I(E)$ is strictly below both $(x,y)$ and $I(F)$.
-    
+    for $E,F/E \in \cA_{-y}$ be a \textit{witness} for this wall, where we choose $E$ to be $(x,y)$ semistable, i.e., by choosing the first factor in the $(x,y)$ Harder-Narasimhan filtration for $F$. By lemma \ref{H-slope-bound-for-destabilizers} and \ref{between-parabola}, $I(F), I(E), (x,y)$ form a positive slope line with increasing heights in order with $I(E)$ outside the parabola, but this is impossible because the line segment $I(F)$ to $(x,y)$ is entirely inside the parabola. Thus, $I(F)$ couldn't have been destabilized.
 \end{proof}
+
+{\color{red} TODO: show (2) in a parallel way... might need to expand the lemmas though.}
+
+
+\subsection{Ideal Sheaves}
+
+Unlike $\cO_S(-C)[1]$, an ideal sheaf $\cI_Z$ for a length $d$ subscheme will not always be stable. However, we will establish numerical criteria to guarantee stability of the $\cI_Z$ long enough to find $(x,y)$ where $\cI_Z$ has bigger $(x,y)$ slope than $\cO_S(-C)[1]$.
+
+By openness of stability, we just need to guarantee $I_Z$ is stable at a point on the line through $I(I_Z)$ and $I(\cO_S(-C)[1])$ intersected with the parabola. By lemma \ref{large-volume-limit}, since $I_Z$ is $H$-stable torsion free, we at least know $I_Z$ is semistable at $(x,-\mu(F)+\eps)$ for $x\gg 0$ and $0<\eps \ll 1$, i.e., $I_Z$ is stable in some circular sector bounded by the positive $x$-axis and some positie slope ray.
+
+so we just need to show that $F$ \textit{remains} stable through the ray from $I(I_Z)$ to $I(\cO_S(-C)[1])$.
+
+\begin{center}
+\begin{tikzpicture}[
+        scale=0.6,
+        extended line/.style={shorten >=-#1,shorten <=-#1}
+    ]
+    \draw[<->] (-3.5, 0) -- (10.4, 0) node[right] {$x$};
+    \draw[<->] (0, -4.5) -- (0, 4.5) node[above] {$y$};
+    \fill[variable=\y, domain=-4.5:4.5, smooth, color=gray, opacity=0.4]  -- plot ({0.5*\y*\y}, {\y}) -- cycle;
+
+    \node (A) at (-1,0) {};
+    \node (B) at (8,4) {};
+
+    \filldraw[black] (B) circle (2pt) node[anchor=south east, fill=white, behind path] {$I(\cO_S(-C)[1])$};
+
+    \filldraw[black] (A) circle (2pt) node[anchor=south east, fill=white, behind path]{$I(I_Z)$};
+
+    \draw[<->,extended line=2cm] (A) -- (B);
+\end{tikzpicture}
+\end{center}
+
+Now, if $(x,y)$ is on some destabilizing wall, then in a neighborhood $F$ has to be destabilized by a sheaf $F$, which we can assume to be $(x,y)$-semistable. We will refer to $\rk F$ as the \textit{rank of the wall} for $I_Z$ through $I(F)$. We want to establish numerical conditions on $(S,C)$ to prevent any walls that occur up to the $I_Z$, $\cO_S(-C)[1]$ wall. Our target wall has slope (in our coordinates for $\Stab(S)$)
+\[m = \frac{\|C\|}{\frac{C^2}{2}+d} = \frac{2\|C\|}{C^2+2d},\]
+so we want to guarantee that any other wall through $I_Z$ has greater slope.
+
+\subsubsection{High Rank Walls}
+
+Suppose $\rk F = r > 1$. As in \cite{bertram_two_2026}, we show that this implies the wall $W$ has too great a ``height'', i.e., showing that the ratio of the $y$ coordinates of the top intersection and bottom intersection of $W \cap \{x=\frac{1}{2}y^2\}$ is too larger.
+
+For comparison, we compute this height ratio for the $I_Z, \cO_S(-C)[1]$ wall. The top intersection has $y$ coordinate $\|C\|$. The bottom intersection has is one of the solutions to the equations
+\[2x=y^2, \qquad y=m(x+d),\]
+which has $y$-coordinate which is a root of
+\begin{align*}
+    y&=m\left(\frac{1}{2}y^2\right)+md\\
+    0&=y^2-\frac{2}{m}y+2d.
+\end{align*}
+Since one root is $\|C\|$, the other root is $\frac{2d}{\|C\|}$. Thus, the height ratio is $\frac{C^2}{2d}$ (or potentially the reciprocal if $\|C\|$ isn't sufficiently large---but we will eventually require $\|C\|$ to be large enough so that $\|C\|$ is the bigger height).
+
+Now, we bound the height ratio for a rank $r$ wall. By Lemma \ref{between-parabola}, $I(F)$ is positioned between $I(I_Z)$ and the parabola, with positive $y$-value. Writing $E$ for the cone, so that we have exact sequence
+\[0\to F \to I_Z \to E \to 0 \tag{$\star$}\]
+in $\cA_{-y}$ (where $(x,y)$ is on the destabilizing wall). Since $F, I_Z$ are both $(x,y)$-semistable of the same slope, so is $E$ ({\color{red} exercise}). Thus, $I(E)$ is also outside of the parabola, but the invariants of $E$ will force $I(E)$ to be on the \textit{opposite} side, since ($\star$) implies
+\[\mu(E) = \frac{r}{r-1}\mu(F), \qquad \chern_2(E) = -d-\chern_2(F)\]
+so... {\color{red} uh oh, why opposite side? for $r\gg 0$, this is basically the same height, so I'm concerned.}
+
+
+Thus, the heights of $I(F)$, $I(E)$ give lower and upper bounds respectively on the height ratio for this wall
+
+
+{\color{red} TODO:
+\begin{itemize}
+    \item understand ``large volume limit''
+    \item understand $H$-stability of $\cO_S$ and $I_Z$.
+    \item replace equations  labeled with $\star$ with numbered equations.
+\end{itemize}}
 
 \printbibliography
 

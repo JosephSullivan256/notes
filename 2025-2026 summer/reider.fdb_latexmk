@@ -1,14 +1,14 @@
 # Fdb version 4
-["biber reider"] 1784271367.94815 "reider.bcf" "reider.bbl" "reider" 1784413473.54985 0
-  "reider.bcf" 1784413473 108692 128bd56e03ac68faf820588db2cda705 "pdflatex"
-  "reider.bib" 1784269050 2758 afc9521186ab626ff793e3275685bd82 ""
+["biber reider"] 0 "reider.bcf" "reider.bbl" "reider" 1784534652.96418 -1
+  "reider.bcf" 1784534652 108763 5e4511246962bd86748a82ab9ff1c13a "pdflatex"
+  "reider.bib" 1784533958 2749 9b12d6f672be03d5028d3145fbcac14b ""
   (generated)
   "reider.bbl"
   "reider.blg"
   (rewritten before read)
-["pdflatex"] 1784413470.70613 "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/reider.tex" "reider.pdf" "reider" 1784413473.55105 0
+["pdflatex"] 1784534650.66023 "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/reider.tex" "reider.pdf" "reider" 1784534652.96527 0
   "../mystyle.sty" 1779162080 7486 419bf7a733384ffd3037c882e710bf20 ""
-  "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/reider.tex" 1784413469 11166 017516f5732766ad083adbb8eac5dd01 ""
+  "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/reider.tex" 1784534649 17132 c578346cdd08715ad3c64d3a0e1f3529 ""
   "c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1774645957 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1774648300 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1774647181 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -91,10 +91,14 @@
   "c:/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex" 1774652322 22012 81b34a0aa8fa1a6158cc6220b00e4f10 ""
   "c:/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex" 1774652322 8893 e851de2175338fdf7c17f3e091d94618 ""
   "c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarymatrix.code.tex" 1774652322 4228 c39d423dc1a80da31c8c67bf1067f384 ""
+  "c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypatterns.code.tex" 1774652322 770 82e332cc9cc48e06b8070d74393a185a ""
+  "c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypatterns.meta.code.tex" 1774652322 3036 674fecad0a872f955e3a17a315c67783 ""
   "c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryquotes.code.tex" 1774652322 3970 c199216b190c70e45bff870bacf0da00 ""
   "c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex" 1774652322 11518 738408f795261b70ce8dd47459171309 ""
   "c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex" 1774652322 186859 0445d9a41a87648b4723e04765409541 ""
   "c:/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex" 1774652323 58801 1e750fb0692eb99aaac45698bbec96b1 ""
+  "c:/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibrarypatterns.code.tex" 1774652323 7936 49e55444d57eb69a380c6baa35094828 ""
+  "c:/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibrarypatterns.meta.code.tex" 1774652323 15474 b617114c75a45c2061a2d249f54a2d3e ""
   "c:/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex" 1774652323 32995 ac577023e12c0e4bd8aa420b2e852d1a ""
   "c:/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfint.code.tex" 1774652323 3063 8c415c68a0f3394e45cfeca0b65f6ee6 ""
   "c:/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex" 1774652323 949 cea70942e7b7eddabfb3186befada2e6 ""
@@ -152,7 +156,6 @@
   "c:/texlive/2026/texmf-dist/tex/latex/base/article.cls" 1774649912 20144 b966087dda3b194755eb460d32e2ef75 ""
   "c:/texlive/2026/texmf-dist/tex/latex/base/ifthen.sty" 1774649912 5525 1593ca62a2554dd7423fc8a4e5a82125 ""
   "c:/texlive/2026/texmf-dist/tex/latex/base/inputenc.sty" 1774649912 5048 0270515b828149155424600fd2d58ac5 ""
-  "c:/texlive/2026/texmf-dist/tex/latex/base/omscmr.fd" 1774649912 2469 c75f72b1dc17277decdd842fa4a321a8 ""
   "c:/texlive/2026/texmf-dist/tex/latex/base/size12.clo" 1774649912 8449 8dc66c6c313c8eb2d774af83bca435dd ""
   "c:/texlive/2026/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx" 1774644947 1818 9ed166ac0a9204a8ebe450ca09db5dde ""
   "c:/texlive/2026/texmf-dist/tex/latex/biblatex/bbx/standard.bbx" 1774644947 25680 409c3f3d570418bc545e8065bebd0688 ""
@@ -242,11 +245,11 @@
   "c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1774807776 5619402 045890036aad9b52b154ef5568e59d3a ""
   "c:/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774808032 3636409 c2b0a166d2bf555ff46a28337d0684bf ""
   "c:/texlive/2026/texmf.cnf" 1774807730 713 e69b156964470283e0530f5060668171 ""
-  "reider.aux" 1784413473 1728 01e5b09babe46024bb315ea285061cae "pdflatex"
-  "reider.bbl" 1784271370 6726 b2ba5409b35e66ae2c357efb76625d39 "biber reider"
-  "reider.out" 1784413473 495 58dce71cfc61ac25ddf3ec1128acd0ac "pdflatex"
-  "reider.run.xml" 1784413473 2315 3f5885a74eb83c78c7eaf9d1778e718c "pdflatex"
-  "reider.tex" 1784413469 11166 017516f5732766ad083adbb8eac5dd01 ""
+  "reider.aux" 1784534652 2347 332b1fd34448d22bbd96db8613322a41 "pdflatex"
+  "reider.bbl" 1784533967 6717 613fd0a79414fcfde7a7ba4067ce057a "biber reider"
+  "reider.out" 1784534652 768 125514a928f77e16c72cdb32057d3def "pdflatex"
+  "reider.run.xml" 1784534652 2315 3f5885a74eb83c78c7eaf9d1778e718c "pdflatex"
+  "reider.tex" 1784534649 17132 c578346cdd08715ad3c64d3a0e1f3529 ""
   (generated)
   "reider.aux"
   "reider.bcf"

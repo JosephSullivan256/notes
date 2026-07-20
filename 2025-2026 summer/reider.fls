@@ -340,6 +340,14 @@ INPUT c:/texlive/2026/texmf-dist/tex/latex/thmtools/thm-restate.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/thmtools/thm-restate.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/thmtools/thm-amsthm.sty
 INPUT c:/texlive/2026/texmf-dist/tex/latex/thmtools/thm-amsthm.sty
+INPUT c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypatterns.code.tex
+INPUT c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypatterns.code.tex
+INPUT c:/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibrarypatterns.code.tex
+INPUT c:/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibrarypatterns.code.tex
+INPUT c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypatterns.meta.code.tex
+INPUT c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypatterns.meta.code.tex
+INPUT c:/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibrarypatterns.meta.code.tex
+INPUT c:/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibrarypatterns.meta.code.tex
 INPUT ./reider.aux
 INPUT ./reider.aux
 INPUT reider.aux
@@ -430,9 +438,6 @@ INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
-INPUT c:/texlive/2026/texmf-dist/tex/latex/base/omscmr.fd
-INPUT c:/texlive/2026/texmf-dist/tex/latex/base/omscmr.fd
-INPUT c:/texlive/2026/texmf-dist/tex/latex/base/omscmr.fd
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
 INPUT c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
 INPUT reider.aux
