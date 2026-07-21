@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber project_notes"] 1780172044.73937 "project_notes.bcf" "project_notes.bbl" "project_notes" 1782331208.04789 0
-  "project_notes.bcf" 0 -1 0 "pdflatex"
+["biber project_notes"] 1784568368.27529 "project_notes.bcf" "project_notes.bbl" "project_notes" 1784568382.94489 0
+  "project_notes.bcf" 1784568382 109014 6dd0c987fc80ceae970390d1ea037edc "pdflatex"
   "project_notes.bib" 1778264298 24428 f4df354b62c46c3333837c933c7701de ""
   (generated)
   "project_notes.bbl"
   "project_notes.blg"
   (rewritten before read)
-["pdflatex"] 1782331204.19414 "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 semester 2 (spring)/project_notes.tex" "project_notes.pdf" "project_notes" 1782331208.04903 2
+["pdflatex"] 1784568378.96224 "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 semester 2 (spring)/project_notes.tex" "project_notes.pdf" "project_notes" 1784568382.94628 0
   "../mystyle.sty" 1779162080 7486 419bf7a733384ffd3037c882e710bf20 ""
   "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 semester 2 (spring)/project_notes.tex" 1782331202 57741 1aad94d073f9ac96314b99dd5f3ecf35 ""
   "c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1774645957 2900 1537cc8184ad1792082cd229ecc269f4 ""
@@ -248,10 +248,10 @@
   "c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1774807776 5619402 045890036aad9b52b154ef5568e59d3a ""
   "c:/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774808032 3636409 c2b0a166d2bf555ff46a28337d0684bf ""
   "c:/texlive/2026/texmf.cnf" 1774807730 713 e69b156964470283e0530f5060668171 ""
-  "project_notes.aux" 1782331207 403 a9fe5e3ef27717fdf3a5ecd93a75231c "pdflatex"
-  "project_notes.bbl" 0 -1 0 "biber project_notes"
-  "project_notes.out" 1782331207 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "project_notes.run.xml" 1782323383 2371 f2901884c5a9c51dab9a60d3003c0a77 ""
+  "project_notes.aux" 1784568382 3879 d3f6dafe0825008c27360c5ad701e283 "pdflatex"
+  "project_notes.bbl" 1784568371 11516 8dd91710234714c9428d6f295bfdc4b9 "biber project_notes"
+  "project_notes.out" 1784568381 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "project_notes.run.xml" 1784568382 2371 f2901884c5a9c51dab9a60d3003c0a77 "pdflatex"
   "project_notes.tex" 1782331202 57741 1aad94d073f9ac96314b99dd5f3ecf35 ""
   (generated)
   "project_notes.aux"
@@ -259,4 +259,5 @@
   "project_notes.log"
   "project_notes.out"
   "project_notes.pdf"
+  "project_notes.run.xml"
   (rewritten before read)

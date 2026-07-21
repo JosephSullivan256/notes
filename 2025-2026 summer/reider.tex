@@ -30,6 +30,7 @@
 
 \newcommand{\rk}{\mathrm{rk}}
 
+\newcommand{\cExt}{\mathcal{E}\hspace{-0.2em}xt}
 \newcommand{\cTor}{\mathcal{T}\hspace{-0.2em}or}
 
 \newcommand{\rddots}{\text{\reflectbox{$\ddots$}}}
@@ -55,6 +56,13 @@ as $Z$ ranges over all length $d$ subschemes. This cohomology group can be rewri
     &= \Hom_{D^b(S)}(\cI_Z, \cO_S(-C)[1])^\vee.
 \end{align*}
 To preclude any nonzero morphism $\cI_Z\to \cO_S(-C)[1]$ in the derived category, we will then find a Bridgeland stability condition with $\cI_Z,\cO_S(-C)[1]$ both (semi)stable but such that $\cI_Z$ has greater slope.
+
+{\color{red} Can we use this strategy to get Koszul cohomology to vanish by phrasing it as vanishing of cohomology of kernel bundles as in Ein-Lazarsfeld Theorem 5.2.5? This could work towards projective normality as in page 143?}
+% \begin{rmk}
+%     One might be interested in questions of syzygies and projective normality, and ask if this strategy could be pushed forward. Recall, the embedding $|K_S+C|$ (assuming it is an embedding) is \textit{projectively normal} if
+%     \[\Sym^d H^0(S,\cO_S(1)) \twoheadrightarrow H^0(S,\omega_S^{\otimes d}(dC)).\]
+%     For $d=1$, this automatic from $|K_S+C|$ being globally generated (since it is an embedding). 
+% \end{rmk}
 
 \section{Stability}
 
@@ -97,11 +105,11 @@ Now, we analyze when $\cO_S(-C)[1]$ is (semi)stable. First, we describe how, for
     \begin{enumerate}[label=(\arabic*)]
         \item If $K\leq F$ in $\cA_{-y}$ with cokernel $Q$, then, by the long exact sequence in $\Coh(S)$ cohomology,
         \[0\to \cH^{-1}(K) \to 0 \to \cH^{-1}(Q) \to \cH^0(K) \to F \to \cH^0(Q)\to 0\]
-        $K$ is itself a sheaf with $\mu_{\min(K)}>-y$.
+        $K$ is itself a sheaf with $\mu_{\min(K)}>-y$ (and torsion free, being an extension of $\cH^{-1}(Q)$ and a subsheaf of $F$).
 
         \item If $F[1] \twoheadrightarrow Q$ is a surjection in $\cA_{-y}$ with kernel $K$, then, by the long exact sequence in $\Coh(S)$ cohomology,
         \[0\to \cH^{-1}(K) \to F \to \cH^{-1}(Q) \to \cH^0(K) \to 0 \to \cH^0(Q)\to 0,\]
-        $Q[-1]$ is itself a sheaf with $\mu_{\max}(Q[-1])\leq -y$.
+        $Q[-1]$ is itself a sheaf with $\mu_{\max}(Q[-1])\leq -y$ (so torsion free). {\color{red} check this... doesn't need $F$ torsion free?}
     \end{enumerate}
 \end{lem}
 
@@ -177,7 +185,27 @@ Now, we analyze when $\cO_S(-C)[1]$ is (semi)stable. First, we describe how, for
     {\color{red} prove or cite this!! probably also need more in my applications to be careful...}
 \end{proof}
 
-Now, we apply these lemma to get the stability of $\cO_S(-C)[1]$ and friends, using the observation that
+\begin{lem}\label{destabilizing-wall-witness}
+    Let $F$ be $(x,y)$-semistable such that in every neighborhood of $(x,y) \in \Stab(S)$, there exists an $(x',y')$ such that $F$ becomes unstable. Then, we can choose an $(x,y)$-semistable object $E$ with the same $(x,y)$ slope as $F$, such that $E$ is a subobject in $\cA_{-y}$ and such that $E\leq F$ destabilizes $F$ in some $(x',y')$ in any small neighborhood.
+    
+    Furthermore, the quotient $F/E$ in $\cA_{-y}$ is also $(x,y)$-semistable (this follows quickly).
+\end{lem}
+
+\begin{proof}
+    {\color{red} state this lemma more carefully... do I need a requirement on the slope so that I can have a constant category somehow?} Choose a sequence $(x_n,y_n)$ converging to $(x,y)$, such that $F$ is $(x_n,y_n)$ unstable for all $n\in \N$, evidenced by a subobject $E_n \hookrightarrow F$ in $\cA_{-y_n}$. Even more, choose $E_n$ to be the first factor of the $(x_n,y_n)$ Harder-Narasimhan filtration, so that $E_n$ is $(x_n,y_n)$ semistable (and so this semistability spreads out in a neighborhood).
+    
+    Eventually, $E_n$ becomes a subobject in $\cA_{-y}$? Local finiteness of walls? Furthermore, the $\nu_{(x,y)}(E_n) \leq \nu_{(x,y)}(E)$ by virtue of the $(x,y)$-semistability of $E$, but for $n\gg 0$ we must get equality because $\nu_{(x,y)}(E_n)$ is continuous in $(x,y)$, and the inequality is reversed (and strict) at $(x_n,y_n)$. {\color{red} fix this later!!!}
+\end{proof}
+
+\begin{defn}
+    As in lemma \ref{destabilizing-wall-witness}, we say
+    \begin{itemize}
+        \item the wall through $I(F)$ and $(x,y)$ is a \textbf{destabilizing wall} for $F$,
+        \item the subobject $E\hookrightarrow F$ in $\cA_{-y}$ is a \textbf{witness} for the wall.
+    \end{itemize}
+\end{defn}
+
+Now, we apply these lemmas to get the stability of $\cO_S(-C)[1]$ and friends, using the observation that
 \[I(\cO_S(-C)[1]) = \left(\frac{C^2}{2}, \|C\|\right)\]
 is exactly on the parabola. In this sense, $\cO_S(-C)[1]$ is \textit{Bogomolov-sharp} (the inequality became an equality), and we will show such Bogomolov-sharp object are stable in the following sense.
 
@@ -190,9 +218,9 @@ is exactly on the parabola. In this sense, $\cO_S(-C)[1]$ is \textit{Bogomolov-s
 \end{prop}
 
 \begin{proof}
-    We show (1). By $H$-stability, $F$ will be $(x,-\mu(F)+\eps)$ semistable for $x\gg 0$ and $0<\eps \ll 1$ as in lemma \ref{large-volume-limit}, and $F$ will \textit{remain} $(x,y)$-semistable until just after a wall, which is a line through $I(F)$. Let $(x,y)$ be on the first destabilizing wall ({\color{red} maybe define this by saying that $E$ destabilizes $F$ in all neighborhoods of the wall?}) counterclockwise to the positive horizontal ray from $I(F)$, and let
+    We show (1). By $H$-stability, $F$ will be $(x,-\mu(F)+\eps)$ semistable for $x\gg 0$ and $0<\eps \ll 1$ as in lemma \ref{large-volume-limit}, and $F$ will \textit{remain} $(x,y)$-semistable until just after a destabilizing wall for $F$ counterclockwise to the positive $x$-axis. Choose a witness
     \[0\to E \to F \to F/E \to 0\]
-    for $E,F/E \in \cA_{-y}$ be a \textit{witness} for this wall, where we choose $E$ to be $(x,y)$ semistable, i.e., by choosing the first factor in the $(x,y)$ Harder-Narasimhan filtration for $F$. By lemma \ref{H-slope-bound-for-destabilizers} and \ref{between-parabola}, $I(F), I(E), (x,y)$ form a positive slope line with increasing heights in order with $I(E)$ outside the parabola, but this is impossible because the line segment $I(F)$ to $(x,y)$ is entirely inside the parabola. Thus, $I(F)$ couldn't have been destabilized.
+    for this wall, as in lemma \ref{destabilizing-wall-witness}. By lemma \ref{H-slope-bound-for-destabilizers} and \ref{between-parabola}, $I(F), I(E), (x,y)$ form a positive slope line with increasing heights in order with $I(E)$ outside the parabola, but this is impossible because the line segment $I(F)$ to $(x,y)$ is entirely inside the parabola. Thus, $I(F)$ couldn't have been destabilized.
 \end{proof}
 
 {\color{red} TODO: show (2) in a parallel way... might need to expand the lemmas though.}
@@ -204,7 +232,7 @@ Unlike $\cO_S(-C)[1]$, an ideal sheaf $\cI_Z$ for a length $d$ subscheme will no
 
 By openness of stability, we just need to guarantee $I_Z$ is stable at a point on the line through $I(I_Z)$ and $I(\cO_S(-C)[1])$ intersected with the parabola. By lemma \ref{large-volume-limit}, since $I_Z$ is $H$-stable torsion free, we at least know $I_Z$ is semistable at $(x,-\mu(F)+\eps)$ for $x\gg 0$ and $0<\eps \ll 1$, i.e., $I_Z$ is stable in some circular sector bounded by the positive $x$-axis and some positie slope ray.
 
-so we just need to show that $F$ \textit{remains} stable through the ray from $I(I_Z)$ to $I(\cO_S(-C)[1])$.
+So, we just need to show that $F$ \textit{remains} stable through the ray from $I(I_Z)$ to $I(\cO_S(-C)[1])$.
 
 \begin{center}
 \begin{tikzpicture}[
@@ -226,39 +254,127 @@ so we just need to show that $F$ \textit{remains} stable through the ray from $I
 \end{tikzpicture}
 \end{center}
 
-Now, if $(x,y)$ is on some destabilizing wall, then in a neighborhood $F$ has to be destabilized by a sheaf $F$, which we can assume to be $(x,y)$-semistable. We will refer to $\rk F$ as the \textit{rank of the wall} for $I_Z$ through $I(F)$. We want to establish numerical conditions on $(S,C)$ to prevent any walls that occur up to the $I_Z$, $\cO_S(-C)[1]$ wall. Our target wall has slope (in our coordinates for $\Stab(S)$)
+Now, for a point $(x,y)$ on a destabilizing wall for $I_Z$, choose a witness \(
+    \begin{tikzcd} F \rar[hook,"\phi"]& I_Z\end{tikzcd}
+\) (again as in lemma \ref{destabilizing-wall-witness}). We will refer to $\rk F$ as the \textit{rank of the wall} for $I_Z$ through $I(F)$. We want to establish numerical conditions on $(S,C)$ to prevent any walls that occur up to the $I_Z$, $\cO_S(-C)[1]$ wall. Our target wall has slope (in our coordinates for $\Stab(S)$)
 \[m = \frac{\|C\|}{\frac{C^2}{2}+d} = \frac{2\|C\|}{C^2+2d},\]
 so we want to guarantee that any other wall through $I_Z$ has greater slope.
 
-\subsubsection{High Rank Walls}
+\subsubsection{Higher Rank Walls}
 
-Suppose $\rk F = r > 1$. As in \cite{bertram_two_2026}, we show that this implies the wall $W$ has too great a ``height'', i.e., showing that the ratio of the $y$ coordinates of the top intersection and bottom intersection of $W \cap \{x=\frac{1}{2}y^2\}$ is too larger.
+Suppose $\rk F = r > 1$. As in \cite{bertram_two_2026}, we show that this implies the wall $W$ has too great a ``height'', i.e., showing that the ratio of the $y$ coordinates of the top intersection and bottom intersection of $W \cap \{x=\frac{1}{2}y^2\}$ is too large.
 
-For comparison, we compute this height ratio for the $I_Z, \cO_S(-C)[1]$ wall. The top intersection has $y$ coordinate $\|C\|$. The bottom intersection has is one of the solutions to the equations
-\[2x=y^2, \qquad y=m(x+d),\]
-which has $y$-coordinate which is a root of
-\begin{align*}
-    y&=m\left(\frac{1}{2}y^2\right)+md\\
-    0&=y^2-\frac{2}{m}y+2d.
-\end{align*}
-Since one root is $\|C\|$, the other root is $\frac{2d}{\|C\|}$. Thus, the height ratio is $\frac{C^2}{2d}$ (or potentially the reciprocal if $\|C\|$ isn't sufficiently large---but we will eventually require $\|C\|$ to be large enough so that $\|C\|$ is the bigger height).
+\begin{computation}
+    For comparison, we compute this height ratio for the $I_Z, \cO_S(-C)[1]$ wall. The top intersection has $y$ coordinate $\|C\|$. The bottom intersection has is one of the solutions to the equations
+    \[2x=y^2, \qquad y=m(x+d),\]
+    which has $y$-coordinate which is a root of
+    \begin{align*}
+        y&=m\left(\frac{1}{2}y^2\right)+md\\
+        0&=y^2-\frac{2}{m}y+2d.
+    \end{align*}
+    Since one root is $\|C\|$, the other root is $\frac{2d}{\|C\|}$. Thus, the height ratio is $\frac{C^2}{2d}$ (or potentially the reciprocal if $\|C\|$ isn't sufficiently large---but we will eventually require $\|C\|$ to be large enough so that $\|C\|$ is the bigger height).
+\end{computation}
+
+\bigskip
+
+
+
+
 
 Now, we bound the height ratio for a rank $r$ wall. By Lemma \ref{between-parabola}, $I(F)$ is positioned between $I(I_Z)$ and the parabola, with positive $y$-value. Writing $E$ for the cone, so that we have exact sequence
 \[0\to F \to I_Z \to E \to 0 \tag{$\star$}\]
-in $\cA_{-y}$ (where $(x,y)$ is on the destabilizing wall). Since $F, I_Z$ are both $(x,y)$-semistable of the same slope, so is $E$ ({\color{red} exercise}). Thus, $I(E)$ is also outside of the parabola, but the invariants of $E$ will force $I(E)$ to be on the \textit{opposite} side, since ($\star$) implies
-\[\mu(E) = \frac{r}{r-1}\mu(F), \qquad \chern_2(E) = -d-\chern_2(F)\]
-so... {\color{red} uh oh, why opposite side? for $r\gg 0$, this is basically the same height, so I'm concerned.}
+in $\cA_{-y}$ (where $(x,y)$ is on the destabilizing wall). Since $F, I_Z$ are both $(x,y)$-semistable of the same slope, so is $E$. In this setup, $I(I_Z)$, $I(F)$, $(x,y)$, and $I(E)$ are all on the same line, and we at least know $I(I_Z)$ below $I(F)$ below $(x,y)$. Furthermore, by $(x,y)$ stability, $I(F),I(E)$ are outside the parabola.
+
+\begin{prop}
+    $I(E)$ is above $(x,y)$.
+\end{prop}
+
+\begin{proof}
+    We have to show $\mu(E)<-y$. We know that $E\in D^b(S)$ has cohomology sheaves
+    \[\cH^{-1}(E) = \ker_{\Coh(S)} \phi, \qquad \cH^0(E) = \coker_{\Coh(S)} \phi.\]
+    Since $\phi\neq 0$ for $\phi$ to be a monomorphism, we in fact get
+    \[\rk(\coker_{\Coh(S)} \phi) = 0\]
+    since $\coker_{\Coh(S)} \phi = I_Z/\im_{\Coh(S)} \phi$ is a quotient of rank 1 sheaves, where $\im_{\Coh(S)}$ is rank 1 because it is a nonzero subsheaf of a torsion free sheaf. Thus, $\coker_{\Coh(S)} \phi$ is a torsion sheaf, and in particular
+    \[c_1(\coker_{\Coh(S)} \phi) \geq 0\]
+    is effective, since $c_1=\ch_1$ can be computed by taking lengths of $\coker_{\Coh(S)} \phi$ at generic points of components of the support (i.e., filter $\coker_{\Coh(S)} \phi$ by structure sheaves of curves and points by analyzing associated primes/points).
+
+    On the other hand, $\rk(\ker_{\Coh(S)} \phi) = -\rk F$, since $\rk F$ is the alternating sum of the ranks of its cohomologies.
+
+    Thus, we can compute
+    \[\mu(E) = \mu(\ker_{\Coh(S)} \phi) + \frac{H\cdot c_1(\coker_{\Coh(S)} \phi)}{\rk F} \leq \mu(\ker_{\Coh(S)} \phi) \leq -y,\]
+    since $H\cdot c_1(\coker_{\Coh(S)} \phi)\geq 0$, but $\rk F<0$. So, $-\mu(E) \geq y$, but this places $I(E)$ above $(x,y)$, so it must be above the parabola.
+\end{proof}
+
+Thus, the heights of $I(F)$, $I(E)$ give lower and upper bounds respectively on the height for this wall, so the height ratio is bounded above by
+\[\frac{-\mu(E)}{-\mu(F)} = \frac{r}{r-1},\]
+which among integer values $r>1$ is maximized at $r=2$ to get get a maximum height ratio of $2$. Thus, to prevent high rank walls from destabilizing $I_Z$ too early, we just need to require
+\[\frac{r}{r-1} < \frac{C^2}{2d},\]
+which is to require
+\[C^2 > 4d.\]
+
+\subsubsection{Rank 1 Walls}
+
+Now, assume $\rk F = r = 1$. First, we characterize such sheaves $F$.
+
+\begin{lem}
+    A rank 1 sheaf on a smooth projective surface is of the form
+    \[\cO(-E)\otimes I_W.\]
+\end{lem}
+\begin{proof}
+    To see this, notice that $F^{\vee \vee}$ is a line bundle by virtue of being reflexive rank 1 on a smooth variety, and the usual evaluation map $s \mapsto \eval_s$ is injective in $\Coh(S)$, giving us the short exact sequence
+    \[0\to F \xrightarrow{e} F^{\vee \vee} \to \coker e \to 0.\]
+    Twisting by the dual $F^{\vee}$, we get
+    \[0\to F \otimes F^{\vee} \to \cO_S \to \coker e \otimes F^{\vee} \to 0,\]
+    which expresses $F$ as a twist of an ideal sheaf (being a subsheaf of $\cO_S$), and the Chern invariants will force it to be the ideal sheaf of a dimension 0 scheme.
+\end{proof}
 
 
-Thus, the heights of $I(F)$, $I(E)$ give lower and upper bounds respectively on the height ratio for this wall
+Next, when analyze stability, we will be interested in morphisms $I_W\to I_Z$, so we prove this next lemma.
 
 
-{\color{red} TODO:
-\begin{itemize}
-    \item understand ``large volume limit''
-    \item understand $H$-stability of $\cO_S$ and $I_Z$.
-    \item replace equations  labeled with $\star$ with numbered equations.
-\end{itemize}}
+{\color{red} is this even helpful here?}
+\begin{lem}
+    Let $Z,W$ be closed subschemes of codimension at least 2 in a smooth projective variety $X$. Then, $\Hom(I_W,I_Z)$ is $\C$ (spanned by inclusion) if $Z\subseteq W$ and 0 otherwise.
+\end{lem}
+\begin{proof}
+    Let $\phi: I_W\to I_Z$. The strategy is to analyze double duals. First, we argue that $I_W^{\vee\vee},I_Z^{\vee\vee} \cong \cO_X$ by applying $\cHom_{\cO_X}(-,\cO_X)$ to, for example,
+    \[0\to I_W \to \cO_X \to \cO_W \to 0\]
+    and trying to get vanishing
+    \[\cHom_{\cO_X}(\cO_W,\cO_X),\; \cExt^1(\cO_W,\cO_X)=0.\]
+    First, $\cHom$ vanishes because there is no nonzero assignment of any $1\in \cO_W(U)$ to a section of $\cO_X$ due to torsion. Next, $\cExt_{\cO_X}^1(\cO_W,\cO_X)$ can be computed by the spectral sequence (for the composition of functors $R\Gamma$ and $R\cHom$)
+    \[H^p(X,\cExt_{\cO_X}^q(\cO_W,\cO_X)) \Rightarrow \Ext^{p+q}(\cO_W,\cO_X),\]
+    where {\color{red} how does this get vanishing? I might need something else}.
+
+    Then, we form a commutative diagram
+    \[\begin{tikzcd}
+        I_W \rar["\phi"] \dar & I_Z \dar\\
+        I_W^{\vee\vee} \rar["\phi^{\vee\vee}"] & I_Z^{\vee\vee}
+    \end{tikzcd}\]
+    where the vertical maps send $s\mapsto \eval_s$. In fancier language, $(-)^{\vee\vee}$ is an endofunctor, and $s\mapsto \eval_s$ is a natural transformation from identity.
+    
+    Now, the bottom morphism in our commutative diagram has to be multiplication by a constant $c\in \C$, and a nonzero $c$ also forces the top morphism $I_W\to I_Z$ uniquely to be $c$ multiplied by inclusion (in particular showing $Z\subseteq W$).
+
+    (from \href{https://mathoverflow.net/questions/458245/homomorphism-between-ideal-sheaves-of-codimension-2}{this math overflow post})
+\end{proof}
+
+
+{\color{red} prove something like this?}
+\begin{lem}\label{rank-1-destabilizer-morphism}
+    A morphism $\cO_S(-E)\otimes I_W \to I_Z$ is the data of a section of $(I_Z: I_W)(E)$.
+\end{lem}
+\begin{proof}
+    {\color{red} TODO}/
+\end{proof}
+
+Now, that we have a grip on the players, we try to handle stability. Our task is to rule out sheaves $\cO_S(-E)\otimes I_W$ before the numerical wall through $I(I_Z)$ and $I(\cO_S(-C)[1])$.
+
+By lemma \ref{rank-1-destabilizer-morphism}, if we have already ruled out destabilizers of lower length schemes $Z'$ than $Z$, then we can assume $W=\emptyset$, since a morphism $\cO_S(-E)\otimes I_W \to I_Z$ will correspond to a
+\[\cO_S(-E) \to (I_Z:I_W)=I_{Z'}\]
+which is at least as ``dangerous'' as far as stability goes.
+
+So, we are considering
+
+
 
 \printbibliography
 

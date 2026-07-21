@@ -1,14 +1,14 @@
 # Fdb version 4
-["biber reider"] 0 "reider.bcf" "reider.bbl" "reider" 1784534652.96418 -1
-  "reider.bcf" 1784534652 108763 5e4511246962bd86748a82ab9ff1c13a "pdflatex"
+["biber reider"] 0 "reider.bcf" "reider.bbl" "reider" 1784611322.73868 -1
+  "reider.bcf" 1784611322 108763 5e4511246962bd86748a82ab9ff1c13a "pdflatex"
   "reider.bib" 1784533958 2749 9b12d6f672be03d5028d3145fbcac14b ""
   (generated)
   "reider.bbl"
   "reider.blg"
   (rewritten before read)
-["pdflatex"] 1784534650.66023 "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/reider.tex" "reider.pdf" "reider" 1784534652.96527 0
-  "../mystyle.sty" 1779162080 7486 419bf7a733384ffd3037c882e710bf20 ""
-  "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/reider.tex" 1784534649 17132 c578346cdd08715ad3c64d3a0e1f3529 ""
+["pdflatex"] 1784611317.16044 "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/reider.tex" "reider.pdf" "reider" 1784611322.74216 0
+  "../mystyle.sty" 1784589712 7531 6520a88b3650075181117cddac78d647 ""
+  "c:/Users/Joseph/Documents/math/latex/AlgebraicGeometry/2025-2026 summer/reider.tex" 1784611309 24530 afd8232c1ea3f67757d27ff955e3988f ""
   "c:/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1774645957 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1774648300 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1774647181 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -32,6 +32,8 @@
   "c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1774645924 1116 933a60c408fc0a863a92debe84b2d294 ""
   "c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1774645924 1120 8b7d695260f3cff42e636090a8002094 ""
   "c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmti12.tfm" 1774645924 1484 ed72f8f5cf654cda15ecc8e32bfcbee5 ""
+  "c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmti7.tfm" 1774645924 1492 86331993fe614793f5e7e755835c31c5 ""
+  "c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmti8.tfm" 1774645924 1504 1747189e0441d1c18f3ea56fafc1c480 ""
   "c:/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm" 1774645924 772 9a936b7f5e2ff0557fce0f62822f0bbf ""
   "c:/texlive/2026/texmf-dist/fonts/tfm/public/latex-fonts/lasy6.tfm" 1774649948 520 4889cce2180234b97cad636b6039c722 ""
   "c:/texlive/2026/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm" 1774681727 688 37338d6ab346c2f1466b29e195316aa4 ""
@@ -53,6 +55,7 @@
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1774644101 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1774644101 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1774644101 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1774644101 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1774644101 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1774644101 36118 fad905eba93cff5bce1e185fe980a177 ""
   "c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb" 1774644101 24252 1e4e051947e12dfb50fee0b7f4e26e3a ""
@@ -245,11 +248,11 @@
   "c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1774807776 5619402 045890036aad9b52b154ef5568e59d3a ""
   "c:/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774808032 3636409 c2b0a166d2bf555ff46a28337d0684bf ""
   "c:/texlive/2026/texmf.cnf" 1774807730 713 e69b156964470283e0530f5060668171 ""
-  "reider.aux" 1784534652 2347 332b1fd34448d22bbd96db8613322a41 "pdflatex"
+  "reider.aux" 1784611322 3587 0fa8db5f59ca201fdc49c0f99332b0be "pdflatex"
   "reider.bbl" 1784533967 6717 613fd0a79414fcfde7a7ba4067ce057a "biber reider"
-  "reider.out" 1784534652 768 125514a928f77e16c72cdb32057d3def "pdflatex"
-  "reider.run.xml" 1784534652 2315 3f5885a74eb83c78c7eaf9d1778e718c "pdflatex"
-  "reider.tex" 1784534649 17132 c578346cdd08715ad3c64d3a0e1f3529 ""
+  "reider.out" 1784611322 911 be0e08ffee47f0f12bdf9a4b134a1cad "pdflatex"
+  "reider.run.xml" 1784611322 2315 3f5885a74eb83c78c7eaf9d1778e718c "pdflatex"
+  "reider.tex" 1784611309 24530 afd8232c1ea3f67757d27ff955e3988f ""
   (generated)
   "reider.aux"
   "reider.bcf"
